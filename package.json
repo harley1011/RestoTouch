@@ -2,9 +2,7 @@
   "name": "SB-Admin-BS4-Angular-2",
   "version": "0.0.0",
   "description": "Modular seed project for Angular 2 apps with fast, statically typed build",
-  "repository": {
-    "url": "https://github.com/start-angular/SB-Admin-BS4-Angular-2"
-  },
+  "main": "app.js",
   "scripts": {
     "build.dev": "gulp build.dev --color --config-env dev",
     "build.dev.watch": "gulp build.dev.watch --color",
@@ -112,7 +110,9 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0",
     "walk": "2.3.9",
-    "yargs": "4.8.0"
+    "yargs": "4.8.0",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.6",
@@ -133,6 +133,8 @@
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.11",
     "systemjs": "0.19.27",
-    "zone.js": "0.6.17"
+    "zone.js": "0.6.17",
+    "express": "^4.12.3",
+    "swagger-express-mw": "^0.1.0"
   }
 }
