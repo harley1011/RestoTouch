@@ -4,6 +4,7 @@
   "description": "Modular seed project for Angular 2 apps with fast, statically typed build",
   "main": "app.js",
   "scripts": {
+    "preinstall ": "npm install -g ts-node",
     "build.dev": "gulp build.dev --color --config-env dev",
     "build.dev.watch": "gulp build.dev.watch --color",
     "build.e2e": "gulp build.e2e --color",
