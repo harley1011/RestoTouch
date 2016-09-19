@@ -1,9 +1,14 @@
-Getting Started
+##Getting Started
 1. Clone the repo
+
 2. Make sure you have NodeJS installed.
+
 NOTE: The following commands are run in a command line window or terminal
+
 3. Run "npm install"
+
 4. Run "npm start"
+
 5. Goto "http://127.0.0.1:10010/"
 
 
