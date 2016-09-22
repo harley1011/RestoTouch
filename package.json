@@ -126,16 +126,19 @@
     "@angular/router": "3.0.0-rc.2",
     "core-js": "2.4.0",
     "es6-module-loader": "0.17.8",
+    "express": "^4.12.3",
     "font-awesome": "4.6.3",
     "highcharts": "4.2.5",
     "jquery": "3.0.0",
     "moment": "2.14.1",
     "ng2-bootstrap": "1.1.1",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.11",
+    "sequelize": "^3.24.3",
+    "swagger-express-mw": "^0.1.0",
     "systemjs": "0.19.27",
-    "zone.js": "0.6.17",
-    "express": "^4.12.3",
-    "swagger-express-mw": "^0.1.0"
+    "zone.js": "0.6.17"
   }
 }
