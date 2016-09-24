@@ -4,9 +4,9 @@ This will launch a local web server that will host the web application HTML, Jav
 
 2. Make sure you have NodeJS installed and npm.
 
-3. Run "npm run setup"
+3. Run "npm install -g ts-node" (Note: sudo might be required on Mac or Linux)
 
-4. Run "npm install -g ts-node" (Note: sudo might be required on Mac or Linux)
+4. Run "npm run setup"
 
 5. Goto "http://127.0.0.1:10010/" in a browser to see the web application
 
