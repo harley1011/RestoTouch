@@ -49,6 +49,6 @@ work on the server.
 ##Stle Guideline
 
 # Angular 2 Style guidelines for Web App
-  We will follow angulars 2 official style guide which can be found here
+  We will follow angulars 2 official style guide which can be found here https://angular.io/styleguide
 
 
