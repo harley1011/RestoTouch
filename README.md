@@ -45,6 +45,10 @@ work on the server.
 - config contains config parameters to connect to the database 
 
 
-- 
+
+##Stle Guideline
+
+# Angular 2 Style guidelines for Web App
+  We will follow angulars 2 official style guide which can be found here
 
 
