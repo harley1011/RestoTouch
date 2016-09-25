@@ -12,7 +12,13 @@ const RESTAURANTS: Restaurant[] = [
   {name: 'Paccini', description: 'Italian Restaurant'},
   {name: 'Villa Massimo', description: 'Italian Restaurant'},
   {name: 'Sushi Shop', description: 'Sushi Restaurant'},
-  {name: 'Subway', description: 'Sandwich fast food Restaurant'}
+  {name: 'Subway', description: 'Sandwich fast food Restaurant'},
+  {name: 'KFC', description: 'Chicken fast food Restaurant'},
+  {name: 'Restaurant 1', description: 'Restaurant Description'},
+  {name: 'Restaurant 2', description: 'Restaurant Description'},
+  {name: 'Restaurant 3', description: 'Restaurant Description'},
+  {name: 'Restaurant 4', description: 'Restaurant Description'},
+  {name: 'Restaurant 5', description: 'Restaurant Description'}
 ];
 
 @Injectable()
