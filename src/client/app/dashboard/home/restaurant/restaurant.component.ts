@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Restaurant } from './restaurant';
-
-const RESTAURANTS: Restaurant[] = [
-  {name: 'McDonald', description: 'Fast food restaurant'},
-  {name: 'Yuan Vegetarien', description: 'Asian vegan restaurant'},
-  {name: 'Copper Branch', description: 'Vegan fast food restaurant'}
-];
+import { RestaurantService } from './restaurant.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'restaurant-cmp',
 	templateUrl: 'restaurant.component.html',
 	styleUrls: ['restaurant.css'],
+  providers: [RestaurantService]
 })
-export class RestaurantComponent {
-  restaurants = RESTAURANTS;
+
+export class RestaurantComponent implements OnInit {
+  restaurants: Restaurant[];
+
+  constructor(private restaurantService: RestaurantService) { }
+
+  getRestaurants(): void {
+    this.restaurantService.getRestaurants().then(restaurants => this.restaurants = restaurants);
+  }
+
+  ngOnInit(): void {
+    this.getRestaurants();
+  }
 }
