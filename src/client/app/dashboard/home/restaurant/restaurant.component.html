@@ -2,14 +2,6 @@
   <h4>Restaurants</h4>
   <div class="row">
     <div class="col-sm-4">
-      <!--<div class="card card-primary card-inverse">
-        <div class="card-header card-primary">
-          Restaurant 1
-        </div>
-        <div class="card-block bg-white">
-          Restaurant Description
-        </div>
-      </div>-->
       <div *ngFor="let restaurant of restaurants" class="card card-primary card-inverse">
         <div class="card-header card-primary">
           {{ restaurant.name }}
@@ -18,11 +10,9 @@
           {{ restaurant.description }}
         </div>
       </div>
-      <div class="card card-success card-inverse">
-        <div class="card-header card-success">
-          Add Restaurant
-        </div>
-      </div>
+      <button class="btn btn-lg btn-success">
+        Add Restaurant
+      </button>
     </div>
   </div>
 </div>

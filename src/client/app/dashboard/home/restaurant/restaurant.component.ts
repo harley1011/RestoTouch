@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 
-export class Restaurant {
-  name: string;
-  description: string;
-}
+import { Restaurant } from './restaurant';
 
 const RESTAURANTS: Restaurant[] = [
   {name: 'McDonald', description: 'Fast food restaurant'},
@@ -14,7 +11,8 @@ const RESTAURANTS: Restaurant[] = [
 @Component({
 	moduleId: module.id,
 	selector: 'restaurant-cmp',
-	templateUrl: 'restaurant.component.html'
+	templateUrl: 'restaurant.component.html',
+	styleUrls: ['restaurant.css'],
 })
 export class RestaurantComponent {
   restaurants = RESTAURANTS;
