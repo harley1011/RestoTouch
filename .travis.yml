@@ -31,9 +31,6 @@ before_script:
 after_failure:
   - cat /home/travis/build/mgechev/angular2-seed/npm-debug.log
 
-branches:
-  only: master
-
 notifications:
   email: true
   webhooks:
