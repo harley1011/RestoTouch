@@ -1,3 +1,4 @@
+![Image of travis](hhttps://api.travis-ci.com/harley1011/RestoTouch.svg?token=svJ7YxEt4VzqxxA86ptx&branch=develop)
 ##Getting Started
 This will launch a local web server that will host the web application HTML, Javascript, and CSS Files and the API
 1. Clone this repo
