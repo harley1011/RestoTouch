@@ -5,13 +5,13 @@ import { RestaurantService } from './restaurant.service';
 
 @Component({
 	moduleId: module.id,
-	selector: 'restaurant-cmp',
-	templateUrl: 'restaurant.component.html',
-	styleUrls: ['restaurant.css'],
+	selector: 'restaurantlist-cmp',
+	templateUrl: 'restaurantlist.component.html',
+	styleUrls: ['restaurantlist.css'],
   providers: [RestaurantService]
 })
 
-export class RestaurantComponent implements OnInit {
+export class RestaurantListComponent implements OnInit {
   numOfRestaurants: number;
   restaurants: Restaurant[];
 
