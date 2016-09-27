@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <button *ngIf="restaurants && restaurants.length >= 12" class="btn btn-success">Add</button>
+      <button *ngIf="restaurants && restaurants.length >= 12" (click)="add()" class="btn btn-success">Add</button>
       <button *ngIf="restaurants && restaurants.length >= 16" class="btn btn-secondary">More</button>
     </div>
   </div>

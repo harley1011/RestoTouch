@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Restaurant } from './restaurant';
-import { RestaurantService } from './restaurant.service';
+import { RestaurantListService } from './restaurantlist.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'restaurantlist-cmp',
 	templateUrl: 'restaurantlist.component.html',
 	styleUrls: ['restaurantlist.css'],
-  providers: [RestaurantService]
+  providers: [RestaurantListService]
 })
 
 export class RestaurantListComponent implements OnInit {
   numOfRestaurants: number;
   restaurants: Restaurant[];
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private restaurantListService: RestaurantListService, private router: Router) { }
 
   getRestaurants(): void {
-    this.restaurantService.getRestaurants().then(restaurants => {
+    this.restaurantListService.getRestaurants().then(restaurants => {
 			this.restaurants = restaurants;
 			this.numOfRestaurants = this.restaurants.length;
 		});
@@ -28,7 +29,11 @@ export class RestaurantListComponent implements OnInit {
     this.getRestaurants();
   }
 
+	add(): void {
+		this.router.navigate(['/dashboard/restaurant']);
+	}
+
 	modify(restaurant: Restaurant): void {
-		console.log(restaurant.name);
+		this.router.navigate(['/dashboard/restaurant', restaurant.id]);
 	}
 }
