@@ -21,17 +21,12 @@ export class RestaurantComponent implements OnInit {
 	getRestaurant(id: number): void {
 		this.restaurantService.getRestaurant(id).then(restaurant => {
 			this.restaurant = restaurant;
-			console.log('Restaurant: ' + this.restaurant.name);
 		});
 	}
 
   ngOnInit(): void {
 		this.route.params.forEach((params: Params) => {
-			if (params['id']) {
-			  this.getRestaurant(parseInt(params['id']));
-			} else {
-				console.log('Create Restaurant');
-			}
+			if (params['id']) this.getRestaurant(parseInt(params['id']));
 		});
   }
 }
