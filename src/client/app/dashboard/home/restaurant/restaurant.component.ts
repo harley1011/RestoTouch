@@ -12,16 +12,23 @@ import { RestaurantService } from './restaurant.service';
 })
 
 export class RestaurantComponent implements OnInit {
-  title: '1';
+  numOfRestaurants: number;
   restaurants: Restaurant[];
 
   constructor(private restaurantService: RestaurantService) { }
 
   getRestaurants(): void {
-    this.restaurantService.getRestaurants().then(restaurants => this.restaurants = restaurants);
+    this.restaurantService.getRestaurants().then(restaurants => {
+			this.restaurants = restaurants;
+			this.numOfRestaurants = this.restaurants.length;
+		});
   }
 
   ngOnInit(): void {
     this.getRestaurants();
   }
+
+	modify(restaurant: Restaurant): void {
+		console.log(restaurant.name);
+	}
 }
