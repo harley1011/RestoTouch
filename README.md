@@ -14,7 +14,7 @@ This will launch a local web server that will host the web application HTML, Jav
 6. Run "swagger project edit" to see the web API editor 
 
 
-#If you want to do developement on just the web application then you can run the command "npm run start.dev"
+##If you want to do developement on just the web application then you can run the command "npm run start.dev"
 this will also launch a local web server but this one has livereload, automatic transpiling of source files when updated, and other stuff
 
 Block diagram of the major components in our platform can be found here https://drive.google.com/file/d/0BwQrVDDNZ8XFUDdUS1FKT3NBR3c/view?usp=sharing
@@ -47,9 +47,9 @@ work on the server.
 
 
 
-##Stle Guideline
+##Style Guideline
 
-# Angular 2 Style guidelines for Web App
+## Angular 2 Style guidelines for Web App
   We will follow angulars 2 official style guide which can be found here https://angular.io/styleguide
 
 
