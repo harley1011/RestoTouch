@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { User } from './user';
+
 /**
 *	This class represents the lazy loaded SignupComponent.
 */
