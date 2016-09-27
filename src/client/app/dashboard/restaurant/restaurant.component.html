@@ -1,1 +1,29 @@
 <h1>{{ restaurant?.name || "Create Restaurant" }}</h1>
+
+<div class="row">
+  <div class="col-lg-6">
+    <form role="form">
+      <fieldset class="form-group">
+        <label>Name</label>
+        <input class="form-control" placeholder="Ex: Resto Touch Restaurant" value="{{restaurant?.name }}">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Description</label>
+        <input class="form-control" placeholder="Enter Text" value="{{restaurant?.description }}">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label>Address</label>
+        <input class="form-control" placeholder="Ex: 7141 Rue Sherbrooke O, Montréal, QC H4B 1R6">
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <button *ngIf="restaurant" (click)="update()" class="btn btn-primary">Confirm</button>
+    <button *ngIf="!restaurant" class="btn btn-success">Create</button>
+  </div>
+</div>
