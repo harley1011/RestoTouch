@@ -47,9 +47,10 @@ work on the server.
 
 
 
-##Style Guideline
 
 ## Angular 2 Style guidelines for Web App
   We will follow angulars 2 official style guide which can be found here https://angular.io/styleguide
-
+  
+## NodeJs Javascript Style guidelines for Web Api
+ We will follow the style guidelines listed here https://github.com/felixge/node-style-guide
 
