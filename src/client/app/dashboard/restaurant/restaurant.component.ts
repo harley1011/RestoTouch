@@ -1,20 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import { Restaurant } from '../home/restaurantlist/restaurant';
+import { RestaurantService } from './restaurant.service';
+
 @Component({
 	moduleId: module.id,
 	selector: 'restaurant-cmp',
 	templateUrl: 'restaurant.component.html',
-	styleUrls: ['restaurant.css']
+	styleUrls: ['restaurant.css'],
+  providers: [RestaurantService]
 })
 
 export class RestaurantComponent implements OnInit {
+	restaurant: Restaurant;
 
-	constructor(private route: ActivatedRoute, private router: Router) {}
+	constructor(private route: ActivatedRoute, private router: Router,
+		private restaurantService: RestaurantService) {}
+
+	getRestaurant(id: number): void {
+		this.restaurantService.getRestaurant(id).then(restaurant => {
+			this.restaurant = restaurant;
+			console.log('Restaurant: ' + this.restaurant.name);
+		});
+	}
 
   ngOnInit(): void {
 		this.route.params.forEach((params: Params) => {
-			console.log('Restaurant: ' + params['id']);
+			if (params['id']) {
+			  this.getRestaurant(parseInt(params['id']));
+			} else {
+				console.log('Create Restaurant');
+			}
 		});
   }
 }
