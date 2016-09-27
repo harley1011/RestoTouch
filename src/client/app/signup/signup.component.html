@@ -3,23 +3,28 @@
 		<div class="col-lg-4 col-lg-offset-4">
         	<img src="assets/img/SB-admin.png" width="150px;" class="user-avatar" />
 			<h1>SB Admin BS 4 Angular2</h1>
-			<form role="form">
-				<div class="form-content">
+			<form>
 					<div class="form-group">
-						<input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name">
+						<input type="text" class="form-control input-underline input-lg" id="name"
+						placeholder="Full Name" 
+						[(ngModel)]="user.name" name="name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control input-underline input-lg" id="email"
+						placeholder="Email" 
+						[(ngModel)]="user.email" name="email">
 					</div>
 
 					<div class="form-group">
-						<input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
-					</div>
-
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+						<input type="password" class="form-control input-underline input-lg" id="password"
+						placeholder="Password" 
+						[(ngModel)]="user.password" name="password">
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password">
 					</div>
-				</div>
+
+					TODO: Remove Name:{{user.name}} Email: {{user.email}} Pass: {{user.password}}
 				<a type="submit" class="btn rounded-btn" routerLink="/dashboard/home"> Register </a>&nbsp;
 				<a type="submit" class="btn rounded-btn" routerLink="/"> Log in </a>
 			</form>
