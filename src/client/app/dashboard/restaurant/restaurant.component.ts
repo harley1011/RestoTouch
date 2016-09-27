@@ -29,4 +29,16 @@ export class RestaurantComponent implements OnInit {
 			if (params['id']) this.getRestaurant(parseInt(params['id']));
 		});
   }
+
+	add(): void {
+		console.log('add');
+	}
+
+	update(): void {
+		console.log('update');
+	}
+
+	cancel(): void {
+		this.router.navigate(['/dashboard/home']);
+	}
 }
