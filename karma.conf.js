@@ -18,6 +18,10 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+
+      './src/client/app/testing/restaurant/test.restaurant.specs.ts',
+      './src/client/app/testing/restaurant/test.signup.specs.ts',
+
       // Polyfills.
       'node_modules/core-js/client/shim.min.js',
 
@@ -99,7 +103,6 @@ module.exports = function (config) {
     browsers: [
       'Chrome'
     ],
-
 
     customLaunchers: {
       Chrome_travis_ci: {
