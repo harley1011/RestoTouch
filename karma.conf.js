@@ -19,9 +19,6 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
 
-      './src/client/app/testing/restaurant/test.restaurant.specs.ts',
-      './src/client/app/testing/restaurant/test.signup.specs.ts',
-
       // Polyfills.
       'node_modules/core-js/client/shim.min.js',
 
@@ -58,7 +55,11 @@ module.exports = function (config) {
 
       'test-config.js',
       'dist/dev/app/system-config.js',
-      'test-main.js'
+      'test-main.js',
+
+      //Location of my source and test files  for Karma testing
+       '/src/client/app/**/*.js', 
+       '/src/client/app/testing/**/*.js'
     ],
 
     // must go along with above, suppress annoying 404 warnings.
