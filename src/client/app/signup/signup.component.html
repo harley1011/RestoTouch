@@ -7,24 +7,45 @@
 					<div class="form-group">
 						<input type="text" class="form-control input-underline input-lg" id="name"
 						placeholder="Full Name" 
-						[(ngModel)]="user.name" name="name">
+						required 
+						[(ngModel)]="user.name" name="name" #name="ngModel">
 					</div>
+					<div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+						Name is required
+					</div>
+
 					<div class="form-group">
 						<input type="text" class="form-control input-underline input-lg" id="email"
 						placeholder="Email" 
-						[(ngModel)]="user.email" name="email">
+						required
+						[(ngModel)]="user.email" name="email" #email="ngModel">
+					</div>
+					<div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+						Email is required
 					</div>
 
 					<div class="form-group">
 						<input type="password" class="form-control input-underline input-lg" id="password"
 						placeholder="Password" 
-						[(ngModel)]="user.password" name="password">
+						required
+						[(ngModel)]="user.password" name="password" #pass="ngModel">
 					</div>
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Repeat Password">
+					<div [hidden]="pass.valid || pass.pristine" class="alert alert-danger">
+						A password is required
 					</div>
 
-					TODO: Remove Name:{{user.name}} Email: {{user.email}} Pass: {{user.password}}
+					<div class="form-group">
+						<input type="password" class="form-control input-underline input-lg" id="passRepeat"
+						required 
+						[(ngModel)]="user.passConfirm"
+						placeholder="Repeat Password" name="passRepeat" #passConfirm="ngModel">
+					</div>
+					<div [hidden]="passConfirm.valid || passConfirm.pristine" class="alert alert-danger">
+						Please repeat your password
+					</div>	
+
+					User object values: Name:{{user.name}} Email: {{user.email}} Pass: {{user.password}}
+					Password confirm: {{user.passConfirm}}
 				<a type="submit" class="btn rounded-btn" routerLink="/dashboard/home"> Register </a>&nbsp;
 				<a type="submit" class="btn rounded-btn" routerLink="/"> Log in </a>
 			</form>

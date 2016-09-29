@@ -1,3 +1,4 @@
+/**
 export function main() {
   describe('registering into the website', () => {
 
@@ -15,3 +16,4 @@ export function main() {
   });
 
 }
+**/

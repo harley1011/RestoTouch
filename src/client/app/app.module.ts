@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
-import { FormsModule } from '@angular/forms';
 
 import { LoginModule } from './login/login.module';
 import { SignupModule } from './signup/signup.module';
@@ -15,7 +14,6 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
 	imports: [
 		BrowserModule,
-		FormsModule,
 		HttpModule,
 		RouterModule.forRoot(routes),
 		LoginModule,
