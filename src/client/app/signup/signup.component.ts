@@ -12,4 +12,4 @@ import { User } from './user';
 	templateUrl: 'signup.component.html'
 })
 
-export class SignupComponent { user = new User('test', '', ''); }
+export class SignupComponent { user = new User('', '', ''); }
