@@ -1,6 +1,6 @@
 //import { RestaurantService } from './restaurant.service';
 
-export function main() {
+/*export function main() {
   describe('create, modify and remove virtual restaurants', () => {
 
     beforeEach(() => {
@@ -22,3 +22,4 @@ export function main() {
 
 
 }
+*/
