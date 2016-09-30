@@ -102,11 +102,19 @@ export class RestaurantComponent implements OnInit {
 				error => {
 					this.errorMessage = <any>error;
 				}
-			);
+		);
 	}
 
 	update(): void {
-		console.log('update');
+		this.restaurantService.updateRestaurant(this.restaurant)
+			.subscribe(
+				generalResponse => {
+					this.router.navigate(['/dashboard/home']);
+				},
+				error => {
+					this.errorMessage = <any>error;
+				}
+		);
 	}
 
 	cancel(): void {
