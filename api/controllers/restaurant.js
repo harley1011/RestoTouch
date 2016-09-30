@@ -15,13 +15,13 @@ var restaurants = [
     description: 'Fast food restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 2,
@@ -29,13 +29,13 @@ var restaurants = [
     description: 'Asian vegan restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 3,
@@ -43,13 +43,13 @@ var restaurants = [
     description: 'Vegan fast food restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 4,
@@ -57,13 +57,13 @@ var restaurants = [
     description: 'Fast food restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 5,
@@ -71,13 +71,13 @@ var restaurants = [
     description: 'BBQ restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 6,
@@ -85,13 +85,13 @@ var restaurants = [
     description: 'Sports Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 7,
@@ -99,13 +99,13 @@ var restaurants = [
     description: 'Italian Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 8,
@@ -113,13 +113,13 @@ var restaurants = [
     description: 'Italian Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 9,
@@ -127,13 +127,13 @@ var restaurants = [
     description: 'Sushi Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 10,
@@ -141,13 +141,13 @@ var restaurants = [
     description: 'Sandwich fast food Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 11,
@@ -155,13 +155,13 @@ var restaurants = [
     description: 'Chicken fast food Restaurant',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 12,
@@ -169,13 +169,13 @@ var restaurants = [
     description: 'Restaurant Description',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 13,
@@ -183,13 +183,13 @@ var restaurants = [
     description: 'Restaurant Description',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 14,
@@ -197,13 +197,13 @@ var restaurants = [
     description: 'Restaurant Description',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 15,
@@ -211,13 +211,13 @@ var restaurants = [
     description: 'Restaurant Description',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }, {
     id: 16,
@@ -225,13 +225,13 @@ var restaurants = [
     description: 'Restaurant Description',
     address: '7141 Rue Sherbrooke O, Montréal, QC H4B 1R6',
     openingHours: [
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'},
-      {open: '12:00 pm', close: '12:00pm'}
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'},
+      {open: '12:00', close: '12:00'}
     ]
   }
 ];
@@ -243,7 +243,8 @@ function getAll(req, res, next) {
 
 //POST /restaurant
 function save(req, res, next) {
-  //res.json({success: db.save(req.body), description: "Movie added to the list!"});
+  var restaurant = req.body;
+  res.json({success: 1, description: "Restaurant added"});
 }
 
 //GET /restaurant/{id}
