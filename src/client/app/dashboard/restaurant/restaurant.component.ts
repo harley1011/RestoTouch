@@ -25,12 +25,23 @@ export class RestaurantComponent implements OnInit {
 	}*/
 
 	getRestaurant(id: number): void {
-		this.restaurantService.getRestaurant().then(restaurants => {
+		/*this.restaurantService.getRestaurant().then(restaurants => {
 			console.log('start print restaurants');
 			console.log(restaurants);
 			console.log(restaurants[0]);
 			console.log('end print restaurants');
-		});
+		});*/
+		this.restaurantService.getRestaurant().subscribe(
+			restaurants => {
+				console.log('start print restaurants');
+				console.log(restaurants);
+				console.log(restaurants[0]);
+				console.log('end print restaurants');
+			},
+			error =>  {
+				console.log(error);
+			}
+		);
 	}
 
   ngOnInit(): void {
