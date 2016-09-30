@@ -5,6 +5,7 @@ import { Headers, RequestOptions } from '@angular/http';
 
 import { User }           from './user';
 import { Observable }     from 'rxjs/Observable';
+import { GeneralResponse }  from '../shared/general.response';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,7 @@ export class UserService {
 
   constructor (private http: Http) {}
 
-  registerUser (user: User): Observable<User> {
+  registerUser (user: User): Observable<GeneralResponse> {
     let body = JSON.stringify(user);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -24,7 +25,7 @@ export class UserService {
 
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    return body || { };
   }
 
   private handleError (error: any) {
