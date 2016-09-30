@@ -35,10 +35,15 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
-  /*private extractRestaurantData(res: Response) {
-    let body = res.json();
-    return body.restaurants || { };
-  }*/
+  updateRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
+    let body = JSON.stringify(restaurant);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.put(this.url + '/' + restaurant.name, body, options)
+      .map(this.extractGeneralResponseData)
+      .catch(this.handleError);
+  }
 
   private extractRestaurantData(res: Response) {
     let body = res.json();

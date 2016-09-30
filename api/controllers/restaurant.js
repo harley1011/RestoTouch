@@ -40,15 +40,18 @@ function get(req, res, next) {
   });
 }
 
-//PUT /restaurant/{id}
+//PUT /restaurant/{name}
 function update(req, res, next) {
-  /*var id = req.swagger.params.id.value; //req.swagger contains the path parameters
-  var movie = req.body;
-  if(db.update(id, movie)){
-      res.json({success: 1, description: "Movie updated!"});
-  }else{
-      res.status(204).send();
-  }*/
+  var restaurant = req.body;
+  console.log(restaurant);
+  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  restaurantModel.update(restaurant, {
+    where: {
+      name: name
+    }
+  }).then(function(result) {
+    return res.json({success: 1, description: "Restaurant Updated"});
+  });
 }
 
 //DELETE /restaurant/{id}
