@@ -81,7 +81,7 @@ export class RestaurantComponent implements OnInit {
 					this.router.navigate(['/dashboard/home']);
 				},
 				error => {
-					this.errorMessage = <any>error
+					this.errorMessage = <any>error;
 				}
 			);
 	}
