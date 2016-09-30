@@ -3,7 +3,8 @@
 var SwaggerExpress = require('swagger-express-mw');
 var express = require('express');
 var app = express();
-var models = require('./database/models.js');
+
+
 module.exports = app; // for testing
 
 var config = {
