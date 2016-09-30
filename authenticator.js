@@ -7,6 +7,7 @@ module.exports = function(req, res, next) {
   for (var i = 0; i < tokenNotRequiredRoutes.length; i++) {
     if (tokenNotRequiredRoutes[i] == req.url) {
       next();
+      return;
     }
   }
 

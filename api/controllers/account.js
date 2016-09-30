@@ -2,7 +2,7 @@ var models = require("../../database/models");
 var passwordHasher = require("../helpers/password_hash");
 var userModel = models.getUserModel();
 var jwt = require('jwt-simple');
-var configAuth = require('../config/auth');
+var configAuth = require('../../config/auth');
 
 module.exports = {
   register: register
@@ -15,17 +15,24 @@ function register(req, res) {
   user.password = passwordData.passwordHash;
   user.salt = passwordData.salt;
 
-  userModel.create(user).then(function(result) {
-    return res.json({success: 1, description: "User registered", user: userInfo(user)});
+  userModel.create(user).then(function(newUser) {
+
+    var info = userInfo(newUser.dataValues);
+    return res.json({success: 1, description: "User registered", "user": info.user, "accessToken":  info.token});
   });
 }
 
 function userInfo(user) {
   var token = genToken(user);
-  user.token = token.token;
   user.password = "";
   user.salt = "";
-  return user;
+  return {user: {
+    "id": user.id,
+    "firstName": user.firstName,
+    "lastName": user.lastName,
+    "email": user.email},
+    "token": token.token
+  }
 }
 
 
