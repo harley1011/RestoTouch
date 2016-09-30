@@ -39,6 +39,6 @@ export class RestaurantListComponent implements OnInit {
 	}
 
 	modify(restaurant: Restaurant): void {
-		this.router.navigate(['/dashboard/restaurant', restaurant.id]);
+		this.router.navigate(['/dashboard/restaurant', restaurant.name]);
 	}
 }

@@ -19,10 +19,12 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
 
-	getRestaurant(id: number): void {
+	getRestaurant(name: string): void {
 		this.restaurantService.getRestaurant().subscribe(
 			restaurants => {
-				this.restaurant = restaurants[id - 1];
+				for (var i = 0; i < restaurants.length; i++) {
+					if (restaurants[i].name === name) this.restaurant = restaurants[i];
+				}
 			},
 			error =>  {
 				console.log(error);
@@ -32,8 +34,8 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit(): void {
 		this.route.params.forEach((params: Params) => {
-			if (params['id']) {
-				this.getRestaurant(parseInt(params['id']));
+			if (params['name']) {
+				this.getRestaurant(params['name']);
 				this.create = false;
 			} else {
 				this.restaurant = new Restaurant(1, '', '', '',
