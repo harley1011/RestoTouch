@@ -3,7 +3,7 @@ export class Restaurant {
   name: string;
   description: string;
   address: string;
-  openingHours: OpeningHour[];
+  //openingHours: OpeningHour[];
 }
 
 export class OpeningHour {

@@ -18,9 +18,18 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
 
-	getRestaurant(id: number): void {
+	/*getRestaurant(id: number): void {
 		this.restaurantService.getRestaurant(id).then(restaurant => {
 			this.restaurant = restaurant;
+		});
+	}*/
+
+	getRestaurant(id: number): void {
+		this.restaurantService.getRestaurant().then(restaurants => {
+			console.log('start print restaurants');
+			console.log(restaurants);
+			console.log(restaurants[0]);
+			console.log('end print restaurants');
 		});
 	}
 
