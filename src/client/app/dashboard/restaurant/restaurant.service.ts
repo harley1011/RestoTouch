@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Restaurant, OpeningHour } from '../home/restaurantlist/restaurant';
+//import { Restaurant, OpeningHour } from '../home/restaurantlist/restaurant';
+import { Restaurant } from '../home/restaurantlist/restaurant';
+import { Http } from '@angular/http';
 
-const RESTAURANTS: Restaurant[] = [
+import 'rxjs/add/operator/toPromise';
+
+/*const RESTAURANTS: Restaurant[] = [
   {
     id: 1,
     name: 'McDonald',
@@ -228,11 +232,11 @@ const RESTAURANTS: Restaurant[] = [
       new OpeningHour('9:00 am', '5:00 pm')
     ]
   }
-];
+];*/
 
 @Injectable()
 export class RestaurantService {
-  getRestaurant(id: number): Promise<Restaurant> {
+  /*getRestaurant(id: number): Promise<Restaurant> {
     var restaurant: Restaurant;
     for (var i = 0; i < RESTAURANTS.length; i++) {
       if (RESTAURANTS[i]['id'] === id) {
@@ -241,5 +245,22 @@ export class RestaurantService {
       }
     }
     return Promise.resolve(restaurant);
+  }*/
+
+  constructor (private http: Http) {}
+
+  getRestaurant (): Promise<Restaurant[]> {
+    var lol = this.http.get('http://localhost:10010/restaurant')
+               .toPromise()
+               .then(response => response.json().restaurants as Restaurant[])
+               .catch(this.handleError);
+    return lol;
+  }
+
+
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
   }
 }
