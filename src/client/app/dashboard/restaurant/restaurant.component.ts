@@ -15,6 +15,7 @@ import { RestaurantService } from './restaurant.service';
 export class RestaurantComponent implements OnInit {
 	create: boolean;
 	restaurant: Restaurant;
+  errorMessage: string;
 
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
@@ -27,7 +28,7 @@ export class RestaurantComponent implements OnInit {
 				}
 			},
 			error =>  {
-				console.log(error);
+				this.errorMessage = <any>error;
 			}
 		);
 	}
@@ -38,7 +39,7 @@ export class RestaurantComponent implements OnInit {
 				this.getRestaurant(params['name']);
 				this.create = false;
 			} else {
-				this.restaurant = new Restaurant(1, '', '', '',
+				this.restaurant = new Restaurant('', '', '',
 		      '9:00', '21:00',
 		      '9:00', '21:00',
 		      '9:00', '21:00',
@@ -77,10 +78,10 @@ export class RestaurantComponent implements OnInit {
 		this.restaurantService.addRestaurant(this.restaurant)
 			.subscribe(
 				generalResponse => {
-					console.log(generalResponse);
+					this.router.navigate(['/dashboard/home']);
 				},
 				error => {
-					console.log(error);
+					this.errorMessage = <any>error
 				}
 			);
 	}

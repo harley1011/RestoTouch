@@ -189,8 +189,6 @@ definitions:
   Restaurant:
     type: object
     properties:
-      id:
-        type: number
       name:
         type: string
       description:
@@ -226,7 +224,6 @@ definitions:
       su_close: 
         type: string
     required:
-      - id
       - name
       - description
       - address

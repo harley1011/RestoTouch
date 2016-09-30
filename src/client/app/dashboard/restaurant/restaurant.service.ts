@@ -20,7 +20,6 @@ export class RestaurantService {
 
   addRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
     let body = JSON.stringify(restaurant);
-    console.log(body);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
