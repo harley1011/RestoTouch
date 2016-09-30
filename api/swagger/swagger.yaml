@@ -195,6 +195,15 @@ definitions:
               type: string
             address:
               type: string
+            openingHours:
+              type: array
+              items:
+                type: object
+                properties:
+                  open:
+                    type: string
+                  close:
+                    type: string
   ErrorResponse:
     required:
       - message
