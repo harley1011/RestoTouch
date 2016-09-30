@@ -17,12 +17,16 @@ import { Router } from '@angular/router';
 
 export class SignupComponent {
   user = new User('', '', '', '', '');
-  errorMessage: string;
+  errorMessage = '';
 
   constructor (private userService: UserService,
                private router: Router,) {}
 
   onSubmit() {
+     if (this.user.password !== this.user.passwordConfirm) {
+       this.errorMessage = 'Passwords do not match';
+       return;
+     }
      this.userService.registerUser(this.user)
                        .subscribe(
                          loginResponse => {

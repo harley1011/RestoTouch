@@ -53,6 +53,10 @@
 						Please repeat your password
 					</div>
 
+        <div *ngIf="errorMessage.length != 0" class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+
 				<button type="submit" class="btn rounded-btn"> Register </button>&nbsp;
 				<a type="submit" class="btn rounded-btn" routerLink="/"> Log in </a>
 			</form>
