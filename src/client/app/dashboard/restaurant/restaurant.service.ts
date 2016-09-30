@@ -9,16 +9,6 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestaurantService {
-  /*getRestaurant(id: number): Promise<Restaurant> {
-    var restaurant: Restaurant;
-    for (var i = 0; i < RESTAURANTS.length; i++) {
-      if (RESTAURANTS[i]['id'] === id) {
-        restaurant = RESTAURANTS[i];
-        break;
-      }
-    }
-    return Promise.resolve(restaurant);
-  }*/
 
   constructor (private http: Http) {}
 
@@ -30,6 +20,7 @@ export class RestaurantService {
 
   addRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
     let body = JSON.stringify(restaurant);
+    console.log(body);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
