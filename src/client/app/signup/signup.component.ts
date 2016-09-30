@@ -25,7 +25,9 @@ export class SignupComponent {
   onSubmit() {
      this.userService.registerUser(this.user)
                        .subscribe(
-                         generalResponse => {this.router.navigate(['/dashboard/home']); },
+                         loginResponse => {
+                           console.log(loginResponse);
+                           this.router.navigate(['/dashboard/home']); },
                          error =>  this.errorMessage = <any>error);
 
   }
