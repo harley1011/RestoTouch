@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <button *ngIf="restaurants && restaurants.length < 4" class="btn btn-lg btn-success">Add Restaurant</button>
+      <button *ngIf="restaurants && restaurants.length < 4" (click)="add()" class="btn btn-lg btn-success">Add</button>
     </div>
     <div class="col-sm-3">
       <div *ngFor="let restaurant of restaurants; let i = index">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <button *ngIf="restaurants && restaurants.length >= 4 && restaurants.length < 8" class="btn btn-lg btn-success">Add Restaurant</button>
+      <button *ngIf="restaurants && restaurants.length >= 4 && restaurants.length < 8" (click)="add()" class="btn btn-lg btn-success">Add</button>
     </div>
     <div class="col-sm-3">
       <div *ngFor="let restaurant of restaurants; let i = index">
@@ -38,7 +38,7 @@
           </div>
         </div>
       </div>
-      <button *ngIf="restaurants && restaurants.length >= 8 && restaurants.length < 12" class="btn btn-lg btn-success">Add Restaurant</button>
+      <button *ngIf="restaurants && restaurants.length >= 8 && restaurants.length < 12" (click)="add()" class="btn btn-lg btn-success">Add</button>
     </div>
     <div class="col-sm-3">
       <div *ngFor="let restaurant of restaurants; let i = index">

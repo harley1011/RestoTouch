@@ -9,7 +9,7 @@ module.exports = {
   del: del
 };
 
-var restaurants = [
+/*var restaurants = [
   {
     id: 1,
     name: 'McDonald',
@@ -315,11 +315,14 @@ var restaurants = [
     su_open: '12:00',
     su_close: '12:00'
   }
-];
+];*/
 
 //GET /restaurant
 function getAll(req, res, next) {
-  res.json({ restaurants: restaurants });
+  restaurantModel.findAll().then(function(restaurants) {
+    res.json({ restaurants: restaurants });
+  });
+  //res.json({ restaurants: restaurants });
 }
 
 //POST /restaurant
