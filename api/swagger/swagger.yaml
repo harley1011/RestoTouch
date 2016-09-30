@@ -197,21 +197,53 @@ definitions:
         type: string
       address:
         type: string
-      openingHours:
-        type: array
-        items:
-          type: object
-          properties:
-            open:
-              type: string
-            close:
-              type: string
+      m_open:
+        type: string
+      m_close: 
+        type: string
+      tu_open: 
+        type: string
+      tu_close: 
+        type: string
+      w_open: 
+        type: string
+      w_close: 
+        type: string
+      th_open: 
+        type: string
+      th_close: 
+        type: string
+      f_open: 
+        type: string
+      f_close: 
+        type: string
+      sa_open: 
+        type: string
+      sa_close: 
+        type: string
+      su_open: 
+        type: string
+      su_close: 
+        type: string
     required:
       - id
       - name
       - description
       - address
-      - openingHours
+      - m_open
+      - m_close
+      - tu_open
+      - tu_close
+      - w_open
+      - w_close
+      - th_open
+      - th_close
+      - f_open
+      - f_close
+      - sa_open
+      - sa_close
+      - su_open
+      - su_close
   ErrorResponse:
     required:
       - message

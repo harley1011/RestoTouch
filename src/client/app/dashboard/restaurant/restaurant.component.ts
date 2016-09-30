@@ -19,12 +19,6 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
 
-	/*getRestaurant(id: number): void {
-		this.restaurantService.getRestaurant(id).then(restaurant => {
-			this.restaurant = restaurant;
-		});
-	}*/
-
 	getRestaurant(id: number): void {
 		this.restaurantService.getRestaurant().subscribe(
 			restaurants => {
@@ -42,15 +36,15 @@ export class RestaurantComponent implements OnInit {
 				this.getRestaurant(parseInt(params['id']));
 				this.create = false;
 			} else {
-				this.restaurant = new Restaurant(1, '', '', '', [
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'},
-		      {open: '9:00', close: '21:00'}
-		    ]);
+				this.restaurant = new Restaurant(1, '', '', '',
+		      '9:00', '21:00',
+		      '9:00', '21:00',
+		      '9:00', '21:00',
+		      '9:00', '21:00',
+		      '9:00', '21:00',
+		      '9:00', '21:00',
+		      '9:00', '21:00'
+		    );
 				this.create = true;
 			}
 		});
@@ -63,20 +57,20 @@ export class RestaurantComponent implements OnInit {
 		this.restaurant.name = values['name'];
 		this.restaurant.description = values['description'];
 		this.restaurant.address = values['address'];
-		this.restaurant.openingHours[0]['open'] = values['m_open'];
-		this.restaurant.openingHours[0]['close'] = values['m_close'];
-		this.restaurant.openingHours[1]['open'] = values['tu_open'];
-		this.restaurant.openingHours[1]['close'] = values['tu_close'];
-		this.restaurant.openingHours[2]['open'] = values['w_open'];
-		this.restaurant.openingHours[2]['close'] = values['w_close'];
-		this.restaurant.openingHours[3]['open'] = values['th_open'];
-		this.restaurant.openingHours[3]['close'] = values['th_close'];
-		this.restaurant.openingHours[4]['open'] = values['f_open'];
-		this.restaurant.openingHours[4]['close'] = values['f_close'];
-		this.restaurant.openingHours[5]['open'] = values['sa_open'];
-		this.restaurant.openingHours[5]['close'] = values['sa_close'];
-		this.restaurant.openingHours[6]['open'] = values['su_open'];
-		this.restaurant.openingHours[6]['close'] = values['su_close'];
+		this.restaurant.m_open = values['m_open'];
+		this.restaurant.m_close = values['m_close'];
+		this.restaurant.tu_open = values['tu_open'];
+		this.restaurant.tu_close = values['tu_close'];
+		this.restaurant.w_open = values['w_open'];
+		this.restaurant.w_close = values['w_close'];
+		this.restaurant.th_open = values['th_open'];
+		this.restaurant.th_close = values['th_close'];
+		this.restaurant.f_open = values['f_open'];
+		this.restaurant.f_close = values['f_close'];
+		this.restaurant.sa_open = values['sa_open'];
+		this.restaurant.sa_close = values['sa_close'];
+		this.restaurant.su_open = values['su_open'];
+		this.restaurant.su_close = values['su_close'];
 
 		this.restaurantService.addRestaurant(this.restaurant)
 			.subscribe(
