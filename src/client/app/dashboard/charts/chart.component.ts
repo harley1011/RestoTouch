@@ -111,13 +111,13 @@ export class ChartComponent implements OnInit {
                 }
             },
 
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.x + '</b><br/>' +
-                        this.series.name + ': ' + this.y + '<br/>' +
-                        'Total: ' + this.point.stackTotal;
-                }
-            },
+            // tooltip: {
+            //     formatter: function () {
+            //         return '<b>' + this.x + '</b><br/>' +
+            //             this.series.name + ': ' + this.y + '<br/>' +
+            //             'Total: ' + this.point.stackTotal;
+            //     }
+            // },
 
             plotOptions: {
                 column: {
