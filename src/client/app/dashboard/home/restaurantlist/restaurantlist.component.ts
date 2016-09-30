@@ -18,13 +18,6 @@ export class RestaurantListComponent implements OnInit {
 
   constructor(private restaurantListService: RestaurantListService, private router: Router) { }
 
-  /*getRestaurants(): void {
-    this.restaurantListService.getRestaurants().then(restaurants => {
-			this.restaurants = restaurants;
-			this.numOfRestaurants = this.restaurants.length;
-		});
-  }*/
-
 	getRestaurants(): void {
 		this.restaurantListService.getRestaurants().subscribe(
 			restaurants => {

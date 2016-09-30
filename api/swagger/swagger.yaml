@@ -185,25 +185,33 @@ definitions:
       restaurants:
         type: array
         items:
+          "$ref": "#/definitions/Restaurant"
+  Restaurant:
+    type: object
+    properties:
+      id:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+      address:
+        type: string
+      openingHours:
+        type: array
+        items:
           type: object
           properties:
-            id:
-              type: number
-            name:
+            open:
               type: string
-            description:
+            close:
               type: string
-            address:
-              type: string
-            openingHours:
-              type: array
-              items:
-                type: object
-                properties:
-                  open:
-                    type: string
-                  close:
-                    type: string
+    required:
+      - id
+      - name
+      - description
+      - address
+      - openingHours
   ErrorResponse:
     required:
       - message
