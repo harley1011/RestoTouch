@@ -22,6 +22,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.all('/*', [require('./authenticator.js')]);
+
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
