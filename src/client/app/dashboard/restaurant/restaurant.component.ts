@@ -20,12 +20,23 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
 
-	getRestaurant(name: string): void {
+	/*getRestaurant(name: string): void {
 		this.restaurantService.getRestaurant().subscribe(
 			restaurants => {
 				for (var i = 0; i < restaurants.length; i++) {
 					if (restaurants[i].name === name) this.restaurant = restaurants[i];
 				}
+			},
+			error =>  {
+				this.errorMessage = <any>error;
+			}
+		);
+	}*/
+
+	getRestaurant(name: string): void {
+		this.restaurantService.getRestaurant(name).subscribe(
+			restaurant => {
+				this.restaurant = restaurant;
 			},
 			error =>  {
 				this.errorMessage = <any>error;

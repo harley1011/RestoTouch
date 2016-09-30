@@ -9,11 +9,18 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestaurantService {
+  private url = 'http://localhost:10010/restaurant';
 
   constructor (private http: Http) {}
 
-  getRestaurant (): Observable<Restaurant[]> {
-    return this.http.get('http://localhost:10010/restaurant')
+  /*getRestaurant (): Observable<Restaurant[]> {
+    return this.http.get(this.url)
+      .map(this.extractRestaurantData)
+      .catch(this.handleError);
+  }*/
+
+  getRestaurant (name: string): Observable<Restaurant> {
+    return this.http.get(this.url + '/' + name)
       .map(this.extractRestaurantData)
       .catch(this.handleError);
   }
@@ -23,14 +30,19 @@ export class RestaurantService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post('http://localhost:10010/restaurant', body, options)
+    return this.http.post(this.url, body, options)
       .map(this.extractGeneralResponseData)
       .catch(this.handleError);
   }
 
-  private extractRestaurantData(res: Response) {
+  /*private extractRestaurantData(res: Response) {
     let body = res.json();
     return body.restaurants || { };
+  }*/
+
+  private extractRestaurantData(res: Response) {
+    let body = res.json();
+    return body || { };
   }
 
   private extractGeneralResponseData(res: Response) {

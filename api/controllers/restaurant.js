@@ -24,15 +24,20 @@ function save(req, res, next) {
   });
 }
 
-//GET /restaurant/{id}
+//GET /restaurant/{name}
 function get(req, res, next) {
-  /*var id = req.swagger.params.id.value; //req.swagger contains the path parameters
-  var movie = db.find(id);
-  if(movie) {
-      res.json(movie);
-  }else {
+  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  restaurantModel.findOne({
+    where: {
+      name: name
+    }
+  }).then(function(restaurant) {
+    if (restaurant) {
+      res.json(restaurant);
+    } else {
       res.status(204).send();
-  }*/
+    }
+  });
 }
 
 //PUT /restaurant/{id}

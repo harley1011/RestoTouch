@@ -25,12 +25,6 @@ paths:
       description: Returns the list of restaurants
       # used as the method name of the controller
       operationId: getAll
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
       responses:
         "200":
           description: Success
@@ -62,7 +56,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /restaurant/{id}:
+  /restaurant/{name}:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurant
     get:
@@ -70,7 +64,7 @@ paths:
       # used as the method name of the controller
       operationId: get
       parameters:
-        - name: id
+        - name: name
           type: string
           in: path
           required: true
@@ -79,7 +73,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/GeneralResponse"
+            $ref: "#/definitions/Restaurant"
         # responses may fall through to errors
         default:
           description: Error
@@ -90,7 +84,7 @@ paths:
       # used as the method name of the controller
       operationId: update
       parameters:
-        - name: id
+        - name: name
           type: string
           in: path
           required: true
@@ -110,7 +104,7 @@ paths:
       # used as the method name of the controller
       operationId: del
       parameters:
-        - name: id
+        - name: name
           type: string
           in: path
           required: true
