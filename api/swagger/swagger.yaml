@@ -43,21 +43,21 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
-      description: Adds a restaurant
-      # used as the method name of the controller
       operationId: save
+      description: Add a restaurant
+      # movie info to be stored
       parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
+        - name: restaurant
+          description: Restaurant properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Restaurant"
       responses:
         "200":
           description: Success
           schema:
             $ref: "#/definitions/GeneralResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
