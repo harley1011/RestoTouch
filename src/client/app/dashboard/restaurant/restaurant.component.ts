@@ -64,7 +64,7 @@ export class RestaurantComponent implements OnInit {
 		});
   }
 
-	add(): void {
+	addAndUpdate(): void {
 		var values = validateInputs();
 		if (values === null) return;
 
@@ -86,6 +86,14 @@ export class RestaurantComponent implements OnInit {
 		this.restaurant.su_open = values['su_open'];
 		this.restaurant.su_close = values['su_close'];
 
+		if (this.create) {
+			this.add();
+		} else {
+			this.update();
+		}
+	}
+
+	add(): void {
 		this.restaurantService.addRestaurant(this.restaurant)
 			.subscribe(
 				generalResponse => {
