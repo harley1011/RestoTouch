@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define("Restaurants", {
-    name: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, unique: true},
     description: {type: DataTypes.STRING, allowNull: false},
     address: {type: DataTypes.STRING, allowNull: false},
     m_open: {type: DataTypes.STRING, allowNull: false},
