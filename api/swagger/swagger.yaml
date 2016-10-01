@@ -149,7 +149,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /login:
     x-swagger-router-controller: account
-    get:
+    post:
       operationId: login
       description: Authenticate an existing user
       
