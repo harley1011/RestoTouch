@@ -1,7 +1,7 @@
 import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http} from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { UserService } from './user.service.ts';
+import { UserService } from './app/signup/user.service.ts';
 
 export function main() {
   describe('Signing up User Service', () => {
