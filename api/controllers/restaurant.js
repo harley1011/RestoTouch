@@ -26,7 +26,7 @@ function save(req, res, next) {
 
 //GET /restaurant/{name}
 function get(req, res, next) {
-  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  var name = req.swagger.params.name.value;
   restaurantModel.findOne({
     where: {
       name: name
@@ -44,7 +44,7 @@ function get(req, res, next) {
 function update(req, res, next) {
   var restaurant = req.body;
   console.log(restaurant);
-  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  var name = req.swagger.params.name.value;
   restaurantModel.update(restaurant, {
     where: {
       name: name
@@ -56,7 +56,7 @@ function update(req, res, next) {
 
 //DELETE /restaurant/{name}
 function del(req, res, next) {
-  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  var name = req.swagger.params.name.value;
   restaurantModel.destroy({
     where: {
       name: name

@@ -13,12 +13,6 @@ export class RestaurantService {
 
   constructor (private http: Http) {}
 
-  /*getRestaurant (): Observable<Restaurant[]> {
-    return this.http.get(this.url)
-      .map(this.extractRestaurantData)
-      .catch(this.handleError);
-  }*/
-
   getRestaurant (name: string): Observable<Restaurant> {
     return this.http.get(this.url + '/' + name)
       .map(this.extractRestaurantData)
