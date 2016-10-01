@@ -117,6 +117,17 @@ export class RestaurantComponent implements OnInit {
 		);
 	}
 
+	delete(): void {
+		this.restaurantService.deleteRestaurant(this.restaurant.name).subscribe(
+			generalResponse => {
+				this.router.navigate(['/dashboard/home']);
+			},
+			error => {
+				this.errorMessage = <any>error;
+			}
+		);
+	}
+
 	cancel(): void {
 		this.router.navigate(['/dashboard/home']);
 	}

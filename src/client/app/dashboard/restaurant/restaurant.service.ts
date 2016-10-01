@@ -45,6 +45,12 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
+  deleteRestaurant (name: string): Observable<Restaurant> {
+    return this.http.delete(this.url + '/' + name)
+      .map(this.extractGeneralResponseData)
+      .catch(this.handleError);
+  }
+
   private extractRestaurantData(res: Response) {
     let body = res.json();
     return body || { };
