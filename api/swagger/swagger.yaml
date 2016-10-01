@@ -147,6 +147,32 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /login:
+    x-swagger-router-controller: account
+    get:
+      operationId: login
+      description: Authenticate an existing user
+      
+      parameters:
+        - name: auth
+          description: User credentials
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Auth"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:  
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -166,6 +192,16 @@ definitions:
       - firstName
       - lastName
       - email
+  Auth:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+        - email
+        - password
   GeneralResponse:
     type: object
     properties:
