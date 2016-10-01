@@ -54,13 +54,14 @@ function update(req, res, next) {
   });
 }
 
-//DELETE /restaurant/{id}
+//DELETE /restaurant/{name}
 function del(req, res, next) {
-  /*var id = req.swagger.params.id.value; //req.swagger contains the path parameters
-  if(db.remove(id)){
-      res.json({success: 1, description: "Movie deleted!"});
-  }else{
-      res.status(204).send();
-  }*/
-
+  var name = req.swagger.params.name.value; //req.swagger contains the path parameters
+  restaurantModel.destroy({
+    where: {
+      name: name
+    }
+  }).then(function(restaurant) {
+    return res.json({success: 1, description: "Restaurant Deleted"});
+  });
 }

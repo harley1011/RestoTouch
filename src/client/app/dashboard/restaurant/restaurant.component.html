@@ -202,6 +202,7 @@
 <div class="row">
   <div class="col-lg-12">
     <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
+    <button *ngIf="!create" (click)="delete()" class="btn btn-danger">Delete</button>
     <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success">Create</button>
     <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
   </div>
