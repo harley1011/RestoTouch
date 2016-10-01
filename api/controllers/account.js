@@ -63,20 +63,18 @@ function expiresIn(numDays) {
 
 function login(req,res) {
   var user = req.body;
-    
+
  userModel.findOne({ where: {email: user.email}
  }).then(function(newUser){
-     //console.dir(newUser);
-     console.dir(newUser.password);
         var info = userInfo(newUser);
-
       var passwordMatched = passwordHasher.comparePassword(user.password, newUser.salt, newUser.password);
-     
+
        if(passwordMatched) {
             return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken":  info.token});
        } else {
-            return res.json({success: 0, description: "User access denied", "user": info.user, "accessToken":  info.token});
+            res.status(401);
+            return res.json({message: "User access denied"});
        }
-      
+
      });
 }
