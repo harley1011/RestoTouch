@@ -25,6 +25,7 @@ export class AuthService {
 
   private extractData(res: Response) {
     let body = res.json();
+    localStorage.setItem('authToken', body.accessToken);
     return body || { };
   }
 
