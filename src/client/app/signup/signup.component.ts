@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 @Component({
 	moduleId: module.id,
 	selector: 'signup-cmp',
-	templateUrl: 'signup.component.html',
-  providers: [ AuthService ]
+	templateUrl: 'signup.component.html'
 })
 
 export class SignupComponent {
