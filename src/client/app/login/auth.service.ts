@@ -18,7 +18,7 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(this.url, body, options)
+    return this.http.post(this.url, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
