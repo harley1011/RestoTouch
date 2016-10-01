@@ -3,7 +3,8 @@ var passwordHasher = require("../helpers/password_hash");
 var userModel = models.getUserModel();
 
 module.exports = {
-  register: register
+  register: register,
+  login: login
 };
 
 
@@ -18,4 +19,13 @@ function register(req, res) {
   });
 }
 
+function login(req,res) {
+  var user = req.body;
 
+  userModel.findOne({ where: {
+    email: user.email,
+    password: user.password}
+  }).then(function(result){
+        return res.json({success: 1, description: "User logged in"});
+      });
+}
