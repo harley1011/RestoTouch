@@ -1,7 +1,7 @@
 var restaurant = require('../controllers/restaurant');
 var mocks = require('./mocks/mocks');
 
-describe("Restaurant Tests", function() {
+describe("The Restaurant API", function() {
 
   var res = {
     json: function (obj) {
@@ -12,7 +12,7 @@ describe("Restaurant Tests", function() {
   //Override models in restaurant so that we don't actually insert into the DB and we mock the database operations
   restaurant.setDatabase(mocks);
 
-  it("Create a valid restaurant", function (done) {
+  it("should create a valid restaurant", function (done) {
     var req = {
       body: {
         "name": "Restaurant 1",
@@ -42,7 +42,7 @@ describe("Restaurant Tests", function() {
     })
   })
 
-  it("Update a restaurant", function (done) {
+  it("should update a restaurant", function (done) {
     var req = {
       body: {
         "name": "Restaurant 2",
@@ -79,7 +79,7 @@ describe("Restaurant Tests", function() {
     })
   })
 
-  it("Get all restaurants", function (done) {
+  it("should get all restaurants", function (done) {
     var req = {};
 
     restaurant.getAll(req, res).then(function (result) {
@@ -89,7 +89,7 @@ describe("Restaurant Tests", function() {
     })
   })
 
-  it("Get a restaurant", function (done) {
+  it("should get a restaurant", function (done) {
     var req = {
       swagger: {
         params: {
@@ -107,7 +107,7 @@ describe("Restaurant Tests", function() {
     })
   })
 
-  it("Delete a restaurant", function (done) {
+  it("should delete a restaurant", function (done) {
     var req = {
       swagger: {
         params: {
