@@ -1,22 +1,130 @@
-<div class="login-page">
-	<div class="row">
-		<div class="col-lg-4 col-lg-offset-4">
-        	<img src="assets/img/SB-admin.png" width="150px" class="user-avatar" />
-			<h1>SB Admin BS 4 Angular2</h1>
-			<form role="form">
-				<div class="form-content">
-					<div class="form-group">
-						<input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="Email">
-					</div>
+<style>
+.loginPageBodySetting{
+	background-image: url('assets/img/background-restaurantsm.jpg');
+	height: 600px;
+}
 
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
-					</div>
+.loginPagetableSetting{
+	width:100%;
+	height:100%;
+}
+
+.loginBtn{
+	border: 2px solid white;
+	background-color: rgba(0, 255, 0, 0.4);
+	width: 30%;
+}
+
+.loginBtn:hover{
+	background-color: rgba(0, 0, 255, 0.2);
+	color: white;
+}
+
+::-webkit-input-placeholder {
+	color: rgb(200,200,200);
+}
+:-moz-placeholder { /* Firefox 18- */
+	color: rgb(200,200,200);
+}
+::-moz-placeholder {  /* Firefox 19+ */
+	color: rgb(200,200,200);
+}
+:-ms-input-placeholder {
+	color: rgb(200,200,200);
+}
+
+a {
+	color: white;
+}
+
+a:hover{
+	color:red;
+}
+
+.loginPageCellBackgroundSetting{
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.loginPageCellTopSetting{
+	height:30px;
+	text-align:right;
+	padding: 1% 5% 0 0;
+	color:white;
+}
+
+.loginPageCellContentPadding{
+	padding: 10%;
+}
+
+.inputField{
+	border: 2px solid white;
+	border-radius: 5px;
+	background-color: transparent;
+	padding: 2%;
+	width: 80%;
+	color: white;
+}
+
+.loginPageTitle{
+	font-size:92px;
+	font-weight:bold;
+	color: white;
+}
+
+.loginPageBodyText{
+	font-size:15px;
+	color: white;
+}
+
+
+</style>
+
+<div class="loginPageBodySetting">
+
+	<table class="loginPagetableSetting">
+		<tr>
+			<!-- left container : logo -->
+			<td align="center" rowspan="2" style="width:60%;">
+				<img src="assets/img/logo.png">
+			</td>
+
+			<!-- right container : top cell: regs lang | bottom cell: login form -->
+			<td class="loginPageCellBackgroundSetting loginPageCellTopSetting">
+
+				<!-- register link emplacement -->
+				<a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
+
+				<!-- language emplacement -->
+				<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+			</td>
+
+			<tr>
+			<!-- bottom cell : login form -->
+			<td align="center" class="loginPageCellBackgroundSetting">
+				<div class="loginPageCellContentPadding">
+					<h1 class="loginPageTitle">Hello</h1>
+					<p class="loginPageBodyText">Please enter your login information</p>
+
+					<!-- login elements form -->
+					<form role="form">
+						<div class="form-content">
+							<!-- input box for login -->
+							<div class="form-group">
+								<input type="text" ng-model="name" class="inputField" id="" placeholder="Email">
+							</div>
+							<!-- input box for password-->
+							<div class="form-group">
+								<input type="password" class="inputField" id="" placeholder="Password">
+							</div>
+						</div>
+						<!-- buttons -->
+						<a class="btn rounded-btn loginBtn" routerLink="/dashboard/home"> Log in </a>
+						&nbsp;
+					</form>
+					<!-- end of login -->
 				</div>
-				<a class="btn rounded-btn" routerLink="/dashboard/home"> Log in </a>				
-				&nbsp;
-				<a type="submit" class="btn rounded-btn" routerLink="/signup">Register</a>
-			</form>
-		</div>	
-	</div>
+			</td>
+		</tr>
+	</table>
+
 </div>
