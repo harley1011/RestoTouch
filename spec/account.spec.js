@@ -1,6 +1,13 @@
 assert = require('assert');
 var request = require("request");
+account = require("/account.specs");  
 
+//PSEUDO CODE 
+// if it creates an entry in the model. -> Need to check if the status is 200.
+//  if it sends the right message for correct input.
+//  if it sends the right message for the incorrect input.  
+
+var base_url = "'http://localhost:10010'";
 
 
 // using jasmine
@@ -16,9 +23,3 @@ describe("Register an owner to the Server", function() {
 });
 
 
-
-
-
-
-console.log("test assert!")
-assert.strictEqual(1,1);
