@@ -7,7 +7,7 @@ module.exports = {
 
 function comparePassword(password, salt, hashPassword) {
   password = sha512(password, salt);
-  return password == hashPassword;
+  return password.passwordHash === hashPassword;
 }
 
 function sha512(password, salt){
