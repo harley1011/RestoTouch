@@ -30,7 +30,7 @@
                                         <img class="media-object" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        <h5 class="media-heading"><strong>{{user.firstName}} {{user.lastName}}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
@@ -46,7 +46,7 @@
                                         <img class="media-object" src="http://i.huffpost.com/gadgets/slideshows/461162/slide_461162_6224974_sq50.jpg" alt="">
                                     </span>
                                     <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        <h5 class="media-heading"><strong>{{user.firstName}} {{user.lastName}}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
                                         <p class="last"> Lorem ipsum dolor sit amet, consectetur...</p>
@@ -85,7 +85,7 @@
             </li>
             <li class="dropdown nav-item" dropdown>
                 <a href="javascript:;" id="single-button" class="nav-link dropdown-toggle" dropdownToggle >
-                    <i class="fa fa-user"></i> John Smith <b class="caret"></b>
+                    <i class="fa fa-user"></i>{{user.firstName}} {{user.lastName}} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="single-button">
                     <li>
