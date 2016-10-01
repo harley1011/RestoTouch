@@ -24,7 +24,6 @@ export class LoginComponent {
 	onSubmit() {
 		this.authService.authenticateUser(this.user)
                         .subscribe(generalResponse => {
-				            console.log(generalResponse);
                             this.router.navigate(['/dashboard/home']);
 				        }, error =>  this.errorMessage = <any>error);
     }
