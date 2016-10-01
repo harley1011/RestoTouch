@@ -1,33 +1,40 @@
 var models = require("../../database/models");
-var restaurantModel = models.getRestaurantModel();
+var restaurantModel;
+setDatabase(models);
 
 module.exports = {
   getAll: getAll,
   save: save,
   get: get,
   update: update,
-  del: del
+  del: del,
+  setDatabase: setDatabase
 };
 
+function setDatabase (m) {
+  models = m;
+  restaurantModel = models.getRestaurantModel();
+}
+
 //GET /restaurant
-function getAll(req, res, next) {
-  restaurantModel.findAll().then(function(restaurants) {
+function getAll(req, res) {
+  return restaurantModel.findAll().then(function(restaurants) {
     res.json({ restaurants: restaurants });
   });
 }
 
 //POST /restaurant
-function save(req, res, next) {
+function save(req, res) {
   var restaurant = req.body;
-  restaurantModel.create(restaurant).then(function(result) {
+  return restaurantModel.create(restaurant).then(function(result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
 }
 
 //GET /restaurant/{name}
-function get(req, res, next) {
+function get(req, res) {
   var name = req.swagger.params.name.value;
-  restaurantModel.findOne({
+  return restaurantModel.findOne({
     where: {
       name: name
     }
@@ -41,11 +48,10 @@ function get(req, res, next) {
 }
 
 //PUT /restaurant/{name}
-function update(req, res, next) {
+function update(req, res) {
   var restaurant = req.body;
-  console.log(restaurant);
   var name = req.swagger.params.name.value;
-  restaurantModel.update(restaurant, {
+  return restaurantModel.update(restaurant, {
     where: {
       name: name
     }
@@ -55,9 +61,9 @@ function update(req, res, next) {
 }
 
 //DELETE /restaurant/{name}
-function del(req, res, next) {
+function del(req, res) {
   var name = req.swagger.params.name.value;
-  restaurantModel.destroy({
+  return restaurantModel.destroy({
     where: {
       name: name
     }
