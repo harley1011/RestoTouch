@@ -19,7 +19,7 @@ function setDatabase (m) {
 //GET /restaurant
 function getAll(req, res) {
   return restaurantModel.findAll().then(function(restaurants) {
-    res.json({ restaurants: restaurants });
+    return res.json({ restaurants: restaurants });
   });
 }
 
@@ -67,7 +67,7 @@ function del(req, res) {
     where: {
       name: name
     }
-  }).then(function(restaurant) {
+  }).then(function(result) {
     return res.json({success: 1, description: "Restaurant Deleted"});
   });
 }
