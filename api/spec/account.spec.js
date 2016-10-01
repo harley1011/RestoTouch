@@ -1,5 +1,5 @@
 var account = require('../controllers/account');
-var mocks = require('./mocks');
+var mocks = require('./mocks/mocks.js');
 
 
 
