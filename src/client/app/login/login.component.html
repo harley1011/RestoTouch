@@ -1,6 +1,12 @@
 <style>
-.content{
-	padding: 10%;
+.loginPageBodySetting{
+	background-image: url('assets/img/background-restaurantsm.jpg');
+	height: 600px;
+}
+
+.loginPagetableSetting{
+	width:100%;
+	height:100%;
 }
 
 .loginBtn{
@@ -10,33 +16,12 @@
 }
 
 .loginBtn:hover{
-	background-color: rgba(255, 87, 34, 0.8);
-
-}
-
-.registerBtn{
-	border: 2px solid white;
-	background-color: rgba(0, 0, 255, 0.4);
-	width: 30%;
-}
-
-.registerBtn:hover{
-	background-color: rgba(255, 87, 34, 0.8);
-}
-
-a {
+	background-color: rgba(0, 0, 255, 0.2);
 	color: white;
-}
-.inputField{
-	border: 2px solid white;
-	border-radius: 5px;
-	background-color: transparent;
-	padding: 2%;
-	width: 80%;
 }
 
 ::-webkit-input-placeholder {
-	color: rgb(255,255,255);
+	color: rgb(200,200,200);
 }
 :-moz-placeholder { /* Firefox 18- */
 	color: rgb(200,200,200);
@@ -47,19 +32,64 @@ a {
 :-ms-input-placeholder {
 	color: rgb(200,200,200);
 }
+
+a {
+	color: white;
+}
+
+a:hover{
+	color:red;
+}
+
+.loginPageCellBackgroundSetting{
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.loginPageCellTopSetting{
+	height:30px;
+	text-align:right;
+	padding: 1% 5% 0 0;
+	color:white;
+}
+
+.loginPageCellContentPadding{
+	padding: 10%;
+}
+
+.inputField{
+	border: 2px solid white;
+	border-radius: 5px;
+	background-color: transparent;
+	padding: 2%;
+	width: 80%;
+	color: white;
+}
+
+.loginPageTitle{
+	font-size:92px;
+	font-weight:bold;
+	color: white;
+}
+
+.loginPageBodyText{
+	font-size:15px;
+	color: white;
+}
+
+
 </style>
 
-<div style="background-image: url('assets/img/background-restaurantsm.jpg'); height: 600px;">
+<div class="loginPageBodySetting">
 
-
-	<table style="width:100%; height:100%;">
+	<table class="loginPagetableSetting">
 		<tr>
 			<!-- left container : logo -->
 			<td align="center" rowspan="2" style="width:60%;">
 				<img src="assets/img/logo.png">
 			</td>
+
 			<!-- right container : top cell: regs lang | bottom cell: login form -->
-			<td style="height:30px; text-align:right; padding-right:5%; color:white;">
+			<td class="loginPageCellBackgroundSetting loginPageCellTopSetting">
 
 				<!-- register link emplacement -->
 				<a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
@@ -67,12 +97,14 @@ a {
 				<!-- language emplacement -->
 				<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
 			</td>
+
 			<tr>
 			<!-- bottom cell : login form -->
-			<td align="center" style="background-color: rgba(0, 0, 0, 0.7);">
-				<div class="content">
-					<span style="font-size:62px; font-weight:bold; color: white;">Hello</span><br>
-					<span style="font-size:16px; color: white;">Please enter your login information</span>
+			<td align="center" class="loginPageCellBackgroundSetting">
+				<div class="loginPageCellContentPadding">
+					<h1 class="loginPageTitle">Hello</h1>
+					<p class="loginPageBodyText">Please enter your login information</p>
+
 					<!-- login elements form -->
 					<form role="form">
 						<div class="form-content">
@@ -88,7 +120,6 @@ a {
 						<!-- buttons -->
 						<a class="btn rounded-btn loginBtn" routerLink="/dashboard/home"> Log in </a>
 						&nbsp;
-
 					</form>
 					<!-- end of login -->
 				</div>
