@@ -1,22 +1,88 @@
-<div class="login-page">
-	<div class="row">
-		<div class="col-lg-4 col-lg-offset-4">
-        	<img src="assets/img/SB-admin.png" width="150px" class="user-avatar" />
-			<h1>SB Admin BS 4 Angular2</h1>
-			<form role="form">
-				<div class="form-content">
-					<div class="form-group">
-						<input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="Email">
-					</div>
+<style>
+.content{
+	padding: 10%;
+}
 
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
-					</div>
+.loginBtn{
+	border: 2px solid white;
+	background-color: rgba(0, 255, 0, 0.4);
+	width: 30%;
+}
+
+.loginBtn:hover{
+	background-color: rgba(255, 87, 34, 0.8);
+
+}
+
+.registerBtn{
+	border: 2px solid white;
+	background-color: rgba(0, 0, 255, 0.4);
+	width: 30%;
+}
+
+.registerBtn:hover{
+	background-color: rgba(255, 87, 34, 0.8);
+}
+
+a {
+	color: white;
+}
+.inputField{
+	border: 2px solid white;
+	border-radius: 5px;
+	background-color: transparent;
+	padding: 2%;
+	width: 80%;
+}
+
+::-webkit-input-placeholder {
+	color: rgb(255,255,255);
+}
+:-moz-placeholder { /* Firefox 18- */
+	color: rgb(200,200,200);
+}
+::-moz-placeholder {  /* Firefox 19+ */
+	color: rgb(200,200,200);
+}
+:-ms-input-placeholder {
+	color: rgb(200,200,200);
+}
+</style>
+
+<div style="background-image: url('assets/img/background-restaurantsm.jpg'); height: 600px;">
+
+
+	<table style="width:100%; height:100%;">
+		<tr>
+			<!-- left container : logo -->
+			<td align="center" style="width:60%;">
+				<img src="assets/img/logo.png">
+			</td>
+
+			<!-- right container : login form -->
+			<td align="center" style="background-color: rgba(0, 0, 0, 0.7);">
+				<div class="content">
+					<!-- login elements form -->
+					<form role="form">
+						<div class="form-content">
+							<!-- input box for login -->
+							<div class="form-group">
+								<input type="text" ng-model="name" class="inputField" id="" placeholder="Email">
+							</div>
+							<!-- input box for password-->
+							<div class="form-group">
+								<input type="password" class="inputField" id="" placeholder="Password">
+							</div>
+						</div>
+						<!-- buttons -->
+						<a class="btn rounded-btn loginBtn" routerLink="/dashboard/home"> Log in </a>
+						&nbsp;
+						<a type="submit" class="btn rounded-btn registerBtn" routerLink="/signup">Register</a>
+					</form>
+					<!-- end of login -->
 				</div>
-				<a class="btn rounded-btn" routerLink="/dashboard/home"> Log in </a>				
-				&nbsp;
-				<a type="submit" class="btn rounded-btn" routerLink="/signup">Register</a>
-			</form>
-		</div>	
-	</div>
+			</td>
+		</tr>
+	</table>
+
 </div>
