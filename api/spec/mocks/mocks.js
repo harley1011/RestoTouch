@@ -1,11 +1,17 @@
 var userModel = {}
+var restaurantModel = {}
 var Promise = require('promise');
 userModel.create = create;
+restaurantModel.create = create;
 
 
 exports.getUserModel = function() {
   return userModel;
 };
+
+exports.getRestaurantModel = function () {
+  return restaurantModel;
+}
 
 
 
