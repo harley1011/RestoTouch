@@ -16,7 +16,6 @@ export class AuthService implements CanActivate, CanActivateChild {
   private url = 'http://localhost:10010/login';
 
   constructor(private http: Http, private router: Router) {
-    console.log('hhdh');
     var data = localStorage.getItem('user');
     if (data !== null) {
       this.loggedInUser = JSON.parse(data);
