@@ -16,6 +16,10 @@ build: off
 
 clone_depth: 10
 
+branches:
+  only:
+    - master
+    - develop
 # Fix line endings on Windows
 init:
   - git config --global core.autocrlf true
