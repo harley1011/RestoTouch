@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Auth } from './auth';
-import { AuthService } from './auth.service';
+import { User } from '../shared/models/user';
+import { AuthService }       from '../services/auth.service';
 import { Router } from '@angular/router';
 
 /**
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent {
-	user = new Auth('', '');
+	user = new User('', '');
 	errorMessage: string;
 
 	constructor (private authService: AuthService,

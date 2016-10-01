@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { User } from './user';
-import { UserService }       from './user.service';
+import { User } from '../shared/models/user';
+import { AuthService }       from '../services/auth.service';
 import { Router } from '@angular/router';
 
 /**
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 	moduleId: module.id,
 	selector: 'signup-cmp',
 	templateUrl: 'signup.component.html',
-  providers: [ UserService ]
+  providers: [ AuthService ]
 })
 
 export class SignupComponent {
   user = new User('', '', '', '', '');
   errorMessage = '';
 
-  constructor (private userService: UserService,
+  constructor (private authService: AuthService,
                private router: Router,) {}
 
   onSubmit() {
@@ -27,7 +27,7 @@ export class SignupComponent {
        this.errorMessage = 'Passwords do not match';
        return;
      }
-     this.userService.registerUser(this.user)
+     this.authService.registerUser(this.user)
                        .subscribe(
                          loginResponse => {
                            console.log(loginResponse);
