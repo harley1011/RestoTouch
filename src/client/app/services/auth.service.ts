@@ -2,18 +2,20 @@
 import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
+import {Router, CanActivate, CanActivateChild} from '@angular/router';
 
 import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
 
 @Injectable()
-export class AuthService  {
+export class AuthService implements CanActivate, CanActivateChild {
+
   public loggedInUser: User;
 
   private url = 'http://localhost:10010/login';
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router) {
     console.log('hhdh');
     var data = localStorage.getItem('user');
     if (data !== null) {
@@ -21,8 +23,24 @@ export class AuthService  {
     }
   }
 
-  isLoggedIn(): Boolean {
-    return this.loggedInUser !== null;
+  canActivate() {
+    if (this.isLoggedIn()) {
+      return true;
+    }
+    this.router.navigate(['/login']);
+    return false;
+
+  }
+
+  canActivateChild() {
+    return this.canActivate();
+  }
+
+  isLoggedIn(): boolean {
+    if (this.loggedInUser) {
+      return true;
+    }
+    return false;
   }
 
   authenticateUser(user: User): Observable<GeneralResponse> {
