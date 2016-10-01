@@ -26,11 +26,11 @@
 					<div class="form-group">
 						<input type="text" class="form-control input-underline input-lg" id="email"
 						placeholder="Email"
-						required
+						required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
 						[(ngModel)]="user.email" name="email" #email="ngModel">
 					</div>
 					<div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-						Email is required
+						A valid email is required
 					</div>
 
 					<div class="form-group">

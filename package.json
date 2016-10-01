@@ -142,6 +142,7 @@
     "ng2-bootstrap": "1.1.1",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
+    "promise": "^7.1.1",
     "reflect-metadata": "0.1.8",
     "request": "^2.75.0",
     "rxjs": "5.0.0-beta.11",
