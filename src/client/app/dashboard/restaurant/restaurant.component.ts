@@ -55,6 +55,7 @@ export class RestaurantComponent implements OnInit {
 		var values = validateInputs();
 		if (values === null) return;
 
+		var oldName = this.restaurant.name;
 		this.restaurant.name = values['name'];
 		this.restaurant.description = values['description'];
 		this.restaurant.address = values['address'];
@@ -76,7 +77,7 @@ export class RestaurantComponent implements OnInit {
 		if (this.create) {
 			this.add();
 		} else {
-			this.update();
+			this.update(oldName);
 		}
 	}
 
@@ -92,8 +93,8 @@ export class RestaurantComponent implements OnInit {
 		);
 	}
 
-	update(): void {
-		this.restaurantService.updateRestaurant(this.restaurant)
+	update(oldName: string): void {
+		this.restaurantService.updateRestaurant(this.restaurant, oldName)
 			.subscribe(
 				generalResponse => {
 					this.router.navigate(['/dashboard/home']);

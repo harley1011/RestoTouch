@@ -29,12 +29,12 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
-  updateRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
+  updateRestaurant (restaurant: Restaurant, oldName: string): Observable<GeneralResponse> {
     let body = JSON.stringify(restaurant);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.url + '/' + restaurant.name, body, options)
+    return this.http.put(this.url + '/' + oldName, body, options)
       .map(this.extractGeneralResponseData)
       .catch(this.handleError);
   }
