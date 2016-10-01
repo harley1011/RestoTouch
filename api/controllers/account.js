@@ -67,6 +67,7 @@ function login(req,res) {
     email: user.email,
     password: user.password}
   }).then(function(result){
-        return res.json({success: 1, description: "User logged in"});
+         var info = userInfo(newUser.dataValues);
+    return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken":  info.token});
       });
 }
