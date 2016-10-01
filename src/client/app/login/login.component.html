@@ -55,13 +55,24 @@ a {
 	<table style="width:100%; height:100%;">
 		<tr>
 			<!-- left container : logo -->
-			<td align="center" style="width:60%;">
+			<td align="center" rowspan="2" style="width:60%;">
 				<img src="assets/img/logo.png">
 			</td>
+			<!-- right container : top cell: regs lang | bottom cell: login form -->
+			<td style="height:30px; text-align:right; padding-right:5%; color:white;">
 
-			<!-- right container : login form -->
+				<!-- register link emplacement -->
+				<a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
+
+				<!-- language emplacement -->
+				<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+			</td>
+			<tr>
+			<!-- bottom cell : login form -->
 			<td align="center" style="background-color: rgba(0, 0, 0, 0.7);">
 				<div class="content">
+					<span style="font-size:62px; font-weight:bold; color: white;">Hello</span><br>
+					<span style="font-size:16px; color: white;">Please enter your login information</span>
 					<!-- login elements form -->
 					<form role="form">
 						<div class="form-content">
@@ -77,7 +88,7 @@ a {
 						<!-- buttons -->
 						<a class="btn rounded-btn loginBtn" routerLink="/dashboard/home"> Log in </a>
 						&nbsp;
-						<a type="submit" class="btn rounded-btn registerBtn" routerLink="/signup">Register</a>
+
 					</form>
 					<!-- end of login -->
 				</div>
