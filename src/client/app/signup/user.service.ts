@@ -13,6 +13,10 @@ export class UserService {
 
   constructor (private http: Http) {}
 
+  setToken (token: string) {
+    localStorage.setItem('authToken', token);
+  }
+
   registerUser (user: User): Observable<GeneralResponse> {
     let body = JSON.stringify(user);
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -25,6 +29,7 @@ export class UserService {
 
   private extractData(res: Response) {
     let body = res.json();
+    localStorage.setItem('authToken', body.accessToken);
     return body || { };
   }
 
