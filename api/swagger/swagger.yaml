@@ -88,6 +88,12 @@ paths:
           type: string
           in: path
           required: true
+        - name: restaurant
+          description: Restaurant properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Restaurant"
       responses:
         "200":
           description: Success
