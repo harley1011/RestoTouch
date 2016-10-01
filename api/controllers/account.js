@@ -1,10 +1,10 @@
 var models = require("../../database/models");
 var passwordHasher = require("../helpers/password_hash");
-var userModel;
 var jwt = require('jwt-simple');
 var configAuth = require('../../config/auth');
+var userModel;
 
-
+setDatabase(models);
 
 module.exports = {
   register: register,
