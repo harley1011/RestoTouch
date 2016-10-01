@@ -14,6 +14,7 @@ export class AuthService  {
   private url = 'http://localhost:10010/login';
 
   constructor(private http: Http) {
+    console.log('hhdh');
     var data = localStorage.getItem('user');
     if (data !== null) {
       this.loggedInUser = JSON.parse(data);
