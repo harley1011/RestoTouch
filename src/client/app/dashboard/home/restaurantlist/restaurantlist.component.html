@@ -1,58 +1,20 @@
 <div class="container-fluid">
   <h4>Restaurants <span class="label label-default"> {{ numOfRestaurants }} </span></h4>
-  <div class="row">
-    <div class="col-sm-3">
-      <div *ngFor="let restaurant of restaurants; let i = index">
-        <div *ngIf="i < 4" (click)="modify(restaurant)" class="card card-primary card-inverse">
-          <div class="card-header card-primary">
-            {{ restaurant.name }}
-          </div>
-          <div class="card-block bg-white">
-            {{ restaurant.description }}
-          </div>
+  <div  class="row">
+    <div class="col-lg-3" *ngFor="let restaurant of restaurants; let i = index">
+      <div (click)="modify(restaurant)" class="card card-primary card-inverse">
+        <div class="card-header card-primary">
+          {{ restaurant.name }}
+        </div>
+        <div class="card-block bg-white">
+          {{ restaurant.description }}
         </div>
       </div>
-      <button *ngIf="restaurants && restaurants.length < 4" (click)="add()" class="btn btn-lg btn-success">Add</button>
     </div>
-    <div class="col-sm-3">
-      <div *ngFor="let restaurant of restaurants; let i = index">
-        <div *ngIf="i >= 4 && i < 8" (click)="modify(restaurant)" class="card card-primary card-inverse">
-          <div class="card-header card-primary">
-            {{ restaurant.name }}
-          </div>
-          <div class="card-block bg-white">
-            {{ restaurant.description }}
-          </div>
-        </div>
-      </div>
-      <button *ngIf="restaurants && restaurants.length >= 4 && restaurants.length < 8" (click)="add()" class="btn btn-lg btn-success">Add</button>
+
+    <div class="col-lg-3">
+      <button (click)="add()" class="btn btn-success">Add</button>
     </div>
-    <div class="col-sm-3">
-      <div *ngFor="let restaurant of restaurants; let i = index">
-        <div *ngIf="i >= 8 && i < 12" (click)="modify(restaurant)" class="card card-primary card-inverse">
-          <div class="card-header card-primary">
-            {{ restaurant.name }}
-          </div>
-          <div class="card-block bg-white">
-            {{ restaurant.description }}
-          </div>
-        </div>
-      </div>
-      <button *ngIf="restaurants && restaurants.length >= 8 && restaurants.length < 12" (click)="add()" class="btn btn-lg btn-success">Add</button>
-    </div>
-    <div class="col-sm-3">
-      <div *ngFor="let restaurant of restaurants; let i = index">
-        <div *ngIf="i >= 12 && i < 15" (click)="modify(restaurant)" class="card card-primary card-inverse">
-          <div class="card-header card-primary">
-            {{ restaurant.name }}
-          </div>
-          <div class="card-block bg-white">
-            {{ restaurant.description }}
-          </div>
-        </div>
-      </div>
-      <button *ngIf="restaurants && restaurants.length >= 12" (click)="add()" class="btn btn-success">Add</button>
-      <button *ngIf="restaurants && restaurants.length >= 16" class="btn btn-secondary">More</button>
-    </div>
+
   </div>
 </div>
