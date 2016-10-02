@@ -12,7 +12,7 @@ module.exports = {
   setDatabase: setDatabase
 };
 
-function setDatabase(m) {
+function setDatabase (m) {
   models = m;
   userModel = models.getUserModel();
 }
@@ -22,23 +22,19 @@ function register(req, res) {
   var passwordData = passwordHasher.saltHashPassword(user.password);
   user.password = passwordData.passwordHash;
   user.salt = passwordData.salt;
-  return userModel.create(user).then(function (newUser) {
+  return userModel.create(user).then(function(newUser) {
     var info = userInfo(newUser.dataValues);
-    return res.json({success: 1, description: "User registered", "user": info.user, "accessToken": info.token});
+    return res.json({success: 1, description: "User registered", "user": info.user, "accessToken":  info.token});
   });
 }
 
 function userInfo(user) {
   var token = genToken(user);
-  //user.password = "";
-  //user.salt = "";
-  return {
-    user: {
-      "id": user.id,
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "email": user.email
-    },
+  return {user: {
+    "id": user.id,
+    "firstName": user.firstName,
+    "lastName": user.lastName,
+    "email": user.email},
     "token": token.token
   }
 }
@@ -63,7 +59,7 @@ function expiresIn(numDays) {
   return dateObj.setDate(dateObj.getDate() + numDays);
 }
 
-function login(req, res) {
+function login(req,res) {
   var user = req.body;
 
   return userModel.findOne({

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Auth } from './auth';
-import { AuthService } from './auth.service';
+import { User } from '../shared/models/user';
+import { AuthService }       from '../services/auth.service';
 import { Router } from '@angular/router';
 
 /**
@@ -11,12 +11,11 @@ import { Router } from '@angular/router';
 @Component({
 	moduleId: module.id,
 	selector: 'login-cmp',
-	templateUrl: 'login.component.html',
-	providers: [ AuthService ]
+	templateUrl: 'login.component.html'
 })
 
 export class LoginComponent {
-	user = new Auth('', '');
+	user = new User('', '');
 	errorMessage: string;
 
 	constructor (private authService: AuthService,
@@ -25,7 +24,6 @@ export class LoginComponent {
 	onSubmit() {
 		this.authService.authenticateUser(this.user)
                         .subscribe(generalResponse => {
-				            console.log(generalResponse);
                             this.router.navigate(['/dashboard/home']);
 				        }, error =>  this.errorMessage = <any>error);
     }
