@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 
 export class LoginComponent {
   user = new User('', '');
-  errorMessage: string;
+  errorMessage = '';
 
   constructor(private authService: AuthService,
               private router: Router,) {
