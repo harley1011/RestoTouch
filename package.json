@@ -27,7 +27,7 @@
     "start.dev": "gulp serve.dev --color",
     "setup": "npm install && typings install && gulp check.versions && npm prune && gulp webdriver",
     "tasks.list": "gulp --tasks-simple --color",
-    "test": "gulp test --color && jasmine-node api/spec",
+    "test": "gulp test --color",
     "apitest": "jasmine-node api/spec",
     "e2e.ci": "gulp build.prod --color && gulp build.js.e2e --color && gulp e2e --color",
     "tests.all": "npm test && npm run e2e.ci",
