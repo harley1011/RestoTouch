@@ -22,6 +22,7 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+require('./websiteRoutes.js')(app, express);
 
 //app.all('/*', [require('./authenticator.js')]);
 
@@ -41,4 +42,4 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   // }
 });
 
-require('./websiteRoutes.js')(app, express);
+

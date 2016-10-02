@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { GeneralResponse }  from '../../shared/general.response';
 
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Response, Headers, RequestOptions } from '@angular/http';
+import { AuthHttpService } from '../../services/auth.http.services';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -11,10 +12,16 @@ import { Observable } from 'rxjs/Observable';
 export class RestaurantService {
   private url = 'http://localhost:10010/restaurant';
 
-  constructor (private http: Http) {}
+  constructor (private http: AuthHttpService) {}
 
   getRestaurant (name: string): Observable<Restaurant> {
     return this.http.get(this.url + '/' + name)
+      .map(this.extractRestaurantData)
+      .catch(this.handleError);
+  }
+
+  getRestaurants (): Observable<Restaurant[]> {
+    return this.http.get(this.url)
       .map(this.extractRestaurantData)
       .catch(this.handleError);
   }
