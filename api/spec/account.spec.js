@@ -1,6 +1,5 @@
 var account = require('../controllers/account');
-var mocks = require('./mocks');
-
+var mocks = require('./mocks/mocks');
 
 
 describe("Register Tests", function() {
@@ -39,7 +38,7 @@ describe("Login Tests", function() {
       "password": "password"
     }
   }
-  
+
   var invalid_req = {
     body: {
       "email": "test123@sample.com",
@@ -68,7 +67,7 @@ describe("Login Tests", function() {
       done();
     })
   })
-  
+
    it("should login a user with valid email and invalid password", function (done) {
     account.login(invalid_req, res).then(function (result) {
       expect(res.status).toBe(401);
