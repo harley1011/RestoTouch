@@ -2,20 +2,30 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { RestaurantListService } from '../../app/dashboard/home/restaurantlist/restaurantlist.service';
+import { RestaurantService } from '../../restaurant/restaurant.service';
+import {AuthHttpService} from '../../../services/auth.http.services';
+import {Router} from '@angular/router';
 
 export function main() {
   describe('RestaurantList Service', () => {
-    let restaurantListService: RestaurantListService;
+    let restaurantListService: RestaurantService;
     let backend: MockBackend;
     let initialResponse: any;
     let connection: any;
 
     beforeEach(() => {
 
+      var routerStub = {
+        navigate: function (arr: string) {
+          return arr;
+        }
+      };
+
       let injector = ReflectiveInjector.resolveAndCreate([
-        RestaurantListService,
+        RestaurantService,
         BaseRequestOptions,
+        AuthHttpService,
+        {provide: Router, useValue: routerStub},
         MockBackend,
         {
           provide: Http,
@@ -25,7 +35,7 @@ export function main() {
           deps: [MockBackend, BaseRequestOptions]
         },
       ]);
-      restaurantListService = injector.get(RestaurantListService);
+      restaurantListService = injector.get(RestaurantService);
       backend = injector.get(MockBackend);
 
       backend.connections.subscribe((c: any) => connection = c);

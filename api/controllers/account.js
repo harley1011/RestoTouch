@@ -8,8 +8,8 @@ setDatabase(models);
 
 module.exports = {
   register: register,
-  setDatabase: setDatabase,
-  login: login
+  login: login,
+  setDatabase: setDatabase
 };
 
 function setDatabase (m) {
