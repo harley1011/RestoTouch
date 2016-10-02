@@ -1,65 +1,90 @@
-<div class="login-page">
-	<div class="row">
-		<div class="col-lg-4 col-lg-offset-4">
-        	<img src="assets/img/SB-admin.png" width="150px;" class="user-avatar" />
-			<h1>Resto Touch</h1>
-			<form (ngSubmit)="onSubmit()">
-					<div class="form-group">
-						<input type="text" class="form-control input-underline input-lg" id="firstName"
-						placeholder="First Name"
-						required
-						[(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
-					</div>
-					<div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
-						First Name is required
-					</div>
-        <div class="form-group">
-						<input type="text" class="form-control input-underline input-lg" id="lastName"
-						placeholder="Last Name"
-						required
-						[(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
-					</div>
-					<div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
-						Last Name is required
-					</div>
+<div class="loginPageBodySetting">
+  <table class="loginPagetableSetting">
+    <tr>
+      <!-- left container : logo -->
+      <td align="center" rowspan="2" style="width:60%;">
+        <img src="assets/img/logo.png">
+      </td>
 
-					<div class="form-group">
-						<input type="text" class="form-control input-underline input-lg" id="email"
-						placeholder="Email"
-						required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
-						[(ngModel)]="user.email" name="email" #email="ngModel">
-					</div>
-					<div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-						A valid email is required
-					</div>
+      <!-- right container : top cell: regs lang | bottom cell: login form -->
+      <td class="loginPageCellBackgroundSetting loginPageCellTopSetting">
 
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="password"
-						placeholder="Password"
-						required
-						[(ngModel)]="user.password" name="password" #password="ngModel">
-					</div>
-					<div [hidden]="password.valid || password.pristine" class="alert alert-danger">
-						A password is required
-					</div>
+        <!-- register link emplacement -->
+        <a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
 
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="passRepeat"
-						required
-						[(ngModel)]="user.passwordConfirm"
-						placeholder="Repeat Password" name="passRepeat" #passRepeat="ngModel">
-					</div>
-					<div [hidden]="passRepeat.valid || passRepeat.pristine" class="alert alert-danger">
-						Please repeat your password
-					</div>
+        <!-- language emplacement -->
+        <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+      </td>
 
-        <div *ngIf="errorMessage.length != 0" class="alert alert-danger">
-          {{errorMessage}}
+    <tr>
+      <!-- bottom cell : login form -->
+      <td align="center" class="loginPageCellBackgroundSetting">
+        <div class="loginPageCellContentPadding">
+          <h1 class="loginPageTitle">Hello</h1>
+          <p class="loginPageBodyText">Please register</p>
+          <!-- login elements form -->
+          <form role="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input type="text" class="form-control input-underline input-lg" id="firstName"
+                     placeholder="First Name"
+                     required
+                     [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
+            </div>
+            <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+              First Name is required
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control input-underline input-lg" id="lastName"
+                     placeholder="Last Name"
+                     required
+                     [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
+            </div>
+            <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+              Last Name is required
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control input-underline input-lg" id="email"
+                     placeholder="Email"
+                     required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+                     [(ngModel)]="user.email" name="email" #email="ngModel">
+            </div>
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+              A valid email is required
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control input-underline input-lg" id="password"
+                     placeholder="Password"
+                     required
+                     [(ngModel)]="user.password" name="password" #password="ngModel">
+            </div>
+            <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+              A password is required
+            </div>
+
+            <div class="form-group">
+              <input type="password" class="form-control input-underline input-lg" id="passRepeat"
+                     required
+                     [(ngModel)]="user.passwordConfirm"
+                     placeholder="Repeat Password" name="passRepeat" #passRepeat="ngModel">
+            </div>
+            <div [hidden]="passRepeat.valid || passRepeat.pristine" class="alert alert-danger">
+              Please repeat your password
+            </div>
+
+            <div *ngIf="errorMessage.length != 0" class="alert alert-danger">
+              {{errorMessage}}
+            </div>
+
+            <button type="submit" class="btn rounded-btn"> Register </button>&nbsp;
+            <a type="submit" class="btn rounded-btn" routerLink="/"> Log in </a>
+            &nbsp;
+          </form>
+          <!-- end of login -->
         </div>
+      </td>
+    </tr>
+  </table>
 
-				<button type="submit" class="btn rounded-btn"> Register </button>&nbsp;
-				<a type="submit" class="btn rounded-btn" routerLink="/"> Log in </a>
-			</form>
-		</div>
-	</div>
 </div>
