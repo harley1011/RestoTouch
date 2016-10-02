@@ -53,7 +53,7 @@ export class AuthService implements CanActivate, CanActivateChild {
   }
 
   registerUser(user: User): Observable<GeneralResponse> {
-    let body = user;
+    let body = JSON.stringify(user);
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
