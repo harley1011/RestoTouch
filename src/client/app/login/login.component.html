@@ -1,83 +1,55 @@
-<style>
-.content{
-	padding: 10%;
-}
+<div class="loginPageBodySetting">
 
-.loginBtn{
-	border: 2px solid white;
-	background-color: rgba(0, 255, 0, 0.4);
-	width: 30%;
-}
-
-.loginBtn:hover{
-	background-color: rgba(255, 87, 34, 0.8);
-
-}
-
-.registerBtn{
-	border: 2px solid white;
-	background-color: rgba(0, 0, 255, 0.4);
-	width: 30%;
-}
-
-.registerBtn:hover{
-	background-color: rgba(255, 87, 34, 0.8);
-}
-
-a {
-	color: white;
-}
-.inputField{
-	border: 2px solid white;
-	border-radius: 5px;
-	background-color: transparent;
-	padding: 2%;
-	width: 80%;
-}
-
-::-webkit-input-placeholder {
-	color: rgb(255,255,255);
-}
-:-moz-placeholder { /* Firefox 18- */
-	color: rgb(200,200,200);
-}
-::-moz-placeholder {  /* Firefox 19+ */
-	color: rgb(200,200,200);
-}
-:-ms-input-placeholder {
-	color: rgb(200,200,200);
-}
-</style>
-
-<div style="background-image: url('assets/img/background-restaurantsm.jpg'); height: 600px;">
-
-
-	<table style="width:100%; height:100%;">
+	<table class="loginPagetableSetting">
 		<tr>
 			<!-- left container : logo -->
-			<td align="center" style="width:60%;">
+			<td align="center" rowspan="2" style="width:60%;">
 				<img src="assets/img/logo.png">
 			</td>
 
-			<!-- right container : login form -->
-			<td align="center" style="background-color: rgba(0, 0, 0, 0.7);">
-				<div class="content">
+			<!-- right container : top cell: regs lang | bottom cell: login form -->
+			<td class="loginPageCellBackgroundSetting loginPageCellTopSetting">
+
+				<!-- register link emplacement -->
+				<a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
+
+				<!-- language emplacement -->
+				<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+			</td>
+
+			<tr>
+			<!-- bottom cell : login form -->
+			<td align="center" class="loginPageCellBackgroundSetting">
+				<div class="loginPageCellContentPadding">
+					<h1 class="loginPageTitle">Hello</h1>
+					<p class="loginPageBodyText">Please enter your login information</p>
 					<!-- login elements form -->
-					<form role="form">
+					<form role="form" (ngSubmit)="onSubmit()">
 						<div class="form-content">
 							<!-- input box for login -->
 							<div class="form-group">
-								<input type="text" ng-model="name" class="inputField" id="" placeholder="Email">
-							</div>
+						<input type="text" class="form-control input-underline input-lg" id="email"
+						placeholder="Email"
+						required
+						[(ngModel)]="user.email" name="email" #email="ngModel">
+					</div>
+					<div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+						E-mail is required
+					</div>
 							<!-- input box for password-->
-							<div class="form-group">
-								<input type="password" class="inputField" id="" placeholder="Password">
+						<div class="form-group">
+						<input type="password" class="form-control input-underline input-lg" id="password"
+						placeholder="Password"
+						required
+						[(ngModel)]="user.password" name="password" #password="ngModel">
+					</div>
+					<div [hidden]="password.valid || password.pristine" class="alert alert-danger">
+						Password is required
+					</div>
 							</div>
-						</div>
 						<!-- buttons -->
-						<a class="btn rounded-btn loginBtn" routerLink="/dashboard/home"> Log in </a>
+						<button type="submit" class="btn rounded-btn"> Log in </button>
 						&nbsp;
-						<a type="submit" class="btn rounded-btn registerBtn" routerLink="/signup">Register</a>
 					</form>
 					<!-- end of login -->
 				</div>
