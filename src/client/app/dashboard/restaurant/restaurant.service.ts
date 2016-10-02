@@ -16,13 +16,13 @@ export class RestaurantService {
 
   getRestaurant (name: string): Observable<Restaurant> {
     return this.http.get(this.url + '/' + name)
-      .map(this.extractRestaurantData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
   getRestaurants (): Observable<Restaurant[]> {
     return this.http.get(this.url)
-      .map(this.extractRestaurantData)
+      .map((response) => this.extractData(response).restaurants)
       .catch(this.handleError);
   }
 
@@ -32,7 +32,7 @@ export class RestaurantService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.url, body, options)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
@@ -42,22 +42,17 @@ export class RestaurantService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.put(this.url + '/' + oldName, body, options)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
   deleteRestaurant (name: string): Observable<Restaurant> {
     return this.http.delete(this.url + '/' + name)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
-  private extractRestaurantData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private extractGeneralResponseData(res: Response) {
+  private extractData(res: Response) {
     let body = res.json();
     return body || { };
   }
