@@ -66,7 +66,7 @@ function expiresIn(numDays) {
 function login(req, res) {
   var user = req.body;
 
-  userModel.findOne({
+  return userModel.findOne({
     where: {email: user.email}
   }).then(function (newUser) {
     if (!newUser) {
