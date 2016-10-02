@@ -4,6 +4,8 @@ var sequelize = new Sequelize(configDB.url);
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 
+restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
+
 userModel.sync();
 restaurantModel.sync();
 
