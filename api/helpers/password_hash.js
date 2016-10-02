@@ -1,7 +1,13 @@
 var crypto = require('crypto');
 
 module.exports = {
-  saltHashPassword : saltHashPassword
+  saltHashPassword : saltHashPassword,
+  comparePassword: comparePassword
+}
+
+function comparePassword(password, salt, hashPassword) {
+  password = sha512(password, salt);
+  return password.passwordHash === hashPassword;
 }
 
 function sha512(password, salt){
