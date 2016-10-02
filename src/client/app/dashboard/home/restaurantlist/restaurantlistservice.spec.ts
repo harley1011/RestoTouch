@@ -2,8 +2,8 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { RestaurantService } from '../../app/dashboard/restaurant/restaurant.service';
-import {AuthHttpService} from '../../app/services/auth.http.services';
+import { RestaurantService } from '../../restaurant/restaurant.service';
+import {AuthHttpService} from '../../../services/auth.http.services';
 import {Router} from '@angular/router';
 
 export function main() {
@@ -15,11 +15,17 @@ export function main() {
 
     beforeEach(() => {
 
+      var routerStub = {
+        navigate: function (arr: string) {
+          return arr;
+        }
+      };
+
       let injector = ReflectiveInjector.resolveAndCreate([
         RestaurantService,
         BaseRequestOptions,
         AuthHttpService,
-        Router,
+        {provide: Router, useValue: routerStub},
         MockBackend,
         {
           provide: Http,
