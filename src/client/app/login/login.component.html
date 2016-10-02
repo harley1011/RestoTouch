@@ -47,7 +47,7 @@
                 Password is required
               </div>
             </div>
-            <div class="form-group">
+            <div [hidden]="errorMessage.length == 0" class="form-group">
               <div class="alert alert-danger">
                 {{errorMessage}}
               </div>
