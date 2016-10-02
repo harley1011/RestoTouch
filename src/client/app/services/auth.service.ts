@@ -7,6 +7,7 @@ import {Router, CanActivate, CanActivateChild} from '@angular/router';
 import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
+import 'rxjs/Rx';
 
 @Injectable()
 export class AuthService implements CanActivate, CanActivateChild {
