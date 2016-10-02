@@ -4,6 +4,8 @@ import { MockBackend } from '@angular/http/testing';
 
 import { RestaurantService } from '../../app/dashboard/restaurant/restaurant.service';
 import { Restaurant } from '../../app/dashboard/home/restaurantlist/restaurant';
+import {AuthHttpService} from '../../app/services/auth.http.services';
+import {Router} from '@angular/router';
 
 export function main() {
   describe('Restaurant Service', () => {
@@ -17,6 +19,8 @@ export function main() {
       let injector = ReflectiveInjector.resolveAndCreate([
         RestaurantService,
         BaseRequestOptions,
+        AuthHttpService,
+        Router,
         MockBackend,
         {
           provide: Http,
