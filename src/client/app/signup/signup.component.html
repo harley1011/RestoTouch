@@ -1,30 +1,25 @@
-<div class="loginPageBodySetting">
-  <table class="loginPagetableSetting">
-    <tr>
-      <!-- left container : logo -->
-      <td align="center" rowspan="2" style="width:60%;">
+<div class="row loginPageContainer">
+    <div class="col col-md-7 logoContainer">
         <img src="assets/img/logo.png">
-      </td>
-
-      <!-- right container : top cell: regs lang | bottom cell: login form -->
-      <td class="loginPageCellBackgroundSetting loginPageCellTopSetting">
-
-        <!-- register link emplacement -->
-        <a type="submit" routerLink="/login"><span style="font-weight: bold;">Login</span></a> &emsp;|&emsp;
-
-        <!-- language emplacement -->
+    </div>
+    <div class="col col-md-5 loginFormContainer">
+        <!-- register/language emplacement -->
+        <div class="row loginFormNav">
+            <a type="submit" routerLink="/"><span style="font-weight: bold;">Log In</span></a> &emsp;|&emsp;
         <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
-      </td>
-
-    <tr>
-      <!-- bottom cell : login form -->
-      <td align="center" class="loginPageCellBackgroundSetting">
-        <div class="loginPageCellContentPadding">
-          <h1 class="loginPageTitle">Hello</h1>
-          <p class="loginPageBodyText">Please register</p>
-          <!-- login elements form -->
-          <form role="form" (ngSubmit)="onSubmit()">
+        </div>
+        
+        <!-- login form -->
+        <div class="row loginPageContent">
+        <div class="row loginFormHeader">
+            <h1 class="loginPageTitle">Hello</h1>
+            <p class="loginPageBodyText">Join RestoTouch today.</p>
+        </div>
+        <!-- login elements form -->
+        <form role="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
+                
+             <!-- input box for first name -->
               <input type="text" class="form-control input-underline input-lg" id="firstName"
                      placeholder="First Name"
                      required
@@ -33,6 +28,7 @@
             <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
               First Name is required
             </div>
+            <!-- input box for last name -->
             <div class="form-group">
               <input type="text" class="form-control input-underline input-lg" id="lastName"
                      placeholder="Last Name"
@@ -42,7 +38,7 @@
             <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
               Last Name is required
             </div>
-
+            <!-- input box for email -->
             <div class="form-group">
               <input type="text" class="form-control input-underline input-lg" id="email"
                      placeholder="Email"
@@ -52,7 +48,7 @@
             <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
               A valid email is required
             </div>
-
+            <!-- input box for password -->
             <div class="form-group">
               <input type="password" class="form-control input-underline input-lg" id="password"
                      placeholder="Password"
@@ -73,17 +69,13 @@
               Please repeat your password
             </div>
 
-            <div *ngIf="errorMessage.length != 0" class="alert alert-danger">
+            <div [hidden]="!errorMessage" class="alert alert-danger">
               {{errorMessage}}
             </div>
 
-            <button type="submit" class="btn rounded-btn"> Register </button>&nbsp;
-            &nbsp;
+            <button type="submit" class="btn btn-success loginBtn rounded-btn"> Register </button>
           </form>
-          <!-- end of login -->
-        </div>
-      </td>
-    </tr>
-  </table>
 
+        </div>
+    </div>
 </div>
