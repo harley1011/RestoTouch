@@ -10,8 +10,7 @@ module.exports = function(req, res, next) {
       return;
     }
   }
-
-  var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'] || req.cookies['x_access_token'];
+  var token =  req.headers['x-access-token'];
   if (token) {
     try {
       var decoded = jwt.decode(token, configAuth.secret);
