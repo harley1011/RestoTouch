@@ -8,7 +8,8 @@ setDatabase(models);
 
 module.exports = {
   register: register,
-  setDatabase: setDatabase
+  setDatabase: setDatabase,
+  login: login
 };
 
 function setDatabase (m) {
@@ -29,8 +30,6 @@ function register(req, res) {
 
 function userInfo(user) {
   var token = genToken(user);
-  user.password = "";
-  user.salt = "";
   return {user: {
     "id": user.id,
     "firstName": user.firstName,
@@ -58,5 +57,27 @@ function genToken(user) {
 function expiresIn(numDays) {
   var dateObj = new Date();
   return dateObj.setDate(dateObj.getDate() + numDays);
+}
+
+function login(req,res) {
+  var user = req.body;
+
+  return userModel.findOne({
+    where: {email: user.email}
+  }).then(function (newUser) {
+    if (!newUser) {
+      res.status(401);
+      return res.json({message: "User access denied"});
+    }
+    var info = userInfo(newUser);
+    var passwordMatched = passwordHasher.comparePassword(user.password, newUser.salt, newUser.password);
+    if (passwordMatched) {
+      return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken": info.token});
+    } else {
+      res.status(401);
+      return res.json({message: "User access denied"});
+    }
+
+  });
 }
 

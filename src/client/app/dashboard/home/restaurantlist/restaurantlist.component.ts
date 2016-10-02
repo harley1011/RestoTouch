@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Restaurant } from './restaurant';
-import { RestaurantListService } from './restaurantlist.service';
+import { RestaurantService } from '../../restaurant/restaurant.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'restaurantlist-cmp',
 	templateUrl: 'restaurantlist.component.html',
 	styleUrls: ['restaurantlist.css'],
-  providers: [RestaurantListService]
+  providers: [RestaurantService]
 })
 
 export class RestaurantListComponent implements OnInit {
   numOfRestaurants: number;
   restaurants: Restaurant[];
 
-  constructor(private restaurantListService: RestaurantListService, private router: Router) { }
+  constructor(private restaurantListService: RestaurantService, private router: Router) { }
 
 	getRestaurants(): void {
 		this.restaurantListService.getRestaurants().subscribe(

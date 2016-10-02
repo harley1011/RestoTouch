@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { GeneralResponse }  from '../../shared/general.response';
 
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Response, Headers, RequestOptions } from '@angular/http';
+import { AuthHttpService } from '../../services/auth.http.services';
 import { Observable } from 'rxjs/Observable';
 
 
@@ -11,11 +12,17 @@ import { Observable } from 'rxjs/Observable';
 export class RestaurantService {
   private url = 'http://localhost:10010/restaurant';
 
-  constructor (private http: Http) {}
+  constructor (private http: AuthHttpService) {}
 
   getRestaurant (name: string): Observable<Restaurant> {
     return this.http.get(this.url + '/' + name)
-      .map(this.extractRestaurantData)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getRestaurants (): Observable<Restaurant[]> {
+    return this.http.get(this.url)
+      .map((response) => this.extractData(response).restaurants)
       .catch(this.handleError);
   }
 
@@ -25,7 +32,7 @@ export class RestaurantService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.url, body, options)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
@@ -35,22 +42,17 @@ export class RestaurantService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.put(this.url + '/' + oldName, body, options)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
   deleteRestaurant (name: string): Observable<Restaurant> {
     return this.http.delete(this.url + '/' + name)
-      .map(this.extractGeneralResponseData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
-  private extractRestaurantData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private extractGeneralResponseData(res: Response) {
+  private extractData(res: Response) {
     let body = res.json();
     return body || { };
   }
