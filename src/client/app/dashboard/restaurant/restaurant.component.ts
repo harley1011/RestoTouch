@@ -59,20 +59,20 @@ export class RestaurantComponent implements OnInit {
 		this.restaurant.name = values['name'];
 		this.restaurant.description = values['description'];
 		this.restaurant.address = values['address'];
-		this.restaurant.m_open = values['m_open'];
-		this.restaurant.m_close = values['m_close'];
-		this.restaurant.tu_open = values['tu_open'];
-		this.restaurant.tu_close = values['tu_close'];
-		this.restaurant.w_open = values['w_open'];
-		this.restaurant.w_close = values['w_close'];
-		this.restaurant.th_open = values['th_open'];
-		this.restaurant.th_close = values['th_close'];
-		this.restaurant.f_open = values['f_open'];
-		this.restaurant.f_close = values['f_close'];
-		this.restaurant.sa_open = values['sa_open'];
-		this.restaurant.sa_close = values['sa_close'];
-		this.restaurant.su_open = values['su_open'];
-		this.restaurant.su_close = values['su_close'];
+		this.restaurant.mOpen = values['mOpen'];
+		this.restaurant.mClose = values['mClose'];
+		this.restaurant.tuOpen = values['tuOpen'];
+		this.restaurant.tuClose = values['tuClose'];
+		this.restaurant.wOpen = values['wOpen'];
+		this.restaurant.wClose = values['wClose'];
+		this.restaurant.thOpen = values['thOpen'];
+		this.restaurant.thClose = values['thClose'];
+		this.restaurant.fOpen = values['fOpen'];
+		this.restaurant.fClose = values['fClose'];
+		this.restaurant.saOpen = values['saOpen'];
+		this.restaurant.saClose = values['saClose'];
+		this.restaurant.suOpen = values['suOpen'];
+		this.restaurant.suClose = values['suClose'];
 
 		if (this.create) {
 			this.add();
@@ -142,46 +142,46 @@ function validateInputs () {
 	var addressValue = validateInput('address', null);
 	if (addressValue === null) validationError = true;
 
-	var mOpenValue = validateInput('m_open', validateTime);
+	var mOpenValue = validateInput('mOpen', validateTime);
 	if (mOpenValue === null) validationError = true;
 
-	var mCloseValue = validateInput('m_close', validateTime);
+	var mCloseValue = validateInput('mClose', validateTime);
 	if (mCloseValue === null) validationError = true;
 
-	var tuOpenValue = validateInput('tu_open', validateTime);
+	var tuOpenValue = validateInput('tuOpen', validateTime);
 	if (tuOpenValue === null) validationError = true;
 
-	var tuCloseValue = validateInput('tu_close', validateTime);
+	var tuCloseValue = validateInput('tuClose', validateTime);
 	if (tuCloseValue === null) validationError = true;
 
-	var wOpenValue = validateInput('w_open', validateTime);
+	var wOpenValue = validateInput('wOpen', validateTime);
 	if (wOpenValue === null) validationError = true;
 
-	var wCloseValue = validateInput('w_close', validateTime);
+	var wCloseValue = validateInput('wClose', validateTime);
 	if (wCloseValue === null) validationError = true;
 
-	var thOpenValue = validateInput('th_open', validateTime);
+	var thOpenValue = validateInput('thOpen', validateTime);
 	if (thOpenValue === null) validationError = true;
 
-	var thCloseValue = validateInput('th_close', validateTime);
+	var thCloseValue = validateInput('thClose', validateTime);
 	if (thCloseValue === null) validationError = true;
 
-	var fOpenValue = validateInput('f_open', validateTime);
+	var fOpenValue = validateInput('fOpen', validateTime);
 	if (fOpenValue === null) validationError = true;
 
-	var fCloseValue = validateInput('f_close', validateTime);
+	var fCloseValue = validateInput('fClose', validateTime);
 	if (fCloseValue === null) validationError = true;
 
-	var saOpenValue = validateInput('sa_open', validateTime);
+	var saOpenValue = validateInput('saOpen', validateTime);
 	if (saOpenValue === null) validationError = true;
 
-	var saCloseValue = validateInput('sa_close', validateTime);
+	var saCloseValue = validateInput('saClose', validateTime);
 	if (saCloseValue === null) validationError = true;
 
-	var suOpenValue = validateInput('su_open', validateTime);
+	var suOpenValue = validateInput('suOpen', validateTime);
 	if (suOpenValue === null) validationError = true;
 
-	var suCloseValue = validateInput('su_close', validateTime);
+	var suCloseValue = validateInput('suClose', validateTime);
 	if (suCloseValue === null) validationError = true;
 
 	if (validationError) return null;
@@ -190,20 +190,20 @@ function validateInputs () {
 		name: nameValue,
 		description: descriptionValue,
 		address: addressValue,
-		m_open: mOpenValue,
-		m_close: mCloseValue,
-		tu_open: tuOpenValue,
-		tu_close: tuCloseValue,
-		w_open: wOpenValue,
-		w_close: wCloseValue,
-		th_open: thOpenValue,
-		th_close: thCloseValue,
-		f_open: fOpenValue,
-		f_close: fCloseValue,
-		sa_open: saOpenValue,
-		sa_close: saCloseValue,
-		su_open: suOpenValue,
-		su_close: suCloseValue,
+		mOpen: mOpenValue,
+		mClose: mCloseValue,
+		tuOpen: tuOpenValue,
+		tuClose: tuCloseValue,
+		wOpen: wOpenValue,
+		wClose: wCloseValue,
+		thOpen: thOpenValue,
+		thClose: thCloseValue,
+		fOpen: fOpenValue,
+		fClose: fCloseValue,
+		saOpen: saOpenValue,
+		saClose: saCloseValue,
+		suOpen: suOpenValue,
+		suClose: suCloseValue,
 	};
 }
 
