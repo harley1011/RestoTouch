@@ -13,7 +13,7 @@ export class AuthService implements CanActivate, CanActivateChild {
 
   public loggedInUser: User;
 
-  private url = 'http://localhost:10010/login';
+  private url = 'http://localhost:10010';
 
   constructor(private http: Http, private router: Router) {
     var data = localStorage.getItem('user');
@@ -47,7 +47,7 @@ export class AuthService implements CanActivate, CanActivateChild {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.url, body, options)
+    return this.http.post(this.url + '/login', body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -57,7 +57,7 @@ export class AuthService implements CanActivate, CanActivateChild {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.url, body, options)
+    return this.http.post(this.url + '/register', body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

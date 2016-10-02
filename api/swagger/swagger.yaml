@@ -188,6 +188,8 @@ definitions:
         type: string
       password:
         type: string
+      passwordConfirm:
+        type: string
     required:
       - firstName
       - lastName
