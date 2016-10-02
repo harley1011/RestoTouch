@@ -18,7 +18,7 @@ function setDatabase (m) {
 
 //GET /restaurant
 function getAll(req, res) {
-  return restaurantModel.findAll().then(function(restaurants) {
+  return restaurantModel.findAll({where: {userId: req.userId}}).then(function(restaurants) {
     return res.json({ restaurants: restaurants });
   });
 }
@@ -26,6 +26,7 @@ function getAll(req, res) {
 //POST /restaurant
 function save(req, res) {
   var restaurant = req.body;
+  restaurant.userId = req.userId;
   return restaurantModel.create(restaurant).then(function(result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
@@ -36,7 +37,8 @@ function get(req, res) {
   var name = req.swagger.params.name.value;
   return restaurantModel.findOne({
     where: {
-      name: name
+      name: name,
+      userId: req.userId
     }
   }).then(function(restaurant) {
     if (restaurant) {
@@ -53,7 +55,8 @@ function update(req, res) {
   var name = req.swagger.params.name.value;
   return restaurantModel.update(restaurant, {
     where: {
-      name: name
+      name: name,
+      userId: req.userId
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Restaurant Updated"});
@@ -65,7 +68,8 @@ function del(req, res) {
   var name = req.swagger.params.name.value;
   return restaurantModel.destroy({
     where: {
-      name: name
+      name: name,
+      userId: req.userId
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Restaurant Deleted"});
