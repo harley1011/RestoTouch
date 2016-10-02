@@ -1,18 +1,20 @@
 import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http} from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import { UserService } from './app/signup/user.service.ts';
+import { AuthService } from '../app/services/auth.service';
+import {Router} from '@angular/router';
 
 export function main() {
   describe('Signing up User Service', () => {
-    let userService: UserService;
+    let userService: AuthService;
     let backend: MockBackend;
     let connection: any;
 
     beforeEach(() => {
 
       let injector = ReflectiveInjector.resolveAndCreate([
-        UserService,
+        AuthService,
+        Router,
         BaseRequestOptions,
         MockBackend,
         {
@@ -23,7 +25,7 @@ export function main() {
           deps: [MockBackend, BaseRequestOptions]
         },
       ]);
-      userService = injector.get(UserService);
+      userService = injector.get(AuthService);
       backend = injector.get(MockBackend);
 
       backend.connections.subscribe((c: any) => connection = c);
