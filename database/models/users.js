@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
     email: {type: DataTypes.STRING, unique: true},
     phoneNumber: {type: DataTypes.STRING, unique: false},
     password: DataTypes.STRING,
+    salt: DataTypes.STRING,
     emailVerified: {type: DataTypes.BOOLEAN, defaultValue: false},
   });
 };
