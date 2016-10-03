@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import { User} from '../models/user';
 
 @Component({
     moduleId: module.id,
@@ -6,7 +8,17 @@ import { Component } from '@angular/core';
     templateUrl: 'topnav.html',
 })
 
-export class TopNavComponent {
+export class TopNavComponent implements OnInit  {
+  user: User;
+
+  constructor(private authService: AuthService) {
+
+  }
+
+  ngOnInit() {
+    this.user = this.authService.loggedInUser;
+  }
+
 	changeTheme(color: string): void {
 		var link: any = $('<link>');
 		link

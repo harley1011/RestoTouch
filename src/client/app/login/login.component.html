@@ -1,22 +1,40 @@
-<div class="login-page">
-	<div class="row">
-		<div class="col-lg-4 col-lg-offset-4">
-        	<img src="assets/img/SB-admin.png" width="150px" class="user-avatar" />
-			<h1>SB Admin BS 4 Angular2</h1>
-			<form role="form">
-				<div class="form-content">
-					<div class="form-group">
-						<input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="Email">
-					</div>
+<div class="row loginPageContainer">
+    <div class="col col-md-7 logoContainer">
+        <img src="assets/img/logo.png">
+    </div>
+    <div class="col col-md-5 loginFormContainer">
+        <!-- register/language emplacement -->
+        <div class="row loginFormNav">
+            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">Register</span></a> &emsp;|&emsp;
+        <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+        </div>
+        
+        <!-- login form -->
+        <div class="row loginPageContent">
+        <div class="row loginFormHeader">
+            <h1 class="loginPageTitle">Hello</h1>
+            <p class="loginPageBodyText">Please enter your login information.</p>
+        </div>
+        <!-- login elements form -->
+        <form role="form" (ngSubmit)="onSubmit()">
+            <div class="form-content">
+                <!-- input box for email-->
+                <div class="form-group">
+                    <input type="email" class="form-control input-underline input-lg" id="email" placeholder="Email" required
+            [(ngModel)]="user.email" name="email" #email="ngModel">
+                </div>
+                <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> E-mail is required </div>
 
-					<div class="form-group">
-						<input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
-					</div>
-				</div>
-				<a class="btn rounded-btn" routerLink="/dashboard/home"> Log in </a>				
-				&nbsp;
-				<a type="submit" class="btn rounded-btn" routerLink="/signup">Register</a>
-			</form>
-		</div>	
-	</div>
+                <!-- input box for password-->
+                <div class="form-group">
+                    <input type="password" class="form-control input-underline input-lg" id="password" placeholder="Password" required
+            [(ngModel)]="user.password" name="password" #password="ngModel">
+                </div>
+                <div [hidden]="password.valid || password.pristine" class="alert alert-danger"> Password is required </div>
+                <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+                <!-- buttons -->
+                <button type="submit" class="btn btn-success loginBtn rounded-btn"> Log in </button>     </div>
+        </form>
+        </div>
+    </div>
 </div>
