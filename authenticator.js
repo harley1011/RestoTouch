@@ -1,6 +1,7 @@
 var jwt = require('jwt-simple');
 var configAuth = require('./config/auth');
 var tokenNotRequiredRoutes = ['/login', '/register'];
+var path = require('path');
 
 module.exports = function(req, res, next) {
 
@@ -27,21 +28,10 @@ module.exports = function(req, res, next) {
       next();
 
     } catch (err) {
-      res.status(401);
-      return res.json({
-        "success": false,
-        "status": 401,
-        "message": "Invalid Token or Key",
-        "error": err
-      });
+      return res.sendFile(path.join(__dirname + '/dist/prod/index.html'));
 
     }
   } else {
-    res.status(401);
-    res.json({
-      "status": 401,
-      "message": "Invalid Token or Key"
-    });
-    return;
+    return res.sendFile(path.join(__dirname + '/dist/prod/index.html'));
   }
 };
