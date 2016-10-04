@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RestaurantService {
-  private url = 'http://localhost:10010/restaurant';
+  private url = '/restaurant';
 
   constructor (private http: AuthHttpService) {}
 
