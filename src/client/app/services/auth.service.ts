@@ -13,6 +13,7 @@ import 'rxjs/Rx';
 export class AuthService implements CanActivate, CanActivateChild {
 
   public loggedInUser: User;
+  private loggedIn = false;
 
   private url = '';
 
@@ -24,7 +25,7 @@ export class AuthService implements CanActivate, CanActivateChild {
   }
 
   canActivate() {
-    if (this.isLoggedIn()) {
+    if (this.loggedIn) {
       return true;
     }
     this.router.navigate(['/']);
@@ -67,7 +68,11 @@ export class AuthService implements CanActivate, CanActivateChild {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));
-    this.loggedInUser = new User(body.user.firstName, body.user.lastName, body.user.lastName, '', '');
+    this.loggedIn = true;
+    var data = localStorage.getItem('user');
+    if (data !== null) {
+      this.loggedInUser = JSON.parse(data);
+    }
     return body || {};
   }
 
