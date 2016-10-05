@@ -8,7 +8,7 @@
             <a type="submit" routerLink="/"><span style="font-weight: bold;">Log In</span></a> &emsp;|&emsp;
         <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
         </div>
-        
+
         <!-- login form -->
         <div class="row loginPageContent">
         <div class="row loginFormHeader">
@@ -18,7 +18,7 @@
         <!-- login elements form -->
         <form role="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
-                
+
              <!-- input box for first name -->
               <input type="text" class="form-control input-underline input-lg" id="firstName"
                      placeholder="First Name"
@@ -42,7 +42,6 @@
             <div class="form-group">
               <input type="text" class="form-control input-underline input-lg" id="email"
                      placeholder="Email"
-                     required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
                      [(ngModel)]="user.email" name="email" #email="ngModel">
             </div>
             <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
