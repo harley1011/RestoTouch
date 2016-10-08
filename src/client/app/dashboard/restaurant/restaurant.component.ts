@@ -16,10 +16,14 @@ export class RestaurantComponent implements OnInit {
 	create: boolean;
 	restaurant: Restaurant;
   errorMessage: string;
+  hideManageLanguage = false;
 
 	constructor(private route: ActivatedRoute, private router: Router,
 		private restaurantService: RestaurantService) {}
 
+  toggleShowManageLanguage(): void {
+    this.hideManageLanguage = !this.hideManageLanguage;
+  }
 	getRestaurant(name: string): void {
 		this.restaurantService.getRestaurant(name).subscribe(
 			restaurant => {
