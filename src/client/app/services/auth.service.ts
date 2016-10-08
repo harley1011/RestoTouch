@@ -15,7 +15,6 @@ import 'rxjs/Rx';
 export class AuthService implements CanActivate, CanActivateChild {
 
   public loggedInUser: User;
-  private loggedIn = false;
 
   constructor(private http: Http, private router: Router, private api: ApiEndpointService) {
     var data = localStorage.getItem('user');
@@ -25,13 +24,16 @@ export class AuthService implements CanActivate, CanActivateChild {
   }
 
   canActivate() {
-    var data = localStorage.getItem('user');
-    if (data !== null) {
-      this.loggedInUser = JSON.parse(data);
+    if (!this.loggedInUser) {
+      var data = localStorage.getItem('user');
+      if (data !== null) {
+        this.loggedInUser = JSON.parse(data);
+      }
     }
     if (this.loggedInUser) {
       return true;
     }
+
     this.router.navigate(['/']);
     return false;
 
@@ -68,16 +70,11 @@ export class AuthService implements CanActivate, CanActivateChild {
       .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
+  extractData(res: Response) : User {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));
-    this.loggedIn = true;
-    var data = localStorage.getItem('user');
-    if (data !== null) {
-      this.loggedInUser = JSON.parse(data);
-    }
-    return body || {};
+    return body.user;
   }
 
   private handleError(error: any) {
