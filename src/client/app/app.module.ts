@@ -12,6 +12,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth.http.services';
+import { ApiEndpointService } from './services/api.endpoint.service';
 
 @NgModule({
 	imports: [
@@ -24,7 +25,7 @@ import { AuthHttpService } from './services/auth.http.services';
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],
-	providers: [AuthService, AuthHttpService, {
+	providers: [AuthService, ApiEndpointService, AuthHttpService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],

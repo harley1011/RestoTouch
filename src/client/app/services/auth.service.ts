@@ -7,6 +7,8 @@ import {Router, CanActivate, CanActivateChild} from '@angular/router';
 import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
+import  {ApiEndpointService} from './api.endpoint.service';
+
 import 'rxjs/Rx';
 
 @Injectable()
@@ -15,9 +17,7 @@ export class AuthService implements CanActivate, CanActivateChild {
   public loggedInUser: User;
   private loggedIn = false;
 
-  private url = '';
-
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: Http, private router: Router, private api: ApiEndpointService) {
     var data = localStorage.getItem('user');
     if (data !== null) {
       this.loggedInUser = JSON.parse(data);
@@ -25,7 +25,11 @@ export class AuthService implements CanActivate, CanActivateChild {
   }
 
   canActivate() {
-    if (this.loggedIn) {
+    var data = localStorage.getItem('user');
+    if (data !== null) {
+      this.loggedInUser = JSON.parse(data);
+    }
+    if (this.loggedInUser) {
       return true;
     }
     this.router.navigate(['/']);
@@ -49,7 +53,7 @@ export class AuthService implements CanActivate, CanActivateChild {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.url + '/login', body, options)
+    return this.http.post(this.api.getEndpoint() + '/login', body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -59,7 +63,7 @@ export class AuthService implements CanActivate, CanActivateChild {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.url + '/register', body, options)
+    return this.http.post(this.api.getEndpoint() + '/register', body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
