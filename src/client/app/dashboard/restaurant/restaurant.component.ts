@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { RestaurantService } from './restaurant.service';
+import { LanguageService} from '../../services/language.service';
 
 @Component({
 	moduleId: module.id,
@@ -18,7 +19,7 @@ export class RestaurantComponent implements OnInit {
   errorMessage: string;
   hideManageLanguage = false;
 
-	constructor(private route: ActivatedRoute, private router: Router,
+	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
 		private restaurantService: RestaurantService) {}
 
   toggleShowManageLanguage(): void {
