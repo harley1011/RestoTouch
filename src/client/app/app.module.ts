@@ -13,6 +13,8 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth.http.services';
 import { ApiEndpointService } from './services/api.endpoint.service';
+import { LanguageService } from './services/language.service';
+
 
 @NgModule({
 	imports: [
@@ -25,7 +27,7 @@ import { ApiEndpointService } from './services/api.endpoint.service';
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],
-	providers: [AuthService, ApiEndpointService, AuthHttpService, {
+	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],
