@@ -74,8 +74,8 @@ export class RestaurantComponent implements OnInit {
 		      '9:00', '21:00',
 		      '9:00', '21:00',
 		      '9:00', '21:00',
-		      '9:00', '21:00'
-		    );
+		      '9:00', '21:00',
+          []);
 				this.create = true;
 			}
 		});

@@ -1,3 +1,5 @@
+import {Language} from '../../../shared/models/language';
+
 export class Restaurant {
   constructor (
     public name: string,
@@ -16,6 +18,7 @@ export class Restaurant {
     public saOpen: string,
     public saClose: string,
     public suOpen: string,
-    public suClose: string
+    public suClose: string,
+    public supportedLanguages: Array<Language>
 	) { }
 }
