@@ -25,19 +25,19 @@
               aria-controls="languageDiv" (click)="toggleShowManageLanguage()">Manage Languages
       </button>
       <div [hidden]="hideManageLanguage">
-        <div class="list-group">
-          <a class="list-group-item" *ngFor="let language of supportedLanguages" href="javascript:;">{{language.name}}</a>
-        </div>
-        <div>
-          <div class="input-group">
-            <select name="language" class="form-control" [(ngModel)]="selectedLanguage" >
-              <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name}}</option>
-            </select>
-            <span class="input-group-btn">
-              <button class="btn btn-default" (click)="addLanguage()" type="button">Add</button>
+        <ul class="list-group">
+          <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-remove icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
+          <li class="list-group-item">
+            <div class="input-group">
+              <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
+                <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name}}</option>
+              </select>
+              <span class="input-group-btn">
+              <button class="btn btn-primary" (click)="addLanguage()" type="button">Add</button>
             </span>
-          </div>
-        </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="col-lg-6">
