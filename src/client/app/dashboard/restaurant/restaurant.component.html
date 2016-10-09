@@ -31,8 +31,7 @@
         <div>
           <div class="input-group">
             <select class="form-control">
-              <option>French</option>
-              <option>English</option>
+              <option *ngFor="let language of languages">{{language.name}}</option>
             </select>
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">Add</button>
