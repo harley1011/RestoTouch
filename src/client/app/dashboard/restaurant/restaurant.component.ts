@@ -20,15 +20,21 @@ export class RestaurantComponent implements OnInit {
   errorMessage: string;
   hideManageLanguage = false;
   languages: Array<Language>;
+  selectedLanguage: Language;
 
 	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
 		private restaurantService: RestaurantService) {
     this.languages = languageService.languages();
   }
 
+  addLanguage() {
+    console.log(this.selectedLanguage);
+  }
+
   toggleShowManageLanguage(): void {
     this.hideManageLanguage = !this.hideManageLanguage;
   }
+
 	getRestaurant(name: string): void {
 		this.restaurantService.getRestaurant(name).subscribe(
 			restaurant => {
