@@ -26,15 +26,15 @@
       </button>
       <div [hidden]="hideManageLanguage">
         <div class="list-group">
-          <a class="list-group-item" href="javascript:;">Cras justo odio</a>
+          <a class="list-group-item" *ngFor="let language of supportedLanguages" href="javascript:;">{{language.name}}</a>
         </div>
         <div>
           <div class="input-group">
-            <select class="form-control">
-              <option *ngFor="let language of languages">{{language.name}}</option>
+            <select name="language" class="form-control" [(ngModel)]="selectedLanguage" >
+              <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name}}</option>
             </select>
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Add</button>
+              <button class="btn btn-default" (click)="addLanguage()" type="button">Add</button>
             </span>
           </div>
         </div>

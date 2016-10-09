@@ -19,8 +19,9 @@ export class RestaurantComponent implements OnInit {
 	restaurant: Restaurant;
   errorMessage: string;
   hideManageLanguage = false;
+  supportedLanguages: Array<Language> = [];
   languages: Array<Language>;
-  selectedLanguage: Language;
+  selectedLanguage: string;
 
 	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
 		private restaurantService: RestaurantService) {
@@ -28,7 +29,13 @@ export class RestaurantComponent implements OnInit {
   }
 
   addLanguage() {
-    console.log(this.selectedLanguage);
+    let language = this.supportedLanguages.find(language => language.code === this.selectedLanguage);
+    if (language) {
+      console.log('Language is already supported');
+      return;
+    }
+    language = this.languages.find(language => language.code === this.selectedLanguage);
+    this.supportedLanguages.push(language);
   }
 
   toggleShowManageLanguage(): void {
