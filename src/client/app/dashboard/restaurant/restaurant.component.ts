@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { RestaurantService } from './restaurant.service';
 import { LanguageService} from '../../services/language.service';
+import { Language } from '../../shared/models/language';
 
 @Component({
 	moduleId: module.id,
@@ -18,9 +19,12 @@ export class RestaurantComponent implements OnInit {
 	restaurant: Restaurant;
   errorMessage: string;
   hideManageLanguage = false;
+  languages: Array<Language>;
 
 	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
-		private restaurantService: RestaurantService) {}
+		private restaurantService: RestaurantService) {
+    this.languages = languageService.languages();
+  }
 
   toggleShowManageLanguage(): void {
     this.hideManageLanguage = !this.hideManageLanguage;
