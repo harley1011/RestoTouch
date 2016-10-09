@@ -26,16 +26,24 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
 		private restaurantService: RestaurantService) {
     this.languages = languageService.languages();
+    this.supportedLanguages = [this.languages[0], this.languages[1], this.languages[50]];
+    //todo: remove the supported languages in languages array
   }
 
   addLanguage() {
     let language = this.supportedLanguages.find(language => language.code === this.selectedLanguage);
     if (language) {
+      //todo: remove this once the supported languages are removed from the languages
       console.log('Language is already supported');
       return;
     }
     language = this.languages.find(language => language.code === this.selectedLanguage);
     this.supportedLanguages.push(language);
+  }
+
+  removeLanguage(language: Language) {
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
   }
 
   toggleShowManageLanguage(): void {

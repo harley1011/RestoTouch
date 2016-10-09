@@ -2,7 +2,7 @@
 @import "app-base.scss";
 
 html, body {
-    height: 100%;   
+    height: 100%;
 }
 /* Login */
 .loginPageContainer{
@@ -96,5 +96,23 @@ a:hover{
 }
 
 
+.icon-remove {
+  font-weight: normal;
+  color: $brand-danger;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+    color: #c9302c;
+  }
+
+  &:active {
+    cursor: pointer;
+    color: #c9302c;
+  }
+
+}
 
 
