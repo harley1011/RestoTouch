@@ -1,9 +1,9 @@
 module.exports = {
-  getAll: getAll,
-  save: save,
-  get: get,
-  update: update,
-  del: del
+  getAll: getAllMenu,
+  save: saveMenu,
+  get: getMenu,
+  update: updateMenu,
+  del: delMenu
 };
 
 //GET /menu
