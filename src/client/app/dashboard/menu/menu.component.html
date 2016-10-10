@@ -1,25 +1,22 @@
 <div class="container-fluid">
 <h1>Create Menu</h1>
-<div class="row">
-  <div class="col-lg-12">
-
-    <div class="form-group">
-      <input id="name" class="form-control" name="name" placeholder="Menu Name" value="{{menu?.name }}">
-    </div>
-
-    <div class="col-lg-12" *ngFor="let menu of menus; let i = index">
-      <div (click)="modify(menu)" class="card card-primary card-inverse">
-        <div class="card-header card-primary">
-          {{ menu.name }}
-        </div>
-        <div class="card-block bg-white"></div>
+  <div class="row">
+    <form id="menuForm" role="form">
+     <div class="col-lg-12">
+      <div class="form-group">
+        <input id="name" class="form-control" name="name" placeholder="Menu Name" value="{{menu?.name }}">
       </div>
-    </div>
-
-    <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
-    <button *ngIf="!create" (click)="delete()" class="btn btn-danger">Delete</button>
-    <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success">Create</button>
-    <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+     </div>
+    </form>
   </div>
-</div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
+      <button *ngIf="!create" (click)="delete()" class="btn btn-danger">Delete</button>
+      <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success">Create</button>
+      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+
 </div>
