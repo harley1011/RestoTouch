@@ -1,5 +1,6 @@
 var models = require("../../database/models");
 var restaurantModel;
+var restaurantLanguageModel;
 setDatabase(models);
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
+  restaurantLanguageModel = models.getRestaurantsLanguageModel();
 }
 
 //GET /restaurant
@@ -27,7 +29,7 @@ function getAll(req, res) {
 function save(req, res) {
   var restaurant = req.body;
   restaurant.userId = req.userId;
-  return restaurantModel.create(restaurant).then(function(result) {
+  return restaurantModel.create(restaurant, {include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]}).then(function(result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
 }

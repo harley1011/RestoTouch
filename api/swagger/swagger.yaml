@@ -224,6 +224,11 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Restaurant"
+  Language:
+    type: object
+    properties:
+      code:
+        type: string
   Restaurant:
     type: object
     properties:
@@ -261,6 +266,10 @@ definitions:
         type: string
       suClose:
         type: string
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
     required:
       - name
       - description
