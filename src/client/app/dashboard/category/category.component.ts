@@ -1,10 +1,10 @@
-import {Component} from 'angular2/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'category',
-  templateUrl: 'category.component.html',
+    moduleId: module.id,
+  selector: 'category-cmp',
+  templateUrl: 'category.component.html'
 })
 
-export class CategoryComponent{
-
+export class CategoryComponent {
 }
