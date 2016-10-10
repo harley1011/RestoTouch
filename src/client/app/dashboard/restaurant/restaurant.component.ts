@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { RestaurantService } from './restaurant.service';
 
+import { Menu } from '../menu/menu';
+
 @Component({
 	moduleId: module.id,
 	selector: 'restaurant-cmp',
@@ -29,6 +31,14 @@ export class RestaurantComponent implements OnInit {
 				this.errorMessage = <any>error;
 			}
 		);
+	}
+
+	addMenu(): void {
+		this.router.navigate(['/dashboard/menulist', this.restaurant.name]);
+	}
+
+	openMenu(menu: Menu): void {
+		this.router.navigate(['/dashboard/menu', menu.name]);
 	}
 
   ngOnInit(): void {

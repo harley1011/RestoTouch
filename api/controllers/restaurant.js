@@ -1,5 +1,6 @@
 var models = require("../../database/models");
 var restaurantModel;
+var menuModel = models.getMenuModel();
 setDatabase(models);
 
 module.exports = {
@@ -18,7 +19,12 @@ function setDatabase (m) {
 
 //GET /restaurant
 function getAll(req, res) {
-  return restaurantModel.findAll({where: {userId: req.userId}}).then(function(restaurants) {
+  return restaurantModel.findAll({
+    where: {userId: req.userId},
+    include: [{
+      model: menuModel
+    }]
+  }).then(function(restaurants) {
     return res.json({ restaurants: restaurants });
   });
 }
@@ -39,7 +45,10 @@ function get(req, res) {
     where: {
       name: name,
       userId: req.userId
-    }
+    },
+    include: [{
+      model: menuModel
+    }]
   }).then(function(restaurant) {
     if (restaurant) {
       res.json(restaurant);
