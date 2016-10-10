@@ -18,6 +18,15 @@
         <label>Address</label>
         <input id="address" class="form-control" name="address" placeholder="Ex: 7141 Rue Sherbrooke O, Montréal, QC H4B 1R6" value="{{restaurant?.address }}">
       </div>
+      <div class="form-group">
+        <div>
+          <label>Menus</label>
+        </div>
+        <div class="btn-group-vertical btn-group-sm">
+          <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
+          <button (click)="addMenu()" type="button" class="btn btn-primary">Add/Remove</button>
+        </div>
+      </div>
     </div>
     <div class="col-lg-6">
       <h4>Opening Hours</h4>
