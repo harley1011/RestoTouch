@@ -12,7 +12,7 @@ module.exports = {
   setDatabase: setDatabase
 };
 
-function setDatabase (m) {
+function setDatabase(m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
   restaurantLanguageModel = models.getRestaurantsLanguageModel();
@@ -20,8 +20,8 @@ function setDatabase (m) {
 
 //GET /restaurant
 function getAll(req, res) {
-  return restaurantModel.findAll({where: {userId: req.userId}}).then(function(restaurants) {
-    return res.json({ restaurants: restaurants });
+  return restaurantModel.findAll({where: {userId: req.userId}}).then(function (restaurants) {
+    return res.json({restaurants: restaurants});
   });
 }
 
@@ -29,7 +29,12 @@ function getAll(req, res) {
 function save(req, res) {
   var restaurant = req.body;
   restaurant.userId = req.userId;
-  return restaurantModel.create(restaurant, {include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]}).then(function(result) {
+  return restaurantModel.create(restaurant, {
+    include: [{
+      model: restaurantLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
 }
@@ -41,8 +46,9 @@ function get(req, res) {
     where: {
       name: name,
       userId: req.userId
-    }
-  }).then(function(restaurant) {
+    },
+    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]
+  }).then(function (restaurant) {
     if (restaurant) {
       res.json(restaurant);
     } else {
@@ -60,7 +66,7 @@ function update(req, res) {
       name: name,
       userId: req.userId
     }
-  }).then(function(result) {
+  }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Updated"});
   });
 }
@@ -73,7 +79,7 @@ function del(req, res) {
       name: name,
       userId: req.userId
     }
-  }).then(function(result) {
+  }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Deleted"});
   });
 }
