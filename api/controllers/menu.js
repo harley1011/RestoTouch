@@ -1,25 +1,52 @@
+var models = require("../../database/models");
+var menuModel;
+setDatabase(models);
+
 module.exports = {
-  getAll: getAllMenu,
-  save: saveMenu,
-  get: getMenu,
-  update: updateMenu,
-  del: delMenu
+  getAllMenu: getAllMenu,
+  saveMenu: saveMenu,
+  getMenu: getMenu,
+  updateMenu: updateMenu,
+  delMenu: delMenu,
+  setDatabase: setDatabase
 };
+
+function setDatabase (m) {
+  models = m;
+  menuModel = models.getMenuModel();
+}
+
+
+var menus = [
+  {
+    name: 'Menu 1'
+  }, {
+    name: 'Menu 2'
+  }, {
+    name: 'Menu 3'
+  }, {
+    name: 'Menu 4'
+  }
+];
+
+
 
 //GET /menu
 function getAllMenu(req, res) {
-  /*return menuModel.findAll({where: {userId: req.userId}}).then(function(menus) {
+  //res.json({ menus: menus });
+
+  return menuModel.findAll({where: {userId: req.userId}}).then(function(menus) {
     return res.json({ menus: menus });
-  });*/
+  });
 }
 
 //POST /menu
 function saveMenu(req, res) {
-  /*var menu = req.body;
+  var menu = req.body;
   menu.userId = req.userId;
   return menuModel.create(menu).then(function(result) {
     return res.json({success: 1, description: "Menu Added"});
-  });*/
+  });
 }
 
 //GET /menu/{name}

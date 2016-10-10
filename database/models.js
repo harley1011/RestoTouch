@@ -6,6 +6,7 @@ var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
+menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 
 userModel.sync();
 restaurantModel.sync();
@@ -20,5 +21,5 @@ exports.getRestaurantModel = function() {
 };
 
 exports.getMenuModel = function() {
-  return restaurantModel;
+  return menuModel;
 };
