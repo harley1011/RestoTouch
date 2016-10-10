@@ -5,6 +5,7 @@ import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { HomeModule } from './home/home.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
+import { MenuModule } from './menu/menu.module';
 import { ChartModule } from './charts/chart.module';
 import { BlankPageModule } from './blank-page/blankPage.module';
 import { TableModule } from './tables/table.module';
@@ -26,6 +27,7 @@ import {SidebarComponent} from '../shared/index';
     	DropdownModule,
     	HomeModule,
       RestaurantModule,
+      MenuModule,
         ChartModule,
         TableModule,
         FormModule,
