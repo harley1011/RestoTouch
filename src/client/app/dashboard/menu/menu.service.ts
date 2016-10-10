@@ -4,7 +4,6 @@ import { Menu } from './menu';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
-//import { Response } from '@angular/http';
 import { AuthHttpService } from '../../services/auth.http.services';
 import { Observable } from 'rxjs/Observable';
 import  {ApiEndpointService} from '../../services/api.endpoint.service';
@@ -15,11 +14,11 @@ export class MenuService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  /*getMenu (name: string): Observable<Menu> {
+  getMenu (name: string): Observable<Menu> {
     return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
       .map(this.extractData)
       .catch(this.handleError);
-  }*/
+  }
 
   getMenus (): Observable<Menu[]> {
     return this.http.get(this.api.getEndpoint() + this.url)
@@ -37,7 +36,7 @@ export class MenuService {
       .catch(this.handleError);
   }
 
-  /*updateMenu (menu: Menu, oldName: string): Observable<GeneralResponse> {
+  updateMenu (menu: Menu, oldName: string): Observable<GeneralResponse> {
     let body = JSON.stringify(menu);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -51,7 +50,7 @@ export class MenuService {
     return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
       .map(this.extractData)
       .catch(this.handleError);
-  }*/
+  }
 
   private extractData(res: Response) {
     let body = res.json();
