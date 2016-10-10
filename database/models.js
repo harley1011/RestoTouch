@@ -7,7 +7,7 @@ var restaurantsLanguages = sequelize.import('./models/restaurantsLanguages.js');
 
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
-restaurantsLanguages.belongsTo(restaurantModel, {onDelete: 'cascade', foreinKey: 'restaurantId'});
+restaurantModel.hasMany(restaurantsLanguages, {as: 'supportedLanguages', foreignKey: 'restaurantId'});
 
 userModel.sync();
 restaurantModel.sync();
