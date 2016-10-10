@@ -16,25 +16,8 @@ function setDatabase (m) {
   menuModel = models.getMenuModel();
 }
 
-
-var menus = [
-  {
-    name: 'Menu 1'
-  }, {
-    name: 'Menu 2'
-  }, {
-    name: 'Menu 3'
-  }, {
-    name: 'Menu 4'
-  }
-];
-
-
-
 //GET /menu
 function getAllMenu(req, res) {
-  //res.json({ menus: menus });
-
   return menuModel.findAll({where: {userId: req.userId}}).then(function(menus) {
     return res.json({ menus: menus });
   });
@@ -51,7 +34,7 @@ function saveMenu(req, res) {
 
 //GET /menu/{name}
 function getMenu(req, res) {
-  /*var name = req.swagger.params.name.value;
+  var name = req.swagger.params.name.value;
   return menuModel.findOne({
     where: {
       name: name,
@@ -63,12 +46,12 @@ function getMenu(req, res) {
     } else {
       res.status(204).send();
     }
-  });*/
+  });
 }
 
 //PUT /menu/{name}
 function updateMenu(req, res) {
-  /*var menu = req.body;
+  var menu = req.body;
   var name = req.swagger.params.name.value;
   return menuModel.update(menu, {
     where: {
@@ -77,12 +60,12 @@ function updateMenu(req, res) {
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Menu Updated"});
-  });*/
+  });
 }
 
 //DELETE /menu/{name}
 function delMenu(req, res) {
-  /*var name = req.swagger.params.name.value;
+  var name = req.swagger.params.name.value;
   return menuModel.destroy({
     where: {
       name: name,
@@ -90,5 +73,5 @@ function delMenu(req, res) {
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Menu Deleted"});
-  });*/
+  });
 }
