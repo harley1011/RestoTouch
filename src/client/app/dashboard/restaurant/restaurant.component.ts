@@ -26,7 +26,6 @@ export class RestaurantComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
 		private restaurantService: RestaurantService) {
     this.languages = languageService.languages();
-    this.supportedLanguages = [this.languages[0], this.languages[1], this.languages[50]];
     //todo: remove the supported languages in languages array
   }
 
@@ -76,6 +75,8 @@ export class RestaurantComponent implements OnInit {
 		      '9:00', '21:00',
 		      '9:00', '21:00',
           this.supportedLanguages);
+        // Add english by default because the restaurant needs to support at least one language
+        this.supportedLanguages.push(this.languages.find(language => language.code === 'en'));
 				this.create = true;
 			}
 		});
