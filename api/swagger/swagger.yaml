@@ -125,6 +125,113 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /menu:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: menu
+    get:
+      description: Returns the list of menus
+      # used as the method name of the controller
+      operationId: getAllMenu
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/MenuListResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: saveMenu
+      description: Add a menu
+      # menu info to be stored
+      parameters:
+        - name: restaurant
+          description: Menu properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Menu"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /menu/{name}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: menu
+    get:
+      description: Returns a specific menu
+      # used as the method name of the controller
+      operationId: getMenu
+      parameters:
+        - name: name
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Menu"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Updates a menu
+      # used as the method name of the controller
+      operationId: updateMenu
+      parameters:
+        - name: name
+          type: string
+          in: path
+          required: true
+        - name: menu
+          description: Menu properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Menu"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes a menu
+      # used as the method name of the controller
+      operationId: delMenu
+      parameters:
+        - name: name
+          type: string
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /register:
     x-swagger-router-controller: account
     post:
@@ -219,7 +326,7 @@ definitions:
     required:
       - restaurants
     properties:
-      # The array of movies
+      # The array of restaurants
       restaurants:
         type: array
         items:
@@ -279,6 +386,22 @@ definitions:
       - saClose
       - suOpen
       - suClose
+  MenuListResponse:
+    required:
+      - menus
+    properties:
+      # The array of menus
+      menus:
+        type: array
+        items:
+          "$ref": "#/definitions/Menu"
+  Menu:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
   ErrorResponse:
     required:
       - message
