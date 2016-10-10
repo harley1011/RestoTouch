@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Menu } from '../menu/menu';
 import { MenuService } from '../menu/menu.service';
@@ -14,12 +14,14 @@ import { MenuService } from '../menu/menu.service';
 
 export class MenuListComponent implements OnInit {
 	numOfMenus: number;
+	restaurantName: string;
 	menus: Menu[];
 
-  constructor(private menuService: MenuService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private menuService: MenuService,
+		private router: Router) { }
 
 	getMenus(): void {
-		this.menuService.getMenus().subscribe(
+		this.menuService.getMenus(this.restaurantName).subscribe(
 			menus => {
 				this.menus = menus;
 				this.numOfMenus = this.menus.length;
@@ -31,6 +33,11 @@ export class MenuListComponent implements OnInit {
 	};
 
   ngOnInit(): void {
+		this.route.params.forEach((params: Params) => {
+			if (params['name']) {
+				this.restaurantName = params['name'];
+			}
+		});
     this.getMenus();
   }
 
