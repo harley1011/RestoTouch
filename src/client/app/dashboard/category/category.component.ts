@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     moduleId: module.id,
@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   templateUrl: 'category.component.html'
 })
 
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
+    isEditable: boolean;
+
+    ngOnInit(): void {
+        this.isEditable = false;
+    }
+    changeInput(): void {
+        if(this.isEditable === false) {
+            this.isEditable = true;
+        } else {
+            this.isEditable = false;
+        }
+    }
 }
