@@ -4,9 +4,14 @@
   transition: all 0.3s;
 }
 
-.card:hover {
+.card-primary:hover {
   border-color: #b3dbfe;
   background-color: #b3dbfe;
+}
+
+.card-success:hover {
+  border-color: #cae8ca;
+  background-color: #cae8ca;
 }
 
 .card .card-header {
@@ -14,9 +19,14 @@
   transition: all 0.3s;
 }
 
-.card:hover .card-header {
+.card-primary:hover .card-header {
   background-color: #b3dbfe;
   color: #0275d8;
+}
+
+.card-success:hover .card-header {
+  background-color: #cae8ca;
+  color: #5cb85c;
 }
 
 .card .card-block {

@@ -20,7 +20,7 @@ export class MenuService {
       .catch(this.handleError);
   }
 
-  getMenus (restaurantName: string): Observable<Menu[]> {
+  getMenus (): Observable<Menu[]> {
     return this.http.get(this.api.getEndpoint() + this.url)
       .map((response) => this.extractData(response).menus)
       .catch(this.handleError);
