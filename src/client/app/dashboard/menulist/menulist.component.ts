@@ -87,4 +87,10 @@ export class MenuListComponent implements OnInit {
 			this.router.navigate(['/dashboard/menu', menu.name]);
 		}
 	}
+
+	cancel(): void {
+		if (this.restaurant !== undefined) {
+			this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
+		}
+	}
 }
