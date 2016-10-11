@@ -22,7 +22,7 @@
         <div>
           <label>Menus</label>
         </div>
-        <div class="btn-group-vertical btn-group-sm">
+        <div class="btn-group-vertical btn-group-md">
           <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
           <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
         </div>
