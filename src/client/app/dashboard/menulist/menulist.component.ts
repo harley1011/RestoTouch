@@ -34,11 +34,14 @@ export class MenuListComponent implements OnInit {
 				if (this.restaurant === undefined)
 					return;
 
+				this.numOfMenus = 0;
+
 				for (var i = 0; i < this.menus.length; i++) {
 					this.menusInRestaurant[i] = false;
 					for (var j = 0; j < this.restaurant.Menus.length; j++) {
 						if (this.menus[i].name === this.restaurant.Menus[j].name) {
 							this.menusInRestaurant[i] = true;
+							this.numOfMenus++;
 							break;
 						}
 					}
@@ -71,9 +74,15 @@ export class MenuListComponent implements OnInit {
 		this.router.navigate(['/dashboard/menu']);
 	}
 
+	addRestaurantMenu(): void {
+		console.log('Add Restaurant Menu');
+	}
+
 	modify(event: MouseEvent, index: number, menu: Menu): void {
 		if (this.restaurant !== undefined) {
-			this.menusInRestaurant[index] = !this.menusInRestaurant[index];
+			var inRestaurant = this.menusInRestaurant[index];
+			this.numOfMenus = (inRestaurant) ? this.numOfMenus-1 : this.numOfMenus+1;
+			this.menusInRestaurant[index] = !inRestaurant;
 		} else {
 			this.router.navigate(['/dashboard/menu', menu.name]);
 		}
