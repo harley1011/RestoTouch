@@ -41,6 +41,10 @@ export class RestaurantComponent implements OnInit {
   }
 
   removeLanguage(language: Language) {
+    if (this.supportedLanguages.length <= 1) {
+      //todo: error message
+      console.log('At least one supported language is required');
+    }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
   }
@@ -53,6 +57,7 @@ export class RestaurantComponent implements OnInit {
 		this.restaurantService.getRestaurant(name).subscribe(
 			restaurant => {
 				this.restaurant = restaurant;
+        this.supportedLanguages = restaurant.supportedLanguages;
 			},
 			error =>  {
 				this.errorMessage = <any>error;
