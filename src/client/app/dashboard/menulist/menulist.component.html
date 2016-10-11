@@ -1,17 +1,17 @@
 <div class="container-fluid">
-  <h1 class="page-header">{{ restaurantName }} Menus <span class="label label-default"> {{ numOfMenus }} </span></h1>
+  <h1 class="page-header">{{ restaurant?.name }} Menus <span class="label label-default"> {{ numOfMenus }} </span></h1>
   <div class="container-fluid">
     <div  class="row">
       <div class="col-lg-3" *ngFor="let menu of menus; let i = index">
-        <div (click)="modify(menu)" class="card card-primary card-inverse">
-          <div class="card-header card-primary">
+        <div [ngClass]="{'card-success': menusInRestaurant[i], 'card-primary': !menusInRestaurant[i]}" (click)="modify($event, i, menu)" class="card card-inverse">
+          <div [ngClass]="{'card-success': menusInRestaurant[i], 'card-primary': !menusInRestaurant[i]}" class="card-header">
             {{ menu.name }}
           </div>
           <div class="card-block bg-white"></div>
         </div>
       </div>
 
-      <div class="col-lg-3">
+      <div *ngIf="!restaurant" class="col-lg-3">
         <button (click)="add()" class="btn btn-success">Add</button>
       </div>
 
