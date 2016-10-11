@@ -76,6 +76,10 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  cancel(): void {
+    this.router.navigate(['/dashboard/menulist']);
+  }
+
 }
 function validateInputs () {
 
