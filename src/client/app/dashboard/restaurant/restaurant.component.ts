@@ -33,7 +33,7 @@ export class RestaurantComponent implements OnInit {
 		);
 	}
 
-	addMenu(): void {
+	addRemoveMenu(): void {
 		this.router.navigate(['/dashboard/menulist', this.restaurant.name]);
 	}
 
@@ -54,7 +54,8 @@ export class RestaurantComponent implements OnInit {
 		      '9:00', '21:00',
 		      '9:00', '21:00',
 		      '9:00', '21:00',
-		      '9:00', '21:00'
+		      '9:00', '21:00',
+					[]
 		    );
 				this.create = true;
 			}

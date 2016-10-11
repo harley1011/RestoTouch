@@ -1,3 +1,5 @@
+import { Menu } from '../../menu/menu';
+
 export class Restaurant {
   constructor (
     public name: string,
@@ -16,6 +18,7 @@ export class Restaurant {
     public saOpen: string,
     public saClose: string,
     public suOpen: string,
-    public suClose: string
+    public suClose: string,
+    public Menus: Menu[]
 	) { }
 }
