@@ -75,7 +75,7 @@ export class MenuListComponent implements OnInit {
 	}
 
 	addRestaurantMenu(): void {
-		console.log('Add Restaurant Menu');
+		this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
 	}
 
 	modify(event: MouseEvent, index: number, menu: Menu): void {
