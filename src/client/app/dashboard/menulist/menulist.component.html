@@ -12,9 +12,10 @@
         </div>
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-4">
         <button *ngIf="!restaurant" (click)="add()" class="btn btn-success">Add</button>
         <button *ngIf="restaurant" (click)="addRestaurantMenu()" class="btn btn-primary">Confirm</button>
+        <button *ngIf="restaurant" (click)="cancel()" class="btn btn-secondary">Cancel</button>
       </div>
 
     </div>
