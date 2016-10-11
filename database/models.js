@@ -5,6 +5,10 @@ var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
 var restaurantMenuModel = sequelize.import('./models/restaurantmenu.js');
+var menucategorymodel = sequlize.import('./models/menucategory.js');
+
+menuModel.belongsToMany(categoryModel, {through:menucategorymodel});
+categoryModel.belongsToMany(menuModel, {through:menucategorymodel});
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
