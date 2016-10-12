@@ -1,6 +1,7 @@
 import { Menu } from '../../menu/menu';
 
 export class Restaurant {
+  id: number;
   constructor (
     public name: string,
     public description: string,
