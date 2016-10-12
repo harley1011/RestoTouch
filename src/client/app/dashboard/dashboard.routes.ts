@@ -22,6 +22,7 @@ export const DashboardRoutes: Route[] = [
     	component: DashboardComponent,
     	children: [
 	    	...HomeRoutes,
+        ...CategoryRoutes,
         ...RestaurantRoutes,
         ...MenuListRoutes,
         ...MenuRoutes,
