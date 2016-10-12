@@ -31,7 +31,13 @@
 }
 
 .cat-label-input input[type="text"] {
-    width: 113px;   
+    width: 100%;   
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 2%;
+    color: white;
+    margin: 0 auto;
 }
 
 .cat-icon {
