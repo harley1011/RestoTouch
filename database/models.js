@@ -5,7 +5,7 @@ var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
 var restaurantMenuModel = sequelize.import('./models/restaurantmenu.js');
-var menucategorymodel = sequlize.import('./models/menucategory.js');
+var menucategorymodel = sequelize.import('./models/menucategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
 
 menuModel.belongsToMany(categoryModel, {through:menucategorymodel});
