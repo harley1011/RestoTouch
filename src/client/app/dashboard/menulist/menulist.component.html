@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div  class="row">
       <div class="col-lg-3" *ngFor="let menu of menus; let i = index">
-        <div [ngClass]="{'card-success': menusInRestaurant[i], 'card-primary': !menusInRestaurant[i]}" (click)="modify($event, i, menu)" class="card card-inverse">
+        <div [ngClass]="{'card-success': menusInRestaurant[i], 'card-primary': !menusInRestaurant[i]}" (click)="modify(i, menu)" class="card card-inverse">
           <div [ngClass]="{'card-success': menusInRestaurant[i], 'card-primary': !menusInRestaurant[i]}" class="card-header">
             {{ menu.name }}
             <i *ngIf="menusInRestaurant[i]" class="fa fa-check" aria-hidden="true"></i>
@@ -14,7 +14,7 @@
 
       <div class="col-lg-4">
         <button *ngIf="!restaurant" (click)="add()" class="btn btn-success">Add</button>
-        <button *ngIf="restaurant" (click)="addRestaurantMenu()" class="btn btn-primary">Confirm</button>
+        <button *ngIf="restaurant" (click)="updateRestaurantMenu()" class="btn btn-primary">Confirm</button>
         <button *ngIf="restaurant" (click)="cancel()" class="btn btn-secondary">Cancel</button>
       </div>
 
