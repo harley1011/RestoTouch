@@ -6,13 +6,14 @@ import { MenuService } from '../menu/menu.service';
 
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { RestaurantService } from '../restaurant/restaurant.service';
+import { MenuListService } from './menulist.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'menulist-cmp',
 	templateUrl: 'menulist.component.html',
 	styleUrls: ['menulist.css'],
-  providers: [MenuService, RestaurantService]
+  providers: [MenuService, RestaurantService, MenuListService]
 })
 
 export class MenuListComponent implements OnInit {
@@ -20,9 +21,11 @@ export class MenuListComponent implements OnInit {
 	restaurant: Restaurant;
 	menus: Menu[];
 	menusInRestaurant: boolean[];
+	updates: {menuId: number, type: string}[];
 
   constructor(private route: ActivatedRoute, private menuService: MenuService,
-		private router: Router, private restaurantService: RestaurantService) { }
+		private router: Router, private restaurantService: RestaurantService,
+		private menuListService: MenuListService) { }
 
 	getMenus(): void {
 		this.menuService.getMenus().subscribe(
@@ -35,6 +38,7 @@ export class MenuListComponent implements OnInit {
 					return;
 
 				this.numOfMenus = 0;
+				this.updates = [];
 
 				for (var i = 0; i < this.menus.length; i++) {
 					this.menusInRestaurant[i] = false;
@@ -74,15 +78,27 @@ export class MenuListComponent implements OnInit {
 		this.router.navigate(['/dashboard/menu']);
 	}
 
-	addRestaurantMenu(): void {
+	updateRestaurantMenu(): void {
+		if (this.updates === undefined)
+			return;
+
+		for (var i = 0; i < this.updates.length; i++) {
+			if (this.updates[i].type === 'add') {
+				this.menuListService.addRestaurantMenu(this.updates[i].menuId, this.restaurant.id);
+			} else if (this.updates[i].type === 'remove') {
+				this.menuListService.deleteRestaurantMenu(this.updates[i].menuId, this.restaurant.id);
+			}
+		}
+
 		this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
 	}
 
-	modify(event: MouseEvent, index: number, menu: Menu): void {
+	modify(index: number, menu: Menu): void {
 		if (this.restaurant !== undefined) {
 			var inRestaurant = this.menusInRestaurant[index];
 			this.numOfMenus = (inRestaurant) ? this.numOfMenus-1 : this.numOfMenus+1;
 			this.menusInRestaurant[index] = !inRestaurant;
+			this.modifyUpdates(menu, this.menusInRestaurant[index]);
 		} else {
 			this.router.navigate(['/dashboard/menu', menu.name]);
 		}
@@ -92,5 +108,20 @@ export class MenuListComponent implements OnInit {
 		if (this.restaurant !== undefined) {
 			this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
 		}
+	}
+
+	private modifyUpdates(menu: Menu, inRestaurant: boolean): void {
+		var type = (inRestaurant) ? 'add' : 'remove';
+		for (var i = 0; i < this.updates.length; i++) {
+			if (this.updates[i].menuId === menu.id) {
+				this.updates[i].type = type;
+				return;
+			}
+		}
+
+		this.updates.push({
+			menuId: menu.id,
+			type: type
+		});
 	}
 }
