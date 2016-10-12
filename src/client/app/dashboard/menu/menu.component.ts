@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
 	create: boolean;
   menu : Menu;
   errorMessage: string;
+  sections: string[];
 
 	constructor(private route: ActivatedRoute, private menuService: MenuService, private router: Router) {}
 
@@ -30,6 +31,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sections = [];
 		this.route.params.forEach((params: Params) => {
 			if (params['name']) {
 			  this.getMenu(params['name']);
@@ -42,20 +44,29 @@ export class MenuComponent implements OnInit {
   }
 
   addAndUpdate(): void {
+    var categories = [
+      {id: 1, name: 'hamburger'}
+    ];
+
     var values = validateInputs();
     if (values === null) return;
 
-    var givenName = this.menu.name;
+    var oldName = this.menu.name;
     this.menu.name = values['name'];
 
     if (this.create) {
       this.add();
     } else {
-      this.update(givenName);
+      this.update(oldName);
     }
   }
 
+  addSection(): void {
+    this.sections.push('aCategory');
+  }
+
   add(): void {
+
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menulist']);
