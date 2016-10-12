@@ -10,6 +10,15 @@
     </form>
   </div>
 
+  <div id= "fatherOfSections" class="row">
+    <div *ngFor="let section of sections; let i = index" class="col-lg-12 menuSection">
+      A Section
+    </div>
+    <div id="addSectionBtn" class="col-lg-12 menuSection" (click)="addSection()">
+      +
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-lg-12">
       <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
