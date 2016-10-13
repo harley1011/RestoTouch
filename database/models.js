@@ -7,7 +7,6 @@ var categoryModel = sequelize.import('./models/categories.js');
 var menuModel = sequelize.import('./models/menus.js');
 var restaurantMenuModel = sequelize.import('./models/restaurantmenu.js');
 var menucategorymodel = sequelize.import('./models/menucategory.js');
-var categoryModel = sequelize.import('./models/categories.js');
 
 menuModel.belongsToMany(categoryModel, {through:menucategorymodel});
 categoryModel.belongsToMany(menuModel, {through:menucategorymodel});
@@ -35,9 +34,6 @@ exports.getRestaurantModel = function() {
 
 exports.getCategoryModel = function() {
   return categoryModel;
-
-exports.getMenuModel = function() {
-  return menuModel;
 };
 
 exports.getMenuModel = function() {
