@@ -1,5 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
-import { Router, ActivatedRoute, Params, RoutesRecognized, Event as NavigationEvent } from '@angular/router';
+import { Router, ActivatedRoute, RoutesRecognized, Event as NavigationEvent } from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import { User} from '../models/user';
 import { LanguageService} from '../../services/language.service';
@@ -21,16 +21,7 @@ export class TopNavComponent implements OnInit  {
   			  private route: ActivatedRoute, private router: Router) {
   	router.events.forEach((event: NavigationEvent) => {
   		if(event instanceof RoutesRecognized) {
-  			//this.hideLanguageSelect = !this.hideLanguageSelect;
-  			this.route.params.forEach((params:Params) => {
-  				console.log(params);
-	    	if(params['name']) {
-	    		this.hideLanguageSelect = false;
-		    		//Retrieve supported languages for that resto
-    		} else {
-    			this.hideLanguageSelect = true;
-    		}
-    	});
+  			this.hideLanguageSelect = !this.hideLanguageSelect;
   		}
   	});
   	this.languages = this.languageService.languages();
