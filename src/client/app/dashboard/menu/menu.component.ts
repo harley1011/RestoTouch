@@ -44,10 +44,12 @@ export class MenuComponent implements OnInit {
   }
 
   addAndUpdate(): void {
-    var categories = [
+  /*
+   // Dummy data from category api
+  var categories = [
       {id: 1, name: 'hamburger'}
     ];
-
+*/
     var values = validateInputs();
     if (values === null) return;
 
@@ -89,6 +91,18 @@ export class MenuComponent implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/dashboard/menulist']);
+  }
+
+  delete(): void {
+    this.menuService.deleteMenu(this.menu.name).subscribe(
+      generalResponse => {
+        console.log('response', generalResponse );
+        this.router.navigate(['/dashboard/menulist']);
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
 }
