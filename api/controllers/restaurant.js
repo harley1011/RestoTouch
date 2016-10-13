@@ -1,6 +1,6 @@
 var models = require("../../database/models");
 var restaurantModel;
-var menuModel = models.getMenuModel();
+var menuModel;
 setDatabase(models);
 
 module.exports = {
@@ -15,6 +15,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
+  menuModel = models.getMenuModel();
 }
 
 //GET /restaurant
