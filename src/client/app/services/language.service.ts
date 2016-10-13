@@ -4,8 +4,8 @@ import {Language} from '../shared/models/language';
 @Injectable()
 export class LanguageService {
 
-	//private supportedLanguages: Array<Language> = [];
-	//private selectedLanguage: Language;
+	private supportedLanguages: Array<Language> = [];
+	private selectedLanguage: Language;
 
   private isoLanguages = [new Language('ab', 'Abkhaz', 'аҧсуа', 2),
  new Language('aa', 'Afar', 'Afaraf', 2),
@@ -192,9 +192,22 @@ export class LanguageService {
 
   languages(): Array<Language> {
     return this.isoLanguages;
-
   }
 
+  setSupportedLanguages(languages: Array<Language>): void {
+  	this.supportedLanguages = languages;
+  }
 
+  setSelectedLanguage(language: Language): void {
+  	this.selectedLanguage = language;
+  }
+
+  getSupportedLanguages(): Array<Language> {
+  	return this.supportedLanguages;
+  }
+
+  getSelectedLanguage(): Language {
+  	return this.selectedLanguage;
+  }
 }
 
