@@ -40,3 +40,7 @@ exports.getCategoryModel = function() {
 exports.getMenuModel = function() {
   return menuModel;
 };
+
+exports.getRestaurantMenuModel = function() {
+  return restaurantMenuModel;
+};
