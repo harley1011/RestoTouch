@@ -57,7 +57,7 @@ export class RestaurantComponent implements OnInit {
 		this.restaurantService.getRestaurant(name).subscribe(
 			restaurant => {
 				this.restaurant = restaurant;
-        this.supportedLanguages = restaurant.supportedLanguages;
+        		this.supportedLanguages = restaurant.supportedLanguages;
 			},
 			error =>  {
 				this.errorMessage = <any>error;
