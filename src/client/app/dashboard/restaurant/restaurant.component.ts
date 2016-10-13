@@ -11,7 +11,7 @@ import { Language } from '../../shared/models/language';
 	selector: 'restaurant-cmp',
 	templateUrl: 'restaurant.component.html',
 	styleUrls: ['restaurant.css'],
-  providers: [RestaurantService]
+  providers: [RestaurantService, LanguageService]
 })
 
 export class RestaurantComponent implements OnInit {
@@ -27,6 +27,7 @@ export class RestaurantComponent implements OnInit {
 		private restaurantService: RestaurantService) {
     this.languages = languageService.languages();
     //todo: remove the supported languages in languages array
+    languageService.setSupportedLanguages(this.supportedLanguages);
   }
 
   addLanguage() {
@@ -85,6 +86,7 @@ export class RestaurantComponent implements OnInit {
 				this.create = true;
 			}
 		});
+		//this.languageService.setSupportedLanguages(this.languages);
   }
 
 	addAndUpdate(): void {

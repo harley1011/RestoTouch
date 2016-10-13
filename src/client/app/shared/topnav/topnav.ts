@@ -9,22 +9,22 @@ import { Language } from '../../shared/models/language';
     moduleId: module.id,
     selector: 'top-nav',
     templateUrl: 'topnav.html',
+    providers: [LanguageService]
 })
 
 export class TopNavComponent implements OnInit  {
   user: User;
-  languages: Array<Language>;
-  hideLanguageSelect = true;
-
+  languages: Array<Language> = [];
+  hideLanguageSelect = false;
 
   constructor(private authService: AuthService, private languageService: LanguageService,
   			  private route: ActivatedRoute, private router: Router) {
   	router.events.forEach((event: NavigationEvent) => {
   		if(event instanceof RoutesRecognized) {
-  			this.hideLanguageSelect = !this.hideLanguageSelect;
+  			//this.hideLanguageSelect = !this.hideLanguageSelect;
+  			this.languages = languageService.getSupportedLanguages();
   		}
   	});
-  	this.languages = this.languageService.languages();
   }
 
   ngOnInit() {
