@@ -232,6 +232,58 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /restaurantmenu:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: restaurantmenu
+    post:
+      operationId: saveRestaurantMenu
+      description: Add a restaurant menu
+      # menu info to be stored
+      parameters:
+        - name: restaurantmenu
+          description: Restaurant Menu relation
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/RestaurantMenu"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /restaurantmenu/{restaurantId}{menuId}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: restaurantmenu
+    delete:
+      description: Deletes a Restaurant Menu relation
+      # used as the method name of the controller
+      operationId: delRestaurantMenu
+      parameters:
+        - name: restaurantId
+          description: Restaurant Id
+          type: number
+          in: path
+          required: true
+        - name: menuId
+          description: Menu Id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /register:
     x-swagger-router-controller: account
     post:
@@ -402,6 +454,16 @@ definitions:
         type: string
     required:
       - name
+  RestaurantMenu:
+    type: object
+    properties:
+      RestaurantId:
+        type: number
+      MenuId:
+        type: number
+    required:
+      - RestaurantId
+      - MenuId
   ErrorResponse:
     required:
       - message

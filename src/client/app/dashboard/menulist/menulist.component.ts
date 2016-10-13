@@ -84,9 +84,21 @@ export class MenuListComponent implements OnInit {
 
 		for (var i = 0; i < this.updates.length; i++) {
 			if (this.updates[i].type === 'add') {
-				this.menuListService.addRestaurantMenu(this.updates[i].menuId, this.restaurant.id);
+				this.menuListService.addRestaurantMenu(this.updates[i].menuId, this.restaurant.id)
+					.subscribe(
+						null,
+						error => {
+							console.log(error);
+						}
+				);
 			} else if (this.updates[i].type === 'remove') {
-				this.menuListService.deleteRestaurantMenu(this.updates[i].menuId, this.restaurant.id);
+				this.menuListService.deleteRestaurantMenu(this.updates[i].menuId, this.restaurant.id)
+					.subscribe(
+						null,
+						error => {
+							console.log(error);
+						}
+				);
 			}
 		}
 
