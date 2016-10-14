@@ -1,6 +1,8 @@
 var models = require("../../database/models");
 var restaurantModel;
 var restaurantLanguageModel;
+var _ = require('lodash');
+
 setDatabase(models);
 
 module.exports = {
@@ -60,17 +62,35 @@ function get(req, res) {
 //PUT /restaurant/{name}
 function update(req, res) {
   var restaurant = req.body;
-  var name = req.swagger.params.name.value;
-  return restaurantModel.update(restaurant, {
-    where: {
-      name: name,
-      userId: req.userId
-    },
-    include: [
-      {model: restaurantLanguageModel, as: 'supportedLanguages'}
-    ]
-  }).then(function (result) {
-    return res.json({success: 1, description: "Restaurant Updated"});
+
+  return restaurantModel.findOne({
+    where: {id: restaurant.id},
+    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]
+  }).then(function (oldRestaurant) {
+
+    //Find what's new and what has been removed
+    var languagesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'code');
+    var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'code');
+
+
+    for (var prop in restaurant) {
+      oldRestaurant[prop] = restaurant[prop];
+    }
+    oldRestaurant.save().then(function (result) {
+
+      languagesToRemove.forEach(function (language) {
+        restaurantLanguageModel.destroy({where: {'code': language.code, 'restaurantId': restaurant.id}});
+      })
+
+      newLanguagesToAdd.forEach(function (language) {
+        language.restaurantId = restaurant.id;
+        //todo: see why this isn't working
+       // var restaurantLanguage = restaurantLanguageModel.create(language);
+      //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
+      })
+
+      return res.json({success: 1, description: "Restaurant Updated"});
+    });
   });
 }
 
