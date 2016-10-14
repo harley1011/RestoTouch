@@ -4,14 +4,17 @@ var sequelize = new Sequelize(configDB.url);
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var restaurantsLanguages = sequelize.import('./models/restaurantsLanguages.js');
+var restaurantsTranslations = sequelize.import('./models/restaurantsTranslations.js');
 
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 restaurantModel.hasMany(restaurantsLanguages, {as: 'supportedLanguages', foreignKey: 'restaurantId'});
+restaurantModel.hasMany(restaurantsTranslations, {as: 'translations', foreignKey: 'restaurantId'});
 
 userModel.sync();
 restaurantModel.sync();
 restaurantsLanguages.sync();
+restaurantsTranslations.sync();
 
 exports.getUserModel = function() {
   return userModel;
@@ -23,4 +26,8 @@ exports.getRestaurantModel = function() {
 
 exports.getRestaurantsLanguageModel = function () {
   return restaurantsLanguages;
+}
+
+exports.getRestaurantsTranslationModel = function () {
+	return restaurantsTranslations;
 }
