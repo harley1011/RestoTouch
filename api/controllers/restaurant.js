@@ -54,10 +54,11 @@ function get(req, res) {
       name: name,
       userId: req.userId
     },
-    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]
+    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
+      {model: restaurantsTranslations, as: 'translations'}]
   }).then(function (restaurant) {
     if (restaurant) {
-      res.json(restaurant);
+      return res.json(restaurant);
     } else {
       res.status(204).send();
     }
@@ -70,7 +71,8 @@ function update(req, res) {
 
   return restaurantModel.findOne({
     where: {id: restaurant.id},
-    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'}]
+    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
+      {model: restaurantsTranslations, as: 'translations'}]
   }).then(function (oldRestaurant) {
 
     //Find what's new and what has been removed

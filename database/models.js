@@ -12,9 +12,9 @@ restaurantModel.hasMany(restaurantsLanguages, {as: 'supportedLanguages', foreign
 restaurantModel.hasMany(restaurantsTranslations, {as: 'translations', foreignKey: 'restaurantId'});
 
 userModel.sync();
-restaurantModel.sync({force: true});
-restaurantsLanguages.sync({force: true});
-restaurantsTranslations.sync({force: true});
+restaurantModel.sync();
+restaurantsLanguages.sync();
+restaurantsTranslations.sync();
 
 exports.getUserModel = function() {
   return userModel;
