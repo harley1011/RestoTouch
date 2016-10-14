@@ -4,6 +4,7 @@ import { MockBackend } from '@angular/http/testing';
 
 import { RestaurantService } from '../../restaurant/restaurant.service';
 import {AuthHttpService} from '../../../services/auth.http.services';
+import {ApiEndpointService} from '../../../services/api.endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
@@ -25,6 +26,7 @@ export function main() {
         RestaurantService,
         BaseRequestOptions,
         AuthHttpService,
+        ApiEndpointService,
         {provide: Router, useValue: routerStub},
         MockBackend,
         {
