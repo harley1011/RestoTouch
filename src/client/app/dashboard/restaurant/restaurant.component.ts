@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Restaurant} from '../home/restaurantlist/restaurant';
+import {Restaurant, RestaurantTranslations} from '../home/restaurantlist/restaurant';
 import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
@@ -77,7 +77,9 @@ export class RestaurantComponent implements OnInit {
         this.getRestaurant(params['name']);
         this.create = false;
       } else {
-        this.restaurant = new Restaurant('', '', '',
+        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+        let translation = new RestaurantTranslations(' ', ' ',this.supportedLanguages[0].languageCode);
+        this.restaurant = new Restaurant('',
           '9:00', '21:00',
           '9:00', '21:00',
           '9:00', '21:00',
@@ -86,9 +88,9 @@ export class RestaurantComponent implements OnInit {
           '9:00', '21:00',
           '9:00', '21:00',
           this.supportedLanguages,
-          this.editingLanguage);
+          [translation],
+          translation);
         // Add english by default because the restaurant needs to support at least one language
-        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         this.create = true;
       }
     });
@@ -98,9 +100,9 @@ export class RestaurantComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    var oldName = this.restaurant.name;
-    this.restaurant.name = values['name'];
-    this.restaurant.description = values['description'];
+    var oldName = this.restaurant.selectedTranslation.name;
+    this.restaurant.selectedTranslation.name = values['name'];
+    this.restaurant.selectedTranslation.description = values['description'];
     this.restaurant.address = values['address'];
     this.restaurant.mOpen = values['mOpen'];
     this.restaurant.mClose = values['mClose'];
@@ -116,7 +118,6 @@ export class RestaurantComponent implements OnInit {
     this.restaurant.saClose = values['saClose'];
     this.restaurant.suOpen = values['suOpen'];
     this.restaurant.suClose = values['suClose'];
-    this.restaurant.selectedLanguage = this.editingLanguage;
 
     if (this.create) {
       this.add();
@@ -150,7 +151,8 @@ export class RestaurantComponent implements OnInit {
   }
 
   delete(): void {
-    this.restaurantService.deleteRestaurant(this.restaurant.name).subscribe(
+    //todo: use the restaurant id not the name to delete it
+    this.restaurantService.deleteRestaurant(this.restaurant.selectedTranslation.name).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/home']);
       },
@@ -166,6 +168,7 @@ export class RestaurantComponent implements OnInit {
 }
 
 function validateInputs() {
+  //todo: use angular form validation
   function validateTime(input: HTMLInputElement, value: string) {
     var timeFormat = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
     if (timeFormat.test(value) === false) {
