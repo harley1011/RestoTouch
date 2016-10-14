@@ -35,13 +35,13 @@ export class RestaurantComponent implements OnInit {
   }
 
   addLanguage() {
-    let language = this.supportedLanguages.find(language => language.code === this.selectedLanguage);
+    let language = this.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
     if (language) {
       //todo: remove this once the supported languages are removed from the languages
       console.log('Language is already supported');
       return;
     }
-    language = this.languages.find(language => language.code === this.selectedLanguage);
+    language = this.languages.find(language => language.languageCode === this.selectedLanguage);
     this.supportedLanguages.push(language);
   }
 
@@ -88,7 +88,7 @@ export class RestaurantComponent implements OnInit {
           this.supportedLanguages,
           this.editingLanguage);
         // Add english by default because the restaurant needs to support at least one language
-        this.supportedLanguages.push(this.languages.find(language => language.code === 'en'));
+        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         this.create = true;
       }
     });
