@@ -85,13 +85,13 @@ export class RestaurantComponent implements OnInit {
           '9:00', '21:00',
           '9:00', '21:00',
           '9:00', '21:00',
-          this.supportedLanguages);
+          this.supportedLanguages,
+          this.editingLanguage);
         // Add english by default because the restaurant needs to support at least one language
         this.supportedLanguages.push(this.languages.find(language => language.code === 'en'));
         this.create = true;
       }
     });
-    //this.languageService.setSupportedLanguages(this.languages);
   }
 
   addAndUpdate(): void {
@@ -116,6 +116,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurant.saClose = values['saClose'];
     this.restaurant.suOpen = values['suOpen'];
     this.restaurant.suClose = values['suClose'];
+    this.restaurant.selectedLanguage = this.editingLanguage;
 
     if (this.create) {
       this.add();

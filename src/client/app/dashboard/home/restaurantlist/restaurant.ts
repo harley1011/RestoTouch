@@ -19,6 +19,7 @@ export class Restaurant {
     public saClose: string,
     public suOpen: string,
     public suClose: string,
-    public supportedLanguages: Array<Language>
+    public supportedLanguages: Array<Language>,
+    public selectedLanguage: Language
 	) { }
 }
