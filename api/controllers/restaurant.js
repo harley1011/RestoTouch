@@ -24,7 +24,10 @@ function setDatabase(m) {
 
 //GET /restaurant
 function getAll(req, res) {
-  return restaurantModel.findAll({where: {userId: req.userId}, include: [{model: restaurantsTranslations, as:'translations'}]}).then(function (restaurants) {
+  return restaurantModel.findAll({
+    where: {userId: req.userId},
+    include: [{model: restaurantsTranslations, as: 'translations'}]
+  }).then(function (restaurants) {
     return res.json({restaurants: restaurants});
   });
 }
@@ -37,7 +40,7 @@ function save(req, res) {
     include: [{
       model: restaurantLanguageModel,
       as: 'supportedLanguages'
-    }]
+    }, {model: restaurantsTranslations, as: 'translations'}]
   }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
@@ -87,8 +90,8 @@ function update(req, res) {
       newLanguagesToAdd.forEach(function (language) {
         language.restaurantId = restaurant.id;
         //todo: see why this isn't working
-       // var restaurantLanguage = restaurantLanguageModel.create(language);
-      //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
+        // var restaurantLanguage = restaurantLanguageModel.create(language);
+        //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
       })
 
       return res.json({success: 1, description: "Restaurant Updated"});
