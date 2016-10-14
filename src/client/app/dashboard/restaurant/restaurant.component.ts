@@ -11,7 +11,7 @@ import {Language} from '../../shared/models/language';
   selector: 'restaurant-cmp',
   templateUrl: 'restaurant.component.html',
   styleUrls: ['restaurant.css'],
-  providers: [RestaurantService, LanguageService]
+  providers: [RestaurantService]
 })
 
 export class RestaurantComponent implements OnInit {

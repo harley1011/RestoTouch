@@ -7,18 +7,18 @@ import {Language} from '../../shared/models/language';
 @Component({
   moduleId: module.id,
   selector: 'top-nav',
-  templateUrl: 'topnav.html',
-  providers: [LanguageService]
+  templateUrl: 'topnav.html'
 })
 
 export class TopNavComponent implements OnInit {
   user: User;
   languages: Array<Language> = [];
-  hideLanguageSelect = false;
+  hideLanguageSelect = true;
 
   constructor(private authService: AuthService, private languageService: LanguageService) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
-      console.log(supportedLanguages);
+      this.hideLanguageSelect = supportedLanguages.length === 0;
+      this.languages = supportedLanguages;
     });
   }
 
