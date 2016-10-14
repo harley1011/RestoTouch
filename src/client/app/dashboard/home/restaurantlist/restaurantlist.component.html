@@ -4,10 +4,10 @@
     <div class="col-lg-3" *ngFor="let restaurant of restaurants; let i = index">
       <div (click)="modify(restaurant)" class="card card-primary card-inverse">
         <div class="card-header card-primary">
-          {{ restaurant.name }}
+          {{ restaurant.selectedTranslation.name }}
         </div>
         <div class="card-block bg-white">
-          {{ restaurant.description }}
+          {{ restaurant.selectedTranslation.description }}
         </div>
       </div>
     </div>
