@@ -14,6 +14,7 @@ export class TopNavComponent implements OnInit {
   user: User;
   languages: Array<Language> = [];
   hideLanguageSelect = true;
+  selectedLanguage: Language = new Language('','','',0);
 
   constructor(private authService: AuthService, private languageService: LanguageService) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
@@ -24,6 +25,10 @@ export class TopNavComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.loggedInUser;
+  }
+
+  selectLanguage(language: Language) {
+  	this.selectedLanguage = language;
   }
 
   changeTheme(color: string): void {
