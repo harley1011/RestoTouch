@@ -5,12 +5,12 @@ var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
 var restaurantMenuModel = sequelize.import('./models/restaurantmenu.js');
-var menucategorymodel = sequelize.import('./models/menucategory.js');
+var menuCategoryModel = sequelize.import('./models/menucategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
 
 
-menuModel.belongsToMany(categoryModel, {through:menucategorymodel});
-categoryModel.belongsToMany(menuModel, {through:menucategorymodel});
+menuModel.belongsToMany(categoryModel, {through:menuCategoryModel});
+categoryModel.belongsToMany(menuModel, {through:menuCategoryModel});
 
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
@@ -24,6 +24,7 @@ restaurantModel.sync();
 categoryModel.sync();
 menuModel.sync();
 restaurantMenuModel.sync();
+menuCategoryModel.sync();
 
 exports.getUserModel = function() {
   return userModel;
@@ -43,4 +44,8 @@ exports.getMenuModel = function() {
 
 exports.getRestaurantMenuModel = function() {
   return restaurantMenuModel;
+};
+
+exports.getmenuCategoryModel = function() {
+  return menuCategoryModel;
 };

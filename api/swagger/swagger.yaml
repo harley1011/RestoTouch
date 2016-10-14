@@ -284,6 +284,58 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /menucategory:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: menucategory
+    post:
+      operationId: saveMenuCategory
+      description: Add a category to menu
+      # menu info to be stored
+      parameters:
+        - name: menucategory
+          description: Menu Category relation
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/MenuCategory"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /menucategory/{menuId}{categoryId}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: menucategory
+    delete:
+      description: Deletes a Category in Menu 
+      # used as the method name of the controller
+      operationId: delMenuCategory
+      parameters:
+        - name: menuId
+          description: a Category Id
+          type: number
+          in: path
+          required: true
+        - name: categoryId
+          description: a Menu Id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /register:
     x-swagger-router-controller: account
     post:
@@ -464,6 +516,16 @@ definitions:
     required:
       - RestaurantId
       - MenuId
+  MenuCategory:
+    type: object
+    properties:
+      MenuId:
+        type: number
+      CategoryId:
+        type: number
+    required:
+      - MenuId
+      - CategoryId
   ErrorResponse:
     required:
       - message
