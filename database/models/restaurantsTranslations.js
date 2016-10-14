@@ -1,7 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define("RestaurantsTranslations", {
-		language: {DataTypes.STRING(3)},
-		name: {DataTypes.STRING},
-		description: {DataTypes.STRING}
+		language: {type: DataTypes.STRING(3)},
+		name: {type: DataTypes.STRING},
+		description: {type: DataTypes.STRING}
 	});
-}
+};
+
