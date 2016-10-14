@@ -65,7 +65,10 @@ function update(req, res) {
     where: {
       name: name,
       userId: req.userId
-    }
+    },
+    include: [
+      {model: restaurantLanguageModel, as: 'supportedLanguages'}
+    ]
   }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Updated"});
   });
