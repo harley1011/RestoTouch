@@ -271,7 +271,6 @@ definitions:
         items:
           "$ref": "#/definitions/Language"
       selectedLanguage:
-        type:
           "$ref": "#/definitions/Language"
     required:
       - name
