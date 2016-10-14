@@ -30,7 +30,7 @@
           <li class="list-group-item">
             <div class="input-group">
               <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
-                <option *ngFor="let language of languages" [ngValue]="language.code">{{language.name}}</option>
+                <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
               </select>
               <span class="input-group-btn">
               <button class="btn btn-primary" (click)="addLanguage()" type="button">Add</button>

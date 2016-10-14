@@ -236,9 +236,12 @@ definitions:
         type: string
       description:
         type: string
+      languageCode:
+        type: string
     required:
       - name
       - description
+      - languageCode
   Restaurant:
     type: object
     properties:
