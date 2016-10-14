@@ -1,9 +1,15 @@
 import {Injectable}     from '@angular/core';
 import {Language} from '../shared/models/language';
+import { Subject, Observable }    from 'rxjs/Subject';
 
 @Injectable()
 export class LanguageService {
 
+  selectedLanguageAnnounced$: Observable<Language>;
+  supportedLanguagesAnnounced$: Observable<Array<Language>>;
+
+  private selectedLanguageAnnounced = new Subject<Language>();
+  private supportedLanguagesAnnounced = new Subject<Array<Language>>();
 	private supportedLanguages: Array<Language> = [];
 	private selectedLanguage: Language;
 
@@ -190,8 +196,21 @@ export class LanguageService {
  new Language('yo', 'Yoruba', 'Yorùbá', 2),
  new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
 
+  constructor() {
+    this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
+    this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
+  }
+
   languages(): Array<Language> {
     return this.isoLanguages;
+  }
+
+  announceSelectedLanguage(language: Language) {
+    this.selectedLanguageAnnounced.next(language);
+  }
+
+  announceSupportedLanguages(languages: Array<Language>) {
+    this.supportedLanguagesAnnounced.next(languages);
   }
 
   setSupportedLanguages(languages: Array<Language>): void {
