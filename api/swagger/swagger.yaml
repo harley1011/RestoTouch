@@ -229,13 +229,19 @@ definitions:
     properties:
       code:
         type: string
-  Restaurant:
+  RestaurantTranslations:
     type: object
     properties:
       name:
         type: string
       description:
         type: string
+    required:
+      - name
+      - description
+  Restaurant:
+    type: object
+    properties:
       address:
         type: string
       mOpen:
@@ -270,11 +276,11 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Language"
-      selectedLanguage:
-          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/RestaurantTranslations"
     required:
-      - name
-      - description
       - address
       - mOpen
       - mClose
