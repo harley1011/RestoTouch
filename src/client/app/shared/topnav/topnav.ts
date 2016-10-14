@@ -29,6 +29,7 @@ export class TopNavComponent implements OnInit {
 
   selectLanguage(language: Language) {
   	this.selectedLanguage = language;
+  	this.languageService.announceSelectedLanguage(language);
   }
 
   changeTheme(color: string): void {
