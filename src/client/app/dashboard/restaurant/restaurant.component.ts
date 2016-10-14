@@ -22,12 +22,16 @@ export class RestaurantComponent implements OnInit {
   supportedLanguages: Array<Language> = [];
   languages: Array<Language>;
   selectedLanguage: string;
+  editingLanguage: Language = new Language('','','',0);
 
   constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
               private restaurantService: RestaurantService) {
     this.languages = languageService.languages();
     //todo: remove the supported languages in languages array
     languageService.setSupportedLanguages(this.supportedLanguages);
+    languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
+    	this.editingLanguage = editingLanguage;
+    });
   }
 
   addLanguage() {
