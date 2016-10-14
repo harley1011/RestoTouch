@@ -86,10 +86,10 @@
 
             <li [hidden]="hideLanguageSelect" class="dropdown nav-item" dropdown>
                 <a href="javascript:;" id="lang-button" class="nav-link dropdown-toggle" dropdownToggle >
-                    <label>Selected Language: </label> Language <b class="caret"></b>
+                    <label>Selected Language: </label> {{selectedLanguage.name}} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="lang-button">
-                    <li *ngFor="let language of languages">
+                    <li *ngFor="let language of languages" class="dropdown-item" (click)="selectLanguage(language)">
                         {{language.name}}
                     </li>
                 </ul>
