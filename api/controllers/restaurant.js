@@ -48,12 +48,12 @@ function save(req, res) {
 
 //GET /restaurant/{name}
 function get(req, res) {
-  var name = req.swagger.params.name.value;
+  var name = req.swagger.params.id.value;
   return restaurantModel.findOne({
     where: {
-      name: name,
+      id: name,
       userId: req.userId
-    },
+        },
     include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
       {model: restaurantsTranslations, as: 'translations'}]
   }).then(function (restaurant) {
@@ -65,7 +65,7 @@ function get(req, res) {
   });
 }
 
-//PUT /restaurant/{name}
+//PUT /restaurant/{id}
 function update(req, res) {
   var restaurant = req.body;
 
@@ -103,10 +103,10 @@ function update(req, res) {
 
 //DELETE /restaurant/{name}
 function del(req, res) {
-  var name = req.swagger.params.name.value;
+  var id = req.swagger.params.id.value;
   return restaurantModel.destroy({
     where: {
-      name: name,
+      id: id,
       userId: req.userId
     }
   }).then(function (result) {

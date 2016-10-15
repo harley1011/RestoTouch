@@ -56,7 +56,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /restaurant/{name}:
+  /restaurant/{id}:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurant
     get:
@@ -64,8 +64,8 @@ paths:
       # used as the method name of the controller
       operationId: get
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
       responses:
@@ -84,8 +84,8 @@ paths:
       # used as the method name of the controller
       operationId: update
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
         - name: restaurant
@@ -110,8 +110,8 @@ paths:
       # used as the method name of the controller
       operationId: del
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
       responses:

@@ -58,11 +58,12 @@ export class RestaurantComponent implements OnInit {
     this.hideManageLanguage = !this.hideManageLanguage;
   }
 
-  getRestaurant(name: string): void {
-    this.restaurantService.getRestaurant(name).subscribe(
+  getRestaurant(id: number): void {
+    this.restaurantService.getRestaurant(id).subscribe(
       restaurant => {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
+        this.restaurant.selectedTranslation = this.restaurant.translations[0];
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
       },
       error => {
@@ -73,8 +74,8 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
-      if (params['name']) {
-        this.getRestaurant(params['name']);
+      if (params['id']) {
+        this.getRestaurant(params['id']);
         this.create = false;
       } else {
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
@@ -139,7 +140,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   update(oldName: string): void {
-    this.restaurantService.updateRestaurant(this.restaurant, oldName)
+    this.restaurantService.updateRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
           this.router.navigate(['/dashboard/home']);
