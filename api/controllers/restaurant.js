@@ -2,7 +2,9 @@ var models = require("../../database/models");
 var restaurantModel;
 var restaurantLanguageModel;
 var restaurantsTranslations;
+var menuModel;
 var _ = require('lodash');
+
 
 setDatabase(models);
 
@@ -18,6 +20,7 @@ module.exports = {
 function setDatabase(m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
+  menuModel = models.getMenuModel();
   restaurantLanguageModel = models.getRestaurantsLanguageModel();
   restaurantsTranslations = models.getRestaurantsTranslationModel();
 }
@@ -26,7 +29,9 @@ function setDatabase(m) {
 function getAll(req, res) {
   return restaurantModel.findAll({
     where: {userId: req.userId},
-    include: [{model: restaurantsTranslations, as: 'translations'}]
+    include: [{model: restaurantsTranslations, as: 'translations'}, {
+      model: menuModel
+    }]
   }).then(function (restaurants) {
     return res.json({restaurants: restaurants});
   });
@@ -55,7 +60,8 @@ function get(req, res) {
       userId: req.userId
         },
     include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
-      {model: restaurantsTranslations, as: 'translations'}]
+      {model: restaurantsTranslations, as: 'translations'},
+      {model: menuModel}]
   }).then(function (restaurant) {
     if (restaurant) {
       return res.json(restaurant);

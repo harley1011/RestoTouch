@@ -6,6 +6,8 @@ import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
+import { Menu } from '../menu/menu';
+
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
@@ -71,6 +73,14 @@ export class RestaurantComponent implements OnInit {
       }
     );
   }
+
+	addRemoveMenu(): void {
+		this.router.navigate(['/dashboard/menulist', this.restaurant.name]);
+	}
+
+	openMenu(menu: Menu): void {
+		this.router.navigate(['/dashboard/menu', menu.name]);
+	}
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
