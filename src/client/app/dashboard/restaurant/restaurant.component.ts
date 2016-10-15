@@ -179,7 +179,6 @@ export class RestaurantComponent implements OnInit {
   }
 
   delete(): void {
-    //todo: use the restaurant id not the name to delete it
     this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/home']);
