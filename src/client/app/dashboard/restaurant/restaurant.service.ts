@@ -40,6 +40,7 @@ export class RestaurantService {
     let body = JSON.stringify(restaurant);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
+    console.log(body);
 
     return this.http.put(this.api.getEndpoint() + this.url + '/' + restaurant.id, body, options)
       .map(this.extractData)
