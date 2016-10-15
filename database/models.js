@@ -6,6 +6,7 @@ var restaurantModel = sequelize.import('./models/restaurants.js');
 var categoryModel = sequelize.import('./models/categories.js');
 
 restaurantModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
+categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 
 userModel.sync();
 restaurantModel.sync();
