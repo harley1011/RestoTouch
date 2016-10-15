@@ -81,18 +81,30 @@ function update(req, res) {
       {model: restaurantsTranslations, as: 'translations'}]
   }).then(function (oldRestaurant) {
 
+
     //Find what's new and what has been removed
-    var languagesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'code');
-    var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'code');
+    var languagesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'languageCode');
+    var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'languageCode');
 
 
     for (var prop in restaurant) {
-      oldRestaurant[prop] = restaurant[prop];
+      if (prop != 'translations')
+        oldRestaurant[prop] = restaurant[prop];
     }
-    oldRestaurant.save().then(function (result) {
 
+    oldRestaurant.translations.forEach(function(translation) {
+      var newTranslation = _.find(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      for (var prop in newTranslation) {
+          translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+    });
+
+    oldRestaurant.save().then(function (result) {
       languagesToRemove.forEach(function (language) {
-        restaurantLanguageModel.destroy({where: {'code': language.code, 'restaurantId': restaurant.id}});
+        restaurantLanguageModel.destroy({where: {'languageCode': language.languageCode, 'restaurantId': restaurant.id}});
+        restaurantsTranslations.destroy({where: {'languageCode': language.languageCode, 'restaurantId': restaurant.id}});
+        _.remove(oldRestaurant.translations, function (translation) { return translation.languageCode == language.languageCode});
       })
 
       newLanguagesToAdd.forEach(function (language) {
@@ -101,6 +113,7 @@ function update(req, res) {
         // var restaurantLanguage = restaurantLanguageModel.create(language);
         //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
       })
+
 
       return res.json({success: 1, description: "Restaurant Updated"});
     });
