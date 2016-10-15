@@ -75,7 +75,7 @@ export class RestaurantComponent implements OnInit {
   }
 
 	addRemoveMenu(): void {
-		this.router.navigate(['/dashboard/menulist', this.restaurant.name]);
+		this.router.navigate(['/dashboard/menulist', this.restaurant.selectedTranslation.name]);
 	}
 
 	openMenu(menu: Menu): void {
@@ -100,7 +100,7 @@ export class RestaurantComponent implements OnInit {
           '9:00', '21:00',
           this.supportedLanguages,
           [translation],
-          translation);
+          translation, []);
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
       }
