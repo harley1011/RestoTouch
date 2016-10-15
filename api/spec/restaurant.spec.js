@@ -65,8 +65,8 @@ describe("The Restaurant API", function() {
       },
       swagger: {
         params: {
-          name: {
-            value: "Restaurant 1"
+          id: {
+            value: 1
           }
         }
       }
@@ -93,8 +93,8 @@ describe("The Restaurant API", function() {
     var req = {
       swagger: {
         params: {
-          name: {
-            value: "Restaurant 1"
+          id: {
+            value: 1
           }
         }
       }
@@ -111,8 +111,8 @@ describe("The Restaurant API", function() {
     var req = {
       swagger: {
         params: {
-          name: {
-            value: "Restaurant 1"
+          id: {
+            value: 1
           }
         }
       }
