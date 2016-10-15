@@ -33,6 +33,8 @@ export class RestaurantComponent implements OnInit {
     languageService.setSupportedLanguages(this.supportedLanguages);
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
     	this.editingLanguage = editingLanguage;
+    	this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
+    		translation.languageCode === this.editingLanguage.languageCode);
     });
   }
 
@@ -45,6 +47,8 @@ export class RestaurantComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
     this.supportedLanguages.push(language);
+    let newTranslation = new RestaurantTranslations('','',language.languageCode);
+    this.restaurant.translations.push(newTranslation);
   }
 
   removeLanguage(language: Language) {
@@ -54,6 +58,10 @@ export class RestaurantComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.restaurant.translations.find(translation =>
+    	translation.languageCode === language.languageCode);
+    let j = this.restaurant.translations.indexOf(removedTranslation);
+    this.restaurant.translations.splice(j, 1);
   }
 
   toggleShowManageLanguage(): void {
@@ -66,6 +74,9 @@ export class RestaurantComponent implements OnInit {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
         this.restaurant.selectedTranslation = this.restaurant.translations[0];
+        this.editingLanguage = this.languages.find(language =>
+        	language.languageCode === this.restaurant.selectedTranslation.languageCode);
+        this.languageService.announceSelectedLanguage(this.editingLanguage);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
       },
       error => {
@@ -103,6 +114,7 @@ export class RestaurantComponent implements OnInit {
           translation, []);
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
       }
     });
   }
