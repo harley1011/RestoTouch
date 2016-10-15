@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { Category } from '../category/category';
+import { AuthHttpService } from '../../services/auth.http.services';
+import { Observable } from 'rxjs/Observable';
+import  {ApiEndpointService} from '../../services/api.endpoint.service';
+
+@Injectable()
+export class CategoryService {
+  private url = '/category';
+
+  constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
+
+  // Extracts the list of category
+  getCategories (categoryName: string): Observable<Category[]> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + categoryName)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+
+  private handleError (error: any) {
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+}
