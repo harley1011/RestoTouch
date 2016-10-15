@@ -120,6 +120,7 @@ export class RestaurantComponent implements OnInit {
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
       }
     });
   }
