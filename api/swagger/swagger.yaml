@@ -259,32 +259,36 @@ paths:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurantmenu
     ############
-        put:
-      description: Updates a restaurant
-      # used as the method name of the controller
-      operationId: update
-      parameters:
-        - name: name
-          type: string
-          in: path
-          required: true
-        - name: restaurant
-          description: Restaurant properties
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/Restaurant"
-      responses:
-        "200":
-          description: Success
-          schema:
+    # ATTENTION !
+    # Don't why the doc BELOW is needed, it causing errors so I commented it out!
+    #put:
+      #description: Updates a restaurant
+       #used as the method name of the controller
+      #operationId: update
+      #parameters:
+       #- name: name
+          #type: string
+          #in: path
+          #required: true
+        #- name: restaurant
+          #description: Restaurant properties
+          #in: body
+          #required: true
+          #schema:
+            #$ref: "#/definitions/Restaurant"
+      #responses:
+        #"200":
+          #description: Success
+          #schema:
             # a pointer to a definition
-            $ref: "#/definitions/GeneralResponse"
+            #$ref: "#/definitions/GeneralResponse"
         # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+        #default:
+          #description: Error
+          #schema:
+            #$ref: "#/definitions/ErrorResponse"
+    # ATTENTION !
+    # Don't why the doc ABOVE is needed, it causing errors so I commented it out!
     ###########
     delete:
       description: Deletes a Restaurant Menu relation
@@ -339,7 +343,7 @@ paths:
     # binds a127 app logic to a route
     x-swagger-router-controller: menucategory
     delete:
-      description: Deletes a Category in Menu 
+      description: Deletes a Category in Menu
       # used as the method name of the controller
       operationId: delMenuCategory
       parameters:
@@ -571,7 +575,7 @@ definitions:
         type: number
       CategoryId:
         type: number
-      Order: 
+      Order:
         type: number
     required:
       - MenuId
