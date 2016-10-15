@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {MenuService} from './menu.service';
-import {MenuCategoryService} from './menucatergory.service';
 import {Menu} from './menu';
-//import {Category} from './category.service';
+//import {MenuCategoryService} from './menucatergory.service';
+//import {CategoryService} from './category.service';
 
 @Component({
 	moduleId: module.id,
@@ -16,15 +16,15 @@ import {Menu} from './menu';
 export class MenuComponent implements OnInit {
 	create: boolean;
   menu : Menu;
-  menuService: MenuService;
-  menuCategoryService: MenuCategoryService;
   errorMessage: string;
   sections: string[];
   // dummy data
-   categories:[{id:number , categoryName: string}];
+  // categories:[{id:number , categoryName: string}];
 
 	constructor(private route: ActivatedRoute,
               private menuService: MenuService,
+              //private menuCategoryService: MenuCategoryService,
+              //private categoriyService: CategoryService,
               private router: Router) {}
 
 	getMenu(name: string): void {
@@ -42,7 +42,7 @@ export class MenuComponent implements OnInit {
 
     //get all categpries (api)
     //for now Dummy data from category api
-    var categories = [
+/*    var categories = [
       { id: 1, categoryName: 'hamburger'},
       { id: 2, categoryName: 'drink'},
       { id: 3, categoryName: 'sandowish'},
@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
       { id: 6, categoryName: 'starter'},
       { id: 7, categoryName: 'sweets'},
       { id: 8, categoryName: 'specials'},
-    ]
+    ];*/
 
     this.sections = [];
 		this.route.params.forEach((params: Params) => {
@@ -104,14 +104,14 @@ export class MenuComponent implements OnInit {
     );
     // TODO loop
     // calling add menucategoryservice
-    this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
+    /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menulist']);
       },
       error => {
         this.errorMessage = <any> error;
       }
-    );
+    );*/
   }
 
   update(oldName : string): void {
