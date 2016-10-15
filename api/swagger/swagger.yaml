@@ -325,11 +325,11 @@ definitions:
     required:
       - category
     properties:
-      # The array of movies
+      # Array of category
       category:
         type: array
         items:
-          "$ref": "#/definitions/Restaurant"
+          "$ref": "#/definitions/Category"
   Category:
     type: object
     properties:
