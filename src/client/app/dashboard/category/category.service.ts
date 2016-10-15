@@ -3,6 +3,7 @@ import { Category } from '../category/category';
 import { AuthHttpService } from '../../services/auth.http.services';
 import { Observable } from 'rxjs/Observable';
 import  {ApiEndpointService} from '../../services/api.endpoint.service';
+import { Response } from '@angular/http';
 
 @Injectable()
 export class CategoryService {
@@ -11,10 +12,10 @@ export class CategoryService {
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
   // Extracts the list of category
-  getCategories (categoryName: string): Observable<Category[]> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + categoryName)
-      .map(this.extractData)
-      .catch(this.handleError);
+  getCategories (): Observable<Category[]> {
+    return this.http.get(this.api.getEndpoint() + this.url)
+                    .map((response) => this.extractData(response).categories)
+                    .catch(this.handleError);
   }
 
   private extractData(res: Response) {
@@ -25,7 +26,7 @@ export class CategoryService {
   private handleError (error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
+      console.error(error);
     return Observable.throw(errMsg);
   }
 }

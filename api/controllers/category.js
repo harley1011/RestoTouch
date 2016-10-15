@@ -19,22 +19,23 @@ function setDatabase (m) {
 
 // GET /category
 function getAllCategories(req, res) {
+  return categoryModel.findAll().then(function(categories) {
+    return res.json({ categories: categories });
+  });
 }
 
 // GET /category/{name}
 function getCategory(req, res) {
 }
 
-// POST /category/{name} 
+// POST /category/{name}
 function addCategory(req, res) {
 }
 
-// PUT /category/{name} 
+// PUT /category/{name}
 function updateCategory(req, res) {
 }
 
 // DELETE /category/{name}
 function deleteCategory(req, res) {
 }
-
-
