@@ -35,6 +35,11 @@ export class RestaurantComponent implements OnInit {
       this.editingLanguage = editingLanguage;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
       translation.languageCode === this.editingLanguage.languageCode);
+      // Translations doesn't exist yet for this language
+      if (!this.restaurant.selectedTranslation) {
+        this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
+        this.restaurant.translations.push(this.restaurant.selectedTranslation);
+      }
     });
   }
 
