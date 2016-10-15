@@ -14,8 +14,8 @@ export class RestaurantService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getRestaurant (name: string): Observable<Restaurant> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
+  getRestaurant (id: number): Observable<Restaurant> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -36,12 +36,12 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
-  updateRestaurant (restaurant: Restaurant, oldName: string): Observable<GeneralResponse> {
+  updateRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
     let body = JSON.stringify(restaurant);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + oldName, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + restaurant.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

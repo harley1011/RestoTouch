@@ -57,8 +57,8 @@ export class MenuListComponent implements OnInit {
 		);
 	};
 
-	getRestaurant(name: string): void {
-		this.restaurantService.getRestaurant(name).subscribe(
+	getRestaurant(id: number): void {
+		this.restaurantService.getRestaurant(id).subscribe(
 			restaurant => {
 				this.restaurant = restaurant;
 			}
@@ -102,7 +102,7 @@ export class MenuListComponent implements OnInit {
 			}
 		}
 
-		this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
+		this.router.navigate(['/dashboard/restaurant', this.restaurant.id]);
 	}
 
 	modify(index: number, menu: Menu): void {
@@ -118,7 +118,7 @@ export class MenuListComponent implements OnInit {
 
 	cancel(): void {
 		if (this.restaurant !== undefined) {
-			this.router.navigate(['/dashboard/restaurant', this.restaurant.name]);
+			this.router.navigate(['/dashboard/restaurant', this.restaurant.id]);
 		}
 	}
 

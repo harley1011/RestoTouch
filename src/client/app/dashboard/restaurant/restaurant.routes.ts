@@ -6,7 +6,7 @@ export const RestaurantRoutes: Route[] = [
   	path: 'restaurant',
   	component: RestaurantComponent
   }, {
-    path: 'restaurant/:name',
+    path: 'restaurant/:id',
   	component: RestaurantComponent
   }
 ];
