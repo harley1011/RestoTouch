@@ -43,6 +43,6 @@ export class RestaurantListComponent implements OnInit {
 	}
 
 	modify(restaurant: Restaurant): void {
-		this.router.navigate(['/dashboard/restaurant', restaurant.selectedTranslation.name]);
+		this.router.navigate(['/dashboard/restaurant', restaurant.id]);
 	}
 }
