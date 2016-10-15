@@ -15,8 +15,7 @@ describe("The Restaurant API", function() {
   it("should create a valid restaurant", function (done) {
     var req = {
       body: {
-        "name": "Restaurant 1",
-        "description": "Description",
+        "id": 2,
         "address": "Address",
         "mOpen": "9:00",
         "mClose": "9:00",
@@ -31,7 +30,10 @@ describe("The Restaurant API", function() {
         "saOpen": "9:00",
         "saClose": "9:00",
         "suOpen": "9:00",
-        "suClose": "9:00"
+        "suClose": "9:00",
+        "supportedLanguages": [{"languageCode":"en","name":"English","restaurantId":2}],
+        "Menus":[],
+        "selectedTranslation": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","restaurantId":2}]
       }
     }
 
@@ -45,8 +47,7 @@ describe("The Restaurant API", function() {
   it("should update a restaurant", function (done) {
     var req = {
       body: {
-        "name": "Restaurant 2",
-        "description": "Description",
+        "id": 2,
         "address": "Address",
         "mOpen": "9:00",
         "mClose": "9:00",
@@ -61,7 +62,10 @@ describe("The Restaurant API", function() {
         "saOpen": "9:00",
         "saClose": "9:00",
         "suOpen": "9:00",
-        "suClose": "9:00"
+        "suClose": "9:00",
+        "supportedLanguages": [{"languageCode":"en","name":"English","restaurantId":2}],
+        "Menus":[],
+        "selectedTranslation": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","restaurantId":2}]
       },
       swagger: {
         params: {
@@ -102,7 +106,7 @@ describe("The Restaurant API", function() {
 
     restaurant.get(req, res).then(function (result) {
       expect(typeof res.obj).toBe('object');
-      expect(res.obj.name).toBe(req.swagger.params.name.value);
+      expect(res.obj.id).toBe(req.swagger.params.id.value);
       done();
     })
   })
