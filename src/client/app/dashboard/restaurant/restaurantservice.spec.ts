@@ -5,6 +5,7 @@ import { MockBackend } from '@angular/http/testing';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import {AuthHttpService} from '../../services/auth.http.services';
+import {ApiEndpointService} from '../../services/api.endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
@@ -25,7 +26,8 @@ export function main() {
         RestaurantService,
         BaseRequestOptions,
         AuthHttpService,
-        {provide: Router, useValue: routerStub},,
+        ApiEndpointService,
+        {provide: Router, useValue: routerStub},
         MockBackend,
         {
           provide: Http,
@@ -69,7 +71,8 @@ export function main() {
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
-        '9:00', '21:00'
+        '9:00', '21:00',
+        []
       );
 
       initialResponse = restaurantService.addRestaurant(mockRestaurant);
@@ -97,7 +100,8 @@ export function main() {
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
-        '9:00', '21:00'
+        '9:00', '21:00',
+        []
       );
 
       initialResponse = restaurantService.updateRestaurant(mockRestaurant, 'Restaurant 1');

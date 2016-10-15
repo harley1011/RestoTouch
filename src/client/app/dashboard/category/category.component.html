@@ -1,0 +1,49 @@
+<h1>Category</h1>
+<form>
+    <input type="text" />
+    <button class="btn btn-success">Add</button>
+</form>
+
+
+<div class="row cat-container">
+    <div class="col col-md-3 thumbnail">
+        <div class="category" (click)="changeInput()">
+            <i class="fa fa-fw fa-close cat-delete"></i>
+            <i class="fa fa-fw fa-cutlery cat-icon"></i>
+            <div class="cat-label" [hidden]="isEditable">soups</div>
+            <div class="cat-label-input" *ngIf="isEditable">
+                <input type="text" value="soups" />
+            </div>
+        </div>
+    </div>
+    <div class="col col-md-3 thumbnail">
+        <div class="category" (click)="changeInput()">
+            <i class="fa fa-fw fa-close cat-delete"></i>
+            <i class="fa fa-fw fa-envira cat-icon"></i>
+            <div class="cat-label" [hidden]="isEditable">salads</div>
+            <div class="cat-label-input" *ngIf="isEditable">
+                <input type="text" value="salads" />
+            </div>
+        </div>
+    </div>
+    <div class="col col-md-3 thumbnail">
+        <div class="category" (click)="changeInput()">
+            <i class="fa fa-fw fa-close cat-delete"></i>
+            <i class="fa fa-fw fa-cutlery cat-icon"></i>
+            <div class="cat-label" [hidden]="isEditable">burgers</div>
+            <div class="cat-label-input" *ngIf="isEditable">
+                <input type="text" value="burgers" />
+            </div>
+        </div>
+    </div>
+    <div class="col col-md-3 thumbnail">
+        <div class="category" (click)="changeInput()">
+            <i class="fa fa-fw fa-close cat-delete"></i>
+            <i class="fa fa-fw fa-glass cat-icon"></i>
+            <div class="cat-label" [hidden]="isEditable">drinks</div>
+            <div class="cat-label-input" *ngIf="isEditable">
+                <input type="text" value="drinks" />
+            </div>
+        </div>
+    </div>
+</div>

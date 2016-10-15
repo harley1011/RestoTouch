@@ -2,6 +2,9 @@ import { Route } from '@angular/router';
 
 import { HomeRoutes } from './home/index';
 import { RestaurantRoutes } from './restaurant/index';
+import { CategoryRoutes } from './category/index';
+import { MenuListRoutes } from './menulist/index';
+import { MenuRoutes } from './menu/index';
 import { ChartRoutes } from './charts/index';
 import { BlankPageRoutes } from './blank-page/index';
 import { TableRoutes } from './tables/index';
@@ -19,7 +22,10 @@ export const DashboardRoutes: Route[] = [
     	component: DashboardComponent,
     	children: [
 	    	...HomeRoutes,
+        ...CategoryRoutes,
         ...RestaurantRoutes,
+        ...MenuListRoutes,
+        ...MenuRoutes,
 	    	...ChartRoutes,
 	    	...BSComponentRoutes,
         ...TableRoutes,

@@ -1,4 +1,5 @@
 import {Language} from '../../../shared/models/language';
+import { Menu } from '../../menu/menu';
 
 export class Restaurant {
 
@@ -21,6 +22,7 @@ export class Restaurant {
               public supportedLanguages: Array<Language>,
               public translations: Array<RestaurantTranslations>,
               public selectedTranslation: RestaurantTranslations,
+              public Menus: Menu[],
               public id?: number) {
   }
 }
