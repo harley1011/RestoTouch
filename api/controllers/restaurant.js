@@ -114,8 +114,12 @@ function update(req, res) {
         //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
       })
 
+      restaurantLanguageModel.bulkCreate(newLanguagesToAdd).then(function (result) {
+        return res.json({success: 1, description: "Restaurant Updated"});
+      })
 
-      return res.json({success: 1, description: "Restaurant Updated"});
+
+
     });
   });
 }
