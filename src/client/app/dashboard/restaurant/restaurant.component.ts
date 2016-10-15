@@ -120,7 +120,7 @@ export class RestaurantComponent implements OnInit {
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
-        this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
+        //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
       }
     });
   }
@@ -180,7 +180,7 @@ export class RestaurantComponent implements OnInit {
 
   delete(): void {
     //todo: use the restaurant id not the name to delete it
-    this.restaurantService.deleteRestaurant(this.restaurant.selectedTranslation.name).subscribe(
+    this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/home']);
       },
