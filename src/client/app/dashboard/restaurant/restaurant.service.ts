@@ -46,8 +46,8 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
-  deleteRestaurant (name: string): Observable<Restaurant> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteRestaurant (restaurant: Restaurant): Observable<Restaurant> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + restaurant.id)
       .map(this.extractData)
       .catch(this.handleError);
   }
