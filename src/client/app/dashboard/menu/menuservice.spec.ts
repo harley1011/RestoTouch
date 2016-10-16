@@ -10,7 +10,7 @@ import { Menu } from './menu';
 
 export function main() {
 
-  describe('Menu Service', function () => {
+  describe('Menu Service', () => {
 
     let menuService: MenuService;
     let backend: MockBackend;
@@ -39,13 +39,13 @@ export function main() {
           deps: [MockBackend, BaseRequestOptions]
         },
       ]);
-      MenuService = injector.get(MenuService);
+      menuService = injector.get(MenuService);
       backend = injector.get(MockBackend);
 
       backend.connections.subscribe((c: any) => connection = c);
     });
 
-    it('should get a Menu', function () => {
+    it('should get a Menu', () => {
 
       initialResponse = menuService.getMenu('Lunch Menu');
 
@@ -63,7 +63,7 @@ export function main() {
       });
     });
 
-    it('should get a list of Menus', function () => {
+    it('should get a list of Menus', () => {
 
       initialResponse = menuService.getMenus();
 
@@ -79,7 +79,7 @@ export function main() {
       expect(response).toEqual([{name: 'Salad Menu'},{name: 'Drinks Menu'}]);
     });
 
-    it('should add a Menu', function () => {
+    it('should add a Menu', () => {
 
       var mockMenu = new Menu('Lunch Menu');
 
@@ -100,7 +100,7 @@ export function main() {
       });
     });
 
-    it('should update a Menu', function() => {
+    it('should update a Menu', () => {
 
      var mockMenu = new Menu('Dinner Menu');
 
@@ -121,7 +121,7 @@ export function main() {
       });
     });
 
-    it('should delete a Menu', function () => {
+    it('should delete a Menu', () => {
 
       initialResponse = menuService.deleteMenu('Lunch Menu');
       connection.mockRespond(new Response(new ResponseOptions({body: '{"success": 1, "description": "Menu Deleted"}'})));
