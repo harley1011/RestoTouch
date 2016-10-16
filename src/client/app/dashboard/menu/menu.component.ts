@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {MenuService} from './menu.service';
 import {Menu} from './menu';
+//import {MenuCategoryService} from './menucatergory.service';
+//import {CategoryService} from './category.service';
 
 @Component({
 	moduleId: module.id,
@@ -16,8 +18,14 @@ export class MenuComponent implements OnInit {
   menu : Menu;
   errorMessage: string;
   sections: string[];
+  // dummy data
+  // categories:[{id:number , categoryName: string}];
 
-	constructor(private route: ActivatedRoute, private menuService: MenuService, private router: Router) {}
+	constructor(private route: ActivatedRoute,
+              private menuService: MenuService,
+              //private menuCategoryService: MenuCategoryService,
+              //private categoriyService: CategoryService,
+              private router: Router) {}
 
 	getMenu(name: string): void {
 	  this.menuService.getMenu(name).subscribe(
@@ -31,6 +39,20 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //get all categpries (api)
+    //for now Dummy data from category api
+/*    var categories = [
+      { id: 1, categoryName: 'hamburger'},
+      { id: 2, categoryName: 'drink'},
+      { id: 3, categoryName: 'sandowish'},
+      { id: 4, categoryName: 'salad'},
+      { id: 5, categoryName: 'icecream'},
+      { id: 6, categoryName: 'starter'},
+      { id: 7, categoryName: 'sweets'},
+      { id: 8, categoryName: 'specials'},
+    ];*/
+
     this.sections = [];
 		this.route.params.forEach((params: Params) => {
 			if (params['name']) {
@@ -43,13 +65,9 @@ export class MenuComponent implements OnInit {
 		});
   }
 
+  // 'Create' button functionality
   addAndUpdate(): void {
-  /*
-   // Dummy data from category api
-  var categories = [
-      {id: 1, name: 'hamburger'}
-    ];
-*/
+
     var values = validateInputs();
     if (values === null) return;
 
@@ -64,11 +82,18 @@ export class MenuComponent implements OnInit {
   }
 
   addSection(): void {
+    // get the list of categories
+    // select which category to add
     this.sections.push('aCategory');
+  }
+
+  removeSection(): void {
+    this.sections.pop();
   }
 
   add(): void {
 
+    // calling add menuservice
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menulist']);
@@ -77,7 +102,18 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any> error;
       }
     );
+    // TODO loop
+    // calling add menucategoryservice
+    /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
+      generalResponse => {
+        this.router.navigate(['/dashboard/menulist']);
+      },
+      error => {
+        this.errorMessage = <any> error;
+      }
+    );*/
   }
+
   update(oldName : string): void {
     this.menuService.updateMenu(this.menu, oldName).subscribe(
       generalResponse => {
@@ -87,6 +123,10 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
+
+    // calling update in  menucategoryservice
+    // updateMenuCategory(): void {}
+
   }
 
   cancel(): void {

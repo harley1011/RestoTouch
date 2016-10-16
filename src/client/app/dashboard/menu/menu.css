@@ -1,3 +1,11 @@
 .menuSection {
   border: 1px solid #687077;
+  text-align: center;
+}
+.addButtonhover:hover {
+  border-color: #00b3ee;
+}
+
+.removeButtonhover:hover {
+  border-color: #bd4147;
 }
