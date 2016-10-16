@@ -1,4 +1,4 @@
-var restaurantMenu = require('../controllers/restaurantmenu');
+var restaurantMenu = require('../controllers/restaurantMenu');
 var mocks = require('./mocks/mocks');
 
 describe("The Restaurant Menu API", function() {
