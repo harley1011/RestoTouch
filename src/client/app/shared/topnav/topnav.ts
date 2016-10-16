@@ -21,6 +21,9 @@ export class TopNavComponent implements OnInit {
       this.hideLanguageSelect = supportedLanguages.length === 0;
       this.languages = supportedLanguages;
     });
+    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+      this.selectedLanguage = selectedLanguage;
+    });
   }
 
   ngOnInit() {
