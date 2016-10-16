@@ -14,7 +14,8 @@ export class CategoryComponent implements OnInit {
     isEditable: boolean; // Determine if a field is editable
     categories: Category[]; // Contains the returned list of category
     category: Category; // instance of a category
-    carIdToDelete: number;
+    catId: number;
+    catNewName: string;
 
     constructor(private categoryService: CategoryService,
                 private route: ActivatedRoute,
@@ -54,7 +55,18 @@ export class CategoryComponent implements OnInit {
       * Deletes a category
       */
       deleteCategory():void {
-        this.categoryService.deleteCategory(this.carIdToDelete)
+        this.categoryService.deleteCategory(this.catId)
+            .subscribe(
+              generalResponse => {this.getCategories();},
+              error => {console.log(error);}
+            );
+      }
+
+      /**
+       * Update a category
+       */
+      updateCategory(): void {
+        this.categoryService.updateCategory(this.category,this.catId)
             .subscribe(
               generalResponse => {this.getCategories();},
               error => {console.log(error);}
@@ -90,8 +102,16 @@ export class CategoryComponent implements OnInit {
     deleteCatClick(event: Event,id: number): void {
       if(id) {
         event.preventDefault();
-        this.carIdToDelete = id;
+        this.catId = id;
         this.deleteCategory();
+      }
+    }
+
+    updateCatClick(event: Event, newName: string, id: number): void {
+      if(newName) {
+        this.category.categoryName = newName;
+        this.catId = id;
+        this.updateCategory();
       }
     }
 }
