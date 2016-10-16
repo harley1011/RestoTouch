@@ -91,7 +91,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   addRemoveMenu(): void {
-    this.router.navigate(['/dashboard/menulist', this.restaurant.selectedTranslation.name]);
+    this.router.navigate(['/dashboard/menulist', this.restaurant.id]);
   }
 
   openMenu(menu: Menu): void {

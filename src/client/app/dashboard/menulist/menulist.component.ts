@@ -67,8 +67,8 @@ export class MenuListComponent implements OnInit {
 
   ngOnInit(): void {
 		this.route.params.forEach((params: Params) => {
-			if (params['name']) {
-				this.getRestaurant(params['name']);
+			if (params['id']) {
+				this.getRestaurant(params['id']);
 			}
 		});
     this.getMenus();
@@ -102,6 +102,7 @@ export class MenuListComponent implements OnInit {
 			}
 		}
 
+		console.log(this.restaurant);
 		this.router.navigate(['/dashboard/restaurant', this.restaurant.id]);
 	}
 
