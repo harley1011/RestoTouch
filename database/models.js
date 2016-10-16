@@ -23,6 +23,7 @@ menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 
 restaurantModel.belongsToMany(menuModel, {through: restaurantMenuModel});
 menuModel.belongsToMany(restaurantModel, {through: restaurantMenuModel});
+categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 
 userModel.sync();
 restaurantModel.sync();
