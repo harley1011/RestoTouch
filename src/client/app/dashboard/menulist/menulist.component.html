@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h1 class="page-header">{{ restaurant?.name }} Menus <span class="label label-default"> {{ numOfMenus }} </span></h1>
+  <h1 class="page-header">{{ restaurant?.translations[0]?.name }} Menus <span class="label label-default"> {{ numOfMenus }} </span></h1>
   <div class="container-fluid">
     <div  class="row">
       <div class="col-lg-3" *ngFor="let menu of menus; let i = index">
