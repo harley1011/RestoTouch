@@ -18,6 +18,7 @@ consumes:
 produces:
   - application/json
 paths:
+  # -----------------------------------------/// Category ///
   /category:
      # binds a127 app logic to a route
     x-swagger-router-controller: category
@@ -29,8 +30,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
-            $ref: "#/definitions/CategoryResponse"
+            $ref: "#/definitions/CategoriesResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -55,7 +55,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /category/{name}:
+  /category/{id}:
     # binds a127 app logic to a route
     x-swagger-router-controller: category
     get:
@@ -63,8 +63,8 @@ paths:
       # used as the method name of the controller
       operationId: getCategory
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
       responses:
@@ -83,8 +83,8 @@ paths:
       # used as the method name of the controller
       operationId: updateCategory
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
         - name: category
@@ -109,8 +109,8 @@ paths:
       # used as the method name of the controller
       operationId: deleteCategory
       parameters:
-        - name: name
-          type: string
+        - name: id
+          type: number
           in: path
           required: true
       responses:
@@ -124,6 +124,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  # -----------------------------------------/// Restaurant ///
   /restaurant:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurant
@@ -231,6 +233,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  # -----------------------------------------/// Register ///
   /register:
     x-swagger-router-controller: account
     post:
@@ -253,6 +256,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+
+  # -----------------------------------------/// Login ///
   /login:
     x-swagger-router-controller: account
     post:
@@ -321,12 +326,12 @@ definitions:
     required:
       - success
       - description
-  CategoryResponse:
+  CategoriesResponse:
     required:
-      - category
+      - categories
     properties:
       # Array of category
-      category:
+      categories:
         type: array
         items:
           "$ref": "#/definitions/Category"

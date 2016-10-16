@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from './category';
 import { CategoryService } from './category.service';
+import { Router, ActivatedRoute} from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -10,28 +11,87 @@ import { CategoryService } from './category.service';
 })
 
 export class CategoryComponent implements OnInit {
-    isEditable: boolean;
-    categories: Category[];
+    isEditable: boolean; // Determine if a field is editable
+    categories: Category[]; // Contains the returned list of category
+    category: Category; // instance of a category
+    carIdToDelete: number;
 
-    constructor(private categoryService: CategoryService) { }
+    constructor(private categoryService: CategoryService,
+                private route: ActivatedRoute,
+                private router: Router) { }
 
+    ngOnInit(): void {
+        this.isEditable = false;
+        this.getCategories();
+        this.category = new Category('');
+    }
+
+    ///////////////////////////////////////////////////////////////
+
+    /**
+     * Gets user's categories
+     */
     getCategories(): void {
       // Subscribe to the getCategories observable
       this.categoryService.getCategories().subscribe(
         categories => {this.categories = categories;},
         error => {console.log(error);}
       );
-    };
-
-    ngOnInit(): void {
-        this.isEditable = false;
-        this.getCategories();
     }
+
+    /**
+     * Adds a new category
+     */
+     addCategory(): void {
+       this.categoryService.addCategory(this.category)
+           .subscribe(
+              generalResponse => {this.getCategories();},
+              error => {console.log(error);}
+            );
+     }
+
+     /**
+      * Deletes a category
+      */
+      deleteCategory():void {
+        this.categoryService.deleteCategory(this.carIdToDelete)
+            .subscribe(
+              generalResponse => {this.getCategories();},
+              error => {console.log(error);}
+            );
+      }
+
+    // Btn Handlers //////////////////////////////////////////////
+    /**
+     * Toggles the tile user input
+     */
     changeInput(): void {
         if(this.isEditable === false) {
             this.isEditable = true;
         } else {
             this.isEditable = false;
         }
+    }
+
+    /**
+     * Adds a new category
+     */
+    addNewCatClick(event: Event,newCat: string): void {
+      if(newCat) {
+        event.preventDefault();
+        this.category.categoryName = newCat;
+        this.addCategory();
+      }
+    }
+
+    /**
+     * Adds a new category
+     */
+    deleteCatClick(event: Event,id: number): void {
+      if(id) {
+        event.preventDefault();
+        this.carIdToDelete = id;
+        this.deleteCategory();
+      }
     }
 }
