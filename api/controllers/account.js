@@ -1,5 +1,5 @@
 var models = require("../../database/models");
-var passwordHasher = require("../helpers/password_hash");
+var passwordHasher = require("../helpers/passwordHash");
 var jwt = require('jwt-simple');
 var configAuth = require('../../config/auth');
 var userModel;
