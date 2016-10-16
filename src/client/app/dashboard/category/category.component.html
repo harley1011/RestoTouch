@@ -12,7 +12,7 @@
             <i class="fa fa-fw fa-cutlery cat-icon"></i>
             <div class="cat-label" [hidden]="isEditable">{{ category.categoryName}}</div>
             <div class="cat-label-input" *ngIf="isEditable">
-                <input type="text" value="{{category.categoryName}}" />
+                <input #editCatField type="text" value="{{category.categoryName}}" (keyup.enter)="updateCatClick($event,editCatField.value,category.id)"/>
             </div>
         </div>
     </div>

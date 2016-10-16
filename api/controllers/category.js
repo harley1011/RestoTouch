@@ -53,3 +53,17 @@ function deleteCategory(req, res) {
     return res.json({success: 1, description: "Category deleted"});
   });
 }
+
+//PUT /category/{id}
+function updateCategory(req, res) {
+  var category = req.body;
+  var id = req.swagger.params.id.value;
+  return categoryModel.update(category, {
+    where: {
+      id: id,
+      userId: req.userId
+    }
+  }).then(function(result) {
+    return res.json({success: 1, description: "Category updated"});
+  });
+}

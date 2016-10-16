@@ -43,6 +43,16 @@ export class CategoryService {
                     .catch(this.handleError);
   }
 
+  updateCategory (category: Category, id: number): Observable<GeneralResponse> {
+    let body = JSON.stringify(category);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + id, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   /////////////////////////////////////////////////////////////////////////////
   private extractData(res: Response) {
     let body = res.json();
