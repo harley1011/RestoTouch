@@ -1,4 +1,4 @@
-<h1>{{ restaurant?.name || "Create Restaurant" }}</h1>
+<h1>{{ restaurant?.selectedTranslation?.name || "Create Restaurant" }}</h1>
 
 <div class="row">
   <form id="restaurantForm" role="form">
@@ -6,17 +6,47 @@
       <h4>General Information</h4>
       <div class="form-group">
         <label>Name</label>
-        <input id="name" class="form-control" name="name" placeholder="Ex: Resto Touch Restaurant" value="{{restaurant?.name }}">
+        <input id="name" class="form-control" name="name" placeholder="Ex: Resto Touch Restaurant"
+               value="{{restaurant?.selectedTranslation?.name }}">
       </div>
 
       <div class="form-group">
         <label>Description</label>
-        <input id="description" class="form-control" name="description" placeholder="Enter Text" value="{{restaurant?.description }}">
+        <input id="description" class="form-control" name="description" placeholder="Enter Text"
+               value="{{restaurant?.selectedTranslation?.description }}">
       </div>
 
       <div class="form-group">
         <label>Address</label>
-        <input id="address" class="form-control" name="address" placeholder="Ex: 7141 Rue Sherbrooke O, Montréal, QC H4B 1R6" value="{{restaurant?.address }}">
+        <input id="address" class="form-control" name="address"
+               placeholder="Ex: 7141 Rue Sherbrooke O, Montréal, QC H4B 1R6" value="{{restaurant?.address }}">
+      </div>
+      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#languageDiv" aria-expanded="false"
+              aria-controls="languageDiv" (click)="toggleShowManageLanguage()">Manage Languages
+      </button>
+      <div [hidden]="hideManageLanguage">
+        <ul class="list-group">
+          <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-remove icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
+          <li class="list-group-item">
+            <div class="input-group">
+              <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
+                <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+              </select>
+              <span class="input-group-btn">
+              <button class="btn btn-primary" (click)="addLanguage()" type="button">Add</button>
+            </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!create" class="form-group">
+        <div>
+          <label>Menus</label>
+        </div>
+        <div class="btn-group-vertical btn-group-md">
+          <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
+          <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
+        </div>
       </div>
     </div>
     <div class="col-lg-6">
@@ -43,7 +73,8 @@
           </div>
           <div class="col-lg-6">
             <label>Close</label>
-            <input id="tuClose" class="form-control" name="tuClose" placeholder="12:00" value="{{restaurant?.tuClose }}">
+            <input id="tuClose" class="form-control" name="tuClose" placeholder="12:00"
+                   value="{{restaurant?.tuClose }}">
           </div>
         </div>
       </div>
@@ -69,7 +100,8 @@
           </div>
           <div class="col-lg-6">
             <label>Close</label>
-            <input id="thClose" class="form-control" name="thClose" placeholder="12:00" value="{{restaurant?.thClose }}">
+            <input id="thClose" class="form-control" name="thClose" placeholder="12:00"
+                   value="{{restaurant?.thClose }}">
           </div>
         </div>
       </div>
@@ -95,7 +127,8 @@
           </div>
           <div class="col-lg-6">
             <label>Close</label>
-            <input id="saClose" class="form-control" name="saClose" placeholder="12:00" value="{{restaurant?.saClose }}">
+            <input id="saClose" class="form-control" name="saClose" placeholder="12:00"
+                   value="{{restaurant?.saClose }}">
           </div>
         </div>
       </div>
@@ -108,7 +141,8 @@
           </div>
           <div class="col-lg-6">
             <label>Close</label>
-            <input id="suClose" class="form-control" name="suClose" placeholder="12:00" value="{{restaurant?.suClose }}">
+            <input id="suClose" class="form-control" name="suClose" placeholder="12:00"
+                   value="{{restaurant?.suClose }}">
           </div>
         </div>
       </div>

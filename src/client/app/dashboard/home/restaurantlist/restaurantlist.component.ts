@@ -21,6 +21,10 @@ export class RestaurantListComponent implements OnInit {
 	getRestaurants(): void {
 		this.restaurantListService.getRestaurants().subscribe(
 			restaurants => {
+			  restaurants.forEach(function(restaurant) {
+			    //todo: show the language the user is using for the application if available
+			    restaurant.selectedTranslation = restaurant.translations[0];
+        });
 				this.restaurants = restaurants;
 				this.numOfRestaurants = this.restaurants.length;
 			},
@@ -39,6 +43,6 @@ export class RestaurantListComponent implements OnInit {
 	}
 
 	modify(restaurant: Restaurant): void {
-		this.router.navigate(['/dashboard/restaurant', restaurant.name]);
+		this.router.navigate(['/dashboard/restaurant', restaurant.id]);
 	}
 }

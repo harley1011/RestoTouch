@@ -3,8 +3,9 @@ import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions 
 import { MockBackend } from '@angular/http/testing';
 
 import { RestaurantService } from '../restaurant/restaurant.service';
-import { Restaurant } from '../home/restaurantlist/restaurant';
+import { Restaurant, RestaurantTranslations } from '../home/restaurantlist/restaurant';
 import {AuthHttpService} from '../../services/auth.http.services';
+import {ApiEndpointService} from '../../services/api.endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
@@ -25,7 +26,8 @@ export function main() {
         RestaurantService,
         BaseRequestOptions,
         AuthHttpService,
-        {provide: Router, useValue: routerStub},,
+        ApiEndpointService,
+        {provide: Router, useValue: routerStub},
         MockBackend,
         {
           provide: Http,
@@ -42,7 +44,7 @@ export function main() {
     });
 
     it('should get a restaurant', () => {
-      initialResponse = restaurantService.getRestaurant('McDonald');
+      initialResponse = restaurantService.getRestaurant(1);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"address"' +
         ': "99 Concordia Street, Montreal, QC, Canada", "description": "Italian' +
         ' restaurant", "name": "Paccini"}' })));
@@ -62,14 +64,16 @@ export function main() {
     });
 
     it('should add a restaurant', () => {
-      var mockRestaurant = new Restaurant('', '', '',
+      var mockTranslation = new RestaurantTranslations('','','');
+      var mockRestaurant = new Restaurant('',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
-        '9:00', '21:00'
+        '9:00', '21:00',
+        [], [], mockTranslation, [], 1
       );
 
       initialResponse = restaurantService.addRestaurant(mockRestaurant);
@@ -90,17 +94,19 @@ export function main() {
     });
 
     it('should update a restaurant', () => {
-      var mockRestaurant = new Restaurant('Restaurant 2', '', '',
+      var mockTranslation = new RestaurantTranslations('','','');
+      var mockRestaurant = new Restaurant('',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
         '9:00', '21:00',
-        '9:00', '21:00'
+        '9:00', '21:00',
+        [], [], mockTranslation, [], 1
       );
 
-      initialResponse = restaurantService.updateRestaurant(mockRestaurant, 'Restaurant 1');
+      initialResponse = restaurantService.updateRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
         ': 1, "description": "Restaurant Updated"}' })));
 
@@ -118,7 +124,18 @@ export function main() {
     });
 
     it('should delete a restaurant', () => {
-      initialResponse = restaurantService.deleteRestaurant('Restaurant 1');
+      var mockTranslation = new RestaurantTranslations('','','');
+      var mockRestaurant = new Restaurant('',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        '9:00', '21:00',
+        [], [], mockTranslation, [], 1
+      );
+      initialResponse = restaurantService.deleteRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
         ': 1, "description": "Restaurant Deleted"}' })));
 
