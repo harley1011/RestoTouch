@@ -10,7 +10,7 @@
         <div class="category" (click)="changeInput()">
             <i class="fa fa-fw fa-close cat-delete" (click)="deleteCatClick($event,category.id)"></i>
             <i class="fa fa-fw fa-cutlery cat-icon"></i>
-            <div class="cat-label" [hidden]="isEditable">{{ category.categoryName}}{{category.id}}</div>
+            <div class="cat-label" [hidden]="isEditable">{{ category.categoryName}}</div>
             <div class="cat-label-input" *ngIf="isEditable">
                 <input type="text" value="{{category.categoryName}}" />
             </div>
