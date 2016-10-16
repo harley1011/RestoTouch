@@ -37,10 +37,6 @@ function addCategory(req, res) {
   });
 }
 
-// PUT /category/{name}
-function updateCategory(req, res) {
-}
-
 // DELETE /category/{id}
 function deleteCategory(req, res) {
   var id = req.swagger.params.id.value;
