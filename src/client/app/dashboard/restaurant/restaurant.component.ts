@@ -6,7 +6,7 @@ import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
-import { Menu } from '../menu/menu';
+import {Menu} from '../menu/menu';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +24,7 @@ export class RestaurantComponent implements OnInit {
   supportedLanguages: Array<Language> = [];
   languages: Array<Language>;
   selectedLanguage: string;
-  editingLanguage: Language = new Language('','','',0);
+  editingLanguage: Language = new Language('', '', '', 0);
 
   constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
               private restaurantService: RestaurantService) {
@@ -32,7 +32,14 @@ export class RestaurantComponent implements OnInit {
     //todo: remove the supported languages in languages array
     languageService.setSupportedLanguages(this.supportedLanguages);
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
-    	this.editingLanguage = editingLanguage;
+      this.editingLanguage = editingLanguage;
+      this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
+      translation.languageCode === this.editingLanguage.languageCode);
+      // Translations doesn't exist yet for this language
+      if (!this.restaurant.selectedTranslation) {
+        this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
+        this.restaurant.translations.push(this.restaurant.selectedTranslation);
+      }
     });
   }
 
@@ -45,6 +52,8 @@ export class RestaurantComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
     this.supportedLanguages.push(language);
+    let newTranslation = new RestaurantTranslations('', '', language.languageCode);
+    this.restaurant.translations.push(newTranslation);
   }
 
   removeLanguage(language: Language) {
@@ -54,6 +63,10 @@ export class RestaurantComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.restaurant.translations.find(translation =>
+    translation.languageCode === language.languageCode);
+    let j = this.restaurant.translations.indexOf(removedTranslation);
+    this.restaurant.translations.splice(j, 1);
   }
 
   toggleShowManageLanguage(): void {
@@ -66,6 +79,9 @@ export class RestaurantComponent implements OnInit {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
         this.restaurant.selectedTranslation = this.restaurant.translations[0];
+        this.editingLanguage = this.languages.find(language =>
+        language.languageCode === this.restaurant.selectedTranslation.languageCode);
+        this.languageService.announceSelectedLanguage(this.editingLanguage);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
       },
       error => {
@@ -74,13 +90,13 @@ export class RestaurantComponent implements OnInit {
     );
   }
 
-	addRemoveMenu(): void {
-		this.router.navigate(['/dashboard/menulist', this.restaurant.selectedTranslation.name]);
-	}
+  addRemoveMenu(): void {
+    this.router.navigate(['/dashboard/menulist', this.restaurant.selectedTranslation.name]);
+  }
 
-	openMenu(menu: Menu): void {
-		this.router.navigate(['/dashboard/menu', menu.name]);
-	}
+  openMenu(menu: Menu): void {
+    this.router.navigate(['/dashboard/menu', menu.name]);
+  }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
@@ -89,7 +105,7 @@ export class RestaurantComponent implements OnInit {
         this.create = false;
       } else {
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-        let translation = new RestaurantTranslations(' ', ' ',this.supportedLanguages[0].languageCode);
+        let translation = new RestaurantTranslations(' ', ' ', this.supportedLanguages[0].languageCode);
         this.restaurant = new Restaurant('',
           '9:00', '21:00',
           '9:00', '21:00',
@@ -103,6 +119,8 @@ export class RestaurantComponent implements OnInit {
           translation, []);
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
       }
     });
   }
@@ -111,7 +129,6 @@ export class RestaurantComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    var oldName = this.restaurant.selectedTranslation.name;
     this.restaurant.selectedTranslation.name = values['name'];
     this.restaurant.selectedTranslation.description = values['description'];
     this.restaurant.address = values['address'];
@@ -133,7 +150,7 @@ export class RestaurantComponent implements OnInit {
     if (this.create) {
       this.add();
     } else {
-      this.update(oldName);
+      this.update();
     }
   }
 
@@ -149,7 +166,7 @@ export class RestaurantComponent implements OnInit {
       );
   }
 
-  update(oldName: string): void {
+  update(): void {
     this.restaurantService.updateRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
@@ -162,8 +179,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   delete(): void {
-    //todo: use the restaurant id not the name to delete it
-    this.restaurantService.deleteRestaurant(this.restaurant.selectedTranslation.name).subscribe(
+    this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/home']);
       },

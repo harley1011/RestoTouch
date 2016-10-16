@@ -98,7 +98,14 @@ function update(req, res) {
           translation[prop] = newTranslation[prop];
       }
       translation.save();
+      _.remove(restaurant.translations, {languageCode: newTranslation.languageCode});
     });
+
+    restaurant.translations.forEach(function (translation) {
+      translation.restaurantId = restaurant.id;
+    });
+    // Create the new translations
+    restaurantsTranslations.bulkCreate(restaurant.translations);
 
     oldRestaurant.save().then(function (result) {
       languagesToRemove.forEach(function (language) {
@@ -114,8 +121,12 @@ function update(req, res) {
         //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
       })
 
+      restaurantLanguageModel.bulkCreate(newLanguagesToAdd).then(function (result) {
+        return res.json({success: 1, description: "Restaurant Updated"});
+      })
 
-      return res.json({success: 1, description: "Restaurant Updated"});
+
+
     });
   });
 }

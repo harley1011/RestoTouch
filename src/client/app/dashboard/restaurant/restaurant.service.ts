@@ -40,14 +40,15 @@ export class RestaurantService {
     let body = JSON.stringify(restaurant);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
+    console.log(body);
 
     return this.http.put(this.api.getEndpoint() + this.url + '/' + restaurant.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteRestaurant (name: string): Observable<Restaurant> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteRestaurant (restaurant: Restaurant): Observable<Restaurant> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + restaurant.id)
       .map(this.extractData)
       .catch(this.handleError);
   }
