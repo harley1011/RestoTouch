@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define("Menus", {
-    name: {type: DataTypes.STRING, unique: true}
+    name: {type: DataTypes.STRING}
   });
 };
