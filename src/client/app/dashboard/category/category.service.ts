@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Category } from '../category/category';
+import { Category } from '../../shared/models/category';
 import { GeneralResponse }  from '../../shared/general.response';
 import { AuthHttpService } from '../../services/auth-http.services';
 import { Observable } from 'rxjs/Observable';
