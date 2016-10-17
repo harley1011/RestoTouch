@@ -30,10 +30,10 @@ after_failure:
   - cat /home/travis/build/mgechev/angular2-seed/npm-debug.log
 
 notifications:
-  slack: agile-sloths:gRUYjpMIEXY6ptArOBR8s5D3
-    on_success: never  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: never     # options: [always|never|change] default: always
+  slack:
+    rooms: agile-sloths:gRUYjpMIEXY6ptArOBR8s5D3
+    on_success: never
+
 
 env:
   global:
