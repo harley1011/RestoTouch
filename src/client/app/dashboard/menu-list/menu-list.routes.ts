@@ -3,10 +3,10 @@ import { MenuListComponent } from './index';
 
 export const MenuListRoutes: Route[] = [
   	{
-    	path: 'menulist',
+    	path: 'menus',
     	component: MenuListComponent
   	}, {
-    	path: 'menulist/:id',
+    	path: 'menus/:id',
     	component: MenuListComponent
   	}
 ];

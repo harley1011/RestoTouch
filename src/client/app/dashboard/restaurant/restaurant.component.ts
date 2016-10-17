@@ -90,7 +90,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   addRemoveMenu(): void {
-    this.router.navigate(['/dashboard/menulist', this.restaurant.id]);
+    this.router.navigate(['/dashboard/menus', this.restaurant.id]);
   }
 
   openMenu(menu: Menu): void {
