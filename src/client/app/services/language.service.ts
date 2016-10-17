@@ -1,6 +1,7 @@
 import {Injectable}     from '@angular/core';
 import {Language} from '../shared/models/language';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class LanguageService {
