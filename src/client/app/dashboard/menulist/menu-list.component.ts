@@ -6,12 +6,12 @@ import { MenuService } from '../menu/menu.service';
 
 import { Restaurant } from '../home/restaurantlist/restaurant';
 import { RestaurantService } from '../restaurant/restaurant.service';
-import { MenuListService } from './menulist.service';
+import { MenuListService } from './menu-list.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'menulist-cmp',
-	templateUrl: 'menulist.component.html',
+	templateUrl: 'menu-list.component.html',
 	styleUrls: ['menulist.css'],
   providers: [MenuService, RestaurantService, MenuListService]
 })
