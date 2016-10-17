@@ -1,6 +1,7 @@
 var model = require('./models');
 var passwordHasher = require("../api/helpers/passwordHash.js");
 var passwordData = passwordHasher.saltHashPassword('password');
+
 var users = [{
   firstName: 'harley',
   lastName: 'mcphee',
@@ -56,6 +57,7 @@ var users = [{
     emailVerified: true
   }];
 
+var menus = [{name: 'breakfast1 Menu'}, {name: 'dinner1 Menu'}];
 // Let the db tables get created
 setTimeout(function () {
   var menuModel = model.getMenuModel();
@@ -64,19 +66,25 @@ setTimeout(function () {
 
   users.forEach(function (user) {
 
-    userModel.findOrCreate({where: {
-      email: user.email}, defaults: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      password: user.password,
-      salt: user.salt,
-      emailVerified: true}
+    userModel.findOrCreate({
+      where: {
+        email: user.email
+      },
+      defaults: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        password: user.password,
+        salt: user.salt,
+        emailVerified: true
+      }
     }).then(function (result) {
       var user = result[0];
-      menuModel.create({name: 'breakfast1 Menu', userId: user.id}).then(function (menu) {
-        console.log(menu);
+
+      menus.forEach(function (menu) {
+        menu.userId = user.id;
+        menuModel.findOrCreate({where: menu, defaults: menu});
       });
     });
   });
