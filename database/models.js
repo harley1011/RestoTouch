@@ -12,7 +12,7 @@ var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTransla
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
-var dropTable = true;
+var dropTable = false;
 
 userModel.sync({force: dropTable}).then(function () {
 
