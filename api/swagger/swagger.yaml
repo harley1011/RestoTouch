@@ -340,9 +340,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /restaurantmenu:
+  /restaurantMenu:
     # binds a127 app logic to a route
-    x-swagger-router-controller: restaurantmenu
+    x-swagger-router-controller: restaurantMenu
     post:
       operationId: saveRestaurantMenu
       description: Add a restaurant menu
@@ -363,7 +363,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /restaurantmenu/{restaurantId}{menuId}:
+  /restaurantMenu/{restaurantId}{menuId}:
     # binds a127 app logic to a route
     x-swagger-router-controller: restaurantmenu
     ############
@@ -424,9 +424,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /menucategory:
+  /menuCategory:
     # binds a127 app logic to a route
-    x-swagger-router-controller: menucategory
+    x-swagger-router-controller: menuCategory
     post:
       operationId: saveMenuCategory
       description: Add a category to menu
@@ -447,9 +447,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /menucategory/{menuId}{categoryId}:
+  /menuCategory/{menuId}{categoryId}:
     # binds a127 app logic to a route
-    x-swagger-router-controller: menucategory
+    x-swagger-router-controller: menuCategory
     delete:
       description: Deletes a Category in Menu
       # used as the method name of the controller
@@ -688,26 +688,26 @@ definitions:
   RestaurantMenu:
     type: object
     properties:
-      RestaurantId:
+      restaurantId:
         type: number
-      MenuId:
+      menuId:
         type: number
     required:
-      - RestaurantId
-      - MenuId
+      - restaurantId
+      - menuId
   MenuCategory:
     type: object
     properties:
-      MenuId:
+      menuId:
         type: number
-      CategoryId:
+      categoryId:
         type: number
-      Order:
+      order:
         type: number
     required:
-      - MenuId
-      - CategoryId
-      - Order
+      - menuId
+      - categoryId
+      - order
   ErrorResponse:
     required:
       - message
