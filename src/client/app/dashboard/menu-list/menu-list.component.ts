@@ -10,7 +10,7 @@ import { MenuListService } from './menu-list.service';
 
 @Component({
 	moduleId: module.id,
-	selector: 'menulist-cmp',
+	selector: 'menu-list-cmp',
 	templateUrl: 'menu-list.component.html',
   providers: [MenuService, RestaurantService, MenuListService]
 })

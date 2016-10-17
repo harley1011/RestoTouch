@@ -95,7 +95,7 @@ export class MenuComponent implements OnInit {
     // calling add menuservice
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/menulist']);
+        this.router.navigate(['/dashboard/menus']);
       },
       error => {
         this.errorMessage = <any> error;
@@ -105,7 +105,7 @@ export class MenuComponent implements OnInit {
     // calling add menucategoryservice
     /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/menulist']);
+        this.router.navigate(['/dashboard/menus']);
       },
       error => {
         this.errorMessage = <any> error;
@@ -116,7 +116,7 @@ export class MenuComponent implements OnInit {
   update(oldName : string): void {
     this.menuService.updateMenu(this.menu, oldName).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/menulist']);
+        this.router.navigate(['/dashboard/menus']);
       },
       error => {
         this.errorMessage = <any>error;
@@ -129,14 +129,14 @@ export class MenuComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/dashboard/menulist']);
+    this.router.navigate(['/dashboard/menus']);
   }
 
   delete(): void {
     this.menuService.deleteMenu(this.menu.name).subscribe(
       generalResponse => {
         console.log('response', generalResponse );
-        this.router.navigate(['/dashboard/menulist']);
+        this.router.navigate(['/dashboard/menus']);
       },
       error => {
         this.errorMessage = <any>error;

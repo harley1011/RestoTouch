@@ -6,7 +6,7 @@ import { RestaurantService } from '../../restaurant/restaurant.service';
 
 @Component({
 	moduleId: module.id,
-	selector: 'restaurantlist-cmp',
+	selector: 'restaurant-list-cmp',
 	templateUrl: 'restaurant-list.component.html',
   providers: [RestaurantService]
 })
