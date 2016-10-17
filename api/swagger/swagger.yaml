@@ -365,7 +365,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /restaurantMenu/{restaurantId}{menuId}:
     # binds a127 app logic to a route
-    x-swagger-router-controller: restaurantmenu
+    x-swagger-router-controller: restaurantMenu
     ############
     # ATTENTION !
     # Don't why the doc BELOW is needed, it causing errors so I commented it out!
