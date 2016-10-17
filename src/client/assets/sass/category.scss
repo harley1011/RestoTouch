@@ -1,0 +1,52 @@
+.cat-container {
+    margin-top: 50px;   
+}
+
+.category {
+    height: 150px;
+    border-radius: 11px;
+    background-color: #1abc9c;
+    padding: 10px 12px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.cat-label {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* border: 1px solid black; */
+    text-align: center;
+    display: inline-block;
+    left: 0;
+    margin-bottom: 20px;   
+}
+
+.cat-label-input {
+    position: absolute;
+    bottom: 10px;
+}
+
+.cat-label-input input[type="text"] {
+    width: 100%;   
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 2%;
+    color: white;
+    margin: 0 auto;
+}
+
+.cat-icon {
+    font-size: 60px;
+    margin-top: 15px;
+}
+
+.cat-delete {
+    position: absolute;
+    right: 20px;
+}
+
