@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { CarouselModule, DropdownModule, AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { RestaurantListComponent } from './restaurantlist/restaurantlist.component';
+import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 
 @NgModule({
     imports: [CommonModule, CarouselModule, DropdownModule, AlertModule],

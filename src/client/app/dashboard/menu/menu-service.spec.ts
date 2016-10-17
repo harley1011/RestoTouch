@@ -1,11 +1,11 @@
 import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
-import {AuthHttpService} from '../../services/auth.http.services';
-import {ApiEndpointService} from '../../services/api.endpoint.service';
+import {AuthHttpService} from '../../services/auth-http.services';
+import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 import { MenuService } from '../menu/menu.service';
-import { Menu } from './menu';
+import { Menu } from '../../shared/models/menu';
 
 
 export function main() {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {MenuService} from './menu.service';
-import {Menu} from './menu';
+import {Menu} from '../../shared/models/menu';
 //import {MenuCategoryService} from './menucatergory.service';
 //import {CategoryService} from './category.service';
 
@@ -9,7 +9,6 @@ import {Menu} from './menu';
 	moduleId: module.id,
 	selector: 'menu-cmp',
 	templateUrl: 'menu.component.html',
-	styleUrls: ['menu.css'],
   providers: [MenuService]
 })
 

@@ -3,8 +3,8 @@ import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions 
 import { MockBackend } from '@angular/http/testing';
 
 import { MenuListService } from './menu-list.service';
-import {AuthHttpService} from '../../services/auth.http.services';
-import {ApiEndpointService} from '../../services/api.endpoint.service';
+import {AuthHttpService} from '../../services/auth-http.services';
+import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
