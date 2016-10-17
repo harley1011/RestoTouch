@@ -1,4 +1,4 @@
-<h1>{{ restaurant?.id || "Create Restaurant" }}</h1>
+<h1>{{ restaurant?.id ? restaurant?.selectedTranslation?.name || 'Add a translation for the selected language': "Create Restaurant" }}</h1>
 
 <div class="row">
   <form id="restaurantForm" role="form">
