@@ -9,7 +9,7 @@ import { GeneralResponse }  from '../../shared/general.response';
 @Injectable()
 export class MenuCategoryService {
 
-  private url = '/menucategory';
+  private url = '/menuCategory';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 

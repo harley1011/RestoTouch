@@ -33,15 +33,19 @@ userModel.sync({force: dropTable}).then(function () {
   categoryModel.sync({force: dropTable});
 
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
-  menuModel.sync({force: dropTable});
+  menuModel.sync({force: dropTable}).then(function () {
 
-  restaurantModel.belongsToMany(menuModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "restaurantId"});
-  menuModel.belongsToMany(restaurantModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "restaurantId"});
-  restaurantMenuModel.sync({force: dropTable});
+    restaurantModel.belongsToMany(menuModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "restaurantId"});
+    menuModel.belongsToMany(restaurantModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "menuId"});
+    restaurantMenuModel.sync({force: dropTable});
 
-  menuModel.belongsToMany(categoryModel, {through: menuCategoryModel, foreignKey: 'menuId'});
-  categoryModel.belongsToMany(menuModel, {through: menuCategoryModel, foreignKey: 'categoryId'});
-  menuCategoryModel.sync({force: dropTable});
+    menuModel.belongsToMany(categoryModel, {through: menuCategoryModel, foreignKey: 'menuId'});
+    categoryModel.belongsToMany(menuModel, {through: menuCategoryModel, foreignKey: 'categoryId'});
+    menuCategoryModel.sync({force: dropTable});
+
+  });
+
+
 
 
 

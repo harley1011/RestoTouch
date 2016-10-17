@@ -10,14 +10,14 @@ import  {ApiEndpointService} from '../../services/api.endpoint.service';
 
 @Injectable()
 export class MenuListService {
-  private url = '/restaurantmenu';
+  private url = '/restaurantMenu';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
   addRestaurantMenu (menuId: number, restaurantId: number): Observable<GeneralResponse> {
     var restaurantMenu = {
-      MenuId: menuId,
-      RestaurantId: restaurantId
+      menuId: menuId,
+      restaurantId: restaurantId
     };
 
     let body = JSON.stringify(restaurantMenu);
