@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Menu } from '../menu/menu';
+import { Menu } from '../../shared/models/menu';
 import { MenuService } from '../menu/menu.service';
 
-import { Restaurant } from '../home/restaurantlist/restaurant';
+import { Restaurant } from '../../shared/models/restaurant';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { MenuListService } from './menu-list.service';
 
@@ -12,7 +12,6 @@ import { MenuListService } from './menu-list.service';
 	moduleId: module.id,
 	selector: 'menulist-cmp',
 	templateUrl: 'menu-list.component.html',
-	styleUrls: ['menulist.css'],
   providers: [MenuService, RestaurantService, MenuListService]
 })
 

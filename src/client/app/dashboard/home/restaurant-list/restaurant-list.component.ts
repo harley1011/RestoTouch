@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Restaurant } from './restaurant';
+import { Restaurant } from '../../../shared/models/restaurant';
 import { RestaurantService } from '../../restaurant/restaurant.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'restaurantlist-cmp',
-	templateUrl: 'restaurantlist.component.html',
-	styleUrls: ['restaurantlist.css'],
+	templateUrl: 'restaurant-list.component.html',
   providers: [RestaurantService]
 })
 

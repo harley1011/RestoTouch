@@ -4,8 +4,8 @@ import { MockBackend } from '@angular/http/testing';
 
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { Restaurant, RestaurantTranslations } from '../home/restaurantlist/restaurant';
-import {AuthHttpService} from '../../services/auth.http.services';
-import {ApiEndpointService} from '../../services/api.endpoint.service';
+import {AuthHttpService} from '../../services/auth-http.services';
+import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {

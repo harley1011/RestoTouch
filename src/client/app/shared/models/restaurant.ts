@@ -1,5 +1,5 @@
-import {Language} from '../../../shared/models/language';
-import { Menu } from '../../menu/menu';
+import {Language} from './language';
+import { Menu } from './menu';
 
 export class Restaurant {
 

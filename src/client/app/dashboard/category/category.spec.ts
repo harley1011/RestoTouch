@@ -4,8 +4,8 @@ import { MockBackend } from '@angular/http/testing';
 
 import { Category } from './category';
 import { CategoryService } from './category.service';
-import {AuthHttpService} from '../../services/auth.http.services';
-import {ApiEndpointService} from '../../services/api.endpoint.service';
+import {AuthHttpService} from '../../services/auth-http.services';
+import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
