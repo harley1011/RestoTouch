@@ -27,8 +27,8 @@ function delRestaurantMenu(req, res) {
   var menuId = req.swagger.params.menuId.value;
   return restaurantMenuModel.destroy({
     where: {
-      RestaurantId: restaurantId,
-      MenuId: menuId
+      restaurantId: restaurantId,
+      menuId: menuId
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Restaurant Menu Relation Deleted"});
