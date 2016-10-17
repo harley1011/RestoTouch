@@ -37,6 +37,9 @@ notifications:
     on_failure: always  # options: [always|never|change] default: always
     on_start: never     # options: [always|never|change] default: always
   slack: agile-sloths:gRUYjpMIEXY6ptArOBR8s5D3
+    on_success: never  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
 
 env:
   global:
@@ -49,3 +52,4 @@ cache:
 
 script:
   - npm run setup
+  - npm run test
