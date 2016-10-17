@@ -1,6 +1,11 @@
-var userModel = {}
-var restaurantModel = {}
+var userModel = {};
+var restaurantModel = {};
+var menuModel = {};
+var restaurantMenuModel = {};
+var restaurantsLanguageModel = {};
+var restaurantsTranslationModel = {};
 var Promise = require('promise');
+
 userModel.create = create;
 userModel.findOne = findOne_user;
 
@@ -10,6 +15,24 @@ restaurantModel.findAll = findAll;
 restaurantModel.findOne = findOne;
 restaurantModel.destroy = destroy;
 
+menuModel.create = create;
+menuModel.update = update;
+menuModel.findAll = findAll;
+menuModel.findOne = findOne;
+menuModel.destroy = destroy;
+
+restaurantMenuModel.create = create;
+restaurantMenuModel.destroy = destroy;
+
+restaurantsLanguageModel.create = create;
+restaurantsLanguageModel.update = update;
+restaurantsLanguageModel.findAll = findAll;
+restaurantsLanguageModel.destroy = destroy;
+
+restaurantsTranslationModel.create = create;
+restaurantsTranslationModel.update = update;
+restaurantsTranslationModel.findAll = findAll;
+restaurantsTranslationModel.destroy = destroy;
 
 exports.getUserModel = function() {
   return userModel;
@@ -17,6 +40,22 @@ exports.getUserModel = function() {
 
 exports.getRestaurantModel = function () {
   return restaurantModel;
+}
+
+exports.getMenuModel = function () {
+  return menuModel;
+}
+
+exports.getRestaurantMenuModel = function () {
+  return restaurantMenuModel;
+}
+
+exports.getRestaurantsLanguageModel = function () {
+  return restaurantsLanguageModel;
+}
+
+exports.getRestaurantsTranslationModel = function () {
+  return restaurantsTranslationModel;
 }
 
 function create(object) {

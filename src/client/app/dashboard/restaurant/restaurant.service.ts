@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 
-import { Restaurant } from '../home/restaurantlist/restaurant';
+import { Restaurant } from '../../shared/models/restaurant';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
-import { AuthHttpService } from '../../services/auth.http.services';
+import { AuthHttpService } from '../../services/auth-http.services';
 import { Observable } from 'rxjs/Observable';
-
+import  {ApiEndpointService} from '../../services/api-endpoint.service';
 
 @Injectable()
 export class RestaurantService {
   private url = '/restaurant';
 
-  constructor (private http: AuthHttpService) {}
+  constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getRestaurant (name: string): Observable<Restaurant> {
-    return this.http.get(this.url + '/' + name)
+  getRestaurant (id: number): Observable<Restaurant> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   getRestaurants (): Observable<Restaurant[]> {
-    return this.http.get(this.url)
+    return this.http.get(this.api.getEndpoint() + this.url)
       .map((response) => this.extractData(response).restaurants)
       .catch(this.handleError);
   }
@@ -31,23 +31,24 @@ export class RestaurantService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.url, body, options)
+    return this.http.post(this.api.getEndpoint() + this.url, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  updateRestaurant (restaurant: Restaurant, oldName: string): Observable<GeneralResponse> {
+  updateRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
     let body = JSON.stringify(restaurant);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
+    console.log(body);
 
-    return this.http.put(this.url + '/' + oldName, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + restaurant.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteRestaurant (name: string): Observable<Restaurant> {
-    return this.http.delete(this.url + '/' + name)
+  deleteRestaurant (restaurant: Restaurant): Observable<Restaurant> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + restaurant.id)
       .map(this.extractData)
       .catch(this.handleError);
   }

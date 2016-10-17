@@ -13,6 +13,16 @@ This will launch a local web server that will host the web application HTML, Jav
 
 6. Run "swagger project edit" to see the web API editor 
 
+## This applications web app was started by using this template http://startangular.com/product/sb-admin-bootstrap-4-angular-2/
+Note:
+- Before adding your own custom components it's a good idea to go to that link and go to the preview site to see if they already have components that you'll need
+
+- A lot of the components were removed but can be added back in if they are needed
+
+- The preview site gives a lot of examples of how to style things so check it out
+
+- The template uses Bootstrap CSS, rather than writing your own custom CSS check if you can do it with Bootstrap first, it'll be a mess if we all have our own CSS for each component
+
 
 ##If you want to do developement on just the web application then you can run the command "npm run start.dev"
 this will also launch a local web server but this one has livereload, automatic transpiling of source files when updated, and other stuff
