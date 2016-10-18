@@ -58,11 +58,14 @@ var users = [{
   }];
 
 var menus = [{name: 'breakfast1 Menu'}, {name: 'dinner1 Menu'}];
+
+var categories = [{categoryName:'Burgers'}, {categoryName:'Sandwiches'}, {categoryName:'Drinks'}, {categoryName:'Sweets'}];
+
 // Let the db tables get created
 setTimeout(function () {
   var menuModel = model.getMenuModel();
   var userModel = model.getUserModel();
-
+  var categoryModel = model.getCategoryModel();
 
   users.forEach(function (user) {
 
@@ -80,11 +83,16 @@ setTimeout(function () {
         emailVerified: true
       }
     }).then(function (result) {
-      var user = result[0];
+      var user = result[0];//[object SequelizeInstance:Users]
 
       menus.forEach(function (menu) {
         menu.userId = user.id;
         menuModel.findOrCreate({where: menu, defaults: menu});
+      });
+
+      categories.forEach(function (category) {
+        category.userId = user.id;
+        categoryModel.findOrCreate({where: category, defaults: category});
       });
     });
   });
