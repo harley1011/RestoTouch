@@ -98,7 +98,7 @@ function update(req, res) {
           translation[prop] = newTranslation[prop];
       }
       translation.save();
-      _.remove(restaurant.translations, {languageCode: newTranslation.languageCode});
+      _.remove(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
     });
 
     restaurant.translations.forEach(function (translation) {

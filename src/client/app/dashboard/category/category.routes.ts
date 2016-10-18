@@ -3,7 +3,7 @@ import { CategoryComponent } from './index';
 
 export const CategoryRoutes: Route[] = [
   	{
-    	path: 'category',
+    	path: 'categories',
     	component: CategoryComponent
   	}
 ];

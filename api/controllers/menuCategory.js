@@ -18,8 +18,8 @@ function setDatabase (m) {
 //POST /menuCategory
 function saveMenuCategory(req, res) {
 
-  var menucategory = req.body;
-  return menuCategoryModel.create(menucategory).then(function(result){
+  var menuCategory = req.body;
+  return menuCategoryModel.create(menuCategory).then(function(result){
     return res.json({success: 1, description: "Added Categor(y/ies) to Menu"});
   });
 
@@ -32,8 +32,8 @@ function delMenuCategory(req, res) {
 
  return menuCategoryModel.destroy({
    where: {
-     MenuId: menuId,
-     CategoryId: categoryId
+     menuId: menuId,
+     categoryId: categoryId
    }
  }).then(function (result) {
  return res.json({success: 1, description: "Deleted Categories from a Menu"});

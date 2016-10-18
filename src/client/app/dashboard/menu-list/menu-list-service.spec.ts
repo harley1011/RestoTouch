@@ -2,15 +2,14 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { Category } from '../../shared/models/category';
-import { CategoryService } from './category.service';
+import { MenuListService } from './menu-list.service';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {
-  describe('Category Service', () => {
-    let categoryService: CategoryService;
+  describe('Menu List Service', () => {
+    let menuListService: MenuListService;
     let backend: MockBackend;
     let initialResponse: any;
     let connection: any;
@@ -23,11 +22,11 @@ export function main() {
       };
 
       let injector = ReflectiveInjector.resolveAndCreate([
-        CategoryService,
+        MenuListService,
         BaseRequestOptions,
         AuthHttpService,
         ApiEndpointService,
-        {provide: Router, useValue: routerStub},,
+        {provide: Router, useValue: routerStub},
         MockBackend,
         {
           provide: Http,
@@ -37,18 +36,19 @@ export function main() {
           deps: [MockBackend, BaseRequestOptions]
         },
       ]);
-      categoryService = injector.get(CategoryService);
+      menuListService = injector.get(MenuListService);
       backend = injector.get(MockBackend);
 
       backend.connections.subscribe((c: any) => connection = c);
     });
 
-    it('should add category', () => {
-      var mockCategory = new Category('Food');
+    it('should add a restaurant menu', () => {
+      var menuId = 2;
+      var restaurantId = 3;
 
-      initialResponse = categoryService.addCategory(mockCategory);
+      initialResponse = menuListService.addRestaurantMenu(menuId, restaurantId);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
-        ': 1, "description": "New Category added"}' })));
+        ': 1, "description": "Restaurant Menu Added"}' })));
 
       let response: any;
       initialResponse.subscribe(
@@ -59,16 +59,17 @@ export function main() {
 
       expect(response).toEqual({
         success: 1,
-        description: 'New Category added'
+        description: 'Restaurant Menu Added'
       });
     });
 
-    it('should update a category', () => {
-      var mockCategory = new Category('Food');
+    it('should delete a restaurant menu', () => {
+      var menuId = 2;
+      var restaurantId = 3;
 
-      initialResponse = categoryService.updateCategory(mockCategory, 1);
+      initialResponse = menuListService.deleteRestaurantMenu(menuId, restaurantId);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
-        ': 1, "description": "Category updated"}' })));
+        ': 1, "description": "Restaurant Menu Deleted"}' })));
 
       let response: any;
       initialResponse.subscribe(
@@ -79,25 +80,7 @@ export function main() {
 
       expect(response).toEqual({
         success: 1,
-        description: 'Category updated'
-      });
-    });
-
-    it('should delete a category', () => {
-      initialResponse = categoryService.deleteCategory(1);
-      connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
-        ': 1, "description": "Category deleted"}' })));
-
-      let response: any;
-      initialResponse.subscribe(
-  			(res: any) => {
-  				response = res;
-  			}
-  		);
-
-      expect(response).toEqual({
-        success: 1,
-        description: 'Category deleted'
+        description: 'Restaurant Menu Deleted'
       });
     });
   });

@@ -11,8 +11,8 @@ import { SignupModule } from './signup/signup.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
-import { AuthHttpService } from './services/auth.http.services';
-import { ApiEndpointService } from './services/api.endpoint.service';
+import { AuthHttpService } from './services/auth-http.services';
+import { ApiEndpointService } from './services/api-endpoint.service';
 import { LanguageService } from './services/language.service';
 
 
