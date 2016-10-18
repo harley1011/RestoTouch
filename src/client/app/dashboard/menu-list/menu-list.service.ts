@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Menu } from '../../shared/models/menu';
+//import { Menu } from '../menu/menu';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
@@ -9,25 +9,18 @@ import { Observable } from 'rxjs/Observable';
 import  {ApiEndpointService} from '../../services/api-endpoint.service';
 
 @Injectable()
-export class MenuService {
-  private url = '/menu';
+export class MenuListService {
+  private url = '/restaurantMenu';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getMenu (name: string): Observable<Menu> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
+  addRestaurantMenu (menuId: number, restaurantId: number): Observable<GeneralResponse> {
+    var restaurantMenu = {
+      menuId: menuId,
+      restaurantId: restaurantId
+    };
 
-  getMenus (): Observable<Menu[]> {
-    return this.http.get(this.api.getEndpoint() + this.url)
-      .map((response) => this.extractData(response).menus)
-      .catch(this.handleError);
-  }
-
-  addMenu (menu: Menu): Observable<GeneralResponse> {
-    let body = JSON.stringify(menu);
+    let body = JSON.stringify(restaurantMenu);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -36,18 +29,8 @@ export class MenuService {
       .catch(this.handleError);
   }
 
-  updateMenu (menu: Menu, oldName: string): Observable<GeneralResponse> {
-    let body = JSON.stringify(menu);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + oldName, body, options)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-
-  deleteMenu (name: string): Observable<Menu> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteRestaurantMenu (menuId: number, restaurantId: number): Observable<GeneralResponse> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + restaurantId + '+' + menuId)
       .map(this.extractData)
       .catch(this.handleError);
   }

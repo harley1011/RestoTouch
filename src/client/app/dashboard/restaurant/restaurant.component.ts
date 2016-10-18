@@ -1,18 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Restaurant, RestaurantTranslations} from '../home/restaurantlist/restaurant';
+import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
 import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
-import {Menu} from '../menu/menu';
+import {Menu} from '../../shared/models/menu';
 
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
   templateUrl: 'restaurant.component.html',
-  styleUrls: ['restaurant.css'],
   providers: [RestaurantService]
 })
 
@@ -91,7 +90,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   addRemoveMenu(): void {
-    this.router.navigate(['/dashboard/menulist', this.restaurant.id]);
+    this.router.navigate(['/dashboard/menus', this.restaurant.id]);
   }
 
   openMenu(menu: Menu): void {

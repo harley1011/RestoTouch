@@ -13,22 +13,22 @@ function setDatabase (m) {
   restaurantMenuModel = models.getRestaurantMenuModel();
 }
 
-//POST /restaurantmenu
+//POST /restaurantMenu
 function saveRestaurantMenu(req, res) {
-  var restaurantmenu = req.body;
-  return restaurantMenuModel.create(restaurantmenu).then(function(result) {
+  var restaurantMenu = req.body;
+  return restaurantMenuModel.create(restaurantMenu).then(function(result) {
     return res.json({success: 1, description: "Restaurant Menu Relation Added"});
   });
 }
 
-//DELETE /restaurantmenu/{restaurantId}{menuId}
+//DELETE /restaurantMenu/{restaurantId}{menuId}
 function delRestaurantMenu(req, res) {
   var restaurantId = req.swagger.params.restaurantId.value;
   var menuId = req.swagger.params.menuId.value;
   return restaurantMenuModel.destroy({
     where: {
-      RestaurantId: restaurantId,
-      MenuId: menuId
+      restaurantId: restaurantId,
+      menuId: menuId
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Restaurant Menu Relation Deleted"});
