@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../../shared/models/category';
-import { CategoryService } from './category.service';
+import { CategoryService } from './categories.service';
 import { Router, ActivatedRoute} from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    selector: 'category-cmp',
-    templateUrl: 'category.component.html',
+    selector: 'categories-cmp',
+    templateUrl: 'categories.component.html',
     providers: [CategoryService]
 })
 
-export class CategoryComponent implements OnInit {
+export class CategoriesComponent implements OnInit {
     isEditable: boolean; // Determine if a field is editable
     categories: Category[]; // Contains the returned list of category
     category: Category; // instance of a category

@@ -5,7 +5,7 @@ import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { HomeModule } from './home/home.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
-import { CategoryModule } from './category/category.module';
+import { CategoriesModule } from './categories/categories.module';
 import { MenuListModule } from './menu-list/menu-list.module';
 import { MenuModule } from './menu/menu.module';
 
@@ -23,7 +23,7 @@ import {SidebarComponent} from '../shared/index';
     	DropdownModule,
     	HomeModule,
       RestaurantModule,
-      CategoryModule,
+      CategoriesModule,
       MenuListModule,
       MenuModule
     ],
