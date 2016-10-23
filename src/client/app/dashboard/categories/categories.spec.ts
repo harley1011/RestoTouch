@@ -3,7 +3,7 @@ import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions 
 import { MockBackend } from '@angular/http/testing';
 
 import { Category } from '../../shared/models/category';
-import { CategoryService } from './categories.service';
+import { CategoryService } from './category.service';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
