@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { ItemListComponent } from '.';
+import { ItemListComponent } from './item-list.component';
 
 export const ItemListRoutes: Route[] = [
   {
-  	path: 'item',
+  	path: 'items',
   	component: ItemListComponent
   }
 ];
