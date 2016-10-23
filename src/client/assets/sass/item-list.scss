@@ -1,18 +1,26 @@
-.item-image {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-
-.item-div {
-  max-width: 320px;
-  min-width: 280px;
+.item-container {
+  width: 250px;
+  height: 300px;
   text-align: center;
   margin-bottom: 5px;
 
-  img {
-    max-width: 200px;
-    max-height: 200px;
+  .img-thumbnail {
+    width: 250px;
+    height: 300px;
+  }
+
+  .item-img-container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 200px;
+    height: 200px;
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-align:center;
+    img {
+      max-width: 200px;
+      max-height: 200px;
+    }
+
   }
 }
