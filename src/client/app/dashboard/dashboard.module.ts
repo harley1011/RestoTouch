@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { HomeModule } from './home/home.module';
+import { RestaurantListModule } from './restaurant-list/restaurant-list.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { CategoriesModule } from './categories/categories.module';
 import { MenuListModule } from './menu-list/menu-list.module';
@@ -21,7 +21,7 @@ import {SidebarComponent} from '../shared/index';
         CommonModule,
     	RouterModule,
     	DropdownModule,
-    	HomeModule,
+      RestaurantListModule,
       RestaurantModule,
       CategoriesModule,
       MenuListModule,

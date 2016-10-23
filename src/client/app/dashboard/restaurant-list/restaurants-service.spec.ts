@@ -2,9 +2,9 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { RestaurantService } from '../../restaurant/restaurant.service';
-import {AuthHttpService} from '../../../services/auth-http.services';
-import {ApiEndpointService} from '../../../services/api-endpoint.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import {AuthHttpService} from '../../services/auth-http.services';
+import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 
 export function main() {

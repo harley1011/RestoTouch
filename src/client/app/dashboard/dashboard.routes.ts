@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { HomeRoutes } from './home/index';
+import { RestaurantsRoutes } from './restaurant-list/index';
 import { RestaurantRoutes } from './restaurant/index';
 import { CategoryRoutes } from './categories/index';
 import { MenuListRoutes } from './menu-list/index';
@@ -14,7 +14,7 @@ export const DashboardRoutes: Route[] = [
     	path: 'dashboard',
     	component: DashboardComponent,
     	children: [
-	    	...HomeRoutes,
+	    	...RestaurantsRoutes,
         ...CategoryRoutes,
         ...RestaurantRoutes,
         ...MenuListRoutes,
