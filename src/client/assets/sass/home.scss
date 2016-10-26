@@ -1,0 +1,53 @@
+//home-cmp {
+////    width: inherit;
+////    border: 5px solid red;
+//    position: relative;
+//    left: -10px;
+//    top: -10px;
+//    
+//}
+
+#homepage {
+    background: linear-gradient(
+      rgba(255, 0, 0, 0.45), 
+      rgba(255, 0, 0, 0.45)
+    );
+    
+    background-image: url('../img/flatlay_lg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+	height: 700px;
+//	width: 700px;
+    color: white;
+}
+
+section.main-container:has(> home-cmp) {
+    padding: 0;
+}
+
+.home-inside {
+    background-color: rgba(0,0,0,0.3);
+    height: inherit;
+    padding: 50px 30px 0;
+}
+
+.resto {
+    background-color: rgba(192,212,147,0.9);
+    height: 80px;
+    padding: 7px;
+    border-radius: 11px;
+    margin-top: 50px;
+    
+}
+
+.sidebar-logo {
+ text-align: center;
+    /* padding: 10px; */
+    /* width: 100%; */
+    position: relative;
+    display: block;
+    margin-bottom: 40px;
+    margin-top: -2px;   
+}

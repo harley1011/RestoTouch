@@ -8,6 +8,7 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { CategoryListModule } from './categories/category-list.module';
 import { MenuListModule } from './menu-list/menu-list.module';
 import { MenuModule } from './menu/menu.module';
+import { HomeModule } from './home/home.module';
 
 
 import { DashboardComponent } from './dashboard.component';
@@ -25,7 +26,8 @@ import {SidebarComponent} from '../shared/index';
       RestaurantModule,
       CategoryListModule,
       MenuListModule,
-      MenuModule
+      MenuModule,
+      HomeModule
     ],
     declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
     exports: [DashboardComponent, TopNavComponent, SidebarComponent]
