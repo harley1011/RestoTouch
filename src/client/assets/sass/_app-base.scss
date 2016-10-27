@@ -97,11 +97,12 @@ a:hover{
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 600;
+            font-weight: 700;
+            font-family: 'Maven Pro', sans-serif;
             text-align: right;
         }
         a:hover{
-            background: darken($topnav-background-color, 5%);
+//            background: darken($topnav-background-color, 5%);
             color: #fff;
         }
         a.router-link-active{
@@ -167,12 +168,18 @@ a:hover{
 }
 .main-container{
   margin: 50px 0 0 225px;
-    padding: 10px;
+//    padding: 10px;
     -ms-overflow-x: hidden;
         overflow-x: hidden;
-    position: relative;
+//    position: relative;
     z-index: 1;
+    
+    h1, h2 {
+        margin-top:20px;
+    }
 }
+
+
 .chat-panel{
     .chat-dropdown{
         margin-top: -3px;

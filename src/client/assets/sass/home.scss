@@ -1,12 +1,3 @@
-//home-cmp {
-////    width: inherit;
-////    border: 5px solid red;
-//    position: relative;
-//    left: -10px;
-//    top: -10px;
-//    
-//}
-
 #homepage {
     background: linear-gradient(
       rgba(255, 0, 0, 0.45), 
@@ -18,9 +9,16 @@
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
-	height: 700px;
+	height: 100%;
 //	width: 700px;
     color: white;
+    position: absolute;
+    min-width: 85%;
+    
+    h1, h3, h4 {
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 0;
+    }
 }
 
 section.main-container:has(> home-cmp) {
@@ -43,11 +41,12 @@ section.main-container:has(> home-cmp) {
 }
 
 .sidebar-logo {
- text-align: center;
+    text-align: center;
     /* padding: 10px; */
     /* width: 100%; */
     position: relative;
     display: block;
-    margin-bottom: 40px;
+    margin-bottom: 46px;
     margin-top: -2px;   
 }
+

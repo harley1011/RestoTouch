@@ -1,3 +1,29 @@
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../fonts/Maven_Pro/MavenPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../fonts/Maven_Pro/MavenPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato/Lato-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
 @import "category.scss";
@@ -28,4 +54,16 @@ html, body {
     color: #c9302c;
   }
 
+}
+
+.btn-circle {
+  width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 22px;
+    line-height: 0.428571;
+    border-radius: 20px;
+    background: transparent;
+    border: 2px solid white;
 }
