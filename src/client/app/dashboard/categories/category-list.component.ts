@@ -5,12 +5,12 @@ import { Router, ActivatedRoute} from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    selector: 'category-cmp',
-    templateUrl: 'category.component.html',
+    selector: 'category-list-cmp',
+    templateUrl: 'category-list.component.html',
     providers: [CategoryService]
 })
 
-export class CategoryComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
     isEditable: boolean; // Determine if a field is editable
     categories: Category[]; // Contains the returned list of category
     category: Category; // instance of a category

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Restaurant } from '../../../shared/models/restaurant';
-import { RestaurantService } from '../../restaurant/restaurant.service';
+import { Restaurant } from '../../shared/models/restaurant';
+import { RestaurantService } from '../restaurant/restaurant.service';
 
 @Component({
 	moduleId: module.id,

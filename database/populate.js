@@ -66,6 +66,7 @@ var restaurants = [{address:'1 Rue Notre-Dame O, Montréal, QC H2Y 1S5', mOpen:'
                    {address:'Centre Eaton de Montréal, 977 Rue Sainte-Catherine O, Montréal, QC H3B 4W3', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'},
                    {address:'Crescent Street Montréal, H3G 2B2', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'}];
 
+
 // Let the db tables get created
 setTimeout(function () {
   var menuModel = model.getMenuModel();
@@ -74,6 +75,7 @@ setTimeout(function () {
   var restaurantsLanguagesModel = model.getRestaurantsLanguageModel();
   var restaurantsTranslationsModel = model.getRestaurantsTranslationModel();
   var restaurantModel = model.getRestaurantModel();
+
 
   users.forEach(function (user) {
 
@@ -92,7 +94,7 @@ setTimeout(function () {
       }
     }).then(function (result) {
       var user = result[0];//[object SequelizeInstance:Users]
-      var restaurant
+
       menus.forEach(function (menu) {
         menu.userId = user.id;
         menuModel.findOrCreate({where: menu, defaults: menu});
