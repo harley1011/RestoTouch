@@ -1,9 +1,4 @@
-#homepage {
-    background: linear-gradient(
-      rgba(255, 0, 0, 0.45), 
-      rgba(255, 0, 0, 0.45)
-    );
-    
+#homeContainer {
     background-image: url('../img/flatlay_lg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -13,7 +8,8 @@
 //	width: 700px;
     color: white;
     position: absolute;
-    min-width: 85%;
+    min-width: 90%;
+    overflow-x: hidden;
     
     h1, h3, h4 {
         font-family: 'Montserrat', sans-serif;
@@ -32,12 +28,12 @@ section.main-container:has(> home-cmp) {
 }
 
 .resto {
-    background-color: rgba(192,212,147,0.9);
+    background-color: rgba(34, 34, 34,0.8);
     height: 80px;
     padding: 7px;
     border-radius: 11px;
     margin-top: 50px;
-    
+    width: 50%;
 }
 
 .sidebar-logo {
