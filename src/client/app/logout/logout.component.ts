@@ -26,9 +26,9 @@ export class LogoutComponent implements OnInit {
     }
 
   onSubmit() {
-    /*this.authService.authenticateUser(this.user)
+    this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
-          this.router.navigate(['/dashboard/home'])
-        , error => this.errorMessage = error);*/
+         window.location.href = '/dashboard/home'
+        , error => this.errorMessage = error);
   }
 }
