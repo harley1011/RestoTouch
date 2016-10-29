@@ -16,6 +16,7 @@ export class TopNavComponent implements OnInit {
   languages: Array<Language> = [];
   hideLanguageSelect = true;
   selectedLanguage: Language = new Language('','','',0);
+  errorMessage = '';
 
   constructor(private authService: AuthService, private languageService: LanguageService, private router: Router) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
@@ -56,10 +57,13 @@ export class TopNavComponent implements OnInit {
     mainContainer.toggleClass('main-container-ml-zero');
   }
 
-  onLogout(): void {
-    this.authService.logout()
-        .subscribe(
-        () => this.router.navigate(['/logout'])
-    );
-  }
+    /**
+     * Logout boutton click
+     */
+    logoutClick(): void {
+        this.authService.logout()
+            .subscribe(generalResponse =>
+                      this.router.navigate(['/logout']),
+                      error => this.errorMessage = error);
+    }
 }
