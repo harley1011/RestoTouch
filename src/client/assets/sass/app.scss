@@ -24,8 +24,12 @@
 @font-face {
     font-family: 'Lato';
     src: url('../fonts/Lato/Lato-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato/Lato-Light.ttf') format('truetype');
+    font-weight: 300;
 }
 
 @import "../bootstrap/variables.scss";

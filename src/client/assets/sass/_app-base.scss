@@ -19,11 +19,19 @@ $topnav-background-color: #222;
 .btn:focus{
     outline: 3px auto #FFF;
 }
+
+ .navbar-dark .navbar-nav .nav-link {
+    color: #fff !important;
+    text-transform: capitalize;
+    font-weight: 300;
+    
+}
 .topnav{
   border-radius: 0;
-  background-color: $topnav-background-color;
+  background: transparent;
   padding : 6px;
     z-index:2;
+    
     .text-center{
         text-align: center;
         padding-left : 0;
@@ -171,7 +179,7 @@ a:hover{
     background: #fff;
 }
 .main-container{
-  margin: 50px 0 0 225px;
+  margin: 0 0 0 225px;
 //    padding: 10px;
     -ms-overflow-x: hidden;
         overflow-x: hidden;
