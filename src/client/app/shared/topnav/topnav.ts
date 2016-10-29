@@ -56,14 +56,4 @@ export class TopNavComponent implements OnInit {
     sidebar.toggleClass('sidebar-left-zero');
     mainContainer.toggleClass('main-container-ml-zero');
   }
-
-    /**
-     * Logout boutton click
-     */
-    logoutClick(): void {
-        this.authService.logout()
-            .subscribe(generalResponse =>
-                      this.router.navigate(['/logout']),
-                      error => this.errorMessage = error);
-    }
 }
