@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 
 import { LoginModule } from './login/login.module';
+import { LogoutModule } from './logout/logout.module';
 import { SignupModule } from './signup/signup.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SharedModule } from './shared/shared.module';
@@ -22,6 +23,7 @@ import { LanguageService } from './services/language.service';
 		HttpModule,
 		RouterModule.forRoot(routes),
 		LoginModule,
+		LogoutModule,
 		SignupModule,
 		DashboardModule,
 		SharedModule.forRoot()
