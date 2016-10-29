@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {User} from '../shared/models/user';
 import {AuthService}       from '../services/auth.service';
@@ -10,16 +10,20 @@ import {Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
+  selector: 'logout-cmp',
   templateUrl: 'logout.component.html'
 })
 
-export class LogoutComponent {
+export class LogoutComponent implements OnInit {
   user = new User('', '');
   errorMessage = '';
 
   constructor(private authService: AuthService,
-              private router: Router,) {
-  }
+              private router: Router) {}
+
+    ngOnInit(): void {
+        this.authService.logout();
+    }
 
   onSubmit() {
     /*this.authService.authenticateUser(this.user)
