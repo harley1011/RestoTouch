@@ -527,22 +527,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-   # -----------------------------------------/// logout ///
-  /logout:
-    x-swagger-router-controller: account
-    get:
-      operationId: logout
-      description: Ends current user session
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/GeneralResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"          
-            
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions

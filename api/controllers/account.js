@@ -82,12 +82,3 @@ function login(req,res) {
   });
 }
 
-// GET /logout
-function logout(req,res){
-  console.log("Logged out");
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('user');
-  
-  return res.json({success: 1, description: "User logged out"});
-}
-

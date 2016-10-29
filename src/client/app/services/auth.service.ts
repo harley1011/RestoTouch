@@ -60,10 +60,10 @@ export class AuthService implements CanActivate, CanActivateChild {
       .catch(this.handleError);
   }
 
-  logout(): Observable<GeneralResponse> {
+  logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
-    return this.http.get(this.api.getEndpoint() + '/logout');
+    return Observable.of('authToken');
   }
 
   registerUser(user: User): Observable<GeneralResponse> {
