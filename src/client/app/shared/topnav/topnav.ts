@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {User} from '../models/user';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,7 @@ export class TopNavComponent implements OnInit {
   hideLanguageSelect = true;
   selectedLanguage: Language = new Language('','','',0);
 
-  constructor(private authService: AuthService, private languageService: LanguageService) {
+  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
       this.hideLanguageSelect = supportedLanguages.length === 0;
       this.languages = supportedLanguages;
@@ -53,5 +54,12 @@ export class TopNavComponent implements OnInit {
     var mainContainer: any = $('.main-container');
     sidebar.toggleClass('sidebar-left-zero');
     mainContainer.toggleClass('main-container-ml-zero');
+  }
+
+  onLogout(): void {
+    this.authService.logout()
+        .subscribe(
+        () => this.router.navigate(['/logout'])
+    );
   }
 }
