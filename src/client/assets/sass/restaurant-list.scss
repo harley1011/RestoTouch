@@ -12,14 +12,14 @@
 
 .manage-header {
 //    background-color: #cae4e4; 
-    padding: 30px 30px 5px;
+    padding: 40px 30px 5px;
 }
 
 .manage-button {
     display: inline-block;
     position: fixed;
-    top: 80px;
-    right: 5%;
+    top: 90px;
+    right: 2%;
 }
 
 .card {
@@ -49,4 +49,8 @@
   min-height: 68px;
   max-height: 68px;
   overflow: hidden;
+}
+
+.edit-section {
+    margin-bottom: 20px;   
 }
