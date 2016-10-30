@@ -32,6 +32,8 @@
     font-weight: 300;
 }
 
+//$green: #5cb85c;
+
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
 @import "category.scss";
@@ -77,3 +79,19 @@ html, body {
     border: 2px solid white;
     margin: 10px 5px;
 }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+//.btn-green {
+//    background: transparent;
+//    color: $green;
+//    border-radius: 30px;
+//}
+//
+//.btn-green:hover {
+//    background: #5cb85c;
+//    color: #fff;
+//    border-radius: 30px;
+//}

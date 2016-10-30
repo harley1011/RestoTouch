@@ -1,5 +1,19 @@
-<h1>{{ restaurant?.id ? restaurant?.selectedTranslation?.name || 'Add a translation for the selected language': "Create Restaurant" }}</h1>
-
+<div id="restaurant">
+    <div class="manage-header">
+    <h1>{{ restaurant?.id ? restaurant?.selectedTranslation?.name || 'Add a translation for the selected language': "Create Restaurant" }}</h1>
+     <nav class="nav navbar-nav">
+         <ul class="nav nav-pills">
+      <li class="nav-item" role="presentation">
+          <a class="nav-link active" href="/dashboard/restaurants/#">Basic Info</a></li>
+      <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurants/#">Business Hours</a></li>
+      <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurants/#">Menu</a></li>
+      <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurants/#">Languages</a></li>
+    </ul>
+            </nav>
+        
+        <hr>
+    </div>
+<div class="formContainer">
 <div class="row">
   <form id="restaurantForm" role="form">
     <div class="col-lg-6">
@@ -157,3 +171,5 @@
     <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
   </div>
 </div>
+    </div>
+    </div>
