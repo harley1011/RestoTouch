@@ -32,7 +32,8 @@
     font-weight: 300;
 }
 
-//$green: #5cb85c;
+$green: #5cb85c;
+$red: #d9534f;
 
 @import "../bootstrap/variables.scss";
 @import "app-base.scss";
@@ -84,14 +85,39 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
 }
 
-//.btn-green {
-//    background: transparent;
-//    color: $green;
-//    border-radius: 30px;
-//}
-//
-//.btn-green:hover {
-//    background: #5cb85c;
-//    color: #fff;
-//    border-radius: 30px;
-//}
+.btn-green {
+    background: transparent;
+    color: $green;
+    border-radius: 30px;
+}
+
+.btn-green:hover {
+    background: $green;
+    border-color: $green;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.btn-red {
+    background: transparent;
+    color: $red;
+    border-radius: 30px;
+}
+
+.btn-red:hover {
+    background: $red;
+    border-color: $red;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.btn-normal {
+    border-radius: 30px;
+    background-color: transparent;
+    color: #666;
+    border-color: #999;   
+}
+
+.btn {
+    margin-right: 6px;   
+}
