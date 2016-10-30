@@ -54,6 +54,9 @@
   border: $dropdown-border-width solid $dropdown-border-color;
   @include border-radius($border-radius);
   @include box-shadow(0 6px 12px rgba(0,0,0,.175));
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 // Dividers (basically an `<hr>`) within the dropdown
@@ -76,6 +79,7 @@
   white-space: nowrap; // prevent links from randomly breaking onto new lines
   background: none; // For `<button>`s
   border: 0; // For `<button>`s
+
 
   @include hover-focus {
     color: $dropdown-link-hover-color;

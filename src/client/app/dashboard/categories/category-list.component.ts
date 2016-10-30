@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../shared/models/category';
 import { CategoryService } from './category.service';
 import { Router, ActivatedRoute} from '@angular/router';
+import { Language } from '../../shared/models/language';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
     moduleId: module.id,
@@ -16,10 +18,18 @@ export class CategoryListComponent implements OnInit {
     category: Category; // instance of a category
     catId: number;
     catNewName: string;
+    languages: Array<Language>;
+    selectedLanguage: Language;
 
     constructor(private categoryService: CategoryService,
                 private route: ActivatedRoute,
-                private router: Router) { }
+                private router: Router,
+                private languageService: LanguageService) {
+      this.languages = languageService.languages();
+      languageService.announceSupportedLanguages(this.languages);
+      this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
+      languageService.announceSelectedLanguage(this.selectedLanguage);
+    }
 
     ngOnInit(): void {
         this.isEditable = false;
