@@ -157,7 +157,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.addRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
-          this.router.navigate(['/dashboard/home']);
+          this.router.navigate(['/dashboard/restaurants']);
         },
         error => {
           this.errorMessage = <any>error;
@@ -169,7 +169,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.updateRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
-          this.router.navigate(['/dashboard/home']);
+          this.router.navigate(['/dashboard/restaurants']);
         },
         error => {
           this.errorMessage = <any>error;
@@ -180,7 +180,7 @@ export class RestaurantComponent implements OnInit {
   delete(): void {
     this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/home']);
+        this.router.navigate(['/dashboard/restaurants']);
       },
       error => {
         this.errorMessage = <any>error;
@@ -189,7 +189,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/dashboard/home']);
+    this.router.navigate(['/dashboard/restaurants']);
   }
 }
 

@@ -7,19 +7,19 @@
 }
 
 .restaurantListContainer {
-    padding: 30px 30px;
+    padding: 170px 30px 30px;
 }
 
 .manage-header {
 //    background-color: #cae4e4; 
-    padding: 30px 30px;
+    padding: 30px 30px 5px;
 }
 
 .manage-button {
     display: inline-block;
-    position: absolute;
-    top: 90px;
-    right: 9%;
+    position: fixed;
+    top: 80px;
+    right: 5%;
 }
 
 .card {
@@ -49,19 +49,4 @@
   min-height: 68px;
   max-height: 68px;
   overflow: hidden;
-}
-
-
-
-.nav.navbar-nav {
-    font-size: small;
-    
-    ul > li > a.nav-link {
-        color: #666;   
-    }
-    
-    ul > li > a.nav-link.active {
-        padding: 3px 7px;
-        color: #fff;
-    }
 }
