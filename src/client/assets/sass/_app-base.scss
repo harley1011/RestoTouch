@@ -19,11 +19,19 @@ $topnav-background-color: #222;
 .btn:focus{
     outline: 3px auto #FFF;
 }
+
+ .navbar-dark .navbar-nav .nav-link {
+    color: #fff !important;
+    text-transform: capitalize;
+    font-weight: 300;
+    
+}
 .topnav{
   border-radius: 0;
-  background-color: $topnav-background-color;
+  background: transparent;
   padding : 6px;
     z-index:2;
+    
     .text-center{
         text-align: center;
         padding-left : 0;
@@ -72,7 +80,11 @@ a:hover{
   border-radius: 0;
   position: fixed;
     z-index: 3;
-    top: 50px;
+//    top: 50px;
+    // test
+    top: 0;
+    padding-top: 66px;
+    //test end
     left: 225px;
     width: 225px;
     margin-left: -225px;
@@ -95,9 +107,14 @@ a:hover{
             border-radius: 0;
             color: #999;
             text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            font-family: 'Maven Pro', sans-serif;
+            text-align: right;
         }
         a:hover{
-            background: darken($topnav-background-color, 5%);
+//            background: darken($topnav-background-color, 5%);
             color: #fff;
         }
         a.router-link-active{
@@ -162,13 +179,19 @@ a:hover{
     background: #fff;
 }
 .main-container{
-  margin: 50px 0 0 225px;
-    padding: 10px;
+  margin: 0 0 0 225px;
+//    padding: 10px;
     -ms-overflow-x: hidden;
         overflow-x: hidden;
-    position: relative;
+//    position: relative;
     z-index: 1;
+    
+    h1, h2 {
+        margin-top:20px;
+    }
 }
+
+
 .chat-panel{
     .chat-dropdown{
         margin-top: -3px;
