@@ -29,6 +29,9 @@ export class CategoryListComponent implements OnInit {
       languageService.announceSupportedLanguages(this.languages);
       this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
       languageService.announceSelectedLanguage(this.selectedLanguage);
+      languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+        this.selectedLanguage = selectedLanguage;
+      });
     }
 
     ngOnInit(): void {
