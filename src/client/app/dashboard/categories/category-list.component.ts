@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../shared/models/category';
+import { Category, CategoryTranslations } from '../../shared/models/category';
 import { CategoryService } from './category.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import { Language } from '../../shared/models/language';
@@ -20,6 +20,8 @@ export class CategoryListComponent implements OnInit {
     catNewName: string;
     languages: Array<Language>;
     selectedLanguage: Language;
+    supportedLanguages: Array<Language>;
+    translationArray: Array<CategoryTranslations> = [];
 
     constructor(private categoryService: CategoryService,
                 private route: ActivatedRoute,
@@ -29,15 +31,16 @@ export class CategoryListComponent implements OnInit {
       languageService.announceSupportedLanguages(this.languages);
       this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
       languageService.announceSelectedLanguage(this.selectedLanguage);
-      languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-        this.selectedLanguage = selectedLanguage;
+      languageService.selectedLanguageAnnounced$.subscribe(workingLanguage => {
+        this.selectedLanguage = workingLanguage;
       });
     }
 
     ngOnInit(): void {
         this.isEditable = false;
         this.getCategories();
-        this.category = new Category('');
+        let translation = new CategoryTranslations('','');
+        this.category = new Category('',this.translationArray,translation);
     }
 
     ///////////////////////////////////////////////////////////////
