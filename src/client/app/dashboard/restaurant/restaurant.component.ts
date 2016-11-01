@@ -40,6 +40,25 @@ export class RestaurantComponent implements OnInit {
         this.restaurant.translations.push(this.restaurant.selectedTranslation);
       }
     });
+
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+    this.restaurant = new Restaurant('',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      '9:00', '21:00',
+      this.supportedLanguages,
+      [translation],
+      translation, []
+    );
+    // Add english by default because the restaurant needs to support at least one language
+    this.create = true;
+    this.languageService.announceSupportedLanguages(this.supportedLanguages);
+    //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
   }
 
   addLanguage() {
@@ -102,9 +121,9 @@ export class RestaurantComponent implements OnInit {
       if (params['id']) {
         this.getRestaurant(params['id']);
         this.create = false;
-      } else {
+      }/* else {
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-        let translation = new RestaurantTranslations(' ', ' ', this.supportedLanguages[0].languageCode);
+        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
         this.restaurant = new Restaurant('',
           '9:00', '21:00',
           '9:00', '21:00',
@@ -115,12 +134,13 @@ export class RestaurantComponent implements OnInit {
           '9:00', '21:00',
           this.supportedLanguages,
           [translation],
-          translation, []);
+          translation, []
+        );
         // Add english by default because the restaurant needs to support at least one language
         this.create = true;
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
-      }
+      }*/
     });
   }
 
