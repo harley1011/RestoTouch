@@ -1,3 +1,27 @@
+#restaurantList {
+    background-color: #f3f3f3;
+    height: 100%;
+    position: absolute;
+    min-width: 90%;
+    overflow-x: hidden;   
+}
+
+.restaurantListContainer {
+    padding: 170px 30px 30px;
+}
+
+.manage-header {
+//    background-color: #cae4e4; 
+    padding: 40px 30px 5px;
+}
+
+.manage-button {
+    display: inline-block;
+    position: fixed;
+    top: 90px;
+    right: 2%;
+}
+
 .card {
   cursor: pointer;
   -webkit-transition: all 0.3s;
@@ -25,4 +49,8 @@
   min-height: 68px;
   max-height: 68px;
   overflow: hidden;
+}
+
+.edit-section {
+    margin-bottom: 20px;   
 }
