@@ -1,5 +1,5 @@
 "use strict";
-var index_1 = require('./home/index');
+var index_1 = require('./restaurant-list/index');
 var index_2 = require('./charts/index');
 var index_3 = require('./blank-page/index');
 var index_4 = require('./tables/index');
@@ -12,7 +12,7 @@ exports.DashboardRoutes = [
     {
         path: 'dashboard',
         component: index_9.DashboardComponent,
-        children: index_1.HomeRoutes.concat(index_2.ChartRoutes, index_7.BSComponentRoutes, index_4.TableRoutes, index_3.BlankPageRoutes, index_5.FormRoutes, index_6.GridRoutes, index_8.BSElementRoutes)
+        children: index_1.RestaurantsRoutes.concat(index_2.ChartRoutes, index_7.BSComponentRoutes, index_4.TableRoutes, index_3.BlankPageRoutes, index_5.FormRoutes, index_6.GridRoutes, index_8.BSElementRoutes)
     }
 ];
 //# sourceMappingURL=dashboard.routes.js.map
