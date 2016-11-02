@@ -13,4 +13,8 @@ export class ItemComponent {
   onSubmit() {
     this.item = new Item('Hello', 'uuu.png');
   }
+
+  newItem() {
+    this.item = new Item('', '', '');
+  }
 }

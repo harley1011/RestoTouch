@@ -78,3 +78,12 @@ html, body {
     border: 2px solid white;
     margin: 10px 5px;
 }
+
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
