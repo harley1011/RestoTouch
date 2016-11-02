@@ -18,21 +18,26 @@ export class CategoryListComponent implements OnInit {
     category: Category; // instance of a category
     catId: number;
     catNewName: string;
-    languages: Array<Language>;
-    selectedLanguage: Language;
-    supportedLanguages: Array<Language>;
-    translationArray: Array<CategoryTranslations> = [];
+
+    //Language & translations 
+    hideManageLanguage = false;
+    languages: Array<Language>; // All languages
+    selectedLanguage: Language; // Selected language from the nav-bar
+    supportedLanguages: Array<Language> = []; //Supported languages chosen in the manage language section
+    addedLanguage: string; //Added language from manage language section
+    translationArray: Array<CategoryTranslations> = []; //Translations for categories
 
     constructor(private categoryService: CategoryService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private languageService: LanguageService) {
       this.languages = languageService.languages();
-      languageService.announceSupportedLanguages(this.languages);
+      this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+      this.languageService.announceSupportedLanguages(this.supportedLanguages);
       this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
       languageService.announceSelectedLanguage(this.selectedLanguage);
-      languageService.selectedLanguageAnnounced$.subscribe(workingLanguage => {
-        this.selectedLanguage = workingLanguage;
+      languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+        this.selectedLanguage = selectedLanguage;
       });
     }
 
@@ -44,6 +49,32 @@ export class CategoryListComponent implements OnInit {
     }
 
     ///////////////////////////////////////////////////////////////
+
+    //Show/Hide the manage language section
+    toggleShowManageLanguage(): void {
+      this.hideManageLanguage = !this.hideManageLanguage;
+    }
+
+    //Add a supported language
+    addLanguage() {
+      let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+      if (language) {
+          //todo: remove this once the supported languages are removed from the languages
+          console.log('Language is already supported');
+          return;
+        }
+      language = this.languages.find(language => language.languageCode === this.addedLanguage);
+      this.supportedLanguages.push(language);
+    }
+
+    removeLanguage(language: Language) {
+      if (this.supportedLanguages.length <= 1) {
+      //todo: error message
+      console.log('At least one supported language is required');
+      }
+      let i = this.supportedLanguages.indexOf(language);
+      this.supportedLanguages.splice(i, 1);
+    }
 
     /**
      * Gets user's categories
