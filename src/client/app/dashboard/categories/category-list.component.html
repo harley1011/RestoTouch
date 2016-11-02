@@ -19,7 +19,7 @@
   </div>
 </div>
 
-
+<form>
 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#languageDiv" aria-expanded="false"
         aria-controls="languageDiv" (click)="toggleShowManageLanguage()">Manage Languages
 </button>
@@ -30,8 +30,8 @@
             <i class="fa fa-remove icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
             <li class="list-group-item">
                 <div class="input-group">
-                    <select name="language" class="form-control">
-                       <option *ngFor="let language of languages" >{{language.name}}</option>
+                    <select name="language" class="form-control" [(ngModel)]="addedLanguage">
+                       <option *ngFor="let language of languages" [ngValue]="language.languageCode" >{{language.name}}</option>
                     </select>
                     <span class="input-group-btn">
                         <button class="btn btn-primary" (click)="addLanguage()" type="button">Add</button>
@@ -40,5 +40,5 @@
             </li>
         </ul>    
     </div> 
-
+</form>
 

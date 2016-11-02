@@ -59,7 +59,6 @@ export class CategoryListComponent implements OnInit {
     addLanguage() {
       let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
       if (language) {
-          //todo: remove this once the supported languages are removed from the languages
           console.log('Language is already supported');
           return;
         }
