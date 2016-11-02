@@ -5,6 +5,7 @@
   background-position: center;
   background-attachment: fixed;
   height: 100%;
+  
 
 input[type=text], input[type=email], input[type=password]  {
     border: 2px solid white;
@@ -15,6 +16,7 @@ input[type=text], input[type=email], input[type=password]  {
     color: white;
     }
 }
+
 
 .logoutTitle{
     color: white;
@@ -41,7 +43,7 @@ input[type=text], input[type=email], input[type=password]  {
 }
 
 .logoutSigningPadding{
-    padding: 3% 5% 3% 5%;
+    padding: 3% 6% 3% 6%;
 }
 
 #logoutPadding{
