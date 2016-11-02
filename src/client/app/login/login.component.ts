@@ -25,7 +25,7 @@ export class LoginComponent {
   onSubmit() {
     this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
-          this.router.navigate(['/dashboard/restaurants'])
+          this.router.navigate(['/dashboard/home'])
         , error => this.errorMessage = error);
   }
 }

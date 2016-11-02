@@ -5,6 +5,7 @@ import { RestaurantRoutes } from './restaurant/index';
 import { CategoryRoutes } from './categories/index';
 import { MenuListRoutes } from './menu-list/index';
 import { MenuRoutes } from './menu/index';
+import { HomeRoutes } from './home/index';
 import { ItemListRoutes } from './item-list/index';
 
 import { DashboardComponent } from './index';
@@ -20,6 +21,7 @@ export const DashboardRoutes: Route[] = [
         ...RestaurantRoutes,
         ...MenuListRoutes,
         ...MenuRoutes,
+        ...HomeRoutes,
         ...ItemListRoutes
     	],
       canActivate: [AuthService],

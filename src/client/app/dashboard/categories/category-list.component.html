@@ -1,4 +1,5 @@
-<h1>Categories</h1>
+<div class="container-fluid">
+<h2>Categories</h2>
 <form>
     <input #newCatField type="text"  (keyup.enter)="addNewCatClick(newCatField.value)"/>
     <button class="btn btn-success" (click)="addNewCatClick($event,newCatField.value)">Add</button>
@@ -17,4 +18,5 @@
         </div>
     </div>
   </div>
+</div>
 </div>
