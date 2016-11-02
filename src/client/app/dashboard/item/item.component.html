@@ -1,22 +1,27 @@
-<div class="row">
-  <div class="col-xs-10">
-    <h4>Items <span class="label label-default"> {{items.length}} </span></h4>
-  </div>
-  <div class="col-xs-2">
-    <button type="button" class="btn btn-primary pull-right" (click)="add()">Add New Item</button>
-  </div>
+<div class="container-fluid">
+    <h2>Create Item</h2>
+    <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   [(ngModel)]="item.name" name="name"
+                   #name="ngModel">
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+                Name is required
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Description</label>
+            <input type="text" class="form-control" id="description"
+                   required
+                   [(ngModel)]="item.description" name="description"
+                   #description="ngModel">
+            <div [hidden]="description.valid || description.pristine"
+                 class="alert alert-danger">
+                Description is required
+            </div>
+        </div>
+    </form>
 </div>
-<div class="row">
-  <div class="col-sm-12 item-container" *ngFor="let item of items">
-    <div class="img-thumbnail">
-      <div class="item-img-container">
-        <img [src]="item.imageUrl">
-      </div>
-      <div class="caption">
-        <h3>{{item.name}}</h3>
-        <p>{{item.description}}</p>
-      </div>
-    </div>
-  </div>
-</div>
-

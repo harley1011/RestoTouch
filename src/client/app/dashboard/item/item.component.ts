@@ -1,19 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Item } from './../../shared/models/items';
 
 @Component({
   moduleId: module.id,
-  selector: 'item-list-cmp',
+  selector: 'item-cmp',
   templateUrl: 'item.component.html',
 })
 
-export class ItemComponent implements OnInit {
-  item: Item;
+export class ItemComponent {
+  item = new Item('', '', '');
 
-  ngOnInit(): void {
-  }
-
-  add(): void {
-
+  onSubmit() {
+    this.item = new Item('Hello', 'uuu.png');
   }
 }

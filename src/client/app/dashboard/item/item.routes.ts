@@ -3,7 +3,7 @@ import { ItemComponent } from './item.component';
 
 export const ItemRoutes: Route[] = [
   {
-  	path: 'items',
+  	path: 'item',
   	component: ItemComponent
   }
 ];
