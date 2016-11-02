@@ -43,13 +43,17 @@
                         <tr *ngFor="let size of item.sizes">
                             <td>{{size.name}}</td>
                             <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
-                            <td><i class="fa fa-remove icon-remove icon-align"></i></td>
+                            <td><i class="fa fa-remove icon-remove icon-align" (click)="removeSize(size)"></i></td>
                         </tr>
-
                         <tr>
-                            <td><input class="form-control" type="text" placeholder="Size Name"></td>
-                            <td><input class="form-control" type="text" placeholder="Price"></td>
-                            <td><i class="fa fa-plus icon-add icon-align"></i></td>
+                            <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName" placeholder="Size Name">
+                            </td>
+                            <td>
+                                <div class="form-group input-group"><span class="input-group-addon">$</span>
+                                    <input class="form-control" [(ngModel)]="size.price" name="price" type="text">
+                                </div>
+                            </td>
+                            <td><i class="fa fa-plus icon-add icon-align" (click)="addSize()"></i></td>
                         </tr>
                         </tbody>
                     </table>

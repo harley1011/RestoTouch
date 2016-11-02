@@ -23,6 +23,11 @@ export class ItemComponent implements OnInit {
     this.size = new Size('', 0);
   }
 
+  removeSize(size: Size) {
+    let sizeToRemove = this.item.sizes.find(currentSize => currentSize === size.name);
+    this.item.sizes.splice(this.item.sizes.indexOf(sizeToRemove), 1);
+  }
+
   newItem() {
     this.item = new Item('', '', '');
   }
