@@ -1,21 +1,21 @@
-.logoutBkgd{
-    background-image: url('../img/logout-backgroundsm.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
+.logoutPageContainer{
+  background-image: url('../img/logout-backgroundsm.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   height: 100%;
 }
 
 .logoutTitle{
-    font-family: 'Pacifico', cursive;
     color: white;
-    font-size: 42pt;
+    font-size: 40pt;
+    font-weight: 900;
 }
 
 .logoutCenter{
-    margin: auto;
-    width: 50%;
+  margin: auto;
+  width:60%;
 }
 
 .logoutBodyText{
@@ -31,9 +31,8 @@
     text-align: left;
 }
 
-#logoutSigningPadding{
-    padding-top: 5%;
-    padding-left: 8%;
+.logoutSigningPadding{
+    padding: 5% 8% 5% 8%;
 }
 
 #logoutPadding{
