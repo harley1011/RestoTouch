@@ -9,7 +9,6 @@ setDatabase(models);
 module.exports = {
   register: register,
   login: login,
-  logout: logout,
   setDatabase: setDatabase
 };
 

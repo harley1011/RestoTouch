@@ -1,6 +1,7 @@
-<div class="row logoutPageContainer">
-  <img src ="assets/img/logoRestoTouch2.png" id="logoutLogo">
+<div class="row logoutContainer">
+  <a href="/"><img src ="assets/img/logoRestoTouch2.png" id="logoutLogo"></a>
   <div class="container logoutCenter">
+
     <!-- top -->
     <div class="row" id="logoutPadding">
       <h1 class="logoutTitle">Heading Out?</h1>
@@ -9,18 +10,22 @@
         Come see us soon again!
       </p>
     </div>
+
     <!-- bottom -->
     <div class="row logoutSigningBkgd">
+
       <!--left-->
       <div class="col-md-4 logoutSigningPadding">
         <h1 class="logoutTitle">Oops..</h1>
         <p class="logoutSigningText">Got sign out by mistake?</p>
       </div>
+
       <!-- right-->
       <div class="col-md-8 logoutSigningText logoutSigningPadding">
         Sign back in:<br/>
         <form role="form" (ngSubmit)="onSubmit()">
           <div class="form-content">
+
             <!-- input box for email-->
             <div class="form-group">
               <input type="email" class="form-control input-underline input-lg" id="email" placeholder="Email" required
