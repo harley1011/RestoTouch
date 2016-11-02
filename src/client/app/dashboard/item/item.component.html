@@ -28,9 +28,33 @@
 
         </div>
         <div class="col-md-6">
-            <ul class="list-group">
-                <li *ngFor="let size of sizes" class="list-group-item"> {{size.name}}<i class="fa fa-remove icon-remove icon-align fa-pull-right"></i></li>
-            </ul>
+            <div>
+                <label for="name">Sizes and Prices</label>
+                <div class="card card-block">
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let size of item.sizes">
+                            <td>{{size.name}}</td>
+                            <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
+                            <td><i class="fa fa-remove icon-remove icon-align"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td><input class="form-control" type="text" placeholder="Size Name"></td>
+                            <td><input class="form-control" type="text" placeholder="Price"></td>
+                            <td><i class="fa fa-plus icon-add icon-align"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </form>
 </div>
