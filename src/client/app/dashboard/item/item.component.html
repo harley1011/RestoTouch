@@ -19,11 +19,10 @@
       </div>
       <div class="col-md-6">
         <div class="row">
-          <label [hidden]="item.sizes.length != 0">Sizes and Prices</label>
           <div>
             <table class="table table-sm td-size-table">
               <thead>
-              <tr [hidden]="item.sizes.length == 0">
+              <tr>
                 <th>Size</th>
                 <th>Price</th>
                 <th></th>
@@ -33,7 +32,7 @@
               <tr *ngFor="let size of item.sizes">
                 <td>{{size.name}}</td>
                 <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
-                <td><i class="fa fa-remove icon-remove icon-align" (click)="removeSize(size)"></i></td>
+                <td><button class="fa fa-remove icon-remove icon-align" (click)="removeSize(size)"></button></td>
               </tr>
               <tr class="td-size-input">
                 <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName"
@@ -44,7 +43,7 @@
                     <input class="form-control" #price="ngModel" id="price" [(ngModel)]="size.price" name="price" type="number">
                   </div>
                 </td>
-                <td><i class="fa fa-plus icon-add icon-align" (click)="addSize()"></i></td>
+                <td><button class="fa fa-plus icon-add icon-align" [disabled]="!size.name" (click)="addSize()"></button></td>
               </tr>
               </tbody>
             </table>
@@ -57,6 +56,7 @@
 
 
     </div>
+
     <div class="row" style="margin-bottom: 2px">
       <div class="col-lg-6">
         <div [hidden]="name.valid || name.pristine"
