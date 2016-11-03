@@ -66,10 +66,6 @@ export class ItemComponent implements OnInit {
     this.item.sizes.splice(this.item.sizes.indexOf(sizeToRemove), 1);
   }
 
-  newItem() {
-    this.item = new Item('', '', '');
-  }
-
   deleteItem() {
     this.itemService.deleteItem(this.item.id).subscribe(response => {
       this.router.navigate(['/dashboard/items']);

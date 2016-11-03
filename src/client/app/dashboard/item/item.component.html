@@ -53,10 +53,7 @@
           <p class="fa fa-exclamation text-info"> At least one size is required
         </div>
       </div>
-
-
     </div>
-
     <div class="row" style="margin-bottom: 2px">
       <div class="col-lg-6">
         <div [hidden]="name.valid || name.pristine"
@@ -66,8 +63,6 @@
       </div>
       <div class="col-lg-12">
         <button type="submit" class="btn btn-primary" [disabled]="!itemForm.form.valid || item.sizes.length == 0">{{create? 'Create' : 'Save Changes'}}</button>
-
-        <button *ngIf="create" type="btn btn-primary" class="btn btn-default" (click)="newItem()">New Item</button>
         <button *ngIf="!create" type="btn btn-danger" class="btn btn-danger" (click)="deleteItem()">Delete</button>
       </div>
     </div>
