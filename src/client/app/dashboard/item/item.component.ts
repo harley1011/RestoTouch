@@ -13,7 +13,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 export class ItemComponent implements OnInit {
   create: boolean;
   item: Item;
-  size = new Size('Regular', 2.00);
+  size = new Size('Regular', 0);
   errorMessage: any;
 
   constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
