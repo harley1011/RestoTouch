@@ -19,11 +19,11 @@
       </div>
       <div class="col-md-6">
         <div class="row">
-          <label for="name">Sizes and Prices</label>
+          <label [hidden]="item.sizes.length != 0">Sizes and Prices</label>
           <div>
-            <table class="table table-sm">
+            <table class="table table-sm td-size-table">
               <thead>
-              <tr [hidden]="item.sizes.length > 0">
+              <tr [hidden]="item.sizes.length == 0">
                 <th>Size</th>
                 <th>Price</th>
                 <th></th>
@@ -50,7 +50,7 @@
             </table>
           </div>
         </div>
-        <div class="row">
+        <div class="row" [hidden]="item.sizes != 0">
           <p class="fa fa-exclamation text-info"> At least one size is required
         </div>
       </div>
