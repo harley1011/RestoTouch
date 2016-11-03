@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 
 export class ItemListComponent implements OnInit {
-  items: Array<Item> = [];
+  items: Array<Item>;
   constructor(private itemService: ItemService, private router: Router) {}
   ngOnInit(): void {
 
