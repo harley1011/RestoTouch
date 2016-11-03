@@ -14,7 +14,7 @@ import { LanguageService } from '../../services/language.service';
 
 export class CategoryListComponent implements OnInit {
     isEditable: boolean; // Determine if a field is editable
-    categories: Category[]; // Contains the returned list of category
+    categories: Category[] = null; // Contains the returned list of category
     category: Category; // instance of a category
     catId: number;
     catNewName: string;
@@ -26,16 +26,14 @@ export class CategoryListComponent implements OnInit {
     supportedLanguages: Array<Language> = []; //Supported languages chosen in the manage language section
     addedLanguage: string; //Added language from manage language section
     translationArray: Array<CategoryTranslations> = []; //Translations for categories
+    selectedTranslation: CategoryTranslations;
 
     constructor(private categoryService: CategoryService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private languageService: LanguageService) {
       this.languages = languageService.languages();
-      this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-      this.languageService.announceSupportedLanguages(this.supportedLanguages);
-      this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
-      languageService.announceSelectedLanguage(this.selectedLanguage);
+
       languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
         this.selectedLanguage = selectedLanguage;
       });
@@ -44,8 +42,22 @@ export class CategoryListComponent implements OnInit {
     ngOnInit(): void {
         this.isEditable = false;
         this.getCategories();
+
+        //Check if categories exist
+        /*
+        if(categories != null) {
+          this.supportedLanguages = this.categories[0].supportedLanguages;
+          this.selectedTranslation = this.categories[0].translations[0];
+        }
+        else
+        */
+        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
+        this.languageService.announceSelectedLanguage(this.selectedLanguage);
+
         let translation = new CategoryTranslations('','');
-        this.category = new Category('',this.translationArray,translation);
+        this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
     }
 
     ///////////////////////////////////////////////////////////////
@@ -64,6 +76,11 @@ export class CategoryListComponent implements OnInit {
         }
       language = this.languages.find(language => language.languageCode === this.addedLanguage);
       this.supportedLanguages.push(language);
+      /*
+      let newTranslation = new CategoryTranslations('', language.languageCode);
+      for (let cat of this.categories) {
+        cat.translations.push(newTranslation);
+      }*/
     }
 
     removeLanguage(language: Language) {
