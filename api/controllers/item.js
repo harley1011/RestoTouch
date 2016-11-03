@@ -87,7 +87,6 @@ function update(req, res) {
     sizesToRemove.forEach(function (size) {
       itemSizeModel.destroy({where: {id: size.id}})
     })
-//    oldItem.removeSizes(sizesToRemove);
 
     oldItem.save().then(function (result) {
       return res.json({success: 1, description: "Item updated"});
