@@ -42,21 +42,18 @@ export class CategoryListComponent implements OnInit {
     ngOnInit(): void {
         this.isEditable = false;
         this.getCategories();
+        //console.log('Selected Language: '+this.selectedLanguage.name);
 
-        //Check if categories exist
-        /*
-        if(categories != null) {
-          this.supportedLanguages = this.categories[0].supportedLanguages;
-          this.selectedTranslation = this.categories[0].translations[0];
-        }
-        else
-        */
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.selectedLanguage = this.languages.find(language => language.languageCode === 'en');
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
 
+        //console.log('Selected Language: '+this.selectedLanguage.name);
+        //console.log('Selected Translation: '+this.selectedTranslation.languageCode);
+
         let translation = new CategoryTranslations('','');
+        this.translationArray.push(translation);
         this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
     }
 
@@ -98,7 +95,10 @@ export class CategoryListComponent implements OnInit {
     getCategories(): void {
       // Subscribe to the getCategories observable
       this.categoryService.getCategories().subscribe(
-        categories => {this.categories = categories;},
+        categories => {
+          this.translationArray = categories[0].translations;
+          this.selectedTranslation = categories[0].selectedTranslation;
+          this.categories = categories;},
         error => {console.log(error);}
       );
     }

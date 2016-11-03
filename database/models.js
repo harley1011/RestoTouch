@@ -10,7 +10,7 @@ var categoryModel = sequelize.import('./models/categories.js');
 var restaurantsLanguagesModel = sequelize.import('./models/restaurantsLanguages.js');
 var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTranslations.js');
 var categoriesLanguagesModel = sequelize.import('./models/categoriesLanguages.js');
-var categoriesTranslationModel = sequelize.import('./models/categoriesTranslations.js');
+var categoriesTranslationsModel = sequelize.import('./models/categoriesTranslations.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -37,8 +37,8 @@ userModel.sync({force: dropTable}).then(function () {
     categoryModel.hasMany(categoriesLanguagesModel, {as: 'supportedLanguages', onDelete: 'cascade', foreignKey: 'categoryId'});
     categoriesLanguagesModel.sync({force: dropTable});
 
-    categoryModel.hasMany(categoriesTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'categoryId'});
-    categoriesTranslationModel.sync({force: dropTable});
+    categoryModel.hasMany(categoriesTranslationsModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'categoryId'});
+    categoriesTranslationsModel.sync({force: dropTable});
 
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
   menuModel.sync({force: dropTable}).then(function () {
@@ -90,4 +90,12 @@ exports.getRestaurantsLanguageModel = function () {
 
 exports.getRestaurantsTranslationModel = function () {
   return restaurantsTranslationsModel;
+}
+
+exports.getCategoriesTranslationsModel = function () {
+  return categoriesTranslationsModel;
+}
+
+exports.getCategoriesLanguagesModel = function () {
+  return categoriesLanguagesModel;
 }
