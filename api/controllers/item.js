@@ -1,83 +1,139 @@
 var models = require("../../database/models");
-var passwordHasher = require("../helpers/passwordHash");
-var jwt = require('jwt-simple');
-var configAuth = require('../../config/auth');
-var userModel;
+var itemModel;
+var itemSizeModel;
+
+var _ = require('lodash');
+
 
 setDatabase(models);
 
 module.exports = {
-  register: register,
-  login: login,
+  getAllItems: getAll,
+  addItem: save,
+  getItem: get,
+  updateItem: update,
+  deleteItem: del,
   setDatabase: setDatabase
 };
 
-function setDatabase (m) {
+function setDatabase(m) {
   models = m;
-  userModel = models.getUserModel();
+  itemModel = models.getItemModel();
+  itemSizeModel = models.getItemSizesModel();
 }
 
-function register(req, res) {
-  var user = req.body;
-  var passwordData = passwordHasher.saltHashPassword(user.password);
-  user.password = passwordData.passwordHash;
-  user.salt = passwordData.salt;
-  return userModel.create(user).then(function(newUser) {
-    var info = userInfo(newUser.dataValues);
-    return res.json({success: 1, description: "User registered", "user": info.user, "accessToken":  info.token});
+
+function getAll(req, res) {
+  return items.findAll({
+    where: {userId: req.userId},
+    include: [{model: itemSizeModel, as: 'itemSizes'}]
+  }).then(function (items) {
+    return res.json({items: items});
   });
 }
 
-function userInfo(user) {
-  var token = genToken(user);
-  return {user: {
-    "id": user.id,
-    "firstName": user.firstName,
-    "lastName": user.lastName,
-    "email": user.email},
-    "token": token.token
-  }
-}
-
-
-function genToken(user) {
-  var expires = expiresIn(10000);
-  var token = jwt.encode({
-    exp: expires,
-    email: user.email,
-    id: user.id
-  }, configAuth.secret);
-
-  return {
-    token: token,
-    expires: expires,
-  };
-}
-
-function expiresIn(numDays) {
-  var dateObj = new Date();
-  return dateObj.setDate(dateObj.getDate() + numDays);
-}
-
-function login(req,res) {
-  var user = req.body;
-
-  return userModel.findOne({
-    where: {email: user.email}
-  }).then(function (newUser) {
-    if (!newUser) {
-      res.status(401);
-      return res.json({message: "User access denied"});
-    }
-    var info = userInfo(newUser);
-    var passwordMatched = passwordHasher.comparePassword(user.password, newUser.salt, newUser.password);
-    if (passwordMatched) {
-      return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken": info.token});
-    } else {
-      res.status(401);
-      return res.json({message: "User access denied"});
-    }
-
+function save(req, res) {
+   var item = req.body;
+   item.userId = req.userId;
+   return itemModel.create(item, {
+     include: [{
+      model: itemSizeModel,
+      as: 'itemSizes'
+    }]
+  }).then(function (result) {
+    return res.json({success: 1, description: "Items Added"});
   });
 }
 
+//GET /restaurant/{name}
+function get(req, res) {
+  // var name = req.swagger.params.id.value;
+  // return restaurantModel.findOne({
+  //   where: {
+  //     id: name,
+  //     userId: req.userId
+  //   },
+  //   include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
+  //     {model: restaurantsTranslations, as: 'translations'},
+  //     {model: menuModel}]
+  // }).then(function (restaurant) {
+  //   if (restaurant) {
+  //     return res.json(restaurant);
+  //   } else {
+  //     res.status(204).send();
+  //   }
+  // });
+}
+
+//PUT /restaurant/{id}
+function update(req, res) {
+  // var restaurant = req.body;
+  //
+  // return restaurantModel.findOne({
+  //   where: {id: restaurant.id},
+  //   include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
+  //     {model: restaurantsTranslations, as: 'translations'}]
+  // }).then(function (oldRestaurant) {
+  //
+  //
+  //   //Find what's new and what has been removed
+  //   var languagesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'languageCode');
+  //   var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'languageCode');
+  //
+  //
+  //   for (var prop in restaurant) {
+  //     if (prop != 'translations')
+  //       oldRestaurant[prop] = restaurant[prop];
+  //   }
+  //
+  //   oldRestaurant.translations.forEach(function(translation) {
+  //     var newTranslation = _.find(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
+  //     for (var prop in newTranslation) {
+  //       translation[prop] = newTranslation[prop];
+  //     }
+  //     translation.save();
+  //     _.remove(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
+  //   });
+  //
+  //   restaurant.translations.forEach(function (translation) {
+  //     translation.restaurantId = restaurant.id;
+  //   });
+  //   // Create the new translations
+  //   restaurantsTranslations.bulkCreate(restaurant.translations);
+  //
+  //   oldRestaurant.save().then(function (result) {
+  //     languagesToRemove.forEach(function (language) {
+  //       restaurantLanguageModel.destroy({where: {'languageCode': language.languageCode, 'restaurantId': restaurant.id}});
+  //       restaurantsTranslations.destroy({where: {'languageCode': language.languageCode, 'restaurantId': restaurant.id}});
+  //       _.remove(oldRestaurant.translations, function (translation) { return translation.languageCode == language.languageCode});
+  //     })
+  //
+  //     newLanguagesToAdd.forEach(function (language) {
+  //       language.restaurantId = restaurant.id;
+  //       //todo: see why this isn't working
+  //       // var restaurantLanguage = restaurantLanguageModel.create(language);
+  //       //  oldRestaurant.addSupportedLanguage(restaurantLanguage);
+  //     })
+  //
+  //     restaurantLanguageModel.bulkCreate(newLanguagesToAdd).then(function (result) {
+  //       return res.json({success: 1, description: "Restaurant Updated"});
+  //     })
+  //
+  //
+  //
+  //   });
+  // });
+}
+
+//DELETE /restaurant/{name}
+function del(req, res) {
+  // var id = req.swagger.params.id.value;
+  // return restaurantModel.destroy({
+  //   where: {
+  //     id: id,
+  //     userId: req.userId
+  //   }
+  // }).then(function (result) {
+  //   return res.json({success: 1, description: "Restaurant Deleted"});
+  // });
+}

@@ -89,3 +89,11 @@ exports.getRestaurantsLanguageModel = function () {
 exports.getRestaurantsTranslationModel = function () {
   return restaurantsTranslationsModel;
 }
+
+exports.getItemModel = function () {
+  return itemModel;
+}
+
+exports.getItemSizesModel = function () {
+  return itemSizesModel;
+}
