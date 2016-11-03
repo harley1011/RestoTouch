@@ -45,11 +45,11 @@
                             <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
                             <td><i class="fa fa-remove icon-remove icon-align" (click)="removeSize(size)"></i></td>
                         </tr>
-                        <tr>
+                        <tr class="td-size-input">
                             <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName" placeholder="Size Name">
                             </td>
                             <td>
-                                <div class="form-group input-group"><span class="input-group-addon">$</span>
+                                <div class="input-group"><span class="input-group-addon">$</span>
                                     <input class="form-control" [(ngModel)]="size.price" name="price" type="text">
                                 </div>
                             </td>

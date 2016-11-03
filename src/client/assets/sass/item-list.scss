@@ -14,9 +14,22 @@
     margin-left: auto;
     width: 200px;
     height: 200px;
+
+    display:-ms-flexbox;
+    -ms-flex-pack:center;
+    -ms-flex-align:center;
+
+    /* Firefox */
+    display:-moz-box;
+    -moz-box-pack:center;
+    -moz-box-align:center;
+
+    /* Safari, Opera, and Chrome */
     display:-webkit-box;
     -webkit-box-pack:center;
     -webkit-box-align:center;
+
+
     img {
       max-width: 200px;
       max-height: 200px;
