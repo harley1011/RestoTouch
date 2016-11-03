@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Item } from './../../shared/models/items';
 import {ItemService} from '../item/item.service';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ import {ItemService} from '../item/item.service';
 
 export class ItemListComponent implements OnInit {
   items: Array<Item> = [];
-  constructor(private itemService: ItemService) {}
+  constructor(private itemService: ItemService, private router: Router) {}
   ngOnInit(): void {
 
     this.itemService.getItems().subscribe(items => {
@@ -25,15 +26,13 @@ export class ItemListComponent implements OnInit {
         console.log(error);
       }
     );
-    // this.items = [new Item('Hot dog', 'A yummy hot dog', 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg'),
-    //   new Item('Hamburger', 'A delicious hamburger', 'http://blog.timesunion.com/opinion/files/2012/03/0316_WVfastfood1.jpg'),
-    //   new Item('Hot dog', 'A yummy hot dog', 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg'),
-    //   new Item('Hamburger', 'A delicious hamburger', 'http://blog.timesunion.com/opinion/files/2012/03/0316_WVfastfood1.jpg'),
-    //   new Item('Hot dog', 'A yummy hot dog', 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg'),
-    //   new Item('Hamburger', 'A delicious hamburger', 'http://blog.timesunion.com/opinion/files/2012/03/0316_WVfastfood1.jpg')];
   }
 
   add(): void {
-    this.items.push(new Item('Drink', 'A drinl'));
+    this.router.navigate(['/dashboard/item']);
+  }
+
+  modify(item: Item): void {
+    this.router.navigate(['/dashboard/item', item.id]);
   }
 }

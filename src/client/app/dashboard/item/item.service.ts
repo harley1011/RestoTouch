@@ -14,8 +14,8 @@ export class ItemService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getItem (name: string): Observable<Item> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
+  getItem (id: number): Observable<Item> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }

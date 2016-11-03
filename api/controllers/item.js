@@ -26,7 +26,7 @@ function setDatabase(m) {
 function getAll(req, res) {
   return itemModel.findAll({
     where: {userId: req.userId},
-    include: [{model: itemSizeModel, as: 'itemSizes'}]
+    include: [{model: itemSizeModel, as: 'sizes'}]
   }).then(function (items) {
     return res.json({items: items});
   });
@@ -35,34 +35,33 @@ function getAll(req, res) {
 function save(req, res) {
    var item = req.body;
    item.userId = req.userId;
+
    return itemModel.create(item, {
      include: [{
       model: itemSizeModel,
-      as: 'itemSizes'
+      as: 'sizes'
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Items Added"});
   });
 }
 
-//GET /restaurant/{name}
+//GET /item/{id}
 function get(req, res) {
-  // var name = req.swagger.params.id.value;
-  // return restaurantModel.findOne({
-  //   where: {
-  //     id: name,
-  //     userId: req.userId
-  //   },
-  //   include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
-  //     {model: restaurantsTranslations, as: 'translations'},
-  //     {model: menuModel}]
-  // }).then(function (restaurant) {
-  //   if (restaurant) {
-  //     return res.json(restaurant);
-  //   } else {
-  //     res.status(204).send();
-  //   }
-  // });
+  var id = req.swagger.params.id.value;
+  return itemModel.findOne({
+    where: {
+      id: id,
+      userId: req.userId
+    },
+    include: [{model: itemSizeModel, as: 'sizes'}]
+  }).then(function (item) {
+    if (item) {
+      return res.json(item);
+    } else {
+      res.status(204).send();
+    }
+  });
 }
 
 //PUT /restaurant/{id}
