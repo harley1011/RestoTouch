@@ -124,15 +124,15 @@ function update(req, res) {
   // });
 }
 
-//DELETE /restaurant/{name}
+//DELETE /item/{item}
 function del(req, res) {
-  // var id = req.swagger.params.id.value;
-  // return restaurantModel.destroy({
-  //   where: {
-  //     id: id,
-  //     userId: req.userId
-  //   }
-  // }).then(function (result) {
-  //   return res.json({success: 1, description: "Restaurant Deleted"});
-  // });
+  var id = req.swagger.params.id.value;
+  return itemModel.destroy({
+    where: {
+      id: id,
+      userId: req.userId
+    }
+  }).then(function (result) {
+    return res.json({success: 1, description: "Item Deleted"});
+  });
 }

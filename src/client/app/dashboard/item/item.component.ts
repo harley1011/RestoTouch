@@ -11,8 +11,9 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 
 export class ItemComponent implements OnInit {
-  item = new Item('', '', '', [new Size('Regular', 0)]);
-  size = new Size('', 0);
+  create: boolean;
+  item: Item;
+  size = new Size('Regular', 2.00);
   errorMessage: any;
 
   constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
@@ -23,22 +24,35 @@ export class ItemComponent implements OnInit {
       if (params['id']) {
         this.itemService.getItem(params['id']).subscribe(item => {
           this.item = item;
+          this.create = false;
         }, error => {
           console.log(error);
         });
+      } else {
+        this.item = new Item('', '', '', []);
+        this.create = true;
       }
     });
   }
 
   onSubmit() {
-    this.itemService.addItem(this.item).subscribe(
-      generalResponse => {
-        this.router.navigate(['/dashboard/items']);
-      },
-      error => {
-        this.errorMessage = <any> error;
-      }
-    );
+    if (this.create) {
+      this.itemService.addItem(this.item).subscribe(
+        generalResponse => {
+          this.router.navigate(['/dashboard/items']);
+        },
+        error => {
+          this.errorMessage = <any> error;
+        });
+    } else {
+      this.itemService.updateItem(this.item).subscribe(
+        generalResponse => {
+          this.router.navigate(['/dashboard/items']);
+        },
+        error => {
+          this.errorMessage = <any> error;
+        });
+    }
 
   }
 
@@ -54,5 +68,11 @@ export class ItemComponent implements OnInit {
 
   newItem() {
     this.item = new Item('', '', '');
+  }
+
+  deleteItem() {
+    this.itemService.deleteItem(this.item.id).subscribe(response => {
+      this.router.navigate(['/dashboard/items']);
+    });
   }
 }

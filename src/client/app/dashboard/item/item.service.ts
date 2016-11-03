@@ -36,18 +36,18 @@ export class ItemService {
       .catch(this.handleError);
   }
 
-  updateItem (item: Item, oldName: string): Observable<GeneralResponse> {
+  updateItem (item: Item): Observable<GeneralResponse> {
     let body = JSON.stringify(item);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + oldName, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + item.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteItem (name: string): Observable<Item> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteItem (id: number): Observable<Item> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
