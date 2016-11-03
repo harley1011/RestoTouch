@@ -33,11 +33,11 @@ function getAll(req, res) {
 }
 
 function save(req, res) {
-   var item = req.body;
-   item.userId = req.userId;
+  var item = req.body;
+  item.userId = req.userId;
 
-   return itemModel.create(item, {
-     include: [{
+  return itemModel.create(item, {
+    include: [{
       model: itemSizeModel,
       as: 'sizes'
     }]
@@ -66,21 +66,32 @@ function get(req, res) {
 
 //PUT /item/{id}
 function update(req, res) {
-   var item = req.body;
+  var item = req.body;
 
   return itemModel.findOne({
     where: {id: item.id},
     include: [{model: itemSizeModel, as: 'sizes'}]
   }).then(function (oldItem) {
-      for (var prop in item) {
-        oldItem[prop] = item[prop];
-      }
 
-    // var sizesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'languageCode');
+    var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
+    var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
 
-      oldItem.save().then(function (result) {
-        return res.json({success: 1, description: "Item updated"});
-      })
+    for (var prop in item) {
+      oldItem[prop] = item[prop];
+    }
+    sizesToAdd.forEach(function (size) {
+      size.itemId = oldItem.id;
+    })
+    itemSizeModel.bulkCreate(sizesToAdd);
+
+    sizesToRemove.forEach(function (size) {
+      itemSizeModel.destroy({where: {id: size.id}})
+    })
+//    oldItem.removeSizes(sizesToRemove);
+
+    oldItem.save().then(function (result) {
+      return res.json({success: 1, description: "Item updated"});
+    })
 
   });
 }
