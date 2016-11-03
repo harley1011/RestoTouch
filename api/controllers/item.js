@@ -24,7 +24,7 @@ function setDatabase(m) {
 
 
 function getAll(req, res) {
-  return items.findAll({
+  return itemModel.findAll({
     where: {userId: req.userId},
     include: [{model: itemSizeModel, as: 'itemSizes'}]
   }).then(function (items) {
