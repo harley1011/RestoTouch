@@ -1,8 +1,7 @@
+import {join} from 'path';
+import {argv} from 'yargs';
 
-import { join } from 'path';
-import { argv } from 'yargs';
-
-import { Environments, InjectableDependency } from './seed.config.interfaces';
+import {Environments, InjectableDependency} from './seed.config.interfaces';
 
 /**
  * The enumeration of available environments.
@@ -67,9 +66,9 @@ export class SeedConfig {
   COVERAGE_PORT = argv['coverage-port'] || 4004;
 
   /**
-  * The path to the coverage output
-  * NB: this must match what is configured in ./karma.conf.js
-  */
+   * The path to the coverage output
+   * NB: this must match what is configured in ./karma.conf.js
+   */
   COVERAGE_DIR = 'coverage';
 
   /**
@@ -274,10 +273,10 @@ export class SeedConfig {
    * @type {InjectableDependency[]}
    */
   NPM_DEPENDENCIES: InjectableDependency[] = [
-    { src: 'zone.js/dist/zone.js', inject: 'libs' },
-    { src: 'core-js/client/shim.min.js', inject: 'shims' },
-    { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.umd.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    {src: 'zone.js/dist/zone.js', inject: 'libs'},
+    {src: 'core-js/client/shim.min.js', inject: 'shims'},
+    {src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT},
+    {src: 'rxjs/bundles/Rx.umd.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT},
   ];
 
   /**
@@ -332,10 +331,8 @@ export class SeedConfig {
       '@angular/compiler/testing': 'node_modules/@angular/compiler/bundles/compiler-testing.umd.js',
       '@angular/core/testing': 'node_modules/@angular/core/bundles/core-testing.umd.js',
       '@angular/http/testing': 'node_modules/@angular/http/bundles/http-testing.umd.js',
-      '@angular/platform-browser/testing':
-        'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
-      '@angular/platform-browser-dynamic/testing':
-        'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      '@angular/platform-browser/testing': 'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+      '@angular/platform-browser-dynamic/testing': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
       'rxjs/*': 'node_modules/rxjs/*',
@@ -345,11 +342,11 @@ export class SeedConfig {
       '*': 'node_modules/*'
     },
     map: {
-      'ng2-dnd': 'node_modules/ng2-dnd'
+      'ng2-dnd': 'ng2-dnd'
     },
     packages: {
-      rxjs: { defaultExtension: 'js' },
-      'ng2-dnd':  { main: 'index.js',  defaultExtension: 'js' }
+      rxjs: {defaultExtension: 'js'},
+      'ng2-dnd': {main: 'index.js', defaultExtension: 'js'}
     }
   };
 
@@ -413,6 +410,10 @@ export class SeedConfig {
       },
       'rxjs': {
         defaultExtension: 'js'
+      },
+      'ng2-dnd': {
+        main: 'index.js',
+        defaultExtension: 'js'
       }
     }
   };
@@ -437,8 +438,7 @@ export class SeedConfig {
    * White list for CSS color guard
    * @type {[string, string][]}
    */
-  COLOR_GUARD_WHITE_LIST: [string, string][] = [
-  ];
+  COLOR_GUARD_WHITE_LIST: [string, string][] = [];
 
   /**
    * Configurations for NPM module configurations. Add to or override in project.config.ts.
@@ -453,7 +453,7 @@ export class SeedConfig {
      * @type {any}
      */
     'browser-sync': {
-      middleware: [require('connect-history-api-fallback')({ index: `${this.APP_BASE}index.html` })],
+      middleware: [require('connect-history-api-fallback')({index: `${this.APP_BASE}index.html`})],
       port: this.PORT,
       startPath: this.APP_BASE,
       open: argv['b'] ? false : true,

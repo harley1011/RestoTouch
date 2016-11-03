@@ -22,7 +22,31 @@
     </div>
   </div>
   //---------------------ADDED---------------------------------------------------------------------------------------------------------
-  <!--</ng2-dnd> if this is used the website freezes-->
+  <h4>Simple sortable</h4>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          Favorite drinks
+        </div>
+        <div class="panel-body">
+          <ul class="list-group" dnd-sortable-container [sortableData]="listOne">
+            <li *ngFor="let item of listOne; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          My prefences:<br/>
+          <span *ngFor="let item of listOne; let i = index">{{i + 1}}) {{item}}<br/></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <h4>Multi list sortable</h4>
   <div class="row">
     <div class="col-sm-3">
@@ -42,7 +66,7 @@
         <div class="panel-heading">
           First Team
         </div>
-        <div class="panel-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamOne">
+        <div class="panel-body" style="height: 200px !important;" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamOne">
           <ul class="list-group" >
             <li *ngFor="let item of listTeamOne; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
           </ul>
@@ -54,7 +78,7 @@
         <div class="panel-heading">
           Second Team
         </div>
-        <div class="panel-body" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamTwo">
+        <div class="panel-body" style="height: 200px !important;" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="listTeamTwo">
           <ul class="list-group">
             <li *ngFor="let item of listTeamTwo; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
           </ul>
@@ -62,7 +86,6 @@
       </div>
     </div>
   </div>
-<!--</ng2-dnd> if this is used the website freezes-->
   //---------------------ADDED---------------------------------------------------------------------------------------------------------
 
 

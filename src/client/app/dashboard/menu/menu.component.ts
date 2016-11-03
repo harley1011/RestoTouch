@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
 import {Menu} from '../../shared/models/menu';
+
 //import {Category} from '../../shared/models/category';
 
 //import {MenuCategoryService} from './menucategory.service';
@@ -11,69 +12,77 @@ import {Menu} from '../../shared/models/menu';
 
 
 @Component({
-	moduleId: module.id,
-	selector: 'ng2-dnd',//menu-cmp
-	templateUrl: 'menu.component.html',
+  moduleId: module.id,
+  selector: 'menu-cmp',//menu-cmp
+  templateUrl: 'menu.component.html',
   providers: [MenuService]
 })
 
 export class MenuComponent implements OnInit {
 
-  listBoxers:Array<string> = ['Sugar Ray Robinson','Muhammad Ali','George Foreman','Joe Frazier','Jake LaMotta','Joe Louis'];
-  listTeamOne:Array<string> = [];
-  listTeamTwo:Array<string> = [];
+  listBoxers: Array<string> = ['Sugar Ray Robinson', 'Muhammad Ali', 'George Foreman', 'Joe Frazier', 'Jake LaMotta', 'Joe Louis'];
+  listTeamOne: Array<string> = [];
+  listTeamTwo: Array<string> = [];
 
 
-	create: boolean;
-  menu : Menu;
+  create: boolean;
+  menu: Menu;
   errorMessage: string;
   sections: string[];
   //categories : Category [];
   //sortableData: Array<any>;
 
-	constructor(private route: ActivatedRoute,
+  availableProducts: Array<Product> = [];
+  listOne: Array<string> = ['Coffee', 'Orange Juice', 'Red Wine', 'Unhealty drink!', 'Water'];
+
+
+  constructor(private route: ActivatedRoute,
               private menuService: MenuService,
               //private menuCategoryService: MenuCategoryService,
-             // private categoryService: CategoryService,
-             // private DragDropSortableService: DragDropSortableService,
-              private router: Router) {}
+              // private categoryService: CategoryService,
+              // private DragDropSortableService: DragDropSortableService,
+              private router: Router) {
+    this.availableProducts.push(new Product('Blue Shoes', 3, 35));
+    this.availableProducts.push(new Product('Good Jacket', 1, 90));
+  }
 
-	getMenu(name: string): void {
-	  this.menuService.getMenu(name).subscribe(
-	    menu => {
-	      this.menu = menu;
+  getMenu(name: string): void {
+    this.menuService.getMenu(name).subscribe(
+      menu => {
+        this.menu = menu;
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
   }
-/*
-  getCategories(): void {
-    this.categoryService.getCategories().subscribe(
-      categories => {
-        this.categories = categories;
-      },
-      error => {
-        this.errorMessage = <any>error;
-      }
-    );
-  }
-*/
+
+  /*
+   getCategories(): void {
+   this.categoryService.getCategories().subscribe(
+   categories => {
+   this.categories = categories;
+   },
+   error => {
+   this.errorMessage = <any>error;
+   }
+   );
+   }
+   */
   ngOnInit(): void {
 
     //get all categpries (api)
 
     this.sections = [];
-		this.route.params.forEach((params: Params) => {
-			if (params['name']) {
-			  this.getMenu(params['name']);
-				this.create = false;
-			} else {
-			  this.menu = new Menu('');
-				this.create = true;
-			}
-		});
+    this.route.params.forEach((params: Params) => {
+      if (params['name']) {
+        this.getMenu(params['name']);
+        this.create = false;
+      } else {
+        this.menu = new Menu('');
+        this.create = true;
+      }
+    });
   }
 
   // 'Create' button functionality
@@ -116,16 +125,16 @@ export class MenuComponent implements OnInit {
     // TODO loop
     // calling add menucategoryservice
     /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
-      generalResponse => {
-        this.router.navigate(['/dashboard/menus']);
-      },
-      error => {
-        this.errorMessage = <any> error;
-      }
-    );*/
+     generalResponse => {
+     this.router.navigate(['/dashboard/menus']);
+     },
+     error => {
+     this.errorMessage = <any> error;
+     }
+     );*/
   }
 
-  update(oldName : string): void {
+  update(oldName: string): void {
     this.menuService.updateMenu(this.menu, oldName).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
@@ -147,7 +156,7 @@ export class MenuComponent implements OnInit {
   delete(): void {
     this.menuService.deleteMenu(this.menu.name).subscribe(
       generalResponse => {
-        console.log('response', generalResponse );
+        console.log('response', generalResponse);
         this.router.navigate(['/dashboard/menus']);
       },
       error => {
@@ -157,7 +166,7 @@ export class MenuComponent implements OnInit {
   }
 
 }
-function validateInputs () {
+function validateInputs() {
 
   var validationError = false;
 
@@ -171,7 +180,7 @@ function validateInputs () {
   };
 }
 
-function validateInput (id: string, callback: any) {
+function validateInput(id: string, callback: any) {
   var input = (<HTMLInputElement>document.getElementById(id));
   var value = input.value;
   if (value === '' || (callback && !callback(input, value))) {
@@ -183,10 +192,16 @@ function validateInput (id: string, callback: any) {
   return value;
 }
 
-function hasError (element: HTMLInputElement) {
+function hasError(element: HTMLInputElement) {
   element.className += ' form-error';
 }
 
-function hasNoError (element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/,'');
+function hasNoError(element: HTMLInputElement) {
+  element.className = element.className.replace(/\bform-error\b/, '');
+}
+
+
+class Product {
+  constructor(public name: string, public quantity: number, public cost: number) {
+  }
 }
