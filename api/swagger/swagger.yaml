@@ -39,8 +39,8 @@ paths:
       operationId: addItem
       description: Add a item
       parameters:
-        - name: category
-          description: category properties
+        - name: item
+          description: item properties
           in: body
           required: true
           schema:
