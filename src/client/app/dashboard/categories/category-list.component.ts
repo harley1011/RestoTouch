@@ -52,7 +52,7 @@ export class CategoryListComponent implements OnInit {
         //console.log('Selected Language: '+this.selectedLanguage.name);
         //console.log('Selected Translation: '+this.selectedTranslation.languageCode);
 
-        let translation = new CategoryTranslations('','');
+        let translation = new CategoryTranslations('','fr');
         this.translationArray.push(translation);
         this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
     }

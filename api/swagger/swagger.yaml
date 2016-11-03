@@ -583,8 +583,26 @@ definitions:
     properties:
       categoryName:
         type: string
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/CategoryTranslations"
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
     required:
       - categoryName
+  CategoryTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
   RestaurantListResponse:
     required:
       - restaurants

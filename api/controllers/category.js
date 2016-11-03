@@ -23,7 +23,11 @@ function setDatabase (m) {
 
 // GET /category
 function getAllCategories(req, res) {
-  return categoryModel.findAll({where: {userId: req.userId}}).then(function(categories) {
+  return categoryModel.findAll({
+    where: {userId: req.userId},
+    include: [{model: categoryLanguagesModel, as:'supportedLanguages'},
+              {model: categoryTranslationsModel, as: 'translations'}]
+  }).then(function(categories) {
     return res.json({ categories: categories });
   });
 }
