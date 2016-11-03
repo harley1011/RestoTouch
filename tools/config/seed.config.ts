@@ -344,8 +344,12 @@ export class SeedConfig {
       'dist/dev/*': '/base/dist/dev/*',
       '*': 'node_modules/*'
     },
+    map: {
+      'ng2-dnd': 'node_modules/ng2-dnd'
+    },
     packages: {
-      rxjs: { defaultExtension: 'js' }
+      rxjs: { defaultExtension: 'js' },
+      'ng2-dnd':  { main: 'index.js',  defaultExtension: 'js' }
     }
   };
 

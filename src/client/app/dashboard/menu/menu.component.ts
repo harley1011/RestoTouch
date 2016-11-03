@@ -2,28 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {MenuService} from './menu.service';
 import {Menu} from '../../shared/models/menu';
-//import {MenuCategoryService} from './menucatergory.service';
-//import {CategoryService} from './category.service';
+//import {Category} from '../../shared/models/category';
+
+//import {MenuCategoryService} from './menucategory.service';
+//import {CategoryService} from '../categories/category.service';
+
+//import {DragDropSortableService} from './ng2-dnd/src/dnd.service.d.ts';
+
 
 @Component({
 	moduleId: module.id,
-	selector: 'menu-cmp',
+	selector: 'ng2-dnd',//menu-cmp
 	templateUrl: 'menu.component.html',
   providers: [MenuService]
 })
 
 export class MenuComponent implements OnInit {
+
+  listBoxers:Array<string> = ['Sugar Ray Robinson','Muhammad Ali','George Foreman','Joe Frazier','Jake LaMotta','Joe Louis'];
+  listTeamOne:Array<string> = [];
+  listTeamTwo:Array<string> = [];
+
+
 	create: boolean;
   menu : Menu;
   errorMessage: string;
   sections: string[];
-  // dummy data
-  // categories:[{id:number , categoryName: string}];
+  //categories : Category [];
+  //sortableData: Array<any>;
 
 	constructor(private route: ActivatedRoute,
               private menuService: MenuService,
               //private menuCategoryService: MenuCategoryService,
-              //private categoriyService: CategoryService,
+             // private categoryService: CategoryService,
+             // private DragDropSortableService: DragDropSortableService,
               private router: Router) {}
 
 	getMenu(name: string): void {
@@ -36,21 +48,21 @@ export class MenuComponent implements OnInit {
       }
     );
   }
-
+/*
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.categories = categories;
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
+  }
+*/
   ngOnInit(): void {
 
     //get all categpries (api)
-    //for now Dummy data from category api
-/*    var categories = [
-      { id: 1, categoryName: 'hamburger'},
-      { id: 2, categoryName: 'drink'},
-      { id: 3, categoryName: 'sandowish'},
-      { id: 4, categoryName: 'salad'},
-      { id: 5, categoryName: 'icecream'},
-      { id: 6, categoryName: 'starter'},
-      { id: 7, categoryName: 'sweets'},
-      { id: 8, categoryName: 'specials'},
-    ];*/
 
     this.sections = [];
 		this.route.params.forEach((params: Params) => {
