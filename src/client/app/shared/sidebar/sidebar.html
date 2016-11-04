@@ -2,7 +2,7 @@
     &#9776;
 </button>
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
-     
+
     <ul class="list-group">
         <a class="sidebar-logo" routerLink="/dashboard/home"><img src="../../../assets/img/logorestotouch2.png" width="180"/></a>
         <a routerLink="/dashboard/restaurants" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -11,6 +11,10 @@
 
         <a routerLink="/dashboard/categories" [routerLinkActive]="['router-link-active']" class="list-group-item">
            Categories
+        </a>
+
+        <a routerLink="/dashboard/items" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            Food Items
         </a>
 
         <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
