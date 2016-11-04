@@ -37,6 +37,11 @@ function save(req, res) {
   var item = req.body;
   item.userId = req.userId;
 
+  if (item.sizes.length == 0) {
+    res.status(400);
+    return res.json({message: "At least one size is required"});
+  }
+
   return itemModel.create(item, {
     include: [{
       model: itemSizeModel,
