@@ -208,12 +208,10 @@
           </tbody>
         </table>
       </div>
-      <div id="resto-menu" class="edit-section">
+      <div id="resto-menu" *ngIf="!create" class="edit-section">
         <h4>Menus</h4>
-        <div *ngIf="!create" class="form-group">
-          <div>
-            <label>Menus</label>
-          </div>
+        <div  class="form-group">
+         
           <div class="btn-group-vertical btn-group-md">
             <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
             <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
@@ -222,12 +220,8 @@
       </div>
       <div id="resto-lang" class="edit-section">
         <h4>Languages</h4>
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#languageDiv" aria-expanded="false"
-                aria-controls="languageDiv" (click)="toggleShowManageLanguage()">Manage Languages
-        </button>
-        <div [hidden]="hideManageLanguage">
           <ul class="list-group">
-            <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-remove icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
+            <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
             <li class="list-group-item">
               <div class="input-group">
                 <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
@@ -239,7 +233,6 @@
               </div>
             </li>
           </ul>
-        </div>
       </div>
       <div class="row">
         <div class="manage-button">
