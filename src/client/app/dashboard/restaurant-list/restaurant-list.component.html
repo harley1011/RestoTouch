@@ -1,27 +1,25 @@
 <div id="restaurantList">
     <div class="manage-header">
-    <h2>Restaurants Management</h2>
-    <h5 style="color:#777"><small>List of all your restaurant</small></h5>
+    <h2>Manage Restaurants</h2>
+    <h5 class="subtitle"><small>You can select any restaurant below to make changes</small></h5>
        <div class="manage-button">
         <button (click)="add()" class="btn btn-success btn-green">+ Add Restaurant</button>
         </div>
         <hr>
     </div>
 
-  <div  class="row restaurantListContainer">
+  <div class="row restaurantListContainer">
     <div class="col-lg-3" *ngFor="let restaurant of restaurants; let i = index">
-      <div (click)="modify(restaurant)" class="card card-primary card-inverse">
-        <div class="card-header card-primary">
-          {{ restaurant.selectedTranslation.name }}
-        </div>
-        <div class="card-block bg-white">
-          {{ restaurant.selectedTranslation.description }} <br>
-            {{ restaurant.address }}
-        </div>
+      <div (click)="modify(restaurant)" class="card card-block new-card">
+        <h4 class="card-title">{{ restaurant.selectedTranslation.name }}<h6 class="card-subtitle text-muted" style="margin-top:0">{{ restaurant.address }}</h6></h4>
+        
+       <p class="card-text">
+          {{ restaurant.selectedTranslation.description }}  </p>
+           <h6 style="margin:0">Menus <span class="label label-default"> {{ restaurant?.Menus.length }} </span></h6>
+            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>
+           
+            
       </div>
-    </div>
-
-    <div class="col-lg-3">
     </div>
 
   </div>
