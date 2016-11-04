@@ -1,6 +1,6 @@
 var jwt = require('jwt-simple');
 var configAuth = require('./config/auth');
-var tokenNotRequiredRoutes = ['/login', '/register'];
+var tokenNotRequiredRoutes = ['/login', '/register','/logout'];
 var path = require('path');
 
 module.exports = function(req, res, next) {
