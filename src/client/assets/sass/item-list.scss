@@ -3,6 +3,8 @@
   height: 300px;
   text-align: center;
   margin-bottom: 5px;
+  overflow: hidden;
+
 
   .img-thumbnail {
     width: 250px;
@@ -39,5 +41,10 @@
 
   &:hover {
     cursor: pointer;
+  }
+
+  p, div {
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
