@@ -71,4 +71,8 @@ export class ItemComponent implements OnInit {
       this.router.navigate(['/dashboard/items']);
     });
   }
+
+  cancelItem() {
+    this.router.navigate(['/dashboard/items']);
+  }
 }
