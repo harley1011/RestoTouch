@@ -81,7 +81,7 @@ export function main() {
 
     it('should add a Menu', () => {
 
-      var mockMenu = new Menu('Lunch Menu');
+      var mockMenu = new Menu('Lunch Menu',[]);
 
       initialResponse = menuService.addMenu(mockMenu);
 
@@ -102,7 +102,7 @@ export function main() {
 
     it('should update a Menu', () => {
 
-     var mockMenu = new Menu('Dinner Menu');
+     var mockMenu = new Menu('Dinner Menu',[]);
 
       initialResponse = menuService.updateMenu(mockMenu,'Lunch Menu');
 
