@@ -36,13 +36,13 @@ export class CategoryListComponent implements OnInit {
 
       languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
         this.selectedLanguage = selectedLanguage;
+        //Change the selected translations for each category, create one if it doens't exist.
       });
     }
 
     ngOnInit(): void {
         this.isEditable = false;
         this.getCategories();
-        //console.log('Selected Language: '+this.selectedLanguage.name);
 
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
@@ -52,9 +52,10 @@ export class CategoryListComponent implements OnInit {
         //console.log('Selected Language: '+this.selectedLanguage.name);
         //console.log('Selected Translation: '+this.selectedTranslation.languageCode);
 
-        let translation = new CategoryTranslations('','fr');
+        let translation = new CategoryTranslations('','en');
         this.translationArray.push(translation);
         this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
+
     }
 
     ///////////////////////////////////////////////////////////////
@@ -73,11 +74,16 @@ export class CategoryListComponent implements OnInit {
         }
       language = this.languages.find(language => language.languageCode === this.addedLanguage);
       this.supportedLanguages.push(language);
-      /*
+
       let newTranslation = new CategoryTranslations('', language.languageCode);
+      this.translationArray.push(newTranslation);
       for (let cat of this.categories) {
         cat.translations.push(newTranslation);
-      }*/
+        cat.supportedLanguages.push(language);
+      }
+      for(let cat of this.categories) {
+        console.log(cat.translations);
+      }
     }
 
     removeLanguage(language: Language) {
@@ -87,6 +93,14 @@ export class CategoryListComponent implements OnInit {
       }
       let i = this.supportedLanguages.indexOf(language);
       this.supportedLanguages.splice(i, 1);
+      let removedTranslation = this.translationArray.find(translation =>
+      translation.languageCode === language.languageCode);
+      let j = this.translationArray.indexOf(removedTranslation);
+      this.translationArray.splice(j, 1);
+      for(let cat of this.categories) {
+        cat.translations.splice(j,1);
+        cat.supportedLanguages.splice(i,1);
+      }
     }
 
     /**
@@ -95,9 +109,28 @@ export class CategoryListComponent implements OnInit {
     getCategories(): void {
       // Subscribe to the getCategories observable
       this.categoryService.getCategories().subscribe(
-        categories => {
-          this.translationArray = categories[0].translations;
-          this.selectedTranslation = categories[0].selectedTranslation;
+        categories => {/*
+          if(categories.length > 0) {
+            console.log('the array is not empty');
+            this.translationArray = categories[0].translations;
+            this.selectedTranslation = categories[0].translations[0];
+            this.supportedLanguages = categories[0].supportedLanguages;
+            this.selectedLanguage = this.languages.find(language =>
+            language.languageCode === categories[0].supportedLanguages[0].languageCode);
+            this.languageService.announceSelectedLanguage(this.selectedLanguage);
+            this.languageService.announceSupportedLanguages(this.supportedLanguages);
+            console.log(this.selectedLanguage);
+            } /*else if (categories.length === 0) {
+              this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'fr'));
+              this.selectedLanguage = this.languages.find(language => language.languageCode === 'fr');
+              this.languageService.announceSupportedLanguages(this.supportedLanguages);
+              this.languageService.announceSelectedLanguage(this.selectedLanguage);
+              console.log(this.selectedLanguage);
+              let translation = new CategoryTranslations('','fr');
+              this.translationArray.push(translation);
+              this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
+            }*/
+
           this.categories = categories;},
         error => {console.log(error);}
       );
