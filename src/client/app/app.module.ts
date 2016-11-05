@@ -15,6 +15,7 @@ import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
 import { LanguageService } from './services/language.service';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { LanguageService } from './services/language.service';
 		LogoutModule,
 		SignupModule,
 		DashboardModule,
+        Ng2PageScrollModule,
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],

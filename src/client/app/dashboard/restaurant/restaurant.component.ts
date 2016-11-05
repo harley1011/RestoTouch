@@ -24,6 +24,7 @@ export class RestaurantComponent implements OnInit {
   languages: Array<Language>;
   selectedLanguage: string;
   editingLanguage: Language = new Language('', '', '', 0);
+//    	@ViewChild('formContainer') private container: ElementRef;
 
   constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
               private restaurantService: RestaurantService) {
@@ -171,4 +172,15 @@ export class RestaurantComponent implements OnInit {
   cancel(): void {
     this.router.navigate(['/dashboard/restaurants']);
   }
+
+//    goToHead2(): void {
+//         let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this.document, '#head2');
+//         this.pageScrollService.start(pageScrollInstance);
+//     };
+//
+//    goToHeadingInContainer(): void {
+//         let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInlineInstance(
+//             this.document, '#resto-lang', this.container.nativeElement);
+//         this.pageScrollService.start(pageScrollInstance);
+//     };
 }

@@ -143,6 +143,7 @@
     "lodash": "^4.16.4",
     "moment": "2.14.1",
     "ng2-bootstrap": "1.1.1",
+    "ng2-page-scroll": "^3.2.1",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
     "promise": "^7.1.1",

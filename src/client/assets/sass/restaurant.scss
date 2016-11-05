@@ -12,11 +12,20 @@
     position: fixed;
     background-color: #f3f3f3;
     width: 84.5%;
+    z-index: 3;
     
     h4 {
       margin-top: 20px;
       margin-bottom: 20px;
     }
+}
+
+.manage-button {
+    display: inline-block;
+    position: fixed;
+    top: 90px;
+    right: 2%;
+    z-index: 3;
 }
 
 .formContainer {
@@ -51,4 +60,12 @@
 
 .edit-section {
     margin-bottom: 40px;   
+    
+    h4 {
+        margin: 20px 0;   
+    }
+    
+    select {
+        height: 40px;   
+    }
 }
