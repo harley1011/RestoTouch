@@ -6,9 +6,11 @@
     <ul class="list-group">
         <a class="sidebar-logo" routerLink="/dashboard/home"><img src="../../../assets/img/logorestotouch2.png" width="180"/></a>
         <a routerLink="/dashboard/restaurants" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            Restaurant
+            Restaurants
         </a>
-
+        <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
+          Menus
+        </a>
         <a routerLink="/dashboard/categories" [routerLinkActive]="['router-link-active']" class="list-group-item">
            Categories
         </a>
@@ -17,9 +19,7 @@
             Food Items
         </a>
 
-        <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
-          Menu
-        </a>
+        
 <a class="list-group-item">Orders</a>
 <a class="list-group-item">Statistics</a>
 <a class="list-group-item">Cashier Mode</a>
