@@ -37,7 +37,7 @@ function save(req, res) {
   var item = req.body;
   item.userId = req.userId;
 
-  if (item.sizes.length == 0) {
+  if (!item.sizes || item.sizes.length == 0) {
     res.status(400);
     return res.json({message: "At least one size is required"});
   }
@@ -48,7 +48,7 @@ function save(req, res) {
       as: 'sizes'
     }]
   }).then(function (result) {
-    return res.json({success: 1, description: "Items Added"});
+    return res.json({success: 1, description: "Item Added"});
   });
 }
 

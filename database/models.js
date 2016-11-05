@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var configDB = require('../config/database.js');
-var sequelize = new Sequelize(configDB.url);
+var sequelize = new Sequelize(configDB.url, {logging: false});
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
@@ -24,10 +24,18 @@ userModel.sync({force: dropTable}).then(function () {
   restaurantModel.sync({force: dropTable}).then(function () {
     //Restaurant has to be created before these tables are created
 
-    restaurantModel.hasMany(restaurantsLanguagesModel, {as: 'supportedLanguages', onDelete: 'cascade', foreignKey: 'restaurantId'});
+    restaurantModel.hasMany(restaurantsLanguagesModel, {
+      as: 'supportedLanguages',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
     restaurantsLanguagesModel.sync({force: dropTable});
 
-    restaurantModel.hasMany(restaurantsTranslationsModel, {as: 'translations', onDelete: 'cascade',  foreignKey: 'restaurantId'});
+    restaurantModel.hasMany(restaurantsTranslationsModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
     restaurantsTranslationsModel.sync({force: dropTable});
   });
 
@@ -37,8 +45,16 @@ userModel.sync({force: dropTable}).then(function () {
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
   menuModel.sync({force: dropTable}).then(function () {
 
-    restaurantModel.belongsToMany(menuModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "restaurantId"});
-    menuModel.belongsToMany(restaurantModel, {through: restaurantMenuModel,  onDelete: 'cascade', foreignKey: "menuId"});
+    restaurantModel.belongsToMany(menuModel, {
+      through: restaurantMenuModel,
+      onDelete: 'cascade',
+      foreignKey: "restaurantId"
+    });
+    menuModel.belongsToMany(restaurantModel, {
+      through: restaurantMenuModel,
+      onDelete: 'cascade',
+      foreignKey: "menuId"
+    });
     restaurantMenuModel.sync({force: dropTable});
 
     menuModel.belongsToMany(categoryModel, {through: menuCategoryModel, foreignKey: 'menuId'});
@@ -57,6 +73,10 @@ userModel.sync({force: dropTable}).then(function () {
 
 });
 
+
+exports.connectToDb = function () {
+
+}
 
 exports.getUserModel = function () {
   return userModel;
