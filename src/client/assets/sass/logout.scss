@@ -1,0 +1,66 @@
+.logoutContainer{
+  background-image: url('../img/logout-backgroundsm.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+//  background-attachment: fixed;
+  height: 100%;
+  
+
+input[type=text], input[type=email], input[type=password]  {
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 2%;
+    width: 100%;
+    color: white;
+    }
+}
+
+
+.logoutTitle{
+    color: white;
+    font-size: 40pt;
+    font-weight: 900;
+}
+
+.logoutCenter{
+  margin: auto;
+  width:55%;
+}
+
+.logoutBodyText{
+    font-family: 'Arial';
+    color: white;
+    font-size: 14pt;
+}
+
+.logoutSigningText{
+    font-family: 'Arial';
+    color: white;
+    font-size: 14pt;
+    text-align: left;
+}
+
+.logoutSigningPadding{
+    padding: 3% 6% 3% 6%;
+}
+
+#logoutPadding{
+    padding-top: 20%;
+    padding-bottom: 20%;
+    text-align: center;
+}
+
+.logoutSigningBkgd{
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+}
+
+#logoutLogo{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 112px;
+    height: 32px;
+}

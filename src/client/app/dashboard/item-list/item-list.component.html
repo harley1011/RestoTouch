@@ -1,0 +1,56 @@
+<div class="manage-list">
+    <div class="manage-header">
+    <h2>Manage Food Items</h2>
+    <h5 class="subtitle">
+        <small>You can select any item below to make changes</small>
+    </h5>
+       <div class="manage-button">
+           <button  (click)="add()" class="btn btn-success btn-green">+ Add Item</button>
+        </div>
+        <hr>
+    </div>
+    <div class="manage-list-container">
+    <div class="row">
+    <div class="col-sm-3" *ngFor="let item of items">
+      <div (click)="modify(item)" class="card">
+        <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl" />
+        <div class="card-block">
+          <h4 class="card-title">{{ item.name }} </h4>
+            <p class="card-text"> {{item.description}} </p>
+          </div>
+      </div>
+    </div>
+
+  </div>
+    </div>
+    
+</div>
+
+<!--
+<div *ngIf="items" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Items <span class="label label-default"> {{items.length}} </span></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" style="margin-bottom: 2px">
+      <button type="button" class="btn btn-primary" (click)="add()">Add New Item</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 item-container" (click)="modify(item)" *ngFor="let item of items">
+      <div class="img-thumbnail">
+        <div class="item-img-container">
+          <img [src]="item.imageUrl">
+        </div>
+        <div class="caption">
+          <h3>{{item.name}}</h3>
+          <p>{{item.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+-->

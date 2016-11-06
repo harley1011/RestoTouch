@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { CarouselModule, DropdownModule, AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
-
 @NgModule({
     imports: [CommonModule, CarouselModule, DropdownModule, AlertModule],
-    declarations: [HomeComponent, RestaurantListComponent],
-    exports: [HomeComponent, RestaurantListComponent]
+    declarations: [HomeComponent],
+    exports: [HomeComponent]
 })
 
 export class HomeModule { }
