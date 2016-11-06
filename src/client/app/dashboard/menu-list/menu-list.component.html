@@ -1,6 +1,7 @@
 <div class="manage-list">
     <div class="manage-header">
-    <h2>{{ restaurant?.translations[0]?.name }} Menus</h2>
+    <h2 *ngIf="restaurant">{{ restaurant?.translations[0]?.name }} Menu</h2>
+    <h2 *ngIf="!restaurant">Manage Menus</h2>
     <h5 class="subtitle">
         <small *ngIf="!restaurant">You can select any menu below to make changes</small>
         <small *ngIf="restaurant">You can select all menus that apply</small>
