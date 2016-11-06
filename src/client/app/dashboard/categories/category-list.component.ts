@@ -33,11 +33,6 @@ export class CategoryListComponent implements OnInit {
                 private router: Router,
                 private languageService: LanguageService) {
       this.languages = languageService.languages();
-
-      languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-        this.selectedLanguage = selectedLanguage;
-        //Change the selected translations for each category, create one if it doens't exist.
-      });
     }
 
     ngOnInit(): void {
@@ -55,6 +50,15 @@ export class CategoryListComponent implements OnInit {
         let translation = new CategoryTranslations('','en');
         this.translationArray.push(translation);
         this.category = new Category('',this.supportedLanguages,this.translationArray,translation);
+
+        this.languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+        this.selectedLanguage = selectedLanguage;
+        //Change the selected translations for each category, create one if it doens't exist.
+        for(let cat of this.categories) {
+          cat.selectedTranslation = this.translationArray.find(translation =>
+            translation.languageCode === this.selectedLanguage.languageCode);
+        }
+      });
 
     }
 
