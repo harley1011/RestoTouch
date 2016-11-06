@@ -11,47 +11,6 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-4">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          Categories Test
-        </div>
-        <div class="card" style="min-height: 200px !important;" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="categoriesTest">
-          <ul class="list-group">
-            <li *ngFor="let item of categoriesTest; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-4">
-      <div class="panel ">
-        <div class="panel-heading">
-          Available Category List
-        </div>                                                                                                                      <!--availableCategoryList, Available Category List Container-->
-        <div class="card" style="min-height: 200px !important;" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="availableCategoryList">
-          <ul class="list-group">
-            <li *ngFor="let item of availableCategoryList; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xs-4">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          Category List
-        </div>                                                                                                                      <!--categoryList, Category List Container-->
-        <div class="card" style="min-height: 200px !important;" dnd-sortable-container [dropZones]="['boxers-zone']" [sortableData]="categoryList">
-          <ul class="list-group">
-            <li *ngFor="let item of categoryList; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">{{item}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
     <div class="col-lg-12">
       <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
       <button *ngIf="!create" (click)="delete()" class="btn btn-danger">Delete</button>

@@ -28,7 +28,6 @@ export class ProjectConfig extends SeedConfig {
       { src: 'highcharts/highcharts.js', inject: 'libs' },
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
-      {src:'ng2-dnd/style.css', inject:true}
     ];
 
     // Add `local` third-party libraries to be injected/bundled.

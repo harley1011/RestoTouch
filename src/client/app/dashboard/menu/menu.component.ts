@@ -16,18 +16,10 @@ import {CategoryService} from '../categories/category.service';
 
 export class MenuComponent implements OnInit {
 
-  categoriesTest: Array<string> = ['Salads', 'Deserts', 'Burgers', 'Sandwiches', 'Drinks'];
-  availableCategoryList: Array<string> = []; // The list of available categories.
-  categoryList: Array<string> = []; // The user selected categories.
-
   create: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   categories: Category [];// This is the Available Category List
-  typeAvailable: boolean[];// If value is false then the category is not in Available Category List but in Category List
-  toAdd: boolean;
-  toUpdate: boolean;
-  toRemove: boolean;
 
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
@@ -47,14 +39,7 @@ export class MenuComponent implements OnInit {
         this.create = true;
       }
     });
-    //  this.getCategories();
-
-    /* PROBLEM: It seems whenever i push a string to the arrays of strings of 'categoriesTest, availableCategoryList, and categoryList'
-     *          all the containers cannot get their element back once the element has been dragged away from its container.
-     */
-    //this.categoriesTest.push('hi1');
-    //this.availableCategoryList.push('hi1');
-    //this.categoryList.push('hi1');
+      this.getCategories();
   }
 
   getMenu(name: string): void {
@@ -67,41 +52,16 @@ export class MenuComponent implements OnInit {
       }
     );
   }
-/*
-
    getCategories(): void {
      this.categoryService.getCategories().subscribe(
        categories => {
-
          this.categories = categories;
-         this.typeAvailable = new Array(this.categories.length);
-         this.toAdd = false;
-         this.toUpdate = false;
-         this.toRemove = false;
-
-         // If (user's first time to create a menu then all the categories we got are of type available)
-         if (this.menu.name === undefined) {
-           for (let i = 0; i < this.categories.length; i++) {
-             this.typeAvailable[i] = true;
-           }
-           return;
-         }
-         // else
-         for (let i = 0; i < this.categories.length; i++) {
-           for (let j = 0; j < this.menu.categories.length; j++) {
-             if (this.categories[i].categoryName === this.menu.categories[j].categoryName) {
-               this.typeAvailable[i] = false;
-               break;
-             }
-           }
-         }
        },
        error => {
         this.errorMessage = <any>error;
        }
      );
    }
-*/
 
   // 'Create' button functionality
   addAndUpdate(): void {
@@ -147,9 +107,6 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any> error;
       }
     );
-
-    // Display all the categories in the available categories
-    // this.getCategories();
   }
 
 
@@ -197,6 +154,7 @@ export class MenuComponent implements OnInit {
   }
 
 /*
+    //TODO calling deleteMenuCategory from menucategoryservice
    // By checking which selected categories are not in the 'Available Category' list then we know which one to delete.
    for (let i = 0; i <= this.availableCategoryList.length - 1; i++) {
      for (let j = 0; j < this.categoryList.length; i++) {
