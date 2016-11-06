@@ -1,3 +1,33 @@
+<div id="restaurantList">
+    <div class="manage-header">
+    <h2>{{ restaurant?.translations[0]?.name }} Menus</h2>
+    <h5 class="subtitle"><small>You can select any menu below to make changes</small></h5>
+       <div class="manage-button">
+        <button (click)="add()" class="btn btn-success btn-green">+ Add Menu</button>
+        </div>
+        <hr>
+    </div>
+
+  <div class="row menuListContainer">
+    <div class="col-sm-3" *ngFor="let menu of menus; let i = index">
+      <div (click)="modify(i, menu)" class="card card-block">
+        <h4 class="card-title">{{ menu.name }}<h6 class="card-subtitle text-muted" style="margin-top:0">stuff</h6></h4>
+        
+       <p class="card-text">
+          stuff </p>
+           <h6 style="margin:0">Items <span class="label label-default"> 0 </span></h6>
+            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>
+           
+            
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--
+
 <div class="container-fluid">
   <h1 class="page-header">{{ restaurant?.translations[0]?.name }} Menus <span class="label label-default"> {{ numOfMenus }} </span></h1>
   <div class="container-fluid">
@@ -22,3 +52,4 @@
   </div>
 
 </div>
+-->
