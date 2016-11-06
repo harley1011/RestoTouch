@@ -3,7 +3,11 @@
     height: 100%;
 //    position: absolute;
 //    min-width: 90%;
-    overflow-x: hidden;   
+    overflow-x: hidden; 
+    
+    .formContainer {
+        height: 100%;
+    }
 }
 
 .menuSection {
@@ -18,3 +22,7 @@
   border-color: #bd4147;
 }
 
+.selected-menu {
+    background-color: #1abc9c;
+    color: #fff;
+}

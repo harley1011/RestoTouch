@@ -237,6 +237,7 @@
             <div class="col col-md-5">
              <div class="list-group">
                  <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="list-group-item">{{ menu.name }}</button>
+                 <button *ngIf="restaurant?.Menus.length == 0"  type="button" class="list-group-item label-empty-menu">No Menus</button>
             </div>
             </div>
             

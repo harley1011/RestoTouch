@@ -12,6 +12,7 @@
     font-weight: 600;
     color: white;
     letter-spacing: 1px;
+    margin-bottom: 15px;
 }
 
 .cat-label {
@@ -22,12 +23,13 @@
     text-align: center;
     display: inline-block;
     left: 0;
-    margin-bottom: 20px;   
+    margin-bottom: 35px;   
 }
 
 .cat-label-input {
     position: absolute;
-    bottom: 10px;
+    bottom: 35px;
+    margin: 0 36px;
 }
 
 .cat-label-input input[type="text"] {
