@@ -1,3 +1,32 @@
+<div class="manage-list">
+    <div class="manage-header">
+    <h2>Manage Food Items</h2>
+    <h5 class="subtitle">
+        <small>You can select any item below to make changes</small>
+    </h5>
+       <div class="manage-button">
+           <button  (click)="add()" class="btn btn-success btn-green">+ Add Item</button>
+        </div>
+        <hr>
+    </div>
+    <div class="manage-list-container">
+    <div class="row">
+    <div class="col-sm-3" *ngFor="let item of items">
+      <div (click)="modify(item)" class="card">
+        <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl" />
+        <div class="card-block">
+          <h4 class="card-title">{{ item.name }} </h4>
+            <p class="card-text"> {{item.description}} </p>
+          </div>
+      </div>
+    </div>
+
+  </div>
+    </div>
+    
+</div>
+
+<!--
 <div *ngIf="items" class="container-fluid">
   <div class="row">
     <div class="col-xs-12">
@@ -24,3 +53,4 @@
   </div>
 
 </div>
+-->

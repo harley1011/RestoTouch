@@ -4,20 +4,19 @@
 <h5 class="subtitle"><small>Change Menu Settings</small></h5>
     <hr>
   </div>
-  <div class="formContainer" #formContainer>
-    <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">
-      <div id="basic-info" class="edit-section">
-<!--      <h4>General Information</h4>-->
+  <div class="formContainer">
+    <form id="menuForm" role="form">
+      
         <div class="form-group">
             <label>Menu Name</label>
           <input id="name" class="form-control" name="name" placeholder="Lunch Menu" value="{{menu?.name }}">
           </div>
-        </div>
+     
         <div class="row">
         <div class="manage-button">
-          <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green">Save</button>
+          <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Save</button>
           <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >Delete</button>
-          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green">Create</button>
+          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create</button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">Cancel</button>
         </div>
       </div>

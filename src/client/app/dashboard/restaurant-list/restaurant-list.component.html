@@ -8,8 +8,9 @@
         <hr>
     </div>
 
-  <div class="row restaurantListContainer">
-    <div class="col-lg-3" *ngFor="let restaurant of restaurants; let i = index">
+    <div class="manage-list-container">
+     <div class="row">
+    <div class="col-sm-3" *ngFor="let restaurant of restaurants; let i = index">
       <div (click)="modify(restaurant)" class="card card-block">
         <h4 class="card-title">{{ restaurant.selectedTranslation.name }}<h6 class="card-subtitle text-muted" style="margin-top:0">{{ restaurant.address }}</h6></h4>
         
@@ -23,4 +24,6 @@
     </div>
 
   </div>
+    </div>
+ 
 </div>

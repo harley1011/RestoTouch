@@ -1,28 +1,34 @@
-<div id="restaurantList">
+<div class="manage-list">
     <div class="manage-header">
-    <h2>{{ restaurant?.translations[0]?.name }} Menus</h2>
-    <h5 class="subtitle"><small>You can select any menu below to make changes</small></h5>
+    <h2 *ngIf="restaurant">{{ restaurant?.translations[0]?.name }} Menu</h2>
+    <h2 *ngIf="!restaurant">Manage Menus</h2>
+    <h5 class="subtitle">
+        <small *ngIf="!restaurant">You can select any menu below to make changes</small>
+        <small *ngIf="restaurant">You can select all menus that apply</small>
+    </h5>
        <div class="manage-button">
-        <button (click)="add()" class="btn btn-success btn-green">+ Add Menu</button>
+           <button *ngIf="!restaurant" (click)="add()" class="btn btn-success btn-green">+ Add Menu</button>
+        <button *ngIf="restaurant" (click)="updateRestaurantMenu()" class="btn btn-success btn-green">Confirm</button>
+        <button *ngIf="restaurant" (click)="cancel()" class="btn btn-default btn-normal">Cancel</button>
         </div>
         <hr>
     </div>
-
-  <div class="row menuListContainer">
+    <div class="manage-list-container">
+    <div class="row">
     <div class="col-sm-3" *ngFor="let menu of menus; let i = index">
-      <div (click)="modify(i, menu)" class="card card-block">
-        <h4 class="card-title">{{ menu.name }}<h6 class="card-subtitle text-muted" style="margin-top:0">stuff</h6></h4>
+      <div (click)="modify(i, menu)" class="card card-block" [ngClass]="{'selected-menu': menusInRestaurant[i]}">
+        <h4 class="card-title">{{ menu.name }} <i *ngIf="menusInRestaurant[i]" class="fa fa-check" aria-hidden="true"></i></h4>
         
-       <p class="card-text">
-          stuff </p>
            <h6 style="margin:0">Items <span class="label label-default"> 0 </span></h6>
-            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>
+<!--            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>-->
            
             
       </div>
     </div>
 
   </div>
+    </div>
+    
 </div>
 
 

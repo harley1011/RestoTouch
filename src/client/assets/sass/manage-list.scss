@@ -1,0 +1,28 @@
+.manage-list {
+    background-color: #f3f3f3;
+    height: 100%;
+    position: absolute;
+    min-width: 90%;
+    overflow-x: hidden;  
+}
+
+.manage-header {
+//    background-color: #cae4e4; 
+    padding: 40px 30px 5px;
+    position: fixed;
+    background-color: #f3f3f3;
+    width: 84.5%;
+    z-index: 3;
+    
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+}
+
+.manage-list-container {
+    padding: 170px 30px 30px;
+    position: fixed;
+    background-color: #f3f3f3;
+    width: 84.5%;
+}

@@ -6,11 +6,6 @@
   overflow: hidden;
 
 
-  .img-thumbnail {
-    width: 250px;
-    height: 300px;
-  }
-
   .item-img-container {
     margin-right: auto;
     margin-left: auto;
@@ -47,4 +42,9 @@
     text-overflow: ellipsis;
     overflow: hidden;
   }
+}
+
+.img-thumbnail-cust {
+    padding: 0;
+    border: 0;
 }

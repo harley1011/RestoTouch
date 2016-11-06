@@ -18,7 +18,8 @@ export class ItemListComponent implements OnInit {
     this.itemService.getItems().subscribe(items => {
         items.forEach(function(item) {
           //todo: show the language the user is using for the application if available
-          item.imageUrl = 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg';
+//          item.imageUrl = 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg';
+            item.imageUrl ='http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg';
         });
         this.items = items;
       },
