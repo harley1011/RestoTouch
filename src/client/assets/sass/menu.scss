@@ -9,3 +9,11 @@
 .removeButtonhover:hover {
   border-color: #bd4147;
 }
+
+#menu {
+    background-color: #f3f3f3;
+    height: 100%;
+//    position: absolute;
+//    min-width: 90%;
+    overflow-x: hidden;   
+}
