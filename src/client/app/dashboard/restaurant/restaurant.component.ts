@@ -54,13 +54,13 @@ export class RestaurantComponent implements OnInit {
       new BusinessHour(4, '9:00', '21:00', false),
       new BusinessHour(5, '9:00', '21:00', false),
       new BusinessHour(6, '9:00', '21:00', false),
-      new BusinessHour(7, '9:00', '21:00', true),
-      new BusinessHour(8, '9:00', '21:00', true),
-      new BusinessHour(9, '9:00', '21:00', true),
-      new BusinessHour(10, '9:00', '21:00', true),
-      new BusinessHour(11, '9:00', '21:00', true),
-      new BusinessHour(12, '9:00', '21:00', true),
-      new BusinessHour(13, '9:00', '21:00', true)
+      new BusinessHour(7, '9:00', '21:00', false),
+      new BusinessHour(8, '9:00', '21:00', false),
+      new BusinessHour(9, '9:00', '21:00', false),
+      new BusinessHour(10, '9:00', '21:00', false),
+      new BusinessHour(11, '9:00', '21:00', false),
+      new BusinessHour(12, '9:00', '21:00', false),
+      new BusinessHour(13, '9:00', '21:00', false)
     ];
 
     this.restaurant = new Restaurant('',
