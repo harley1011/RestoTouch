@@ -7,6 +7,7 @@ import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
 import {Menu} from '../../shared/models/menu';
+import {BusinessHour} from '../../shared/models/business-hour';
 
 @Component({
   moduleId: module.id,
@@ -44,6 +45,17 @@ export class RestaurantComponent implements OnInit {
 
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
     let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+
+    let businessHours = [
+      new BusinessHour(0, '9:00', '21:00', false),
+      new BusinessHour(1, '9:00', '21:00', false),
+      new BusinessHour(2, '9:00', '21:00', false),
+      new BusinessHour(3, '9:00', '21:00', false),
+      new BusinessHour(4, '9:00', '21:00', false),
+      new BusinessHour(5, '9:00', '21:00', false),
+      new BusinessHour(6, '9:00', '21:00', false),
+    ];
+
     this.restaurant = new Restaurant('',
       '9:00', '21:00',
       '9:00', '21:00',
@@ -54,7 +66,8 @@ export class RestaurantComponent implements OnInit {
       '9:00', '21:00',
       this.supportedLanguages,
       [translation],
-      translation, []
+      translation, [],
+      businessHours
     );
     // Add english by default because the restaurant needs to support at least one language
     this.create = true;

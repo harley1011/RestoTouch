@@ -39,7 +39,11 @@ userModel.sync({force: dropTable}).then(function () {
     });
     restaurantsTranslationsModel.sync({force: dropTable});
 
-    restaurantModel.hasMany(businessHoursModel, {as: 'businessHours', onDelete: 'cascade', foreignKey: 'restaurantId'});
+    restaurantModel.hasMany(businessHoursModel, {
+      as: 'businessHours', 
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
     businessHoursModel.sync({force: dropTable});
   });
 
@@ -112,6 +116,10 @@ exports.getRestaurantsLanguageModel = function () {
 
 exports.getRestaurantsTranslationModel = function () {
   return restaurantsTranslationsModel;
+}
+
+exports.getBusinessHoursModel = function () {
+  return businessHoursModel;
 }
 
 exports.getItemModel = function () {

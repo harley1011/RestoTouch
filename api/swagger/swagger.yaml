@@ -745,6 +745,22 @@ definitions:
       - name
       - description
       - languageCode
+  BusinessHour:
+    type: object
+    properties:
+      day:
+        type: number
+      openTime:
+        type: string
+      closeTime:
+        type: string
+      afterBreak:
+        type: boolean
+    required:
+      - day
+      - openTime
+      - closeTime
+      - afterBreak
   Restaurant:
     type: object
     properties:
@@ -786,6 +802,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/RestaurantTranslations"
+      businessHours:
+        type: array
+        items:
+          "$ref": "#/definitions/BusinessHour"
     required:
       - address
       - mOpen
