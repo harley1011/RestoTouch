@@ -40,7 +40,7 @@ userModel.sync({force: dropTable}).then(function () {
     restaurantsTranslationsModel.sync({force: dropTable});
 
     restaurantModel.hasMany(businessHoursModel, {
-      as: 'businessHours', 
+      as: 'businessHours',
       onDelete: 'cascade',
       foreignKey: 'restaurantId'
     });

@@ -54,16 +54,16 @@ export class RestaurantComponent implements OnInit {
       new BusinessHour(4, '9:00', '21:00', false),
       new BusinessHour(5, '9:00', '21:00', false),
       new BusinessHour(6, '9:00', '21:00', false),
+      new BusinessHour(7, '9:00', '21:00', true),
+      new BusinessHour(8, '9:00', '21:00', true),
+      new BusinessHour(9, '9:00', '21:00', true),
+      new BusinessHour(10, '9:00', '21:00', true),
+      new BusinessHour(11, '9:00', '21:00', true),
+      new BusinessHour(12, '9:00', '21:00', true),
+      new BusinessHour(13, '9:00', '21:00', true)
     ];
 
     this.restaurant = new Restaurant('',
-      '9:00', '21:00',
-      '9:00', '21:00',
-      '9:00', '21:00',
-      '9:00', '21:00',
-      '9:00', '21:00',
-      '9:00', '21:00',
-      '9:00', '21:00',
       this.supportedLanguages,
       [translation],
       translation, [],
@@ -115,6 +115,14 @@ export class RestaurantComponent implements OnInit {
         language.languageCode === this.restaurant.selectedTranslation.languageCode);
         this.languageService.announceSelectedLanguage(this.editingLanguage);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
+
+        //make sure that business hours are in order of day
+        this.restaurant.businessHours.sort((a, b): number => {
+          var aValue = (a.afterBreak) ? a.day + 7 : a.day;
+          var bValue = (b.afterBreak) ? b.day + 7 : b.day;
+
+          return aValue - bValue;
+        });
       },
       error => {
         this.errorMessage = <any>error;
