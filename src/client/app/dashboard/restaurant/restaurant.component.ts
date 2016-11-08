@@ -160,6 +160,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   update(): void {
+    console.log(this.restaurant);
     this.restaurantService.updateRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {

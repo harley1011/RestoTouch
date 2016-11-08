@@ -117,6 +117,7 @@ function update(req, res) {
     var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'languageCode');
     var businessHoursToRemove = _.differenceBy(oldRestaurant.businessHours, restaurant.businessHours, 'id');
     var businessHoursToAdd = _.differenceBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
+    var businessHoursToUpdate = _.intersectionBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
 
     for (var prop in restaurant) {
       if (prop != 'translations')
@@ -125,12 +126,18 @@ function update(req, res) {
 
     businessHoursToAdd.forEach(function (businessHour) {
       businessHour.restaurantId = oldRestaurant.id;
-    })
+    });
     businessHoursModel.bulkCreate(businessHoursToAdd);
 
     businessHoursToRemove.forEach(function (businessHour) {
-      businessHoursModel.destroy({where: {id: businessHour.id}})
-    })
+      businessHoursModel.destroy({where: {id: businessHour.id}});
+    });
+
+    console.log('BUSINESS HOURS TO UPDATE');
+    businessHoursToUpdate.forEach(function (businessHour) {
+      console.log(businessHour);
+      businessHoursModel.update(businessHour, {where: {id: businessHour.id}});
+    });
 
     oldRestaurant.translations.forEach(function(translation) {
       var newTranslation = _.find(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
