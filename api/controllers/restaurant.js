@@ -133,9 +133,7 @@ function update(req, res) {
       businessHoursModel.destroy({where: {id: businessHour.id}});
     });
 
-    console.log('BUSINESS HOURS TO UPDATE');
     businessHoursToUpdate.forEach(function (businessHour) {
-      console.log(businessHour);
       businessHoursModel.update(businessHour, {where: {id: businessHour.id}});
     });
 
