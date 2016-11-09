@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var configDB = require('../config/database.js');
-var sequelize = new Sequelize(configDB.url, {logging: false});
+var sequelize = new Sequelize(configDB.url, {logging: true});
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var menuModel = sequelize.import('./models/menus.js');
@@ -14,7 +14,7 @@ var itemSizesModel = sequelize.import('./models/itemSizes.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
-var dropTable = false;
+var dropTable = true;
 
 userModel.sync({force: dropTable}).then(function () {
 
