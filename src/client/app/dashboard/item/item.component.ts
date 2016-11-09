@@ -48,7 +48,7 @@ export class ItemComponent implements OnInit {
   onChange(fileInput) {
     if (fileInput.target.files && fileInput.target.files[0]) {
       var reader = new FileReader();
-      var image = this.element.nativeElement.querySelector('.img-upload');
+      var image = this.element.nativeElement.querySelector('.item-image-upload');
       reader.onload = function(e) {
         var src = e.target.result;
         image.src = src;
