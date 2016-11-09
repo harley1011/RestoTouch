@@ -8,8 +8,12 @@
   </div>
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
-      <img class="card-img-top img-thumbnail img-thumbnail-cust" ng-reflect-src="http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg" src="http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg">
-      <input type="file" ng2FileSelect [uploader]="uploader" title="Upload an image for this item" accept="image/*"/>
+      <img class="card-img-top img-thumbnail img-thumbnail-cust img-upload" [(src)]="imgUrl">
+      <input type="file" ng2FileSelect (change)="onChange($event)" [uploader]="uploader" title="Upload an image for this item" accept="image/*"/>
+      <button type="button" class="btn btn-success btn-s"
+              (click)="uploaderFile()" [disabled]="!uploader.getNotUploadedItems().length">
+        <span class="glyphicon glyphicon-upload"></span> Upload all
+      </button>
       <div class="form-group">
         <label for="name">Item Name</label>
         <input type="text" class="form-control" id="name"
