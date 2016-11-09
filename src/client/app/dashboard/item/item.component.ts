@@ -3,6 +3,10 @@ import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import { FileUploader } from 'ng2-file-upload';
+
+const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+
 @Component({
   moduleId: module.id,
   selector: 'item-cmp',
@@ -15,6 +19,7 @@ export class ItemComponent implements OnInit {
   item: Item;
   size = new Size('', 0);
   errorMessage: any;
+  uploader: FileUploader = new FileUploader({url: URL});
 
   constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
   }

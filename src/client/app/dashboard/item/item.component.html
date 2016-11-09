@@ -9,7 +9,7 @@
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
       <img class="card-img-top img-thumbnail img-thumbnail-cust" ng-reflect-src="http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg" src="http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg">
-      <input type="file" title="Upload an image for this item" accept="image/*"/>
+      <input type="file" ng2FileSelect [uploader]="uploader" title="Upload an image for this item" accept="image/*"/>
       <div class="form-group">
         <label for="name">Item Name</label>
         <input type="text" class="form-control" id="name"
