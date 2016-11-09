@@ -118,10 +118,7 @@ export class RestaurantComponent implements OnInit {
 
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
-          var aValue = (a.afterBreak) ? a.day + 7 : a.day;
-          var bValue = (b.afterBreak) ? b.day + 7 : b.day;
-
-          return aValue - bValue;
+          return a.day - b.day;
         });
       },
       error => {
