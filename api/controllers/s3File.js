@@ -22,7 +22,7 @@ function getS3UploadImageKey(req, res) {
   var s3Params = {
     Bucket: S3_BUCKET,
     Key: uuidGen,
-    Expires: 600,
+    Expires: 60,
     ContentType: fileType,
     ACL: 'public-read'
   };

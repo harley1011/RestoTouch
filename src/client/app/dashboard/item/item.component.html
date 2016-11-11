@@ -8,68 +8,74 @@
   </div>
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
-      <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" [(src)]="item.imageUrl">
-      <input type="file" name="itemImage" class="item-image-select" ng2FileSelect (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
-      <button type="button" class="btn btn-success btn-s"
-              (click)="uploaderFile()">
-        <span class="glyphicon glyphicon-upload"></span> Upload all
-      </button>
-      <div class="form-group">
-        <label for="name">Item Name</label>
-        <input type="text" class="form-control" id="name"
-               required
-               [(ngModel)]="item.name" name="name"
-               #name="ngModel">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="name">Item Name</label>
+          <input type="text" class="form-control" id="name"
+                 required
+                 [(ngModel)]="item.name" name="name"
+                 #name="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="name">Description</label>
+          <textarea type="text" rows="3" class="form-control" id="description"
+                    [(ngModel)]="item.description" name="description"
+                    #description="ngModel"></textarea>
+        </div>
+        <div>
+          <table class="table table-sm td-size-table">
+            <thead>
+            <tr>
+              <th>Size</th>
+              <th>Price</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let size of item.sizes">
+              <td>{{size.name}}</td>
+              <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
+              <td>
+                <button class="fa fa-times-circle icon-remove icon-align" (click)="removeSize(size)"></button>
+              </td>
+            </tr>
+            <tr class="td-size-input">
+              <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName"
+                         placeholder="Size Name">
+              </td>
+              <td>
+                <div class="input-group"><span class="input-group-addon">$</span>
+                  <input class="form-control" #price="ngModel" id="price" [(ngModel)]="size.price" name="price"
+                         type="number">
+                </div>
+              </td>
+              <td>
+                <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!size.name"
+                        (click)="addSize()"></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div [hidden]="item.sizes != 0">
+            <i class="fa fa-exclamation-circle"></i> At least one size is required
+          </div>
+        </div>
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+
+
+      </div>
+      <div class="col-md-4">
+        <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" (click)="selectFile()"
+             [(src)]="item.imageUrl">
+        <div class="upload-image-div" (click)="selectFile()"> Select Image</div>
+        <input style="display: none;" type="file" name="itemImage" class="item-image-select" ng2FileSelect
+               (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
 
-      <div class="form-group">
-        <label for="name">Description</label>
-        <textarea type="text" rows="3" class="form-control" id="description"
-                  [(ngModel)]="item.description" name="description"
-                  #description="ngModel"></textarea>
-      </div>
-      <div>
-        <table class="table table-sm td-size-table">
-          <thead>
-          <tr>
-            <th>Size</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let size of item.sizes">
-            <td>{{size.name}}</td>
-            <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
-            <td>
-              <button class="fa fa-times-circle icon-remove icon-align" (click)="removeSize(size)"></button>
-            </td>
-          </tr>
-          <tr class="td-size-input">
-            <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName"
-                       placeholder="Size Name">
-            </td>
-            <td>
-              <div class="input-group"><span class="input-group-addon">$</span>
-                <input class="form-control" #price="ngModel" id="price" [(ngModel)]="size.price" name="price"
-                       type="number">
-              </div>
-            </td>
-            <td>
-              <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!size.name"
-                      (click)="addSize()"></button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-        <div [hidden]="item.sizes != 0">
-          <i class="fa fa-exclamation-circle"></i> At least one size is required
-        </div>
-      </div>
-      <div [hidden]="name.valid || name.pristine"
-           class="alert alert-danger">
-        Name is required
-      </div>
       <div class="row">
         <div class="manage-button">
           <button type="submit" class="btn btn-success btn-green"

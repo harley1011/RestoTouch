@@ -42,6 +42,12 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  selectFile() {
+    var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
+    imageSelector.click();
+    console.log(imageSelector);
+  }
+
   onChange(fileInput) {
     if (fileInput.target.files && fileInput.target.files[0]) {
       var reader = new FileReader();
