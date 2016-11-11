@@ -4,8 +4,9 @@ import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload/ng2-file-upload';
+import {ImageUploadService} from '../../services/image-upload.service';
 
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = 'http://localhost:10010/api';
 
 @Component({
   moduleId: module.id,
@@ -20,9 +21,14 @@ export class ItemComponent implements OnInit {
   size = new Size('', 0);
   errorMessage: any;
   uploader: FileUploader = new FileUploader({url: URL});
-  imgUrl: any = 'http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg';
+  imgUrl: any = 'assets/img/default-placeholder.png';
 
-  constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute, private element: ElementRef) {
+  constructor(private itemService: ItemService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private element: ElementRef,
+              private imageUploadService: ImageUploadService) {
+    this.uploader.onAfterAddingFile = (file)=> { file.withCredentials = false; };
   }
 
   ngOnInit() {
@@ -42,6 +48,10 @@ export class ItemComponent implements OnInit {
   }
 
   uploaderFile() {
+    this.imageUploadService.getS3Key('test', 'png').subscribe((response) => {
+      console.log(response);
+    });
+    //this.uploader.uploadAll();
     console.log(this.uploader);
   }
 
