@@ -3,7 +3,6 @@ import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import {FileUploader} from 'ng2-file-upload/ng2-file-upload';
 import {ImageUploadService} from '../../services/image-upload.service';
 
 const URL = 'http://localhost:10010/api';
@@ -20,7 +19,6 @@ export class ItemComponent implements OnInit {
   item: Item;
   size = new Size('', 0);
   errorMessage: any;
-  uploader: FileUploader = new FileUploader({url: URL});
   imgUrl: any = 'assets/img/default-placeholder.png';
 
   constructor(private itemService: ItemService,
@@ -28,7 +26,6 @@ export class ItemComponent implements OnInit {
               private route: ActivatedRoute,
               private element: ElementRef,
               private imageUploadService: ImageUploadService) {
-    this.uploader.onAfterAddingFile = (file)=> { file.withCredentials = false; };
   }
 
   ngOnInit() {
@@ -48,11 +45,12 @@ export class ItemComponent implements OnInit {
   }
 
   uploaderFile() {
-    this.imageUploadService.getS3Key('test', 'png').subscribe((response) => {
+    var images = this.element.nativeElement.querySelector('.item-image-select').files;
+    var image = images[0];
+    this.imageUploadService.getS3Key('whatever', image.type).subscribe((response) => {
       console.log(response);
+      this.imageUploadService.uploadImage(response.url, response.signedRequest, image);
     });
-    //this.uploader.uploadAll();
-    console.log(this.uploader);
   }
 
   onChange(fileInput) {
@@ -60,6 +58,7 @@ export class ItemComponent implements OnInit {
       var reader = new FileReader();
       var image = this.element.nativeElement.querySelector('.item-image-upload');
       reader.onload = function(e) {
+        //noinspection TypeScriptUnresolvedVariable
         var src = e.target.result;
         image.src = src;
       };
