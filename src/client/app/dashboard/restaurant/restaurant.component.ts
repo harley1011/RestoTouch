@@ -25,18 +25,19 @@ export class RestaurantComponent implements OnInit {
   languages: Array<Language>;
   selectedLanguage: string;
   editingLanguage: Language = new Language('', '', '', 0);
-//    	@ViewChild('formContainer') private container: ElementRef;
+  timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
 
   constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
               private restaurantService: RestaurantService) {
+
     this.languages = languageService.languages();
-    //todo: remove the supported languages in languages array
     languageService.setSupportedLanguages(this.supportedLanguages);
+
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
       this.editingLanguage = editingLanguage;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
       translation.languageCode === this.editingLanguage.languageCode);
-      // Translations doesn't exist yet for this language
+
       if (!this.restaurant.selectedTranslation) {
         this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
         this.restaurant.translations.push(this.restaurant.selectedTranslation);
@@ -69,10 +70,10 @@ export class RestaurantComponent implements OnInit {
       translation, [],
       businessHours
     );
+
     // Add english by default because the restaurant needs to support at least one language
     this.create = true;
     this.languageService.announceSupportedLanguages(this.supportedLanguages);
-    //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
   }
 
   addLanguage() {
@@ -145,6 +146,8 @@ export class RestaurantComponent implements OnInit {
   }
 
   addAndUpdate(): void {
+    if (this.hasTimeConflict()) return;
+
     if (this.create) {
       this.add();
     } else {
@@ -192,14 +195,69 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/dashboard/restaurants']);
   }
 
-//    goToHead2(): void {
-//         let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInstance(this.document, '#head2');
-//         this.pageScrollService.start(pageScrollInstance);
-//     };
-//
-//    goToHeadingInContainer(): void {
-//         let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInlineInstance(
-//             this.document, '#resto-lang', this.container.nativeElement);
-//         this.pageScrollService.start(pageScrollInstance);
-//     };
+  hasTimeConflict(): boolean {
+    var re = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
+
+    var timeConflict = false;
+    var businessHour: BusinessHour;
+    var hourMatch1: Array<string>;
+    var hourMatch2: Array<string>;
+    var time1: number;
+    var time2: number;
+    for (var i = 0; i < 7; i++) {
+      businessHour = this.restaurant.businessHours[i];
+
+      hourMatch1 = re.exec(businessHour.openTime);
+      hourMatch2 = re.exec(businessHour.closeTime);
+
+      if (hourMatch1 === null || hourMatch2 === null) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time1 = parseInt(hourMatch1[1]) * 60 + parseInt(hourMatch1[2]);
+      time2 = parseInt(hourMatch2[1]) * 60 + parseInt(hourMatch2[2]);
+
+      if (time1 >= time2) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      businessHour = this.restaurant.businessHours[i+7];
+      if (!businessHour.afterBreak) {
+        this.timeConflicts[i] = false;
+        continue;
+      }
+
+      hourMatch1 = re.exec(businessHour.openTime);
+      hourMatch2 = re.exec(businessHour.closeTime);
+      if (hourMatch1 === null || hourMatch2 === null) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time1 = parseInt(hourMatch1[1]) * 60 + parseInt(hourMatch1[2]);
+
+      if (time2 > time1) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time2 = parseInt(hourMatch2[1]) * 60 + parseInt(hourMatch2[2]);
+
+      if (time1 >= time2) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      this.timeConflicts[i] = false;
+    }
+
+    return timeConflict;
+  }
 }
