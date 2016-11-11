@@ -18,7 +18,6 @@ export class ItemComponent implements OnInit {
   item: Item;
   size = new Size('', 0);
   errorMessage: any;
-  imgUrl: any = 'assets/img/default-placeholder.png';
 
   constructor(private itemService: ItemService,
               private router: Router,
@@ -37,18 +36,9 @@ export class ItemComponent implements OnInit {
           console.log(error);
         });
       } else {
-        this.item = new Item('', '', '', []);
+        this.item = new Item('', '', 'assets/img/default-placeholder.png', []);
         this.create = true;
       }
-    });
-  }
-
-  uploaderFile() {
-    var images = this.element.nativeElement.querySelector('.item-image-select').files;
-    var image = images[0];
-    this.imageUploadService.getS3Key(image.name, image.type).subscribe((response) => {
-      console.log(response);
-      this.imageUploadService.uploadImage(response.url, response.signedRequest, image);
     });
   }
 
@@ -56,14 +46,26 @@ export class ItemComponent implements OnInit {
     if (fileInput.target.files && fileInput.target.files[0]) {
       var reader = new FileReader();
       var image = this.element.nativeElement.querySelector('.item-image-upload');
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         //noinspection TypeScriptUnresolvedVariable
         var src = e.target.result;
         image.src = src;
       };
 
       reader.readAsDataURL(fileInput.target.files[0]);
+
+      var images = this.element.nativeElement.querySelector('.item-image-select').files;
+      var imageSelect = images[0];
+      this.imageUploadService.getS3Key(imageSelect.name, imageSelect.type).subscribe((response) => {
+        this.imageUploadService.uploadImage(response.url, response.signedRequest, imageSelect, this.onProgress, (): void => {
+          this.item.imageUrl = response.url;
+        });
+      });
     }
+  }
+
+  onProgress(progress: number) {
+    console.log(progress);
   }
 
   onSubmit() {

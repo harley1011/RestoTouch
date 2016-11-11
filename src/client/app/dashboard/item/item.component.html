@@ -8,7 +8,7 @@
   </div>
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
-      <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" [(src)]="imgUrl">
+      <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" [(src)]="item.imageUrl">
       <input type="file" name="itemImage" class="item-image-select" ng2FileSelect (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       <button type="button" class="btn btn-success btn-s"
               (click)="uploaderFile()">

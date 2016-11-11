@@ -18,11 +18,11 @@ function getS3UploadImageKey(req, res) {
   var s3 = new aws.S3();
   var fileName = req.query['imageName'];
   var fileType = req.query['imageType'];
-
+  var uuidGen = uuid.v4();
   var s3Params = {
     Bucket: S3_BUCKET,
-    Key: uuid.v4(),
-    Expires: 60,
+    Key: uuidGen,
+    Expires: 600,
     ContentType: fileType,
     ACL: 'public-read'
   };
@@ -34,7 +34,7 @@ function getS3UploadImageKey(req, res) {
     }
     const returnData = {
         signedRequest: data,
-        url: 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + fileName
+        url: 'https://' + S3_BUCKET + '.s3.amazonaws.com/' + uuidGen
       };
     return res.json(returnData);
   });

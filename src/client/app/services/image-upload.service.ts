@@ -16,7 +16,7 @@ export class ImageUploadService {
       .catch(this.handleError);
   }
 
-  uploadImage(url: string, signedRequest: string,  file: any) {
+  uploadImage(url: string, signedRequest: string,  file: any, onProgress: (progress: number) => void, onFinish: () => void) {
     // this.rawHttp.put(signedRequest, file).subscribe(response => {
     //   console.log(response);
     //   return url;
@@ -29,6 +29,7 @@ export class ImageUploadService {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           console.log('works');
+          onFinish();
         } else {
           console.log('Could not upload file.');
         }
@@ -36,7 +37,7 @@ export class ImageUploadService {
     };
 
     xhr.upload.onprogress = (event) => {
-      console.log(Math.round(event.loaded / event.total * 100));
+      onProgress(Math.round(event.loaded / event.total * 100));
     };
     xhr.send(file);
     return url;
