@@ -338,6 +338,7 @@ export class SeedConfig {
         'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
+      'ng2-img-cropper': 'node_modules/ng2-img-cropper/',
       'rxjs/*': 'node_modules/rxjs/*',
       'app/*': '/app/*',
       // For test config
@@ -345,7 +346,11 @@ export class SeedConfig {
       '*': 'node_modules/*'
     },
     packages: {
-      rxjs: { defaultExtension: 'js' }
+      rxjs: { defaultExtension: 'js' },
+      'ng2-img-cropper': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
     }
   };
 
