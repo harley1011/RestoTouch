@@ -11,7 +11,7 @@
       <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" [(src)]="imgUrl">
       <input type="file" name="itemImage" class="item-image-select" ng2FileSelect (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       <button type="button" class="btn btn-success btn-s"
-              (click)="uploaderFile()" [disabled]="!uploader.getNotUploadedItems().length">
+              (click)="uploaderFile()">
         <span class="glyphicon glyphicon-upload"></span> Upload all
       </button>
       <div class="form-group">

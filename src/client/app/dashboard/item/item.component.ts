@@ -5,7 +5,6 @@ import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ImageUploadService} from '../../services/image-upload.service';
 
-const URL = 'http://localhost:10010/api';
 
 @Component({
   moduleId: module.id,
@@ -47,7 +46,7 @@ export class ItemComponent implements OnInit {
   uploaderFile() {
     var images = this.element.nativeElement.querySelector('.item-image-select').files;
     var image = images[0];
-    this.imageUploadService.getS3Key('whatever', image.type).subscribe((response) => {
+    this.imageUploadService.getS3Key(image.name, image.type).subscribe((response) => {
       console.log(response);
       this.imageUploadService.uploadImage(response.url, response.signedRequest, image);
     });

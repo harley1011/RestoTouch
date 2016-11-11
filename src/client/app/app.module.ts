@@ -15,7 +15,7 @@ import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
 import { LanguageService } from './services/language.service';
-
+import { ImageUploadService } from './services/image-upload.service';
 
 @NgModule({
 	imports: [
@@ -29,7 +29,7 @@ import { LanguageService } from './services/language.service';
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],
-	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, {
+	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, ImageUploadService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],
