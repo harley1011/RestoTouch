@@ -741,12 +741,15 @@ definitions:
         type: string
       description:
         type: string
+      imageUrl:
+        type: string
       itemSizes:
         type: array
         items:
           "$ref": "#/definitions/ItemSize"
     required:
       - name
+      - imageUrl
   ItemSize:
     type: object
     properties:
