@@ -1,0 +1,25 @@
+<div class="manage-content">
+  <div class="manage-header">
+    <h2>{{ category?.id ? "Edit Category" : "Create Category" }}</h2>
+<h5 class="subtitle"><small>Change Category Settings</small></h5>
+    <hr>
+  </div>
+  <div class="formContainer">
+    <form id="categoryForm" role="form">
+      
+        <div class="form-group">
+            <label>Category Name</label>
+          <input id="name" class="form-control" name="name" placeholder="Appetizers" value="{{category?.name }}">
+          </div>
+     
+        <div class="row">
+        <div class="manage-button">
+          <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Save</button>
+          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >Delete</button>
+          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create</button>
+          <button class="btn btn-default btn-normal" (click)="cancel()" type="button">Cancel</button>
+        </div>
+      </div>
+      </form>
+    </div>
+</div>
