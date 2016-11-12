@@ -48,20 +48,20 @@ export class RestaurantComponent implements OnInit {
     let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
 
     let businessHours = [
-      new BusinessHour(0, '9:00', '21:00', false),
-      new BusinessHour(1, '9:00', '21:00', false),
-      new BusinessHour(2, '9:00', '21:00', false),
-      new BusinessHour(3, '9:00', '21:00', false),
-      new BusinessHour(4, '9:00', '21:00', false),
-      new BusinessHour(5, '9:00', '21:00', false),
-      new BusinessHour(6, '9:00', '21:00', false),
-      new BusinessHour(7, '9:00', '21:00', false),
-      new BusinessHour(8, '9:00', '21:00', false),
-      new BusinessHour(9, '9:00', '21:00', false),
-      new BusinessHour(10, '9:00', '21:00', false),
-      new BusinessHour(11, '9:00', '21:00', false),
-      new BusinessHour(12, '9:00', '21:00', false),
-      new BusinessHour(13, '9:00', '21:00', false)
+      new BusinessHour(0, 0, '9:00', '21:00', false),
+      new BusinessHour(0, 1, '9:00', '21:00', false),
+      new BusinessHour(1, 0, '9:00', '21:00', false),
+      new BusinessHour(1, 1, '9:00', '21:00', false),
+      new BusinessHour(2, 0, '9:00', '21:00', false),
+      new BusinessHour(2, 1, '9:00', '21:00', false),
+      new BusinessHour(3, 0, '9:00', '21:00', false),
+      new BusinessHour(3, 1, '9:00', '21:00', false),
+      new BusinessHour(4, 0, '9:00', '21:00', false),
+      new BusinessHour(4, 1, '9:00', '21:00', false),
+      new BusinessHour(5, 0, '9:00', '21:00', false),
+      new BusinessHour(5, 1, '9:00', '21:00', false),
+      new BusinessHour(6, 0, '9:00', '21:00', false),
+      new BusinessHour(6, 1, '9:00', '21:00', false)
     ];
 
     this.restaurant = new Restaurant('',
@@ -119,7 +119,17 @@ export class RestaurantComponent implements OnInit {
 
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
-          return a.day - b.day;
+          if (a.day < b.day) {
+            return -1;
+          } else if (a.day === b.day) {
+            if (a.shift < b.shift) {
+              return -1;
+            } else {
+              return 1;
+            }
+          } else {
+            return 1;
+          }
         });
       },
       error => {
@@ -204,7 +214,7 @@ export class RestaurantComponent implements OnInit {
     var hourMatch2: Array<string>;
     var time1: number;
     var time2: number;
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 14; i+=2) {
       businessHour = this.restaurant.businessHours[i];
 
       hourMatch1 = re.exec(businessHour.openTime);
@@ -225,8 +235,8 @@ export class RestaurantComponent implements OnInit {
         continue;
       }
 
-      businessHour = this.restaurant.businessHours[i+7];
-      if (!businessHour.afterBreak) {
+      businessHour = this.restaurant.businessHours[i+1];
+      if (!businessHour.active) {
         this.timeConflicts[i] = false;
         continue;
       }

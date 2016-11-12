@@ -750,17 +750,20 @@ definitions:
     properties:
       day:
         type: number
+      shift:
+        type: number
       openTime:
         type: string
       closeTime:
         type: string
-      afterBreak:
+      active:
         type: boolean
     required:
       - day
+      - shift
       - openTime
       - closeTime
-      - afterBreak
+      - active
   Restaurant:
     type: object
     properties:
