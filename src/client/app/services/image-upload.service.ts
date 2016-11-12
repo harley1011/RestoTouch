@@ -16,13 +16,34 @@ export class ImageUploadService {
       .catch(this.handleError);
   }
 
+  resizeImage(width: number, height: number, img: any) {
+    var canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    var context = canvas.getContext('2d');
+
+    console.log(img);
+    console.log(context);
+
+  }
+
   uploadImage(url: string, signedRequest: string,  file: any, onProgress: (progress: number) => void, onFinish: () => void) {
-    // this.rawHttp.put(signedRequest, file).subscribe(response => {
-    //   console.log(response);
-    //   return url;
-    // }, error => {
-    //   console.log(error);
-    // });
+    var byteString;
+    if (file.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(file.split(',')[1]);
+    // else
+    //   byteString = unescape(file.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = file.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    var b = new Blob([ia], {type:mimeString});
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', signedRequest);
     xhr.onreadystatechange = () => {
@@ -35,11 +56,10 @@ export class ImageUploadService {
         }
       }
     };
-
     xhr.upload.onprogress = (event) => {
       onProgress(Math.round(event.loaded / event.total * 100));
     };
-    xhr.send(file);
+    xhr.send(b);
     return url;
   }
 

@@ -68,11 +68,14 @@
 
 
       </div>
-      <div class="col-md-4">
-        <img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" (click)="selectFile()"
-             [(src)]="item.imageUrl">
+      <div class="col-md-4 image-crop-div">
+
+        <img-cropper class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
+                     [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+        <!--<img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" (click)="selectFile()"-->
+             <!--[(src)]="item.imageUrl">-->
         <div class="upload-image-div" (click)="selectFile()"> Select Image</div>
-        <input style="display: none;" type="file" name="itemImage" class="item-image-select" ng2FileSelect
+        <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
 

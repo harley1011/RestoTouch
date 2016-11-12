@@ -1,16 +1,19 @@
-import {Component, OnInit, ElementRef} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ImageUploadService} from '../../services/image-upload.service';
-
+import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
+import {Bounds} from 'ng2-img-cropper/src/model/bounds';
+import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 
 @Component({
   moduleId: module.id,
   selector: 'item-cmp',
   templateUrl: 'item.component.html',
-  providers: [ItemService]
+  providers: [ItemService],
+  directives: [ImageCropperComponent]
 })
 
 export class ItemComponent implements OnInit {
@@ -18,12 +21,51 @@ export class ItemComponent implements OnInit {
   item: Item;
   size = new Size('', 0);
   errorMessage: any;
+  cropperSettings1: CropperSettings;
+  name: string;
+  data1: any;
+
+  @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
   constructor(private itemService: ItemService,
               private router: Router,
               private route: ActivatedRoute,
               private element: ElementRef,
               private imageUploadService: ImageUploadService) {
+
+    this.name = 'Angular2';
+    this.cropperSettings1 = new CropperSettings();
+    this.cropperSettings1.width = 200;
+    this.cropperSettings1.height = 200;
+
+    this.cropperSettings1.croppedWidth = 300;
+    this.cropperSettings1.croppedHeight = 300;
+
+    this.cropperSettings1.canvasWidth = 300;
+    this.cropperSettings1.canvasHeight = 300;
+
+    this.cropperSettings1.minWidth = 100;
+    this.cropperSettings1.minHeight = 100;
+
+    this.cropperSettings1.rounded = false;
+
+    this.cropperSettings1.noFileInput = true;
+
+    this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+    this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
+    this.data1 = {};
+  }
+
+  cropped(bounds: Bounds) {
+    console.log(bounds);
+    console.log(this.data1);
+    var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+    this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+      this.imageUploadService.uploadImage(response.url, response.signedRequest,
+        this.data1.image, this.onProgress, (): void => {
+          this.item.imageUrl = response.url;
+        });
+    });
   }
 
   ngOnInit() {
@@ -36,7 +78,7 @@ export class ItemComponent implements OnInit {
           console.log(error);
         });
       } else {
-        this.item = new Item('', '', 'assets/img/default-placeholder.png', []);
+        this.item = new Item('', '', '', []);
         this.create = true;
       }
     });
@@ -45,29 +87,24 @@ export class ItemComponent implements OnInit {
   selectFile() {
     var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
     imageSelector.click();
-    console.log(imageSelector);
   }
 
   onChange(fileInput) {
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      var reader = new FileReader();
-      var image = this.element.nativeElement.querySelector('.item-image-upload');
-      reader.onload = function (e) {
-        //noinspection TypeScriptUnresolvedVariable
-        var src = e.target.result;
-        image.src = src;
-      };
+    this.cropper.fileChangeListener(fileInput);
+    console.log(this.data1);
 
-      reader.readAsDataURL(fileInput.target.files[0]);
+    // var reader = new FileReader();
+    var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+    console.log(imageSelector);
 
-      var images = this.element.nativeElement.querySelector('.item-image-select').files;
-      var imageSelect = images[0];
-      this.imageUploadService.getS3Key(imageSelect.name, imageSelect.type).subscribe((response) => {
-        this.imageUploadService.uploadImage(response.url, response.signedRequest, imageSelect, this.onProgress, (): void => {
-          this.item.imageUrl = response.url;
-        });
-      });
-    }
+    // reader.addEventListener('load', function () {
+    //
+    // }, false);
+
+    //reader.readAsDataURL(this.data1.image);
+
+
+
   }
 
   onProgress(progress: number) {
