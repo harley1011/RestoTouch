@@ -3,6 +3,7 @@ var configDB = require('../config/database.js');
 var sequelize = new Sequelize(configDB.url, {logging: false});
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
+var businessHoursModel = sequelize.import('./models/businessHours.js');
 var menuModel = sequelize.import('./models/menus.js');
 var restaurantMenuModel = sequelize.import('./models/restaurantMenu.js');
 var menuCategoryModel = sequelize.import('./models/menuCategory.js');
@@ -37,6 +38,13 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'restaurantId'
     });
     restaurantsTranslationsModel.sync({force: dropTable});
+
+    restaurantModel.hasMany(businessHoursModel, {
+      as: 'businessHours',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
+    businessHoursModel.sync({force: dropTable});
   });
 
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
@@ -108,6 +116,10 @@ exports.getRestaurantsLanguageModel = function () {
 
 exports.getRestaurantsTranslationModel = function () {
   return restaurantsTranslationsModel;
+}
+
+exports.getBusinessHoursModel = function () {
+  return businessHoursModel;
 }
 
 exports.getItemModel = function () {

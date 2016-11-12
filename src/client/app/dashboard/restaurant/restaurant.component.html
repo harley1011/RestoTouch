@@ -8,9 +8,8 @@
           <a class="nav-link active" href="/dashboard/restaurant/#basic-info">Basic Info</a>
         </li>
         <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#business-hours">Business Hours</a></li>
-          <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#resto-lang">Languages</a></li>
-          <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#resto-menu">Menu</a></li>
-        
+        <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#resto-lang">Languages</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#resto-menu">Menu</a></li>
       </ul>
     </nav>
     <hr>
@@ -52,15 +51,10 @@
         <table class="table">
           <thead>
             <tr>
-              <th></th>
-              <th colspan="3">Morning</th>
-              <th colspan="3">Evening</th>
-            </tr>
-            <tr>
               <th>Day</th>
               <th>Opening</th>
               <th>Closing</th>
-              <th>Break?</th>
+              <th>Break</th>
               <th>Opening</th>
               <th>Closing</th>
             </tr>
@@ -71,152 +65,265 @@
               <td>
                 <input id="mOpen" class="form-control" name="mOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.mOpen" name="mOpen" #mOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[0].openTime" #mOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
-                       [ngClass]="{'form-error': !mOpen.valid && !mOpen.pristine}">
+                       [ngClass]="{'form-error': !mOpen.valid && !mOpen.pristine}"
+                       validator="timeValidator()">
               </td>
               <td>
                 <input id="mClose" class="form-control" name="mClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.mClose" name="mClose" #mClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[0].closeTime" #mClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !mClose.valid && !mClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="mBreak" class="form-control" type="checkbox" name="mBreak"
+                       [(ngModel)]="restaurant.businessHours[1].active" #mBreak="ngModel">
+              </td>
+              <td>
+                <input id="mReopen" class="form-control" name="mReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[1].active"
+                     [(ngModel)]="restaurant.businessHours[1].openTime" #mReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !mReopen.valid && !mReopen.pristine && !mReopen.disabled}">
+               </td>
+              <td>
+                <input id="mReclose" class="form-control" name="mReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[1].active"
+                     [(ngModel)]="restaurant.businessHours[1].closeTime" #mReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !mReclose.valid && !mReclose.pristine && !mReclose.disabled}">
+               </td>
             </tr>
+            <tr id="mConflict" [hidden]="!timeConflicts[0]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Tuesday</th>
               <td>
                 <input id="tuOpen" class="form-control" name="tuOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.tuOpen" name="tuOpen" #tuOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[2].openTime" #tuOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !tuOpen.valid && !tuOpen.pristine}">
               </td>
               <td>
                 <input id="tuClose" class="form-control" name="tuClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.tuClose" name="tuClose" #tuClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[2].closeTime" #tuClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !tuClose.valid && !tuClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="tuBreak" class="form-control" type="checkbox" name="tuBreak"
+                       [(ngModel)]="restaurant.businessHours[3].active" #tuBreak="ngModel">
+              </td>
+              <td>
+                <input id="tuReopen" class="form-control" name="tuReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[3].active"
+                     [(ngModel)]="restaurant.businessHours[3].openTime" #tuReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !tuReopen.valid && !tuReopen.pristine && !tuReopen.disabled}">
+               </td>
+              <td>
+                <input id="tuReclose" class="form-control" name="tuReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[3].active"
+                     [(ngModel)]="restaurant.businessHours[3].closeTime" #tuReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !tuReclose.valid && !tuReclose.pristine && !tuReclose.disabled}">
+               </td>
             </tr>
+            <tr id="tuConflict" [hidden]="!timeConflicts[2]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Wednesday</th>
               <td>
                 <input id="wOpen" class="form-control" name="wOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.wOpen" name="wOpen" #wOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[4].openTime" #wOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !wOpen.valid && !wOpen.pristine}">
               </td>
               <td>
                 <input id="wClose" class="form-control" name="wClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.wClose" name="wClose" #wClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[4].closeTime" #wClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !wClose.valid && !wClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="wBreak" class="form-control" type="checkbox" name="wBreak"
+                       [(ngModel)]="restaurant.businessHours[5].active" #wBreak="ngModel">
+              </td>
+              <td>
+                <input id="wReopen" class="form-control" name="wReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[5].active"
+                     [(ngModel)]="restaurant.businessHours[5].openTime" #wReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !wReopen.valid && !wReopen.pristine && !wReopen.disabled}">
+              </td>
+              <td>
+                <input id="wReclose" class="form-control" name="wReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[5].active"
+                     [(ngModel)]="restaurant.businessHours[5].closeTime" #wReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !wReclose.valid && !wReclose.pristine && !wReclose.disabled}">
+              </td>
             </tr>
+            <tr id="wConflict" [hidden]="!timeConflicts[4]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Thursday</th>
               <td>
                 <input id="thOpen" class="form-control" name="thOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.thOpen" name="thOpen" #thOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[6].openTime" #thOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !thOpen.valid && !thOpen.pristine}">
               </td>
               <td>
                 <input id="thClose" class="form-control" name="thClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.thClose" name="thClose" #thClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[6].closeTime" #thClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !thClose.valid && !thClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="thBreak" class="form-control" type="checkbox" name="thBreak"
+                       [(ngModel)]="restaurant.businessHours[7].active" #thBreak="ngModel">
+              </td>
+              <td>
+                <input id="thReopen" class="form-control" name="thReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[7].active"
+                     [(ngModel)]="restaurant.businessHours[7].openTime" #thReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !thReopen.valid && !thReopen.pristine && !thReopen.disabled}">
+              </td>
+              <td>
+                <input id="thReclose" class="form-control" name="thReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[7].active"
+                     [(ngModel)]="restaurant.businessHours[7].closeTime" #thReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !thReclose.valid && !thReclose.pristine && !thReclose.disabled}">
+              </td>
             </tr>
+            <tr id="thConflict" [hidden]="!timeConflicts[6]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Friday</th>
               <td>
                 <input id="fOpen" class="form-control" name="fOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.fOpen" name="fOpen" #fOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[8].openTime" #fOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !fOpen.valid && !fOpen.pristine}">
               </td>
               <td>
                 <input id="fClose" class="form-control" name="fClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.fClose" name="fClose" #fClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[8].closeTime" #fClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !fClose.valid && !fClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="fBreak" class="form-control" type="checkbox" name="fBreak"
+                       [(ngModel)]="restaurant.businessHours[9].active" #fBreak="ngModel">
+              </td>
+              <td>
+                <input id="fReopen" class="form-control" name="fReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[9].active"
+                     [(ngModel)]="restaurant.businessHours[9].openTime" #fReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !fReopen.valid && !fReopen.pristine && !fReopen.disabled}">
+              </td>
+              <td>
+                <input id="fReclose" class="form-control" name="fReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[9].active"
+                     [(ngModel)]="restaurant.businessHours[9].closeTime" #fReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !fReclose.valid && !fReclose.pristine && !fReclose.disabled}">
+              </td>
             </tr>
+            <tr id="fConflict" [hidden]="!timeConflicts[8]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Saturday</th>
               <td>
                 <input id="saOpen" class="form-control" name="saOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.saOpen" name="saOpen" #saOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[10].openTime" #saOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !saOpen.valid && !saOpen.pristine}">
               </td>
               <td>
                 <input id="saClose" class="form-control" name="saClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.saClose" name="saClose" #saClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[10].closeTime" #saClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !saClose.valid && !saClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="saBreak" class="form-control" type="checkbox" name="saBreak"
+                       [(ngModel)]="restaurant.businessHours[11].active" #saBreak="ngModel">
+              </td>
+              <td>
+                <input id="saReopen" class="form-control" name="saReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[11].active"
+                     [(ngModel)]="restaurant.businessHours[11].openTime" #saReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !saReopen.valid && !saReopen.pristine && !saReopen.disabled}">
+              </td>
+              <td>
+                <input id="saReclose" class="form-control" name="saReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[11].active"
+                     [(ngModel)]="restaurant.businessHours[11].closeTime" #saReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !saReclose.valid && !saReclose.pristine && !saReclose.disabled}">
+              </td>
             </tr>
+            <tr id="saConflict" [hidden]="!timeConflicts[10]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
             <tr>
               <th>Sunday</th>
               <td>
                 <input id="suOpen" class="form-control" name="suOpen" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.suOpen" name="suOpen" #suOpen="ngModel"
+                       [(ngModel)]="restaurant.businessHours[12].openTime" #suOpen="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !suOpen.valid && !suOpen.pristine}">
               </td>
               <td>
                 <input id="suClose" class="form-control" name="suClose" placeholder="12:00"
                        required
-                       [(ngModel)]="restaurant.suClose" name="suClose" #suClose="ngModel"
+                       [(ngModel)]="restaurant.businessHours[12].closeTime" #suClose="ngModel"
                        pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
                        [ngClass]="{'form-error': !suClose.valid && !suClose.pristine}">
               </td>
-              <td><input class="form-control" type="checkbox"></td>
-              <td><input class="form-control" type="text" disabled></td>
-              <td><input class="form-control" type="text" disabled></td>
+              <td>
+                <input id="suBreak" class="form-control" type="checkbox" name="suBreak"
+                       [(ngModel)]="restaurant.businessHours[13].active" #suBreak="ngModel">
+              </td>
+              <td>
+                <input id="suReopen" class="form-control" name="suReopen" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[13].active"
+                     [(ngModel)]="restaurant.businessHours[13].openTime" #suReopen="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !suReopen.valid && !suReopen.pristine && !suReopen.disabled}">
+              </td>
+              <td>
+                <input id="suReclose" class="form-control" name="suReclose" placeholder="12:00"
+                     required [disabled]="!restaurant.businessHours[13].active"
+                     [(ngModel)]="restaurant.businessHours[13].closeTime" #suReclose="ngModel"
+                     pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$"
+                     [ngClass]="{'form-error': !suReclose.valid && !suReclose.pristine && !suReclose.disabled}">
+              </td>
             </tr>
+            <tr id="suConflict" [hidden]="!timeConflicts[12]" ><td colspan="6"><div class="alert alert-danger">Time Conflict</div></td></tr>
           </tbody>
         </table>
       </div>
-        
+
          <div id="resto-lang" class="edit-section">
         <h4>Languages</h4>
         <div class="row">
             <div class="col col-md-5">
                 <ul class="list-group">
                     <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
-              </ul>  
+              </ul>
             </div>
             <div class="col col-md-4 col-md-offset-1">
               <div class="form-group input-group">
@@ -240,17 +347,17 @@
                  <button *ngIf="restaurant?.Menus.length == 0"  type="button" class="list-group-item label-empty-menu">No Menus</button>
             </div>
             </div>
-            
+
            <div class="col col-md-2 col-md-offset-1">
               <button class="btn btn-success btn-green" (click)="addRemoveMenu()" type="button">Add/Remove Menus</button>
             </div>
           </div>
-          
-          
-          
+
+
+
 <!--
         <div class="form-group">
-         
+
           <div class="btn-group-vertical btn-group-md">
             <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
             <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
@@ -258,7 +365,7 @@
         </div>
 -->
       </div>
-     
+
       <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">Save</button>
