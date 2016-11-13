@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from './category.service';
 import { Category } from '../../shared/models/category';
-//import {MenuCategoryService} from './menucatergory.service';
-//import {CategoryService} from './category.service';
 
 @Component({
 	moduleId: module.id,
@@ -16,20 +14,17 @@ export class CategoryComponent implements OnInit {
 	create: boolean;
   category : Category;
   errorMessage: string;
-  sections: string[];
   // dummy data
   // categories:[{id:number , categoryName: string}];
 
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
-              //private menuCategoryService: MenuCategoryService,
-              //private categoriyService: CategoryService,
               private router: Router) {}
 
-	getCategory(name: string): void {
-	  this.categoryService.getCategory(name).subscribe(
+    getCategory(name: string): void {
+	  this.categoryService.getCategories(name).subscribe(
 	    menu => {
-	      this.menu = menu;
+	      this.category = category;
       },
       error => {
         this.errorMessage = <any>error;
@@ -38,27 +33,12 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    //get all categpries (api)
-    //for now Dummy data from category api
-/*    var categories = [
-      { id: 1, categoryName: 'hamburger'},
-      { id: 2, categoryName: 'drink'},
-      { id: 3, categoryName: 'sandowish'},
-      { id: 4, categoryName: 'salad'},
-      { id: 5, categoryName: 'icecream'},
-      { id: 6, categoryName: 'starter'},
-      { id: 7, categoryName: 'sweets'},
-      { id: 8, categoryName: 'specials'},
-    ];*/
-
-    this.sections = [];
-		this.route.params.forEach((params: Params) => {
+      this.route.params.forEach((params: Params) => {
 			if (params['name']) {
-			  this.getMenu(params['name']);
+			  this.getCategory(params['name']);
 				this.create = false;
 			} else {
-			  this.menu = new Menu('');
+			  this.category = new Category('');
 				this.create = true;
 			}
 		});
@@ -70,73 +50,53 @@ export class CategoryComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    var oldName = this.menu.name;
-    this.menu.name = values['name'];
+//    var oldName = this.category.categoryName;
+    this.category.categoryName = values['name'];
 
     if (this.create) {
       this.add();
     } else {
-      this.update(oldName);
+      this.update(this.category.id);
     }
   }
 
-  addSection(): void {
-    // get the list of categories
-    // select which category to add
-    this.sections.push('aCategory');
-  }
 
-  removeSection(): void {
-    this.sections.pop();
-  }
 
   add(): void {
 
-    // calling add menuservice
-    this.menuService.addMenu(this.menu).subscribe(
+    // calling add categoryService
+    this.categoryService.addCategory(this.category).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/menus']);
+        this.router.navigate(['/dashboard/categories']);
       },
       error => {
         this.errorMessage = <any> error;
       }
     );
-    // TODO loop
-    // calling add menucategoryservice
-    /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
-      generalResponse => {
-        this.router.navigate(['/dashboard/menus']);
-      },
-      error => {
-        this.errorMessage = <any> error;
-      }
-    );*/
+
   }
 
   update(oldName : string): void {
-    this.menuService.updateMenu(this.menu, oldName).subscribe(
+    this.categoryService.updateCategory(this.category, oldName).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/menus']);
+        this.router.navigate(['/dashboard/categories']);
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
 
-    // calling update in  menucategoryservice
-    // updateMenuCategory(): void {}
-
   }
 
   cancel(): void {
-    this.router.navigate(['/dashboard/menus']);
+    this.router.navigate(['/dashboard/categories']);
   }
 
   delete(): void {
-    this.menuService.deleteMenu(this.menu.name).subscribe(
+    this.categoryService.deleteCategory(this.category.categoryName).subscribe(
       generalResponse => {
         console.log('response', generalResponse );
-        this.router.navigate(['/dashboard/menus']);
+        this.router.navigate(['/dashboard/categories']);
       },
       error => {
         this.errorMessage = <any>error;

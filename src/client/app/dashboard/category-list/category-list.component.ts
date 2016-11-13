@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Category } from '../../shared/models/category';
-import { CategoryService } from './category.service';
-import { Router, ActivatedRoute} from '@angular/router';
+import { CategoryService } from '../category/category.service';
+import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
@@ -11,27 +11,22 @@ import { Router, ActivatedRoute} from '@angular/router';
 })
 
 export class CategoryListComponent implements OnInit {
-    isEditable: boolean; // Determine if a field is editable
     categories: Category[]; // Contains the returned list of category
-    category: Category; // instance of a category
-    catId: number;
-    catNewName: string;
 
     constructor(private categoryService: CategoryService,
-                private route: ActivatedRoute,
                 private router: Router) { }
 
     ngOnInit(): void {
-        this.isEditable = false;
+//        this.isEditable = false;
         this.getCategories();
-        this.category = new Category('');
+//        this.category = new Category('');
     }
 
     ///////////////////////////////////////////////////////////////
 
     /**
      * Gets user's categories
-     */
+    */
     getCategories(): void {
       // Subscribe to the getCategories observable
       this.categoryService.getCategories().subscribe(
@@ -40,9 +35,17 @@ export class CategoryListComponent implements OnInit {
       );
     }
 
+    add(): void {
+        this.router.navigate(['/dashboard/category']);
+    }
+
+    modify(category: Category): void {
+        this.router.navigate(['/dashboard/category', category.categoryName]);
+    }
+/*
     /**
-     * Adds a new category
-     */
+//     * Adds a new category
+     
      addCategory(): void {
        this.categoryService.addCategory(this.category)
            .subscribe(
@@ -53,7 +56,7 @@ export class CategoryListComponent implements OnInit {
 
      /**
       * Deletes a category
-      */
+      
       deleteCategory():void {
         this.categoryService.deleteCategory(this.catId)
             .subscribe(
@@ -64,7 +67,7 @@ export class CategoryListComponent implements OnInit {
 
       /**
        * Update a category
-       */
+       
       updateCategory(): void {
         this.categoryService.updateCategory(this.category,this.catId)
             .subscribe(
@@ -76,7 +79,7 @@ export class CategoryListComponent implements OnInit {
     // Btn Handlers //////////////////////////////////////////////
     /**
      * Toggles the tile user input
-     */
+     
     changeInput(): void {
         if(this.isEditable === false) {
             this.isEditable = true;
@@ -87,7 +90,7 @@ export class CategoryListComponent implements OnInit {
 
     /**
      * Adds a new category
-     */
+     
     addNewCatClick(event: Event,newCat: string): void {
       if(newCat) {
         event.preventDefault();
@@ -98,7 +101,7 @@ export class CategoryListComponent implements OnInit {
 
     /**
      * Adds a new category
-     */
+     
     deleteCatClick(event: Event,id: number): void {
       if(id) {
         event.preventDefault();
@@ -114,4 +117,5 @@ export class CategoryListComponent implements OnInit {
         this.updateCategory();
       }
     }
+*/
 }

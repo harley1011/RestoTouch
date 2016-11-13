@@ -14,20 +14,20 @@ export class CategoryService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getMenu (name: string): Observable<Menu> {
+  getCategory (name: string): Observable<Category> {
     return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  getMenus (): Observable<Menu[]> {
+  getCategories (): Observable<Category[]> {
     return this.http.get(this.api.getEndpoint() + this.url)
-      .map((response) => this.extractData(response).menus)
+      .map((response) => this.extractData(response).categories)
       .catch(this.handleError);
   }
 
-  addMenu (menu: Menu): Observable<GeneralResponse> {
-    let body = JSON.stringify(menu);
+  addCategory (category: Category): Observable<GeneralResponse> {
+    let body = JSON.stringify(category);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -36,18 +36,18 @@ export class CategoryService {
       .catch(this.handleError);
   }
 
-  updateMenu (menu: Menu, oldName: string): Observable<GeneralResponse> {
-    let body = JSON.stringify(menu);
+updateCategory (category: Category, id: number): Observable<GeneralResponse> {
+    let body = JSON.stringify(category);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + oldName, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteMenu (name: string): Observable<Menu> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteCategory (id: number): Observable<Category> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
