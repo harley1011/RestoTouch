@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from './category.service';
 import { Category } from '../../shared/models/category';
 
@@ -12,18 +12,16 @@ import { Category } from '../../shared/models/category';
 
 export class CategoryComponent implements OnInit {
 	create: boolean;
-  category : Category;
+  category: Category;
   errorMessage: string;
-  // dummy data
-  // categories:[{id:number , categoryName: string}];
 
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
               private router: Router) {}
 
-    getCategory(name: string): void {
-	  this.categoryService.getCategories(name).subscribe(
-	    menu => {
+    getCategory(id: number): void {
+	  this.categoryService.getCategory(id).subscribe(
+	    category => {
 	      this.category = category;
       },
       error => {
@@ -34,13 +32,13 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
       this.route.params.forEach((params: Params) => {
-			if (params['name']) {
-			  this.getCategory(params['name']);
+			if (params['id']) {
+			  this.getCategory(params['id']);
 				this.create = false;
 			} else {
-			  this.category = new Category('');
+                 this.category = new Category('');
 				this.create = true;
-			}
+            }
 		});
   }
 
@@ -50,13 +48,12 @@ export class CategoryComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-//    var oldName = this.category.categoryName;
     this.category.categoryName = values['name'];
 
     if (this.create) {
       this.add();
     } else {
-      this.update(this.category.id);
+      this.update();
     }
   }
 
@@ -76,8 +73,8 @@ export class CategoryComponent implements OnInit {
 
   }
 
-  update(oldName : string): void {
-    this.categoryService.updateCategory(this.category, oldName).subscribe(
+  update(): void {
+    this.categoryService.updateCategory(this.category).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/categories']);
       },
@@ -93,7 +90,7 @@ export class CategoryComponent implements OnInit {
   }
 
   delete(): void {
-    this.categoryService.deleteCategory(this.category.categoryName).subscribe(
+    this.categoryService.deleteCategory(this.category).subscribe(
       generalResponse => {
         console.log('response', generalResponse );
         this.router.navigate(['/dashboard/categories']);

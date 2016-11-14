@@ -6,7 +6,7 @@ export const CategoryRoutes: Route[] = [
   	path: 'category',
   	component: CategoryComponent
   }, {
-    path: 'category/:name',
+    path: 'category/:id',
   	component: CategoryComponent
   }
 ];
