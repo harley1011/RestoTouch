@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {User} from '../models/user';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -15,8 +16,9 @@ export class TopNavComponent implements OnInit {
   languages: Array<Language> = [];
   hideLanguageSelect = true;
   selectedLanguage: Language = new Language('','','',0);
+  errorMessage = '';
 
-  constructor(private authService: AuthService, private languageService: LanguageService) {
+  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
       this.hideLanguageSelect = supportedLanguages.length === 0;
       this.languages = supportedLanguages;

@@ -1,0 +1,51 @@
+<div class="row logoutContainer">
+  <a href="/"><img src ="assets/img/logo2.png" id="logoutLogo"></a>
+  <div class="container logoutCenter">
+
+    <!-- top -->
+    <div class="row" id="logoutPadding">
+      <h1 class="logoutTitle">Heading Out?</h1>
+      <p class="logoutBodyText">
+        We got your back! We've closed your session.<br/>
+        Come see us soon again!
+      </p>
+    </div>
+
+    <!-- bottom -->
+    <div class="row logoutSigningBkgd">
+
+      <!--left-->
+      <div class="col-md-4 logoutSigningPadding">
+        <h1 class="logoutTitle">Oops</h1>
+        <p class="logoutSigningText">Got sign out by mistake?</p>
+      </div>
+
+      <!-- right-->
+      <div class="col-md-8 logoutSigningText logoutSigningPadding">
+        Sign back in:<br/>
+        <form role="form" (ngSubmit)="onSubmit()">
+          <div class="form-content">
+
+            <!-- input box for email-->
+            <div class="form-group">
+              <input type="email" class="form-control input-underline input-lg" id="email" placeholder="Email" required
+              [(ngModel)]="user.email" name="email" #email="ngModel">
+            </div>
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> E-mail is required </div>
+
+            <!-- input box for password-->
+            <div class="form-group">
+              <input type="password" class="form-control input-underline input-lg" id="password" placeholder="Password" required
+              [(ngModel)]="user.password" name="password" #password="ngModel">
+            </div>
+            <div [hidden]="password.valid || password.pristine" class="alert alert-danger"> Password is required </div>
+            <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+            <!-- buttons -->
+            <button type="submit" class="btn btn-success rounded-btn"> Log back in </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

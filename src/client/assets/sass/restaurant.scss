@@ -1,7 +1,38 @@
-h4 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+#restaurant {
+    background-color: #f3f3f3;
+    height: 100%;
+//    position: absolute;
+//    min-width: 90%;
+    overflow-x: hidden;
 }
+
+.manage-header {
+//    background-color: #cae4e4;
+    padding: 40px 30px 5px;
+    position: fixed;
+    background-color: #f3f3f3;
+    width: 84.5%;
+    z-index: 3;
+
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+}
+
+.manage-button {
+    display: inline-block;
+    position: fixed;
+    top: 90px;
+    right: 2%;
+    z-index: 3;
+}
+
+.formContainer {
+    padding: 170px 30px 0;
+}
+
+
 
 .form-error {
   border-color: red;
@@ -13,3 +44,38 @@ h4 {
   line-height: 1em;
 }
 
+.nav.navbar-nav {
+    font-size: small;
+
+    ul > li > a.nav-link {
+        color: #666;
+    }
+
+    ul > li > a.nav-link.active {
+        padding: 3px 7px;
+        color: #fff;
+        margin-top: 4px;
+    }
+}
+
+.edit-section {
+    margin-bottom: 40px;
+
+    h4 {
+        margin: 20px 0;
+    }
+
+    select {
+        height: 40px;
+    }
+}
+
+.label-empty-menu {
+    color: #999 !important;
+    font-style: italic;
+}
+
+.time-conflict-error {
+  color: red;
+  background-color: #ff9999;
+}

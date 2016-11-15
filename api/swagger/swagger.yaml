@@ -18,6 +18,108 @@ consumes:
 produces:
   - application/json
 paths:
+  /item:
+     # binds a127 app logic to a route
+    x-swagger-router-controller: item
+    get:
+      # used as the method name of the controller
+      operationId: getAllItems
+      description: Returns the list of items
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ItemsResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: addItem
+      description: Add a item
+      parameters:
+        - name: item
+          description: item properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Item"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /item/{id}:
+    x-swagger-router-controller: item
+    get:
+      description: Returns a specific item
+      operationId: getItem
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Item"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Updates a item
+      # used as the method name of the controller
+      operationId: updateItem
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+        - name: category
+          description: Category properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Item"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes an item
+      # used as the method name of the controller
+      operationId: deleteItem
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   # -----------------------------------------/// Category ///
   /category:
      # binds a127 app logic to a route
@@ -585,6 +687,37 @@ definitions:
         type: string
     required:
       - categoryName
+  ItemsResponse:
+    required:
+      - items
+    properties:
+      items:
+        type: array
+        items:
+          "$ref": "#/definitions/Item"      
+  Item:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      itemSizes:
+        type: array
+        items:
+          "$ref": "#/definitions/ItemSize"
+    required:
+      - name
+  ItemSize:
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+    required:
+      - name
+      - price
   RestaurantListResponse:
     required:
       - restaurants
@@ -612,38 +745,29 @@ definitions:
       - name
       - description
       - languageCode
+  BusinessHour:
+    type: object
+    properties:
+      day:
+        type: number
+      shift:
+        type: number
+      openTime:
+        type: string
+      closeTime:
+        type: string
+      active:
+        type: boolean
+    required:
+      - day
+      - shift
+      - openTime
+      - closeTime
+      - active
   Restaurant:
     type: object
     properties:
       address:
-        type: string
-      mOpen:
-        type: string
-      mClose:
-        type: string
-      tuOpen:
-        type: string
-      tuClose:
-        type: string
-      wOpen:
-        type: string
-      wClose:
-        type: string
-      thOpen:
-        type: string
-      thClose:
-        type: string
-      fOpen:
-        type: string
-      fClose:
-        type: string
-      saOpen:
-        type: string
-      saClose:
-        type: string
-      suOpen:
-        type: string
-      suClose:
         type: string
       supportedLanguages:
         type: array
@@ -653,22 +777,12 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/RestaurantTranslations"
+      businessHours:
+        type: array
+        items:
+          "$ref": "#/definitions/BusinessHour"
     required:
       - address
-      - mOpen
-      - mClose
-      - tuOpen
-      - tuClose
-      - wOpen
-      - wClose
-      - thOpen
-      - thClose
-      - fOpen
-      - fClose
-      - saOpen
-      - saClose
-      - suOpen
-      - suClose
   MenuListResponse:
     required:
       - menus

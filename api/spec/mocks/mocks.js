@@ -1,9 +1,13 @@
 var userModel = {};
 var restaurantModel = {};
+var businessHoursModel = {};
 var menuModel = {};
 var restaurantMenuModel = {};
 var restaurantsLanguageModel = {};
 var restaurantsTranslationModel = {};
+var itemModel = {};
+var itemSizesModel = {};
+
 var Promise = require('promise');
 
 userModel.create = create;
@@ -14,6 +18,12 @@ restaurantModel.update = update;
 restaurantModel.findAll = findAll;
 restaurantModel.findOne = findOne;
 restaurantModel.destroy = destroy;
+
+businessHoursModel.create = create;
+businessHoursModel.update = update;
+businessHoursModel.findAll = findAll;
+businessHoursModel.findOne = findOne;
+businessHoursModel.destroy = destroy;
 
 menuModel.create = create;
 menuModel.update = update;
@@ -34,12 +44,27 @@ restaurantsTranslationModel.update = update;
 restaurantsTranslationModel.findAll = findAll;
 restaurantsTranslationModel.destroy = destroy;
 
+addMethodsToObject(itemModel);
+addMethodsToObject(itemSizesModel);
+
+function addMethodsToObject(obj) {
+  obj.create = create;
+  obj.update = update;
+  obj.findAll = findAll;
+  obj.findOne = findOne;
+  obj.destroy = destroy;
+}
+
 exports.getUserModel = function() {
   return userModel;
 };
 
 exports.getRestaurantModel = function () {
   return restaurantModel;
+}
+
+exports.getBusinessHoursModel = function () {
+  return businessHoursModel;
 }
 
 exports.getMenuModel = function () {
@@ -57,6 +82,15 @@ exports.getRestaurantsLanguageModel = function () {
 exports.getRestaurantsTranslationModel = function () {
   return restaurantsTranslationModel;
 }
+
+exports.getItemModel = function () {
+  return itemModel;
+}
+
+exports.getItemSizesModel = function () {
+  return itemSizesModel;
+}
+
 
 function create(object) {
   return new Promise(function (fulfill, reject) {

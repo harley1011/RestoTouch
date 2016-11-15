@@ -9,9 +9,11 @@ This will launch a local web server that will host the web application HTML, Jav
 
 4. Run "npm run setup"
 
-5. Goto "http://127.0.0.1:10010/" in a browser to see the web application
+5. Run "npm start"
 
-6. Run "swagger project edit" to see the web API editor 
+6. Goto "http://127.0.0.1:10010/" in a browser to see the web application
+
+7. Run "swagger project edit" to see the web API editor 
 
 ## This applications web app was started by using this template http://startangular.com/product/sb-admin-bootstrap-4-angular-2/
 Note:
@@ -24,7 +26,7 @@ Note:
 - The template uses Bootstrap CSS, rather than writing your own custom CSS check if you can do it with Bootstrap first, it'll be a mess if we all have our own CSS for each component
 
 
-##If you want to do developement on just the web application then you can run the command "npm run start.dev"
+##If you want to do development on just the web application then you can run the command "npm run start.dev"
 this will also launch a local web server but this one has livereload, automatic transpiling of source files when updated, and other stuff
 
 Block diagram of the major components in our platform can be found here https://drive.google.com/file/d/0BwQrVDDNZ8XFUDdUS1FKT3NBR3c/view?usp=sharing
@@ -43,9 +45,9 @@ work on the server.
 #Project Structure Explanation
 - app.js is the main entry point used to launch our app. It calls webSiteRoutes.js which setups the routes for serving the HTML, Javascript, and CSS files. It also makes use of the Swagger module which will make the api accessible.
 
-- src folder contains the source files for the web application, developement is done in Typescript and then transpiled into Javascript so that the browser can execute it. The transpiled Javascript files are outputed to dist
+- src folder contains the source files for the web application, development is done in Typescript and then transpiled into Javascript so that the browser can execute it. The transpiled Javascript files are outputted to dist
 
-- dist which stands for distribution, as mentionned before it contains the output of the transpiled Typescript files to Javascript, dev contains the regular files that haven't been minified, prod contains the production ready files so they've been minified and concatenated together so they will be used on the server. (Note: this folder is not tracked on Github because it is generated from the files in src using the gulp tasks)
+- dist which stands for distribution, as mentioned before it contains the output of the transpiled Typescript files to Javascript, dev contains the regular files that haven't been minified, prod contains the production ready files so they've been minified and concatenated together so they will be used on the server. (Note: this folder is not tracked on Github because it is generated from the files in src using the gulp tasks)
 
 - tools contains the gulp tasks implementations for transpiling the Typescript files into Javascript, adding the scripts to index.html, minifying, livereload and many other tasks
 

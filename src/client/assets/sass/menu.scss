@@ -1,0 +1,28 @@
+#menu {
+    background-color: #f3f3f3;
+    height: 100%;
+//    position: absolute;
+//    min-width: 90%;
+    overflow-x: hidden; 
+    
+    .formContainer {
+        height: 100%;
+    }
+}
+
+.menuSection {
+  border: 1px solid #687077;
+  text-align: center;
+}
+.addButtonhover:hover {
+  border-color: #00b3ee;
+}
+
+.removeButtonhover:hover {
+  border-color: #bd4147;
+}
+
+.selected-menu {
+    background-color: #1abc9c;
+    color: #fff;
+}

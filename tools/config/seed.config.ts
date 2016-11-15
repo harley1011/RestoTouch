@@ -1,7 +1,8 @@
-import {join} from 'path';
-import {argv} from 'yargs';
 
-import {Environments, InjectableDependency} from './seed.config.interfaces';
+import { join } from 'path';
+import { argv } from 'yargs';
+
+import { Environments, InjectableDependency } from './seed.config.interfaces';
 
 /**
  * The enumeration of available environments.
@@ -66,9 +67,9 @@ export class SeedConfig {
   COVERAGE_PORT = argv['coverage-port'] || 4004;
 
   /**
-   * The path to the coverage output
-   * NB: this must match what is configured in ./karma.conf.js
-   */
+  * The path to the coverage output
+  * NB: this must match what is configured in ./karma.conf.js
+  */
   COVERAGE_DIR = 'coverage';
 
   /**
@@ -276,7 +277,7 @@ export class SeedConfig {
     {src: 'zone.js/dist/zone.js', inject: 'libs'},
     {src: 'core-js/client/shim.min.js', inject: 'shims'},
     {src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT},
-    {src: 'rxjs/bundles/Rx.umd.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT},
+    {src: 'rxjs/bundles/Rx.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT},
   ];
 
   /**

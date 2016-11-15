@@ -7,6 +7,7 @@ import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
 import {Menu} from '../../shared/models/menu';
+import {BusinessHour} from '../../shared/models/business-hour';
 
 @Component({
   moduleId: module.id,
@@ -24,22 +25,55 @@ export class RestaurantComponent implements OnInit {
   languages: Array<Language>;
   selectedLanguage: string;
   editingLanguage: Language = new Language('', '', '', 0);
+  timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
 
   constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
               private restaurantService: RestaurantService) {
+
     this.languages = languageService.languages();
-    //todo: remove the supported languages in languages array
     languageService.setSupportedLanguages(this.supportedLanguages);
+
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
       this.editingLanguage = editingLanguage;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
       translation.languageCode === this.editingLanguage.languageCode);
-      // Translations doesn't exist yet for this language
+
       if (!this.restaurant.selectedTranslation) {
         this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
         this.restaurant.translations.push(this.restaurant.selectedTranslation);
       }
     });
+
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+
+    let businessHours = [
+      new BusinessHour(0, 0, '9:00', '21:00', false),
+      new BusinessHour(0, 1, '9:00', '21:00', false),
+      new BusinessHour(1, 0, '9:00', '21:00', false),
+      new BusinessHour(1, 1, '9:00', '21:00', false),
+      new BusinessHour(2, 0, '9:00', '21:00', false),
+      new BusinessHour(2, 1, '9:00', '21:00', false),
+      new BusinessHour(3, 0, '9:00', '21:00', false),
+      new BusinessHour(3, 1, '9:00', '21:00', false),
+      new BusinessHour(4, 0, '9:00', '21:00', false),
+      new BusinessHour(4, 1, '9:00', '21:00', false),
+      new BusinessHour(5, 0, '9:00', '21:00', false),
+      new BusinessHour(5, 1, '9:00', '21:00', false),
+      new BusinessHour(6, 0, '9:00', '21:00', false),
+      new BusinessHour(6, 1, '9:00', '21:00', false)
+    ];
+
+    this.restaurant = new Restaurant('',
+      this.supportedLanguages,
+      [translation],
+      translation, [],
+      businessHours
+    );
+
+    // Add english by default because the restaurant needs to support at least one language
+    this.create = true;
+    this.languageService.announceSupportedLanguages(this.supportedLanguages);
   }
 
   addLanguage() {
@@ -82,6 +116,21 @@ export class RestaurantComponent implements OnInit {
         language.languageCode === this.restaurant.selectedTranslation.languageCode);
         this.languageService.announceSelectedLanguage(this.editingLanguage);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
+
+        //make sure that business hours are in order of day
+        this.restaurant.businessHours.sort((a, b): number => {
+          if (a.day < b.day) {
+            return -1;
+          } else if (a.day === b.day) {
+            if (a.shift < b.shift) {
+              return -1;
+            } else {
+              return 1;
+            }
+          } else {
+            return 1;
+          }
+        });
       },
       error => {
         this.errorMessage = <any>error;
@@ -102,49 +151,12 @@ export class RestaurantComponent implements OnInit {
       if (params['id']) {
         this.getRestaurant(params['id']);
         this.create = false;
-      } else {
-        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-        let translation = new RestaurantTranslations(' ', ' ', this.supportedLanguages[0].languageCode);
-        this.restaurant = new Restaurant('',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          '9:00', '21:00',
-          this.supportedLanguages,
-          [translation],
-          translation, []);
-        // Add english by default because the restaurant needs to support at least one language
-        this.create = true;
-        this.languageService.announceSupportedLanguages(this.supportedLanguages);
-        //this.languageService.announceSelectedLanguage(this.supportedLanguages[0]);
       }
     });
   }
 
   addAndUpdate(): void {
-    var values = validateInputs();
-    if (values === null) return;
-
-    this.restaurant.selectedTranslation.name = values['name'];
-    this.restaurant.selectedTranslation.description = values['description'];
-    this.restaurant.address = values['address'];
-    this.restaurant.mOpen = values['mOpen'];
-    this.restaurant.mClose = values['mClose'];
-    this.restaurant.tuOpen = values['tuOpen'];
-    this.restaurant.tuClose = values['tuClose'];
-    this.restaurant.wOpen = values['wOpen'];
-    this.restaurant.wClose = values['wClose'];
-    this.restaurant.thOpen = values['thOpen'];
-    this.restaurant.thClose = values['thClose'];
-    this.restaurant.fOpen = values['fOpen'];
-    this.restaurant.fClose = values['fClose'];
-    this.restaurant.saOpen = values['saOpen'];
-    this.restaurant.saClose = values['saClose'];
-    this.restaurant.suOpen = values['suOpen'];
-    this.restaurant.suClose = values['suClose'];
+    if (this.hasTimeConflict()) return;
 
     if (this.create) {
       this.add();
@@ -157,7 +169,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.addRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
-          this.router.navigate(['/dashboard/home']);
+          this.router.navigate(['/dashboard/restaurants']);
         },
         error => {
           this.errorMessage = <any>error;
@@ -166,10 +178,11 @@ export class RestaurantComponent implements OnInit {
   }
 
   update(): void {
+    console.log(this.restaurant);
     this.restaurantService.updateRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
-          this.router.navigate(['/dashboard/home']);
+          this.router.navigate(['/dashboard/restaurants']);
         },
         error => {
           this.errorMessage = <any>error;
@@ -180,7 +193,7 @@ export class RestaurantComponent implements OnInit {
   delete(): void {
     this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/home']);
+        this.router.navigate(['/dashboard/restaurants']);
       },
       error => {
         this.errorMessage = <any>error;
@@ -189,113 +202,72 @@ export class RestaurantComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/dashboard/home']);
+    this.router.navigate(['/dashboard/restaurants']);
   }
-}
 
-function validateInputs() {
-  //todo: use angular form validation
-  function validateTime(input: HTMLInputElement, value: string) {
-    var timeFormat = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
-    if (timeFormat.test(value) === false) {
-      return false;
+  hasTimeConflict(): boolean {
+    var re = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/;
+
+    var timeConflict = false;
+    var businessHour: BusinessHour;
+    var hourMatch1: Array<string>;
+    var hourMatch2: Array<string>;
+    var time1: number;
+    var time2: number;
+    for (var i = 0; i < 14; i+=2) {
+      businessHour = this.restaurant.businessHours[i];
+
+      hourMatch1 = re.exec(businessHour.openTime);
+      hourMatch2 = re.exec(businessHour.closeTime);
+
+      if (hourMatch1 === null || hourMatch2 === null) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time1 = parseInt(hourMatch1[1]) * 60 + parseInt(hourMatch1[2]);
+      time2 = parseInt(hourMatch2[1]) * 60 + parseInt(hourMatch2[2]);
+
+      if (time1 >= time2) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      businessHour = this.restaurant.businessHours[i+1];
+      if (!businessHour.active) {
+        this.timeConflicts[i] = false;
+        continue;
+      }
+
+      hourMatch1 = re.exec(businessHour.openTime);
+      hourMatch2 = re.exec(businessHour.closeTime);
+      if (hourMatch1 === null || hourMatch2 === null) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time1 = parseInt(hourMatch1[1]) * 60 + parseInt(hourMatch1[2]);
+
+      if (time2 > time1) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      time2 = parseInt(hourMatch2[1]) * 60 + parseInt(hourMatch2[2]);
+
+      if (time1 >= time2) {
+        timeConflict = true;
+        this.timeConflicts[i] = true;
+        continue;
+      }
+
+      this.timeConflicts[i] = false;
     }
 
-    return true;
+    return timeConflict;
   }
-
-  var validationError = false;
-
-  var nameValue = validateInput('name', null);
-  if (nameValue === null) validationError = true;
-
-  var descriptionValue = validateInput('description', null);
-  if (descriptionValue === null) validationError = true;
-
-  var addressValue = validateInput('address', null);
-  if (addressValue === null) validationError = true;
-
-  var mOpenValue = validateInput('mOpen', validateTime);
-  if (mOpenValue === null) validationError = true;
-
-  var mCloseValue = validateInput('mClose', validateTime);
-  if (mCloseValue === null) validationError = true;
-
-  var tuOpenValue = validateInput('tuOpen', validateTime);
-  if (tuOpenValue === null) validationError = true;
-
-  var tuCloseValue = validateInput('tuClose', validateTime);
-  if (tuCloseValue === null) validationError = true;
-
-  var wOpenValue = validateInput('wOpen', validateTime);
-  if (wOpenValue === null) validationError = true;
-
-  var wCloseValue = validateInput('wClose', validateTime);
-  if (wCloseValue === null) validationError = true;
-
-  var thOpenValue = validateInput('thOpen', validateTime);
-  if (thOpenValue === null) validationError = true;
-
-  var thCloseValue = validateInput('thClose', validateTime);
-  if (thCloseValue === null) validationError = true;
-
-  var fOpenValue = validateInput('fOpen', validateTime);
-  if (fOpenValue === null) validationError = true;
-
-  var fCloseValue = validateInput('fClose', validateTime);
-  if (fCloseValue === null) validationError = true;
-
-  var saOpenValue = validateInput('saOpen', validateTime);
-  if (saOpenValue === null) validationError = true;
-
-  var saCloseValue = validateInput('saClose', validateTime);
-  if (saCloseValue === null) validationError = true;
-
-  var suOpenValue = validateInput('suOpen', validateTime);
-  if (suOpenValue === null) validationError = true;
-
-  var suCloseValue = validateInput('suClose', validateTime);
-  if (suCloseValue === null) validationError = true;
-
-  if (validationError) return null;
-
-  return {
-    name: nameValue,
-    description: descriptionValue,
-    address: addressValue,
-    mOpen: mOpenValue,
-    mClose: mCloseValue,
-    tuOpen: tuOpenValue,
-    tuClose: tuCloseValue,
-    wOpen: wOpenValue,
-    wClose: wCloseValue,
-    thOpen: thOpenValue,
-    thClose: thCloseValue,
-    fOpen: fOpenValue,
-    fClose: fCloseValue,
-    saOpen: saOpenValue,
-    saClose: saCloseValue,
-    suOpen: suOpenValue,
-    suClose: suCloseValue,
-  };
-}
-
-function validateInput(id: string, callback: any) {
-  var input = (<HTMLInputElement>document.getElementById(id));
-  var value = input.value;
-  if (value === '' || (callback && !callback(input, value))) {
-    hasError(input);
-    return null;
-  }
-
-  hasNoError(input);
-  return value;
-}
-
-function hasError(element: HTMLInputElement) {
-  element.className += ' form-error';
-}
-
-function hasNoError(element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/, '');
 }
