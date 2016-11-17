@@ -10,7 +10,8 @@ aws.config.update({
 
 
 module.exports = {
-  getS3UploadImageKey: getS3UploadImageKey
+  getS3UploadImageKey: getS3UploadImageKey,
+  deleteImage: deleteImage
 };
 
 
@@ -38,4 +39,16 @@ function getS3UploadImageKey(req, res) {
       };
     return res.json(returnData);
   });
+}
+
+function deleteImage(req, res) {
+  var s3 = new aws.S3();
+  var s3Params = {
+    Bucket: S3_BUCKET,
+    Key: req.imageKey,
+  };
+
+  s3.deleteObject(s3Params, function(err, data) {
+    if (err) console.log(err, err.stack);
+  })
 }

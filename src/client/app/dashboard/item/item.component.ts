@@ -34,8 +34,6 @@ export class ItemComponent implements OnInit {
               private route: ActivatedRoute,
               private element: ElementRef,
               private imageUploadService: ImageUploadService) {
-
-    this.name = 'Angular2';
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 200;
     this.cropperSettings.height = 200;
@@ -103,7 +101,7 @@ export class ItemComponent implements OnInit {
 
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
       this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
-        let finished: boolean = true;
+        let finished: boolean = false;
         this.item.imageUrl = response.url;
         this.itemService.addItem(this.item).subscribe(
           generalResponse => {
