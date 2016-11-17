@@ -26,7 +26,6 @@ export class MenuComponent implements OnInit {
   languages: Array<Language>;
   addedLanguage: string;
   supportedLanguages: Array<Language> = [];
-  hideManageLanguage = false;
 
   // dummy data
   // categories:[{id:number , categoryName: string}];
@@ -56,10 +55,6 @@ export class MenuComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
-  }
-
-  toggleShowManageLanguage(): void {
-    this.hideManageLanguage = !this.hideManageLanguage;
   }
 
 	getMenu(name: string): void {
