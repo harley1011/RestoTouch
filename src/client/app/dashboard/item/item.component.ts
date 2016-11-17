@@ -12,8 +12,7 @@ import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
   moduleId: module.id,
   selector: 'item-cmp',
   templateUrl: 'item.component.html',
-  providers: [ItemService],
-  directives: [ImageCropperComponent]
+  providers: [ItemService]
 })
 
 export class ItemComponent implements OnInit {
@@ -24,6 +23,8 @@ export class ItemComponent implements OnInit {
   cropperSettings1: CropperSettings;
   name: string;
   data1: any;
+  pictureSelected: boolean = false;
+  pictureCroppedSelect: boolean = false;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -59,13 +60,18 @@ export class ItemComponent implements OnInit {
   cropped(bounds: Bounds) {
     console.log(bounds);
     console.log(this.data1);
-    var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
-    this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
-      this.imageUploadService.uploadImage(response.url, response.signedRequest,
-        this.data1.image, this.onProgress, (): void => {
-          this.item.imageUrl = response.url;
-        });
-    });
+  }
+
+  selectCroppedImage() {
+    this.pictureCroppedSelect = !this.pictureCroppedSelect;
+
+    // var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+    // this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+    //   this.imageUploadService.uploadImage(response.url, response.signedRequest,
+    //     this.data1.image, this.onProgress, (): void => {
+    //       this.item.imageUrl = response.url;
+    //     });
+    // });
   }
 
   ngOnInit() {
@@ -85,8 +91,13 @@ export class ItemComponent implements OnInit {
   }
 
   selectFile() {
-    var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
-    imageSelector.click();
+    if (this.pictureSelected) {
+      this.pictureCroppedSelect = !this.pictureCroppedSelect;
+    } else {
+      var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
+      imageSelector.click();
+      this.pictureSelected = true;
+    }
   }
 
   onChange(fileInput) {

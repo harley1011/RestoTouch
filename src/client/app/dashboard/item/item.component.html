@@ -66,15 +66,16 @@
           Name is required
         </div>
 
-
       </div>
       <div class="col-md-4 image-crop-div">
-
-        <img-cropper class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
+        <img-cropper [(hidden)]="pictureCroppedSelect" class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
                      [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+        <span class="result" *ngIf="pictureCroppedSelect">
+          <img [src]="data1.image" [width]="cropperSettings1.croppedWidth" [height]="cropperSettings1.croppedHeight">
+        </span>
         <!--<img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" (click)="selectFile()"-->
-             <!--[(src)]="item.imageUrl">-->
-        <div class="upload-image-div" (click)="selectFile()"> Select Image</div>
+        <!--[(src)]="item.imageUrl">-->
+        <button class="upload-image-div" (click)="selectFile()"> {{pictureSelected? "Select Cropped image": "Select Image"}}</button>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
