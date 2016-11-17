@@ -1,5 +1,6 @@
 var models = require("../../database/models");
 var menuModel;
+var menuLanguageModel;
 setDatabase(models);
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
+  menuLanguageModel = models.getMenuLanguageModel();
 }
 
 //GET /menu
@@ -27,7 +29,12 @@ function getAllMenu(req, res) {
 function saveMenu(req, res) {
   var menu = req.body;
   menu.userId = req.userId;
-  return menuModel.create(menu).then(function(result) {
+  return menuModel.create(menu, {
+    include: [{
+      model: menuLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function(result) {
     return res.json({success: 1, description: "Menu Added"});
   });
 }
@@ -39,7 +46,11 @@ function getMenu(req, res) {
     where: {
       name: name,
       userId: req.userId
-    }
+    },
+    include: [{
+      model: menuLanguageModel,
+      as: 'supportedLanguages'
+    }]
   }).then(function(menu) {
     if (menu) {
       res.json(menu);

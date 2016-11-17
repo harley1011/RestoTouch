@@ -68,10 +68,10 @@ export class MenuComponent implements OnInit {
 	  this.menuService.getMenu(name).subscribe(
 	    menu => {
 	      this.menu = menu;
-        //this.supportedLanguages = menu.supportedLanguages;
-        //this.selectedLanguage = menu.supportedLanguages[0];
-        //this.languageService.announceSupportedLanguages(this.supportedLanguages);
-        //this.languageService.announceSelectedLanguage(this.selectedLanguage);
+        this.supportedLanguages = menu.supportedLanguages;
+        this.selectedLanguage = menu.supportedLanguages[0];
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;

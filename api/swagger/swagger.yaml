@@ -797,6 +797,10 @@ definitions:
     properties:
       name:
         type: string
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
     required:
       - name
   RestaurantMenu:
