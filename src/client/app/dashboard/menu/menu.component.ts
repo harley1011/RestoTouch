@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
 import {MenuService} from './menu.service';
 import {Menu} from '../../shared/models/menu';
+import {LanguageService} from '../../services/language.service';
+import {Language} from '../../shared/models/language';
+
 //import {MenuCategoryService} from './menucatergory.service';
 //import {CategoryService} from './category.service';
 
@@ -17,14 +21,46 @@ export class MenuComponent implements OnInit {
   menu : Menu;
   errorMessage: string;
   sections: string[];
+
+  //Translation support
+  languages: Array<Language>;
+  addedLanguage: string;
+  supportedLanguages: Array<Language> = [];
+  hideManageLanguage = false;
+
   // dummy data
   // categories:[{id:number , categoryName: string}];
 
 	constructor(private route: ActivatedRoute,
               private menuService: MenuService,
+              private languageService: LanguageService,
               //private menuCategoryService: MenuCategoryService,
               //private categoriyService: CategoryService,
-              private router: Router) {}
+              private router: Router) {
+    this.languages = languageService.languages();
+  }
+
+  addLanguage() {
+    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+    if (language) {
+      console.log('Language is already supported.');
+      return;
+    }
+    language = this.languages.find(language => language.languageCode === this.addedLanguage);
+    this.supportedLanguages.push(language);
+  }
+
+  removeLanguage(language: Language) {
+    if (this.supportedLanguages.length < 1) {
+      console.log('At least one supported language is required.');
+    }
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
+  }
+
+  toggleShowManageLanguage(): void {
+    this.hideManageLanguage = !this.hideManageLanguage;
+  }
 
 	getMenu(name: string): void {
 	  this.menuService.getMenu(name).subscribe(
