@@ -1,6 +1,8 @@
 var models = require("../../database/models");
 var menuModel;
 var menuLanguageModel;
+var _ = require('lodash');
+
 setDatabase(models);
 
 module.exports = {
@@ -64,6 +66,40 @@ function getMenu(req, res) {
 function updateMenu(req, res) {
   var menu = req.body;
   var name = req.swagger.params.name.value;
+  return menuModel.findOne({
+    where: {
+      name: name,
+      userId: req.userId
+    },
+    include: [{
+      model: menuLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function (oldMenu) {
+
+    var languagesToRemove = _.differenceBy(oldMenu.supportedLanguages, menu.supportedLanguages, 'languageCode');
+    var languagesToAdd = _.differenceBy(menu.supportedLanguages, oldMenu.supportedLanguages, 'languageCode');
+
+    for (var prop in menu) {
+      oldMenu[prop] = menu[prop];
+    }
+
+    oldMenu.save().then(function (result) {
+      languagesToRemove.forEach(function (language) {
+        menuLanguageModel.destroy({where: {'languageCode': language.languageCode, 'menuId': menu.id}});
+      })
+
+      languagesToAdd.forEach(function (language) {
+        language.menuId = menu.id;
+      })
+
+      menuLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
+        return res.json({success: 1, description: 'Menu Updated'});
+      })
+
+    });        
+  });
+  /*
   return menuModel.update(menu, {
     where: {
       name: name,
@@ -71,7 +107,7 @@ function updateMenu(req, res) {
     }
   }).then(function(result) {
     return res.json({success: 1, description: "Menu Updated"});
-  });
+  });*/
 }
 
 //DELETE /menu/{name}
