@@ -24,11 +24,24 @@ function getAllCategories(req, res) {
   });
 }
 
-// GET /category/{name}
+// GET /category/{id}
 function getCategory(req, res) {
+    var id = req.swagger.params.id.value;
+  return categoryModel.findOne({
+    where: {
+      id: id,
+      userId: req.userId
+    }
+  }).then(function(category) {
+      if(category) {
+        return res.json(category);
+      } else {
+        res.status(204).send();
+      }
+  });
 }
 
-// POST /category/{name}
+// POST /category
 function addCategory(req, res) {
   var newCat = req.body;
   newCat.userId = req.userId;

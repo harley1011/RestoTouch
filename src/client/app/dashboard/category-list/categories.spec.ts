@@ -3,7 +3,7 @@ import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions 
 import { MockBackend } from '@angular/http/testing';
 
 import { Category } from '../../shared/models/category';
-import { CategoryService } from './category.service';
+import { CategoryService } from '../category/category.service';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
@@ -66,7 +66,7 @@ export function main() {
     it('should update a category', () => {
       var mockCategory = new Category('Food');
 
-      initialResponse = categoryService.updateCategory(mockCategory, 1);
+      initialResponse = categoryService.updateCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
         ': 1, "description": "Category updated"}' })));
 
@@ -84,7 +84,9 @@ export function main() {
     });
 
     it('should delete a category', () => {
-      initialResponse = categoryService.deleteCategory(1);
+      var mockCategory = new Category('Food');
+
+      initialResponse = categoryService.deleteCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
         ': 1, "description": "Category deleted"}' })));
 
