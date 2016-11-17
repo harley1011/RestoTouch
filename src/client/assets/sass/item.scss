@@ -17,19 +17,18 @@
 .item-image-upload {
   max-width: 300px;
   max-height: 300px;
-  cursor: pointer;
+  display: block;
 }
 
-.upload-image-div {
+.btn-upload-image {
+  line-height: 25px;
   width: 300px;
-  opacity: .6;
-  background-color: black;
   height: 50px;
   color: white;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  line-height: 50px;
+  border-radius: 0px 0px 10px 10px !important;
 }
 
 .image-crop-div {

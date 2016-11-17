@@ -22,7 +22,8 @@ export class ItemComponent implements OnInit {
   errorMessage: any;
   cropperSettings: CropperSettings;
   name: string;
-  data1: any;
+  croppedImageContainer: any;
+  croppedImage: any = 'assets/img/default-placeholder.png';
   pictureSelected: boolean = false;
   pictureCroppedSelect: boolean = false;
 
@@ -54,12 +55,12 @@ export class ItemComponent implements OnInit {
 
     this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
-    this.data1 = {};
+    this.croppedImageContainer = {};
   }
 
   cropped(bounds: Bounds) {
     console.log(bounds);
-    console.log(this.data1);
+    console.log(this.croppedImageContainer);
   }
 
   ngOnInit() {
@@ -81,17 +82,16 @@ export class ItemComponent implements OnInit {
   selectFile() {
     if (this.pictureSelected) {
       this.pictureCroppedSelect = !this.pictureCroppedSelect;
+      this.croppedImage = this.croppedImageContainer.image;
     } else {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
       imageSelector.click();
-      this.pictureSelected = true;
     }
   }
 
   onChange(fileInput: File) {
     this.cropper.fileChangeListener(fileInput);
-    var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
-    console.log(imageSelector);
+    this.pictureSelected = true;
   }
 
   onProgress(progress: number) {
@@ -100,6 +100,35 @@ export class ItemComponent implements OnInit {
 
   onSubmit() {
     if (this.create) {
+
+      var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+      this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+        let finished: boolean = true;
+        this.item.imageUrl = response.url;
+        this.itemService.addItem(this.item).subscribe(
+          generalResponse => {
+            if (finished) {
+              this.router.navigate(['/dashboard/items']);
+            } else {
+              finished = true;
+            }
+
+          },
+          error => {
+            this.errorMessage = <any> error;
+          });
+
+        this.imageUploadService.uploadImage(response.url, response.signedRequest,
+          this.croppedImageContainer.image, this.onProgress, (): void => {
+            if (finished) {
+              this.router.navigate(['/dashboard/items']);
+            } else {
+              finished = true;
+            }
+          });
+
+      });
+
       this.itemService.addItem(this.item).subscribe(
         generalResponse => {
           this.router.navigate(['/dashboard/items']);
