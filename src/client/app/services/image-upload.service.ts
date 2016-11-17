@@ -27,8 +27,9 @@ export class ImageUploadService {
 
   }
 
-  uploadImage(url: string, signedRequest: string,  file: any, onProgress: (progress: number) => void, onFinish: () => void) {
-    var byteString;
+  uploadImage(url: string, signedRequest: string,  file: string, onProgress: (progress: number) => void, onFinish: () => void) {
+    let byteString: string;
+
     if (file.split(',')[0].indexOf('base64') >= 0)
       byteString = atob(file.split(',')[1]);
     // else
