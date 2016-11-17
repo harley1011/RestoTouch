@@ -99,15 +99,6 @@ function updateMenu(req, res) {
 
     });        
   });
-  /*
-  return menuModel.update(menu, {
-    where: {
-      name: name,
-      userId: req.userId
-    }
-  }).then(function(result) {
-    return res.json({success: 1, description: "Menu Updated"});
-  });*/
 }
 
 //DELETE /menu/{name}
