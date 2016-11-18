@@ -5,7 +5,6 @@ import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
-import {Bounds} from 'ng2-img-cropper/src/model/bounds';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 
 @Component({
@@ -35,8 +34,8 @@ export class ItemComponent implements OnInit {
               private element: ElementRef,
               private imageUploadService: ImageUploadService) {
     this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = 200;
-    this.cropperSettings.height = 200;
+    this.cropperSettings.width = 300;
+    this.cropperSettings.height = 300;
 
     this.cropperSettings.croppedWidth = 300;
     this.cropperSettings.croppedHeight = 300;
@@ -51,14 +50,9 @@ export class ItemComponent implements OnInit {
 
     this.cropperSettings.noFileInput = true;
 
-    this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+    this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(64,64,64,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
     this.croppedImageContainer = {};
-  }
-
-  cropped(bounds: Bounds) {
-    console.log(bounds);
-    console.log(this.croppedImageContainer);
   }
 
   ngOnInit() {
