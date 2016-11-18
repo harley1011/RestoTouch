@@ -28,6 +28,7 @@ export class ItemComponent implements OnInit {
   progress: number = 0;
   zone: NgZone;
   uploading: boolean = false;
+  finished: boolean = false;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -104,51 +105,63 @@ export class ItemComponent implements OnInit {
   }
 
   onSubmit() {
+    this.uploading = true;
     if (this.create) {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+
       this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
-        let finished: boolean = false;
         this.item.imageUrl = response.url;
-        this.uploading = true;
-        this.itemService.addItem(this.item).subscribe(
-          generalResponse => {
-            if (finished) {
-              this.router.navigate(['/dashboard/items']);
-            } else {
-              finished = true;
-            }
-          },
+
+        this.itemService.addItem(this.item).subscribe(this.isFinished(),
           error => {
             this.errorMessage = <any> error;
           });
 
-        this.imageUploadService.progress$.subscribe(data => {
-          console.log(data);
-          this.zone.run(() => {
-            this.progress = data;
-          });
-        });
-
-        this.imageUploadService.uploadImage(response.url, response.signedRequest,
-          this.croppedImageContainer.image).subscribe(result => {
-          if (finished) {
-            this.router.navigate(['/dashboard/items']);
-          } else {
-            finished = true;
-          }
-        });
+        this.uploadImage(response.url, response.signedRequest);
       });
     } else {
-      this.itemService.updateItem(this.item).subscribe(
-        generalResponse => {
-          this.router.navigate(['/dashboard/items']);
-        },
-        error => {
-          this.errorMessage = <any> error;
+      if (this.item.imageUrl !== this.croppedImage) {
+        var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+
+        this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+          this.item.imageUrl = response.url;
+
+          this.itemService.updateItem(this.item).subscribe(this.isFinished(),
+            error => {
+              this.errorMessage = <any> error;
+            });
+
+          this.uploadImage(response.url, response.signedRequest);
         });
+      } else {
+        this.itemService.updateItem(this.item).subscribe(
+          generalResponse => {
+            this.router.navigate(['/dashboard/items']);
+          },
+          error => {
+            this.errorMessage = <any> error;
+          });
+      }
     }
   }
 
+  uploadImage(url: string, signedRequest: string) {
+    this.imageUploadService.progress$.subscribe(data => {
+      this.zone.run(() => {
+        this.progress = data;
+      });
+    });
+    this.imageUploadService.uploadImage(url, signedRequest,
+      this.croppedImageContainer.image).subscribe(this.isFinished());
+  }
+
+  isFinished() {
+    if (this.finished) {
+      this.router.navigate(['/dashboard/items']);
+    } else {
+      this.finished = true;
+    }
+  }
 
   addSize() {
     this.item.sizes.push(this.size);

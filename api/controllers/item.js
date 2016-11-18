@@ -83,6 +83,13 @@ function update(req, res) {
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
     var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
 
+    if (item.imageUrl != oldItem.imageUrl)
+    {
+      var split = oldItem.imageUrl.split('/');
+      req.imageKey = split[split.length - 1];
+      s3File.deleteImage(req,res);
+    }
+
     for (var prop in item) {
       oldItem[prop] = item[prop];
     }
@@ -115,7 +122,7 @@ function del(req, res) {
       if (item.imageUrl) {
         var split = item.imageUrl.split('/');
         req.imageKey = split[split.length - 1];
-        s3File.deleteImage(req,res)
+        s3File.deleteImage(req,res);
       }
       item.destroy();
       return res.json({success: 1, description: "Item Deleted"});
