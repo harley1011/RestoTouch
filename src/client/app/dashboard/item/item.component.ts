@@ -27,6 +27,7 @@ export class ItemComponent implements OnInit {
   pictureModes = PictureMode;
   progress: number = 0;
   zone: NgZone;
+  uploading: boolean = false;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -108,6 +109,7 @@ export class ItemComponent implements OnInit {
       this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
         let finished: boolean = false;
         this.item.imageUrl = response.url;
+        this.uploading = true;
         this.itemService.addItem(this.item).subscribe(
           generalResponse => {
             if (finished) {
@@ -115,7 +117,6 @@ export class ItemComponent implements OnInit {
             } else {
               finished = true;
             }
-
           },
           error => {
             this.errorMessage = <any> error;
