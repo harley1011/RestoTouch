@@ -102,10 +102,6 @@ export class ItemComponent implements OnInit {
     this.croppedImage = 'assets/img/default-placeholder.png';
   }
 
-  onProgress(progress: number) {
-    console.log(progress);
-  }
-
   onSubmit() {
     if (this.create) {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
@@ -133,16 +129,13 @@ export class ItemComponent implements OnInit {
         });
 
         this.imageUploadService.uploadImage(response.url, response.signedRequest,
-          this.croppedImageContainer.image, this.onProgress, (): void => {
-            if (finished) {
-              this.router.navigate(['/dashboard/items']);
-            } else {
-              finished = true;
-            }
-          }).subscribe(result => {
-            console.log('success');
+          this.croppedImageContainer.image).subscribe(result => {
+          if (finished) {
+            this.router.navigate(['/dashboard/items']);
+          } else {
+            finished = true;
+          }
         });
-
       });
     } else {
       this.itemService.updateItem(this.item).subscribe(
@@ -153,7 +146,6 @@ export class ItemComponent implements OnInit {
           this.errorMessage = <any> error;
         });
     }
-
   }
 
 

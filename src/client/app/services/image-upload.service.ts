@@ -34,9 +34,7 @@ export class ImageUploadService {
   }
 
   uploadImage(url: string, signedRequest: string,
-              file: string,
-              onProgress: (progress: number) => void,
-              onFinish: () => void) {
+              file: string) {
     return Observable.create(observer => {
       let byteString: string;
       if (file.split(',')[0].indexOf('base64') >= 0)
@@ -70,7 +68,6 @@ export class ImageUploadService {
         }
       };
       xhr.upload.onprogress = (event) => {
-        onProgress(Math.round(event.loaded / event.total * 100));
         this.progressObserver.next(Math.round(event.loaded / event.total * 100));
       };
       xhr.send(b);
