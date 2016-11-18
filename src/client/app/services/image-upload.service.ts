@@ -47,6 +47,7 @@ export class ImageUploadService {
     var b = new Blob([ia], {type:mimeString});
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', signedRequest);
+    xhr.setRequestHeader('Cache-Control', 'max-age=100000000000');
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {

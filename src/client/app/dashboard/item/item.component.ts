@@ -24,8 +24,8 @@ export class ItemComponent implements OnInit {
   name: string;
   croppedImageContainer: any;
   croppedImage: any = 'assets/img/default-placeholder.png';
-  pictureSelected: boolean = false;
-  pictureCroppedSelect: boolean = false;
+  pictureMode: PictureMode = PictureMode.Select;
+  pictureModes = PictureMode;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -67,29 +67,40 @@ export class ItemComponent implements OnInit {
         this.itemService.getItem(params['id']).subscribe(item => {
           this.item = item;
           this.create = false;
+          this.croppedImage = item.imageUrl;
+          this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
         });
       } else {
         this.item = new Item('', '', '', []);
         this.create = true;
+        this.pictureMode = PictureMode.Select;
       }
     });
   }
 
   selectFile() {
-    if (this.pictureSelected) {
-      this.pictureCroppedSelect = !this.pictureCroppedSelect;
+    if (this.pictureMode === PictureMode.CropSelected) {
+      this.pictureMode = PictureMode.Crop;
+    } else if (this.pictureMode === PictureMode.Crop) {
       this.croppedImage = this.croppedImageContainer.image;
+      this.pictureMode = PictureMode.CropSelected;
     } else {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
       imageSelector.click();
     }
   }
 
+
   onChange(fileInput: File) {
     this.cropper.fileChangeListener(fileInput);
-    this.pictureSelected = true;
+    this.pictureMode = PictureMode.Crop;
+  }
+
+  clearImage() {
+    this.pictureMode = PictureMode.Select;
+    this.croppedImage = 'assets/img/default-placeholder.png';
   }
 
   onProgress(progress: number) {
@@ -98,7 +109,6 @@ export class ItemComponent implements OnInit {
 
   onSubmit() {
     if (this.create) {
-
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
       this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
         let finished: boolean = false;
@@ -126,14 +136,6 @@ export class ItemComponent implements OnInit {
           });
 
       });
-
-      this.itemService.addItem(this.item).subscribe(
-        generalResponse => {
-          this.router.navigate(['/dashboard/items']);
-        },
-        error => {
-          this.errorMessage = <any> error;
-        });
     } else {
       this.itemService.updateItem(this.item).subscribe(
         generalResponse => {
@@ -166,4 +168,11 @@ export class ItemComponent implements OnInit {
   cancelItem() {
     this.router.navigate(['/dashboard/items']);
   }
+}
+
+enum PictureMode {
+  Select,
+  Edit,
+  Crop,
+  CropSelected
 }

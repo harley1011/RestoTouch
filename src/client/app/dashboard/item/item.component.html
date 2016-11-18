@@ -68,16 +68,25 @@
 
       </div>
       <div class="col-md-4 image-crop-div">
-        <img-cropper [(hidden)]="pictureCroppedSelect || !pictureSelected" class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
+        <img-cropper [(hidden)]="pictureMode != pictureModes.Crop"
+                     class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
                      [image]="croppedImageContainer" [settings]="cropperSettings" (onCrop)="cropped($event)">
         </img-cropper>
 
-        <span class="result" *ngIf="pictureCroppedSelect || !pictureSelected">
+        <span class="result" *ngIf="pictureMode != pictureModes.Crop">
           <img [src]="croppedImage" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
         </span>
         <!--<img class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload" (click)="selectFile()"-->
         <!--[(src)]="item.imageUrl">-->
-        <button class="btn-upload-image btn btn-success btn-green" type="button" (click)="selectFile()"> {{pictureSelected? pictureCroppedSelect? "Recrop image": "Select Cropped image": "Add an Image"}}</button>
+        <div>
+          <button class="btn-upload-image btn-primary btn" type="button" (click)="selectFile()">
+            {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": "Add an Image": "Select Cropped Image"}}
+          </button><!--
+          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" (click)="clearImage()"></button>
+          <!--<button class="btn-upload-image btn btn-success btn-green" type="button" (click)="selectFile()">-->
+            <!--{{pictureSelected? pictureCroppedSelect? "Recrop image": "Select Cropped image": "Add an Image"}}-->
+          <!--</button>-->
+        </div>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
@@ -94,7 +103,6 @@
     </form>
   </div>
 </div>
-
 <!--
 <div *ngIf="item" class="container-fluid">
   <h2>{{create? 'Create Item': 'Modify Item'}}</h2>

@@ -7,20 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
-var home_component_1 = require('./home.component');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
-var home_component_2 = require('./home.component');
-var HomeModule = (function () {
-    function HomeModule() {
+var restaurant_list_component_1 = require('./restaurant-list.component');
+var RestaurantListModule = (function () {
+    function RestaurantListModule() {
     }
-    HomeModule = __decorate([
+    RestaurantListModule = __decorate([
         core_1.NgModule({
             imports: [common_1.CommonModule, ng2_bootstrap_1.CarouselModule, ng2_bootstrap_1.DropdownModule, ng2_bootstrap_1.AlertModule],
-            declarations: [home_component_1.HomeComponent, home_component_2.TimelineComponent, home_component_2.ChatComponent, home_component_2.NotificationComponent],
-            exports: [home_component_1.HomeComponent, home_component_2.TimelineComponent, home_component_2.ChatComponent, home_component_2.NotificationComponent]
+            declarations: [restaurant_list_component_1.RestaurantListComponent],
+            exports: [restaurant_list_component_1.RestaurantListComponent]
         })
-    ], HomeModule);
-    return HomeModule;
+    ], RestaurantListModule);
+    return RestaurantListModule;
 }());
-exports.HomeModule = HomeModule;
-//# sourceMappingURL=home.module.js.map
+exports.RestaurantListModule = RestaurantListModule;
