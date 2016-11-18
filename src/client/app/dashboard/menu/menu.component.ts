@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import {MenuService} from './menu.service';
-import {Menu} from '../../shared/models/menu';
+import {Menu, MenuTranslations} from '../../shared/models/menu';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
@@ -40,7 +40,15 @@ export class MenuComponent implements OnInit {
     this.languages = languageService.languages();
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
+      this.menu.selectedTranslation = this.menu.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode);
+
+      if(!this.menu.selectedTranslation) {
+        this.menu.selectedTranslation = new MenuTranslations('',this.selectedLanguage.languageCode);
+        this.menu.translations.push(this.menu.selectedTranslation);
+      }
     });
+    //default to english
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
 
     this.languageService.announceSupportedLanguages(this.supportedLanguages);
@@ -100,7 +108,8 @@ export class MenuComponent implements OnInit {
 			  this.getMenu(params['name']);
 				this.create = false;
 			} else {
-			  this.menu = new Menu('', this.supportedLanguages);
+        let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
+			  this.menu = new Menu('', this.supportedLanguages, [translation], translation);
 				this.create = true;
 			}
 		});
