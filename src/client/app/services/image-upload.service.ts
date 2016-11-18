@@ -6,7 +6,13 @@ import {Observable} from 'rxjs/Observable';
 import {Http} from '@angular/http';
 @Injectable()
 export class ImageUploadService {
+  progress$: any;
+  progressObserver: any;
+
   constructor(private http: AuthHttpService, private rawHttp: Http, private api: ApiEndpointService) {
+    this.progress$ = Observable.create(observer => {
+      this.progressObserver = observer;
+    }).share();
   }
 
   getS3Key(imageName: string, imageType: string) {
@@ -27,42 +33,48 @@ export class ImageUploadService {
 
   }
 
-  uploadImage(url: string, signedRequest: string,  file: string, onProgress: (progress: number) => void, onFinish: () => void) {
-    let byteString: string;
+  uploadImage(url: string, signedRequest: string,
+              file: string,
+              onProgress: (progress: number) => void,
+              onFinish: () => void) {
+    return Observable.create(observer => {
+      let byteString: string;
+      if (file.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(file.split(',')[1]);
+      // else
+      //   byteString = unescape(file.split(',')[1]);
 
-    if (file.split(',')[0].indexOf('base64') >= 0)
-      byteString = atob(file.split(',')[1]);
-    // else
-    //   byteString = unescape(file.split(',')[1]);
+      // separate out the mime component
+      var mimeString = file.split(',')[0].split(':')[1].split(';')[0];
 
-    // separate out the mime component
-    var mimeString = file.split(',')[0].split(':')[1].split(';')[0];
-
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    var b = new Blob([ia], {type:mimeString});
-    const xhr = new XMLHttpRequest();
-    xhr.open('PUT', signedRequest);
-    xhr.setRequestHeader('Cache-Control', 'max-age=100000000000');
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          console.log('works');
-          onFinish();
-        } else {
-          console.log('Could not upload file.');
-        }
+      // write the bytes of the string to a typed array
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
       }
-    };
-    xhr.upload.onprogress = (event) => {
-      onProgress(Math.round(event.loaded / event.total * 100));
-    };
-    xhr.send(b);
-    return url;
+
+      var b = new Blob([ia], {type: mimeString});
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', signedRequest);
+      xhr.setRequestHeader('Cache-Control', 'max-age=100000000000');
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log('works');
+            observer.next(xhr.response);
+            observer.complete();
+           // onFinish();
+          } else {
+            console.log('Could not upload file.');
+          }
+        }
+      };
+      xhr.upload.onprogress = (event) => {
+        onProgress(Math.round(event.loaded / event.total * 100));
+        this.progressObserver.next(Math.round(event.loaded / event.total * 100));
+      };
+      xhr.send(b);
+    });
   }
 
   private extractData(res: Response) {

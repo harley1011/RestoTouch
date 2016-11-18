@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
@@ -25,6 +25,8 @@ export class ItemComponent implements OnInit {
   croppedImage: any = 'assets/img/default-placeholder.png';
   pictureMode: PictureMode = PictureMode.Select;
   pictureModes = PictureMode;
+  progress: number = 0;
+  zone: NgZone;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -32,7 +34,8 @@ export class ItemComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private element: ElementRef,
-              private imageUploadService: ImageUploadService) {
+              private imageUploadService: ImageUploadService,
+              private zone: NgZone) {
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 300;
     this.cropperSettings.height = 300;
@@ -53,6 +56,7 @@ export class ItemComponent implements OnInit {
     this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(64,64,64,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
     this.croppedImageContainer = {};
+    this.zone = zone;
   }
 
   ngOnInit() {
@@ -83,6 +87,7 @@ export class ItemComponent implements OnInit {
     } else {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
       imageSelector.click();
+
     }
   }
 
@@ -120,6 +125,13 @@ export class ItemComponent implements OnInit {
             this.errorMessage = <any> error;
           });
 
+        this.imageUploadService.progress$.subscribe(data => {
+          console.log(data);
+          this.zone.run(() => {
+            this.progress = data;
+          });
+        });
+
         this.imageUploadService.uploadImage(response.url, response.signedRequest,
           this.croppedImageContainer.image, this.onProgress, (): void => {
             if (finished) {
@@ -127,7 +139,9 @@ export class ItemComponent implements OnInit {
             } else {
               finished = true;
             }
-          });
+          }).subscribe(result => {
+            console.log('success');
+        });
 
       });
     } else {
