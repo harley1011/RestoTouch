@@ -62,6 +62,8 @@ export class MenuComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.addedLanguage);
     this.supportedLanguages.push(language);
+    let newTranslation = new MenuTranslations('', language.languageCode);
+    this.menu.translations.push(newTranslation);
   }
 
   removeLanguage(language: Language) {
@@ -70,6 +72,10 @@ export class MenuComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.menu.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let j = this.menu.translations.indexOf(removedTranslation);
+    this.menu.translations.splice(j, 1);
   }
 
 	getMenu(name: string): void {
