@@ -9,7 +9,8 @@
       
         <div class="form-group">
             <label>Menu Name</label>
-          <input id="name" class="form-control" name="name" placeholder="Lunch Menu" value="{{menu?.name }}">
+          <input id="name" class="form-control" name="name" placeholder="Lunch Menu" 
+          [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
           </div>
      
         <div class="row">

@@ -83,7 +83,9 @@ export class MenuComponent implements OnInit {
 	    menu => {
 	      this.menu = menu;
         this.supportedLanguages = menu.supportedLanguages;
-        this.selectedLanguage = menu.supportedLanguages[0];
+        this.menu.selectedTranslation = menu.translations[0];
+        this.selectedLanguage = this.languages.find(language =>
+          language.languageCode === this.menu.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
@@ -127,7 +129,7 @@ export class MenuComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    var oldName = this.menu.name;
+    var oldName = this.menu.selectedTranslation.name;
     this.menu.name = values['name'];
 
     if (this.create) {
