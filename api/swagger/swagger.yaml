@@ -745,6 +745,16 @@ definitions:
       - name
       - description
       - languageCode
+  MenuTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
   BusinessHour:
     type: object
     properties:
@@ -801,6 +811,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/MenuTranslations"
     required:
       - name
   RestaurantMenu:

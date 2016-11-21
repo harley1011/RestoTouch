@@ -1,6 +1,7 @@
 var models = require("../../database/models");
 var menuModel;
 var menuLanguageModel;
+var menuTranslationsModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -18,6 +19,7 @@ function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
   menuLanguageModel = models.getMenuLanguageModel();
+  menuTranslationsModel = models.getMenuTranslationsModel();
 }
 
 //GET /menu
@@ -35,6 +37,9 @@ function saveMenu(req, res) {
     include: [{
       model: menuLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: menuTranslationsModel,
+      as: 'translations'
     }]
   }).then(function(result) {
     return res.json({success: 1, description: "Menu Added"});
@@ -52,6 +57,9 @@ function getMenu(req, res) {
     include: [{
       model: menuLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: menuTranslationsModel,
+      as: 'translations'
     }]
   }).then(function(menu) {
     if (menu) {
