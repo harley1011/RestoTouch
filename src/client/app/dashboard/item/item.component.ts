@@ -22,6 +22,7 @@ export class ItemComponent implements OnInit {
   languages: Array<Language>;
   addedLanguage: string;
   supportedLanguages: Array<Language> = [];
+  selectedLanguage: Language = new Language('','','',0);
 
 
   constructor(private itemService: ItemService,
@@ -29,6 +30,12 @@ export class ItemComponent implements OnInit {
               private route: ActivatedRoute,
               private languageService: LanguageService) {
     this.languages = languageService.languages();
+    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+      this.selectedLanguage = selectedLanguage;
+    });
+    //default to english
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    languageService.announceSupportedLanguages(this.supportedLanguages);
   }
 
   ngOnInit() {
@@ -36,12 +43,16 @@ export class ItemComponent implements OnInit {
       if (params['id']) {
         this.itemService.getItem(params['id']).subscribe(item => {
           this.item = item;
+          //this.supportedLanguages = item.supportedLanguages;
+          //this.selectedLanguage = item.supportedLanguages[0];
+          //this.languageService.announceSupportedLanguages(this.supportedLanguages);
+          //this.languageService.announceSelectedLanguage(this.selectedLanguage);
           this.create = false;
         }, error => {
           console.log(error);
         });
       } else {
-        this.item = new Item('', '', '', []);
+        this.item = new Item('', '', this.supportedLanguages, '', []);
         this.create = true;
       }
     });
