@@ -3,6 +3,8 @@ import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import {LanguageService} from '../../services/language.service';
+import {Language} from '../../shared/models/language';
 @Component({
   moduleId: module.id,
   selector: 'item-cmp',
@@ -16,7 +18,17 @@ export class ItemComponent implements OnInit {
   size = new Size('', 0);
   errorMessage: any;
 
-  constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
+  //Translation Support
+  languages: Array<Language>;
+  addedLanguage: string;
+  supportedLanguages: Array<Language> = [];
+
+
+  constructor(private itemService: ItemService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private languageService: LanguageService) {
+    this.languages = languageService.languages();
   }
 
   ngOnInit() {
@@ -54,6 +66,24 @@ export class ItemComponent implements OnInit {
         });
     }
 
+  }
+
+  addLanguage() {
+    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+    if(language) {
+      console.log('Language is already supported.');
+      return;
+    }
+    language = this.languages.find(language => language.languageCode === this.addedLanguage);
+    this.supportedLanguages.push(language);
+  }
+
+  removeLanguage(language: Language) {
+    if (this.supportedLanguages.length < 1) {
+      console.log('At least one language is required.');
+    }
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
   }
 
   addSize() {
