@@ -28,6 +28,8 @@ export class ProjectConfig extends SeedConfig {
       { src: 'highcharts/highcharts.js', inject: 'libs' },
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
+      // TODO check why causing the error below
+      // {src: 'dist/dragula.css', inject: true}
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
@@ -37,6 +39,14 @@ export class ProjectConfig extends SeedConfig {
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
+
+    // Add Dragula
+
+    // Development
+    this.SYSTEM_CONFIG.paths['dragula'] = `${this.APP_BASE}node_modules/dragula/dist/dragula.min`;
+
+    // Production
+    this.SYSTEM_BUILDER_CONFIG.paths['dragula'] = `node_modules/dragula/dist/dragula.min.js`;
 
     /* Add to or override NPM module configurations: */
     // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });

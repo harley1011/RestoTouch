@@ -5,13 +5,18 @@ import {Menu} from '../../shared/models/menu';
 import {Category} from '../../shared/models/category';
 import {MenuCategoryService} from '../menu/menu-catergory.service';
 import {CategoryService} from '../categories/category.service';
+//TODO check why i can't import dragula
+import {DragulaService} from '../../../../../node_modules/ng2-dragula/ng2-dragula';
+//import {Dragula} from '../../../../../node_modules/dragula';
 
 // This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({
   moduleId: module.id,
   selector: 'menu-cmp',
   templateUrl: 'menu.component.html',
-  providers: [MenuService, CategoryService, MenuCategoryService] //Registering Services with angular.
+  providers: [MenuService, CategoryService, MenuCategoryService], //Registering Services with angular.
+  //directives: [Dragula],
+  viewProviders:[DragulaService]
 })
 
 export class MenuComponent implements OnInit {
