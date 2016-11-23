@@ -26,24 +26,6 @@
       </div>
     </form>
 
-        <!--I imported the dragula css files, check why it is not working-->
-        <div class='wrapper'>
-          <div class="col-md-6">
-            <div>Available Categories List</div>
-            <div class='container' [dragula]='"first-bag"' [dragulaModel]="availableCategories">
-              <div *ngFor='let cateogry of availableCategories' [innerHtml]='cateogry'></div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div>User Categories List</div>
-            <div class='container' [dragula]='"first-bag"' [dragulaModel]="userCategories">
-              <div *ngFor='let cateogry of userCategories' [innerHtml]='cateogry'></div>
-            </div>
-          </div>
-        </div>
-
-
     </div>
   </div>
 

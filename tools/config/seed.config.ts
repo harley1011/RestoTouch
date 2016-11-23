@@ -342,20 +342,8 @@ export class SeedConfig {
       'dist/dev/*': '/base/dist/dev/*',
       '*': 'node_modules/*'
     },
-    map: {
-      'dragula' : 'dragula.min',
-      'ng2-dragula' : 'ng2-dragula'
-    },
     packages: {
       rxjs: {defaultExtension: 'js'},
-
-      'dragula' : {
-        main: 'dragula.min.js',
-        defaultExtension: 'js'},
-
-      'ng2-dragula' : {
-        main: 'index.js',
-        defaultExtension: 'js'},
     }
   };
 
@@ -418,14 +406,6 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       'rxjs': {
-        defaultExtension: 'js'
-      },
-      'dragula': {
-        main: 'dragula.min.js',
-        defaultExtension: 'js'
-      },
-      'ng2-dragula': {
-        main: 'index.js',
         defaultExtension: 'js'
       },
     }
