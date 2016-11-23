@@ -7,7 +7,7 @@ import {MenuCategoryService} from '../menu/menu-catergory.service';
 import {CategoryService} from '../categories/category.service';
 //TODO check why i can't import dragula
 import {DragulaService} from '../../../../../node_modules/ng2-dragula/ng2-dragula';
-//import {Dragula} from '../../../../../node_modules/dragula';
+//import{Dragula
 
 // This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({
@@ -26,11 +26,16 @@ export class MenuComponent implements OnInit {
   menu: Menu; // Menu has an array of selected categories that represent Category List
   categories: Category [];// This is the Available Category List
 
+  availableCategories: Array<string> = ['Salads', 'Sweets', 'Sandwishes'];
+  userCategories: Array<string> = [];
+
+
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
               private menuService: MenuService,
               private menuCategoryService: MenuCategoryService,
               private categoryService: CategoryService,
+              private dragulaService: DragulaService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -45,6 +50,7 @@ export class MenuComponent implements OnInit {
       }
     });
       this.getCategories();
+
   }
 
   getMenu(name: string): void {
