@@ -87,11 +87,14 @@ function update(req, res) {
 
   return itemModel.findOne({
     where: {id: item.id},
-    include: [{model: itemSizeModel, as: 'sizes'}]
+    include: [{model: itemSizeModel, as: 'sizes'},
+              {model: itemLanguageModel, as: 'supportedLanguages'}]
   }).then(function (oldItem) {
 
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
     var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
+    var languagesToRemove = _.differenceBy(oldItem.supportedLanguages, item.supportedLanguages, 'languageCode');
+    var languagesToAdd = _.differenceBy(item.supportedLanguages, oldItem.supportedLanguages, 'languageCode');
 
     for (var prop in item) {
       oldItem[prop] = item[prop];
@@ -106,7 +109,17 @@ function update(req, res) {
     })
 
     oldItem.save().then(function (result) {
-      return res.json({success: 1, description: "Item updated"});
+      languagesToRemove.forEach(function (language) {
+        itemLanguageModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
+      })
+
+      languagesToAdd.forEach(function (language) {
+        language.itemId = item.id;
+      })
+
+      itemLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
+        return res.json({success: 1, description: "Item updated"});
+      })
     })
 
   });
