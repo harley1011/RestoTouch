@@ -43,10 +43,10 @@ export class ItemComponent implements OnInit {
       if (params['id']) {
         this.itemService.getItem(params['id']).subscribe(item => {
           this.item = item;
-          //this.supportedLanguages = item.supportedLanguages;
-          //this.selectedLanguage = item.supportedLanguages[0];
-          //this.languageService.announceSupportedLanguages(this.supportedLanguages);
-          //this.languageService.announceSelectedLanguage(this.selectedLanguage);
+          this.supportedLanguages = item.supportedLanguages;
+          this.selectedLanguage = item.supportedLanguages[0];
+          this.languageService.announceSupportedLanguages(this.supportedLanguages);
+          this.languageService.announceSelectedLanguage(this.selectedLanguage);
           this.create = false;
         }, error => {
           console.log(error);

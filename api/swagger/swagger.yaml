@@ -706,6 +706,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/ItemSize"
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
     required:
       - name
   ItemSize:
