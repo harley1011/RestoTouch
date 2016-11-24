@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Item} from './../../shared/models/items';
+import {Item, ItemTranslations} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
@@ -32,6 +32,13 @@ export class ItemComponent implements OnInit {
     this.languages = languageService.languages();
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
+      this.item.selectedTranslation = this.item.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode);
+
+      if(!this.item.selectedTranslation) {
+        this.item.selectedTranslation = new ItemTranslations('','',this.selectedLanguage.languageCode);
+        this.item.translations.push(this.item.selectedTranslation);
+      }
     });
     //default to english
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
@@ -52,7 +59,8 @@ export class ItemComponent implements OnInit {
           console.log(error);
         });
       } else {
-        this.item = new Item('', '', this.supportedLanguages, '', []);
+        let translation = new ItemTranslations('','', this.supportedLanguages[0].languageCode);
+        this.item = new Item('', '', this.supportedLanguages, [translation], translation, '', []);
         this.create = true;
       }
     });
