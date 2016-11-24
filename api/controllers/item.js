@@ -96,7 +96,8 @@ function update(req, res) {
   return itemModel.findOne({
     where: {id: item.id},
     include: [{model: itemSizeModel, as: 'sizes'},
-              {model: itemLanguageModel, as: 'supportedLanguages'}]
+              {model: itemLanguageModel, as: 'supportedLanguages'},
+              {model: itemTranslationModel, as: 'translations'}]
   }).then(function (oldItem) {
 
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
@@ -105,7 +106,8 @@ function update(req, res) {
     var languagesToAdd = _.differenceBy(item.supportedLanguages, oldItem.supportedLanguages, 'languageCode');
 
     for (var prop in item) {
-      oldItem[prop] = item[prop];
+      if(prop != 'translations')
+        oldItem[prop] = item[prop];
     }
     sizesToAdd.forEach(function (size) {
       size.itemId = oldItem.id;
@@ -116,9 +118,26 @@ function update(req, res) {
       itemSizeModel.destroy({where: {id: size.id}})
     })
 
+    oldItem.translations.forEach(function(translation) {
+      var newTranslation = _.find(item.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      for (var prop in newTranslation ) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(item.translations, function (tr) {return tr.languageCode === translation.languageCode});
+    });
+
+    item.translations.forEach(function (translation) {
+      translation.itemId = item.id;
+    })
+
+    itemTranslationModel.bulkCreate(item.translations);
+
     oldItem.save().then(function (result) {
       languagesToRemove.forEach(function (language) {
         itemLanguageModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
+        itemTranslationModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
+        _.remove(oldItem.translations, function (translation) {return translation.languageCode == language.languageCode})
       })
 
       languagesToAdd.forEach(function (language) {

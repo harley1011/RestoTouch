@@ -51,7 +51,9 @@ export class ItemComponent implements OnInit {
         this.itemService.getItem(params['id']).subscribe(item => {
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
-          this.selectedLanguage = item.supportedLanguages[0];
+          this.item.selectedTranslation = item.translations[0];
+          this.selectedLanguage = this.languages.find(language =>
+            language.languageCode === this.item.selectedTranslation.languageCode);
           this.languageService.announceSupportedLanguages(this.supportedLanguages);
           this.languageService.announceSelectedLanguage(this.selectedLanguage);
           this.create = false;
