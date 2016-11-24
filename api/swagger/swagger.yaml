@@ -710,6 +710,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ItemTranslations"
     required:
       - name
   ItemSize:
@@ -722,6 +726,19 @@ definitions:
     required:
       - name
       - price
+  ItemTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - description
+      - languageCode
   RestaurantListResponse:
     required:
       - restaurants

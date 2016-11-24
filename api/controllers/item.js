@@ -2,6 +2,7 @@ var models = require("../../database/models");
 var itemModel;
 var itemSizeModel;
 var itemLanguageModel;
+var itemTranslationModel;
 
 var _ = require('lodash');
 
@@ -22,6 +23,7 @@ function setDatabase(m) {
   itemModel = models.getItemModel();
   itemSizeModel = models.getItemSizesModel();
   itemLanguageModel = models.getItemLanguageModel();
+  itemTranslationModel = models.getItemTranslationModel();
 }
 
 
@@ -51,6 +53,9 @@ function save(req, res) {
     }, {
       model: itemLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: itemTranslationModel,
+      as: 'translations'
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Item Added"});
@@ -71,6 +76,9 @@ function get(req, res) {
     }, {
       model: itemLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: itemTranslationModel,
+      as: 'translations'
     }]
   }).then(function (item) {
     if (item) {
