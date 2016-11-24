@@ -1,9 +1,8 @@
 "use strict";
-var index_1 = require('./index');
-exports.HomeRoutes = [
+var restaurant_list_component_1 = require('./restaurant-list.component');
+exports.RestaurantsRoutes = [
     {
-        path: 'home',
-        component: index_1.HomeComponent
+        path: 'restaurants',
+        component: restaurant_list_component_1.RestaurantListComponent
     }
 ];
-//# sourceMappingURL=home.routes.js.map

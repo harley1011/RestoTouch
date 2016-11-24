@@ -8,13 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var router_1 = require('@angular/router');
+var forms_1 = require('@angular/forms');
 var signup_component_1 = require('./signup.component');
 var SignupModule = (function () {
     function SignupModule() {
     }
     SignupModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule],
+            imports: [common_1.CommonModule, router_1.RouterModule, forms_1.FormsModule],
             declarations: [signup_component_1.SignupComponent],
             exports: [signup_component_1.SignupComponent]
         })
@@ -22,4 +23,3 @@ var SignupModule = (function () {
     return SignupModule;
 }());
 exports.SignupModule = SignupModule;
-//# sourceMappingURL=signup.module.js.map
