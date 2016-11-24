@@ -11,14 +11,14 @@
           <label for="name">Item Name</label>
           <input type="text" class="form-control" id="name"
                  required
-                 [(ngModel)]="item.name" name="name"
+                 [(ngModel)]="item.selectedTranslation.name" name="name"
                  #name="ngModel">
         </div>
 
         <div class="form-group">
           <label for="name">Description</label>
           <textarea type="text" rows="3" class="form-control" id="description"
-                 [(ngModel)]="item.description" name="description"
+                 [(ngModel)]="item.selectedTranslation.description" name="description"
                  #description="ngModel"></textarea>
         </div>
         <div>

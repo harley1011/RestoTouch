@@ -15,8 +15,8 @@
       <div (click)="modify(item)" class="card">
         <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl" />
         <div class="card-block">
-          <h4 class="card-title">{{ item.name }} </h4>
-            <p class="card-text"> {{item.description}} </p>
+          <h4 class="card-title">{{ item.selectedTranslation.name }} </h4>
+            <p class="card-text"> {{item.selectedTranslation.description}} </p>
           </div>
       </div>
     </div>
