@@ -154,7 +154,9 @@ export class ItemComponent implements OnInit {
       });
     });
     this.imageUploadService.uploadImage(url, signedRequest,
-      this.croppedImageContainer.image).subscribe(this.isFinished());
+      this.croppedImageContainer.image).subscribe((result: number) => {
+      this.isFinished();
+    });
   }
 
   isFinished() {
