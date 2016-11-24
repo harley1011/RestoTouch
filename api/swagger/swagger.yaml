@@ -698,10 +698,6 @@ definitions:
   Item:
     type: object
     properties:
-      name:
-        type: string
-      description:
-        type: string
       itemSizes:
         type: array
         items:
@@ -714,8 +710,6 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/ItemTranslations"
-    required:
-      - name
   ItemSize:
     type: object
     properties:

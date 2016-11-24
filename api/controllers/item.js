@@ -32,7 +32,7 @@ function getAll(req, res) {
     where: {userId: req.userId},
     include: [{model: itemSizeModel, as: 'sizes'},
               {model: itemTranslationModel, as: 'translations'}],
-    order: ['name']
+    //order: ['name']
   }).then(function (items) {
     return res.json({items: items});
   });

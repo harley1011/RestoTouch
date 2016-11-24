@@ -2,8 +2,8 @@ import {Size} from './size';
 import {Language} from './language';
 
 export class Item {
-    constructor(public name: string,
-                public description: string,
+    constructor(//public name: string,
+                //public description: string,
                 public supportedLanguages: Array<Language>,
                 public translations: Array<ItemTranslations>,
                 public selectedTranslation: ItemTranslations,
