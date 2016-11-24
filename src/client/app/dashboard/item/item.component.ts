@@ -26,7 +26,6 @@ export class ItemComponent implements OnInit {
   pictureMode: PictureMode = PictureMode.Select;
   pictureModes = PictureMode;
   progress: number = 0;
-  zone: NgZone;
   uploading: boolean = false;
   finished: boolean = false;
 
@@ -58,7 +57,6 @@ export class ItemComponent implements OnInit {
     this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(64,64,64,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
     this.croppedImageContainer = {};
-    this.zone = zone;
   }
 
   ngOnInit() {
@@ -126,7 +124,7 @@ export class ItemComponent implements OnInit {
         this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
           this.item.imageUrl = response.url;
 
-          this.itemService.updateItem(this.item).subscribe(this.isFinished(),
+          this.itemService.updateItem(this.item).subscribe(result => {this.isFinished();},
             error => {
               this.errorMessage = <any> error;
             });

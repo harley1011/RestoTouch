@@ -3,14 +3,15 @@ import {AuthHttpService} from './auth-http.services';
 import {ApiEndpointService} from './api-endpoint.service';
 import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
 import {Http} from '@angular/http';
 @Injectable()
 export class ImageUploadService {
-  progress$: any;
-  progressObserver: any;
+  progress$: Observable<any>;
+  private progressObserver: any;
 
   constructor(private http: AuthHttpService, private rawHttp: Http, private api: ApiEndpointService) {
-    this.progress$ = Observable.create(observer => {
+    this.progress$ = Observable.create((observer: Observer<number>) => {
       this.progressObserver = observer;
     }).share();
   }
@@ -35,7 +36,7 @@ export class ImageUploadService {
 
   uploadImage(url: string, signedRequest: string,
               file: string) {
-    return Observable.create(observer => {
+    return Observable.create((observer: Observer<number>) => {
       let byteString: string;
       if (file.split(',')[0].indexOf('base64') >= 0)
         byteString = atob(file.split(',')[1]);

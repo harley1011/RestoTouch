@@ -1,4 +1,4 @@
-@import "../bootstrap/bootstrap.scss";
+@import "../bootstrap/_bootstrap";
 
 $topnav-background-color: #222;
 .user-avatar {
@@ -25,14 +25,14 @@ $topnav-background-color: #222;
     text-transform: capitalize;
     font-weight: 300;
     font-size: 14px;
-    
+
 }
 .topnav{
   border-radius: 0;
   background: transparent;
   padding : 6px;
     z-index: 10;
-    
+
     .text-center{
         text-align: center;
         padding-left : 0;
@@ -53,8 +53,8 @@ $topnav-background-color: #222;
                     .media-body{
                         .media-heading{
                             font-size: 14px;
-                            font-weight: bold;     
-                            margin-bottom : 0;  
+                            font-weight: bold;
+                            margin-bottom : 0;
                         }
                         p{
                             margin : 0;
@@ -63,7 +63,7 @@ $topnav-background-color: #222;
                             font-size : 13px;
                             margin-bottom: 0;
                         }
-                    }                    
+                    }
                 }
             }
             hr {
@@ -72,7 +72,7 @@ $topnav-background-color: #222;
             }
         }
     }
-    
+
 }
 a:hover{
     text-decoration: none;
@@ -186,7 +186,7 @@ a:hover{
         overflow-x: hidden;
 //    position: relative;
     z-index: 1;
-    
+
     h1, h2 {
         margin-top:20px;
     }
@@ -218,10 +218,10 @@ a:hover{
             margin-right: 15px;
             padding-bottom: 5px;
             border-bottom: 1px dotted #999;
-        }   
+        }
     }
     .card-footer{
-        input{  
+        input{
             padding : 3px;
         }
     }
@@ -274,7 +274,7 @@ a:hover{
         display: inline-block;
         cursor: pointer;
     }
-    
+
     .show-name{
         display: block !important;
         z-index: 1;
@@ -384,17 +384,17 @@ a:hover{
         input::-webkit-input-placeholder {
         color: rgba(255,255,255,0.6) !important;
         }
-         
+
         input:-moz-placeholder { /* Firefox 18- */
-        color: rgba(255,255,255,0.6) !important;  
+        color: rgba(255,255,255,0.6) !important;
         }
-         
+
         input::-moz-placeholder {  /* Firefox 19+ */
-        color: rgba(255,255,255,0.6) !important;  
+        color: rgba(255,255,255,0.6) !important;
         }
-         
-        input:-ms-input-placeholder {  
-        color: rgba(255,255,255,0.6) !important;  
+
+        input:-ms-input-placeholder {
+        color: rgba(255,255,255,0.6) !important;
         }
     }
     .form-content {

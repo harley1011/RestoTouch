@@ -35,20 +35,20 @@
 $green: #5cb85c;
 $red: #d9534f;
 
-@import "../bootstrap/variables.scss";
-@import "app-base.scss";
-@import "category.scss";
-@import "login.scss";
-@import "logout.scss";
-@import "menu-list.scss";
-@import "menu.scss";
-@import "restaurant.scss";
-@import "restaurant-list.scss";
-@import "home.scss";
-@import "item-list.scss";
-@import "item.scss";
-@import "manage-list.scss";
-@import "manage.scss";
+@import "../bootstrap/_variables";
+@import "app-base";
+@import "category";
+@import "login";
+@import "logout";
+@import "menu-list";
+@import "menu";
+@import "restaurant";
+@import "restaurant-list";
+@import "home";
+@import "item-list";
+@import "item";
+@import "manage-list";
+@import "manage";
 html, body {
     height: 100%;
     font-family: 'Lato', sans-serif;
@@ -147,9 +147,9 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 30px;
     background-color: transparent;
     color: #666;
-    border-color: #999;   
+    border-color: #999;
 }
 
 .btn {
-    margin-right: 6px;   
+    margin-right: 6px;
 }
