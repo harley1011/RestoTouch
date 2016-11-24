@@ -106,7 +106,7 @@ exports.getRestaurantMenuModel = function () {
   return restaurantMenuModel;
 };
 
-exports.getmenuCategoryModel = function () {
+exports.getMenuCategoryModel = function () {
   return menuCategoryModel;
 };
 
