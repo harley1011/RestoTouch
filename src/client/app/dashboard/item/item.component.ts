@@ -95,6 +95,8 @@ export class ItemComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.addedLanguage);
     this.supportedLanguages.push(language);
+    let newTranslation = new ItemTranslations('','', language.languageCode);
+    this.item.translations.push(newTranslation);
   }
 
   removeLanguage(language: Language) {
@@ -103,6 +105,10 @@ export class ItemComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.item.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let j = this.item.translations.indexOf(removedTranslation);
+    this.item.translations.splice(j, 1);
   }
 
   addSize() {
