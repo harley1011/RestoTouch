@@ -13,6 +13,7 @@ var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTransla
 var itemModel = sequelize.import('./models/items.js');
 var itemSizesModel = sequelize.import('./models/itemSizes.js');
 var itemLanguageModel = sequelize.import('./models/itemsLanguages.js');
+var itemTranslationModel = sequelize.import('./models/itemsTranslations.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -79,6 +80,8 @@ userModel.sync({force: dropTable}).then(function () {
     itemSizesModel.sync({force: dropTable});
     itemModel.hasMany(itemLanguageModel, {as: 'supportedLanguages', onDelete: 'cascade', foreignKey: 'itemId'});
     itemLanguageModel.sync({force: dropTable});
+    itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});
+    itemTranslationModel.sync({force: dropTable});
   })
 
 
@@ -135,4 +138,8 @@ exports.getItemSizesModel = function () {
 
 exports.getItemLanguageModel = function () {
   return itemLanguageModel;
+}
+
+exports.getItemTranslationModel = function () {
+  return itemTranslationModel;
 }
