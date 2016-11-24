@@ -63,9 +63,11 @@ export class ItemComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         this.itemService.getItem(params['id']).subscribe(item => {
+          if (item.imageUrl.length !== 0) {
+            this.croppedImage = item.imageUrl;
+          }
           this.item = item;
           this.create = false;
-          this.croppedImage = item.imageUrl;
           this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
@@ -100,6 +102,7 @@ export class ItemComponent implements OnInit {
   clearImage() {
     this.pictureMode = PictureMode.Select;
     this.croppedImage = 'assets/img/default-placeholder.png';
+    this.item.imageUrl = '';
   }
 
   onSubmit() {
@@ -107,20 +110,29 @@ export class ItemComponent implements OnInit {
     if (this.create) {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
 
-      this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
-        this.item.imageUrl = response.url;
+      if (imageSelector) {
+        this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+          this.item.imageUrl = response.url;
 
-        this.uploadImage(response.url, response.signedRequest);
+          this.uploadImage(response.url, response.signedRequest);
 
-        this.itemService.addItem(this.item).subscribe(result => {
-            this.isFinished();
+          this.itemService.addItem(this.item).subscribe(result => {
+              this.isFinished();
+            },
+            error => {
+              this.errorMessage = <any> error;
+            });
+        });
+      } else {
+        this.itemService.addItem(this.item).subscribe(generalResponse => {
+            this.router.navigate(['/dashboard/items']);
           },
           error => {
             this.errorMessage = <any> error;
           });
-      });
+      }
     } else {
-      if (this.item.imageUrl !== this.croppedImage) {
+      if (this.item.imageUrl !== this.croppedImage && this.croppedImage !== 'assets/img/default-placeholder.png') {
         var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
 
         this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
