@@ -1,6 +1,12 @@
 var aws = require('aws-sdk');
 var S3_BUCKET = 'resto-item-images';
 var uuid = require('node-uuid');
+var itemModel;
+var _ = require('lodash');
+var models = require("../../database/models");
+
+setDatabase(models);
+
 
 aws.config.update({
   accessKeyId: 'AKIAI6I4KH6ZMYVNGVKA',
@@ -14,6 +20,11 @@ module.exports = {
   deleteImage: deleteImage
 };
 
+function setDatabase(m) {
+  models = m;
+  itemModel = models.getItemModel();
+  itemSizeModel = models.getItemSizesModel();
+}
 
 function getS3UploadImageKey(req, res) {
   var s3 = new aws.S3();
@@ -59,9 +70,20 @@ function imageCleanUp() {
   var params = {
     Bucket: S3_BUCKET
   };
-  s3.listObjectVersions(params, function(err, data) {
+  s3.listObjectVersions(params, function(err, imagesUrls) {
     if (err) console.log(err, err.stack); // an error occurred
-    else     console.log(data);           // successful response
+    else     console.log(imagesUrls);           // successful response
+
+    itemModel.findAll().then(function (items) {
+      var unlinkedItems = _.differenceWith(imagesUrls.Versions, items,
+        function(imageUrl, item) {
+          return 'https://resto-item-images.s3.amazonaws.com/' + imageUrl.Key == item.dataValues.imageUrl}
+      )
+      unlinkedItems.forEach(function (unlinkedItem) {
+        var req = {imageKey: unlinkedItem.Key};
+        deleteImage(req, {});
+      })
+    })
   });
 }
 
