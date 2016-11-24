@@ -25,7 +25,7 @@
     "serve.prod": "gulp serve.prod --color --config-env prod",
     "start": "node app.js",
     "start.dev": "gulp serve.dev --color",
-    "setup": "npm install && gulp check.versions && npm prune && gulp webdriver",
+    "setup": "npm install && gulp check.versions && gulp build.bundle.rxjs && npm prune && gulp webdriver",
     "tasks.list": "gulp --tasks-simple --color",
     "test": "gulp test --color && jasmine-node api/spec",
     "apitest": "jasmine-node api/spec",
