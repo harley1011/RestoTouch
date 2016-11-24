@@ -112,7 +112,9 @@ export class ItemComponent implements OnInit {
 
         this.uploadImage(response.url, response.signedRequest);
 
-        this.itemService.addItem(this.item).subscribe(result => {this.isFinished();},
+        this.itemService.addItem(this.item).subscribe(result => {
+            this.isFinished();
+          },
           error => {
             this.errorMessage = <any> error;
           });
@@ -124,7 +126,9 @@ export class ItemComponent implements OnInit {
         this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
           this.item.imageUrl = response.url;
 
-          this.itemService.updateItem(this.item).subscribe(result => {this.isFinished();},
+          this.itemService.updateItem(this.item).subscribe(result => {
+              this.isFinished();
+            },
             error => {
               this.errorMessage = <any> error;
             });

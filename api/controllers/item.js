@@ -75,7 +75,7 @@ function get(req, res) {
 function update(req, res) {
   var item = req.body;
 
-  return itemModel.findOne({
+  itemModel.findOne({
     where: {id: item.id},
     include: [{model: itemSizeModel, as: 'sizes'}]
   }).then(function (oldItem) {
