@@ -43,7 +43,7 @@ function save(req, res) {
     return res.json({message: "At least one size is required"});
   }
 
-  return itemModel.create(item, {
+  itemModel.create(item, {
     include: [{
       model: itemSizeModel,
       as: 'sizes'

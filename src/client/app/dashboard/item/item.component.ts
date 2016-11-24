@@ -112,12 +112,12 @@ export class ItemComponent implements OnInit {
       this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
         this.item.imageUrl = response.url;
 
-        this.itemService.addItem(this.item).subscribe(this.isFinished(),
+        this.uploadImage(response.url, response.signedRequest);
+
+        this.itemService.addItem(this.item).subscribe(result => {this.isFinished();},
           error => {
             this.errorMessage = <any> error;
           });
-
-        this.uploadImage(response.url, response.signedRequest);
       });
     } else {
       if (this.item.imageUrl !== this.croppedImage) {
