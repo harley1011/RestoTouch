@@ -1,0 +1,27 @@
+<div class="manage-list">
+    <div class="manage-header">
+    <h2>Manage Categories</h2>
+    <h5 class="subtitle"><small>You can select any category below to make changes</small></h5>
+       <div class="manage-button">
+           <form class="form-inline">
+<!--    <input #newCatField type="text" class="form-control" (keyup.enter)="addNewCatClick(newCatField.value)"/>-->
+    <button type="button" class="btn btn-success btn-green" (click)="add()">+ Add Category</button>
+</form>
+        </div>
+        <hr>
+    </div>
+    <div class="manage-list-container">
+  <div class="col-sm-3" *ngFor="let category of categories; let i = index">
+      <div (click)="modify(category)" class="card card-block">
+        <h4 class="card-title">{{ category.categoryName }} </h4>
+        
+           <h6 style="margin:0">Items <span class="label label-default"> 0 </span></h6>
+<!--            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>-->
+           
+            
+      </div>
+    </div>
+
+</div>
+    
+</div>

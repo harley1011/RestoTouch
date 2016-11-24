@@ -787,38 +787,29 @@ definitions:
       - name
       - description
       - languageCode
+  BusinessHour:
+    type: object
+    properties:
+      day:
+        type: number
+      shift:
+        type: number
+      openTime:
+        type: string
+      closeTime:
+        type: string
+      active:
+        type: boolean
+    required:
+      - day
+      - shift
+      - openTime
+      - closeTime
+      - active
   Restaurant:
     type: object
     properties:
       address:
-        type: string
-      mOpen:
-        type: string
-      mClose:
-        type: string
-      tuOpen:
-        type: string
-      tuClose:
-        type: string
-      wOpen:
-        type: string
-      wClose:
-        type: string
-      thOpen:
-        type: string
-      thClose:
-        type: string
-      fOpen:
-        type: string
-      fClose:
-        type: string
-      saOpen:
-        type: string
-      saClose:
-        type: string
-      suOpen:
-        type: string
-      suClose:
         type: string
       supportedLanguages:
         type: array
@@ -828,22 +819,12 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/RestaurantTranslations"
+      businessHours:
+        type: array
+        items:
+          "$ref": "#/definitions/BusinessHour"
     required:
       - address
-      - mOpen
-      - mClose
-      - tuOpen
-      - tuClose
-      - wOpen
-      - wClose
-      - thOpen
-      - thClose
-      - fOpen
-      - fClose
-      - saOpen
-      - saClose
-      - suOpen
-      - suClose
   MenuListResponse:
     required:
       - menus
