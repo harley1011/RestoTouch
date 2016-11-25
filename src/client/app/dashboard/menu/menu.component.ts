@@ -78,8 +78,8 @@ export class MenuComponent implements OnInit {
     this.menu.translations.splice(j, 1);
   }
 
-	getMenu(name: string): void {
-	  this.menuService.getMenu(name).subscribe(
+	getMenu(id: number): void {
+	  this.menuService.getMenu(id).subscribe(
 	    menu => {
 	      this.menu = menu;
         this.supportedLanguages = menu.supportedLanguages;
@@ -112,8 +112,8 @@ export class MenuComponent implements OnInit {
 
     this.sections = [];
 		this.route.params.forEach((params: Params) => {
-			if (params['name']) {
-			  this.getMenu(params['name']);
+			if (params['menuId']) {
+			  this.getMenu(params['menuId']);
 				this.create = false;
 			} else {
         let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
@@ -173,7 +173,7 @@ export class MenuComponent implements OnInit {
   }
 
   update(oldName : string): void {
-    this.menuService.updateMenu(this.menu, oldName).subscribe(
+    this.menuService.updateMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
       },
@@ -192,7 +192,7 @@ export class MenuComponent implements OnInit {
   }
 
   delete(): void {
-    this.menuService.deleteMenu(this.menu.name).subscribe(
+    this.menuService.deleteMenu(this.menu).subscribe(
       generalResponse => {
         console.log('response', generalResponse );
         this.router.navigate(['/dashboard/menus']);

@@ -112,7 +112,7 @@ export class MenuListComponent implements OnInit {
 			this.menusInRestaurant[index] = !inRestaurant;
 			this.modifyUpdates(menu, this.menusInRestaurant[index]);
 		} else {
-			this.router.navigate(['/dashboard/menu', menu.name]);
+			this.router.navigate(['/dashboard/menu', menu.id]);
 		}
 	}
 

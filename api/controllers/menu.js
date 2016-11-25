@@ -46,12 +46,12 @@ function saveMenu(req, res) {
   });
 }
 
-//GET /menu/{name}
+//GET /menu/{menuId}
 function getMenu(req, res) {
-  var name = req.swagger.params.name.value;
+  var id = req.swagger.params.menuId.value;
   return menuModel.findOne({
     where: {
-      name: name,
+      id: id,
       userId: req.userId
     },
     include: [{
@@ -70,13 +70,13 @@ function getMenu(req, res) {
   });
 }
 
-//PUT /menu/{name}
+//PUT /menu/{menuId}
 function updateMenu(req, res) {
   var menu = req.body;
-  var name = req.swagger.params.name.value;
+  var id = req.swagger.params.menuId.value;
   return menuModel.findOne({
     where: {
-      name: name,
+      id: id,
       userId: req.userId
     },
     include: [{
@@ -130,12 +130,12 @@ function updateMenu(req, res) {
   });
 }
 
-//DELETE /menu/{name}
+//DELETE /menu/{menuId}
 function delMenu(req, res) {
-  var name = req.swagger.params.name.value;
+  var id = req.swagger.params.menuId.value;
   return menuModel.destroy({
     where: {
-      name: name,
+      id: id,
       userId: req.userId
     }
   }).then(function(result) {

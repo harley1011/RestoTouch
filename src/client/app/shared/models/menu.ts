@@ -1,12 +1,13 @@
 import { Language } from './language';
 
 export class Menu {
-  id: number;
+  //id: number;
   constructor (
     public name: string,
     public supportedLanguages: Array<Language>,
     public translations: Array<MenuTranslations>,
-    public selectedTranslation: MenuTranslations
+    public selectedTranslation: MenuTranslations,
+    public id?: number
 	) { }
 }
 
