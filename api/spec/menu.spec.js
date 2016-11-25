@@ -67,8 +67,8 @@ describe("The Menu API", function() {
     var req = {
       swagger: {
         params: {
-          name: {
-            value: "Menu 1"
+          menuId: {
+            value: 1
           }
         }
       }
@@ -76,7 +76,7 @@ describe("The Menu API", function() {
 
     menu.getMenu(req, res).then(function (result) {
       expect(typeof res.obj).toBe('object');
-      expect(res.obj.name).toBe(req.swagger.params.name.value);
+      expect(res.obj.id).toBe(req.swagger.params.menuId.value);
       done();
     })
   })
@@ -85,8 +85,8 @@ describe("The Menu API", function() {
     var req = {
       swagger: {
         params: {
-          name: {
-            value: "Menu 1"
+          menuId: {
+            value: 1
           }
         }
       }
