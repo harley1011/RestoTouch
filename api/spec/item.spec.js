@@ -19,8 +19,9 @@ describe("The Item API", function () {
   it("should create a valid item", function (done) {
     var req = {
       body: {
-        "name": "Item 1",
-        sizes: [{"name": "regular", "price": 1}]
+        sizes: [{"name": "regular", "price": 1}],
+        "supportedLanguages": [{"languageCode":"en","name":"English","itemId":2}],
+        "translations": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","itemId":2}]
       }
     }
 

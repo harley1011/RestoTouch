@@ -7,6 +7,8 @@ var restaurantsLanguageModel = {};
 var restaurantsTranslationModel = {};
 var itemModel = {};
 var itemSizesModel = {};
+var itemLanguageModel = {};
+var itemTranslationModel = {};
 
 var Promise = require('promise');
 
@@ -43,6 +45,16 @@ restaurantsTranslationModel.create = create;
 restaurantsTranslationModel.update = update;
 restaurantsTranslationModel.findAll = findAll;
 restaurantsTranslationModel.destroy = destroy;
+
+itemLanguageModel.create = create;
+itemLanguageModel.update = update;
+itemLanguageModel.findAll = findAll;
+itemLanguageModel.destroy = destroy;
+
+itemTranslationModel.create = create;
+itemTranslationModel.update = update;
+itemTranslationModel.findAll = findAll;
+itemTranslationModel.destroy = destroy;
 
 addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
@@ -89,6 +101,14 @@ exports.getItemModel = function () {
 
 exports.getItemSizesModel = function () {
   return itemSizesModel;
+}
+
+exports.getItemLanguageModel = function () {
+  return itemLanguageModel;
+}
+
+exports.getItemTranslationModel = function () {
+  return itemTranslationModel;
 }
 
 
