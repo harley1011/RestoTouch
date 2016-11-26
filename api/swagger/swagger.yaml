@@ -402,7 +402,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /menu/{name}:
+  /menu/{menuId}:
     # binds a127 app logic to a route
     x-swagger-router-controller: menu
     get:
@@ -410,8 +410,8 @@ paths:
       # used as the method name of the controller
       operationId: getMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
       responses:
@@ -430,8 +430,8 @@ paths:
       # used as the method name of the controller
       operationId: updateMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
         - name: menu
@@ -456,8 +456,8 @@ paths:
       # used as the method name of the controller
       operationId: delMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
       responses:
@@ -787,6 +787,16 @@ definitions:
       - name
       - description
       - languageCode
+  MenuTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
   BusinessHour:
     type: object
     properties:
@@ -837,10 +847,14 @@ definitions:
   Menu:
     type: object
     properties:
-      name:
-        type: string
-    required:
-      - name
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/MenuTranslations"
   RestaurantMenu:
     type: object
     properties:

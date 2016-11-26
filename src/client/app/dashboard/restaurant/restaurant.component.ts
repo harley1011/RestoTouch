@@ -143,7 +143,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   openMenu(menu: Menu): void {
-    this.router.navigate(['/dashboard/menu', menu.name]);
+    this.router.navigate(['/dashboard/menu', menu.id]);
   }
 
   ngOnInit(): void {

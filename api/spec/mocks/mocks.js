@@ -7,6 +7,8 @@ var restaurantsLanguageModel = {};
 var restaurantsTranslationModel = {};
 var itemModel = {};
 var itemSizesModel = {};
+var menuLanguageModel = {};
+var menuTranslationModel = {};
 
 var Promise = require('promise');
 
@@ -44,6 +46,16 @@ restaurantsTranslationModel.update = update;
 restaurantsTranslationModel.findAll = findAll;
 restaurantsTranslationModel.destroy = destroy;
 
+menuLanguageModel.create = create;
+menuLanguageModel.update = update;
+menuLanguageModel.findAll = findAll;
+menuLanguageModel.destroy = destroy;
+
+menuTranslationModel.create = create;
+menuTranslationModel.update = update;
+menuTranslationModel.findAll = findAll;
+menuTranslationModel.destroy = destroy;
+
 addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
 
@@ -69,6 +81,14 @@ exports.getBusinessHoursModel = function () {
 
 exports.getMenuModel = function () {
   return menuModel;
+}
+
+exports.getMenuLanguageModel = function () {
+  return menuLanguageModel;
+}
+
+exports.getMenuTranslationsModel = function () {
+  return menuTranslationModel;
 }
 
 exports.getRestaurantMenuModel = function () {
