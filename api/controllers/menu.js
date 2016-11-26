@@ -24,7 +24,13 @@ function setDatabase (m) {
 
 //GET /menu
 function getAllMenu(req, res) {
-  return menuModel.findAll({where: {userId: req.userId}}).then(function(menus) {
+  return menuModel.findAll({
+    where: {userId: req.userId},
+    include: [{
+      model: menuTranslationsModel,
+      as: 'translations'
+    }]
+}).then(function(menus) {
     return res.json({ menus: menus });
   });
 }

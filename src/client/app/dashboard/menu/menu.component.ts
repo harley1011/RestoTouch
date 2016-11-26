@@ -117,7 +117,7 @@ export class MenuComponent implements OnInit {
 				this.create = false;
 			} else {
         let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
-			  this.menu = new Menu('', this.supportedLanguages, [translation], translation);
+			  this.menu = new Menu(this.supportedLanguages, [translation], translation);
 				this.create = true;
 			}
 		});
@@ -130,7 +130,7 @@ export class MenuComponent implements OnInit {
     if (values === null) return;
 
     var oldName = this.menu.selectedTranslation.name;
-    this.menu.name = values['name'];
+    this.menu.selectedTranslation.name = values['name'];
 
     if (this.create) {
       this.add();

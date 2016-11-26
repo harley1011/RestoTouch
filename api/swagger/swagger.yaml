@@ -805,8 +805,6 @@ definitions:
   Menu:
     type: object
     properties:
-      name:
-        type: string
       supportedLanguages:
         type: array
         items:
@@ -815,8 +813,6 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/MenuTranslations"
-    required:
-      - name
   RestaurantMenu:
     type: object
     properties:
