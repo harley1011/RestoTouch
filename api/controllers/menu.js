@@ -1,5 +1,6 @@
 var models = require("../../database/models");
 var menuModel;
+var categoryModel;
 setDatabase(models);
 
 module.exports = {
@@ -14,11 +15,16 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
+  categoryModel = models.getCategoryModel();
 }
 
 //GET /menu
 function getAllMenu(req, res) {
-  return menuModel.findAll({where: {userId: req.userId}}).then(function(menus) {
+  return menuModel.findAll({
+    where: {
+      userId: req.userId
+    }
+  }).then(function(menus) {
     return res.json({ menus: menus });
   });
 }
@@ -39,7 +45,10 @@ function getMenu(req, res) {
     where: {
       name: name,
       userId: req.userId
-    }
+    },
+    include: [{
+      model: categoryModel
+    }]
   }).then(function(menu) {
     if (menu) {
       res.json(menu);

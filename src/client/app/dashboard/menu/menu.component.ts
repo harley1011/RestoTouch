@@ -19,10 +19,7 @@ export class MenuComponent implements OnInit {
   create: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
-  categories: Category [];// This is the Available Category List
-
-  availableCategories: Array<string> = [];
-  userCategories: Array<string> = [];
+  availableCategories: Category [];// This is the Available Category List
 
 
   // We are using dependency injection to get instances of these services into our component.
@@ -35,22 +32,23 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.forEach((params: Params) => {
-      if (params['name']) {
-        this.getMenu(params['name']);
+      if (params['name']) {//TODO change name to id
+        this.getMenu(params['name']);//TODO change name to id
         this.create = false;
       } else {
         this.menu = new Menu('',[]);
         this.create = true;
       }
     });
+    // TODO Don't i have to check if there is categories or not ??
       this.getCategories();
-
   }
 
-  getMenu(name: string): void {
-    this.menuService.getMenu(name).subscribe(
+  getMenu(name: string): void {//TODO id: number
+    this.menuService.getMenu(name).subscribe(//TODO id: number
       menu => {
         this.menu = menu;
+        console.log(menu);//TODO------------------- for some reason the categories are not stored..
       },
       error => {
         this.errorMessage = <any>error;
@@ -60,7 +58,15 @@ export class MenuComponent implements OnInit {
    getCategories(): void {
      this.categoryService.getCategories().subscribe(
        categories => {
-         this.categories = categories;
+
+         for (let i = 0; i < categories.length; i++) {
+           for (let j = 0; j < this.menu.categories.length; j++) {
+             if(categories[i] === this.menu.categories[j]) {
+               //Do nothing; don't push
+             }
+             this.availableCategories.push(categories[i]);
+           }
+         }
        },
        error => {
         this.errorMessage = <any>error;
@@ -82,28 +88,9 @@ export class MenuComponent implements OnInit {
     } else {
       this.update(oldName);
     }
-    //this.addMenuCategories();
   }
 
-/*
-   addMenuCategories(): void {
-     //TODO calling addMenuCategory from menucategoryservice
-     for(let catindex = 0; catindex < this.categories.length; catindex++) {
-       if(this.categoryList[catindex] === true) {
-         this.menuCategoryService.addMenuCategory(this.menu.id, this.category.id).subscribe(
-           generalResponse => {
-            this.router.navigate(['/dashboard/menus']);
-           },
-           error => {
-            this.errorMessage = <any> error;
-           }
-         );
-       }
-     }
-   }*/
-
   add(): void {
-
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
@@ -114,6 +101,14 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  addCatClick(event: Event, catid: number): void {
+    if(catid) {
+      event.preventDefault();
+      if(this.create = false) {
+        this.menuCategoryService.addMenuCategory(this.menu.id, catid);//, order);//TODO
+      }
+    }
+  }
 
   update(oldName: string): void {
     this.menuService.updateMenu(this.menu, oldName).subscribe(
@@ -124,22 +119,6 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
-
-/*
-     //TODO calling updateMenuCategory from menucategoryservice
-     for(let i = 0; i < this.categoryList.length; i++) {
-       if (this.categoryList[i] === true) {
-         this.menuCategoryService.updateMenuCategory(this.menu.id , this.category.id).subscribe(
-           generalResponse => {
-            this.router.navigate(['/dashboard/menus']);
-           },
-           error => {
-            this.errorMessage = <any> error;
-           }
-         );
-       }
-     }
-*/
   }
 
   cancel(): void {
@@ -158,24 +137,12 @@ export class MenuComponent implements OnInit {
     );
   }
 
-/*
-    //TODO calling deleteMenuCategory from menucategoryservice
-   // By checking which selected categories are not in the 'Available Category' list then we know which one to delete.
-   for (let i = 0; i <= this.availableCategoryList.length - 1; i++) {
-     for (let j = 0; j < this.categoryList.length; i++) {
-       if (this.categoryList[i] === true) {
-         this.menuCategoryService.deleteMenuCategory(this.menu.id, this.category.id).subscribe(
-           generalResponse => {
-            this.router.navigate(['/dashboard/menus']);
-           },
-           error => {
-            this.errorMessage = <any> error;
-           }
-         );
-       }
-     }
-   }
-   */
+  deleteCatClick(event: Event, menuid: number, catid: number): void {
+    if(catid && menuid) {
+      event.preventDefault();
+      this.menuCategoryService.deleteMenuCategory(menuid, catid);
+    }
+  }
 }
 
 

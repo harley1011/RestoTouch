@@ -65,8 +65,16 @@ userModel.sync({force: dropTable}).then(function () {
     });
     restaurantMenuModel.sync({force: dropTable});
 
-    menuModel.belongsToMany(categoryModel, {through: menuCategoryModel, foreignKey: 'menuId'});
-    categoryModel.belongsToMany(menuModel, {through: menuCategoryModel, foreignKey: 'categoryId'});
+    menuModel.belongsToMany(categoryModel, {
+      through: menuCategoryModel,
+      onDelete: 'cascade',
+      foreignKey: 'menuId'
+    });
+    categoryModel.belongsToMany(menuModel, {
+      through: menuCategoryModel,
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
     menuCategoryModel.sync({force: dropTable});
 
   });

@@ -8,22 +8,46 @@
   </div>
 
   <div class="formContainer">
+
     <form id="menuForm" role="form">
 
       <div class="form-group">
         <label>Menu Name</label>
-        <input id="name" class="form-control" name="name" placeholder="Lunch Menu" value="{{menu?.name }}">
+        <input id="name" class="form-control" name="name" placeholder="ex: Lunch Menu" value="{{menu?.name }}">
       </div>
+
+
+        <div class="row" *ngIf="!create">
+          <div *ngFor="let category of menu.categories">
+            <ul class="col col-lg-12">
+              <i class="fa fa-fw fa-minus-square cat-delete" (click)="deleteCatClick($event, menu.id, category.id)"></i>
+                {{category.categoryName}}
+            </ul>
+          </div>
+
+          <h2 class="col col-lg-12">-----------------------------------------------------------------------</h2>
+
+            <div class="col-lg-12" *ngFor="let category of availableCategories">
+              <div (click)="addCatClick($event, menu.id, category.id)">
+                <i class="fa fa-fw fa-plus-square cat-delete" ></i>
+                {{category.categoryName}}
+              </div>
+            </div>
+
+        </div>
+
 
       <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Save</button>
           <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red">Delete</button>
-          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create
-          </button>
+          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create</button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">Cancel</button>
         </div>
       </div>
+
+
+
     </form>
 
     </div>
@@ -32,16 +56,6 @@
 
 <!--
 <div class="container-fluid">
-<h1>Create Menu</h1>
-  <div class="row">
-    <form id="menuForm" role="form">
-     <div class="col-lg-12">
-      <div class="form-group">
-        <input id="name" class="form-control" name="name" placeholder="Menu Name" value="{{menu?.name }}">
-      </div>
-     </div>
-    </form>
-  </div>
 
   <div id= "fatherOfSections" class="row">
     <div *ngFor="let section of sections; let i = index" class="col-lg-12 menuSection">
@@ -54,15 +68,6 @@
       +
     </div>
 
-  </div>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-primary">Confirm</button>
-      <button *ngIf="!create" (click)="delete()" class="btn btn-danger">Delete</button>
-      <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success">Create</button>
-      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
-    </div>
   </div>
 
 </div>

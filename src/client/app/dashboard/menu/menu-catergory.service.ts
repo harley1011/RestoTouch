@@ -14,10 +14,11 @@ export class MenuCategoryService {
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
 
-  addMenuCategory (menuId: number, categoryId: number): Observable<GeneralResponse> {
+  addMenuCategory (menuId: number, categoryId: number): Observable<GeneralResponse> {//TODO , order: number
     var categoryMenu = {
       menuId: menuId,
-      categoryId: categoryId
+      categoryId: categoryId,
+      //order: order,
     };
     let body = JSON.stringify(categoryMenu);
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -28,6 +29,7 @@ export class MenuCategoryService {
       .catch(this.handleError);
   }
 
+/*  Not needed for now
   updateMenuCategory (menuId: number, categoryId: number): Observable<GeneralResponse> {
     var categoryMenu = {
       menuId: menuId,
@@ -40,7 +42,7 @@ export class MenuCategoryService {
     return this.http.put(this.api.getEndpoint() + this.url + '/' + menuId + '+' + categoryId, body, options)
       .map(this.extractData)
       .catch(this.handleError);
-  }
+  }*/
 
   deleteMenuCategory (menuId: number, categoryId: number): Observable<GeneralResponse> {
     return this.http.delete(this.api.getEndpoint() + this.url + '/' + menuId + '+' + categoryId)

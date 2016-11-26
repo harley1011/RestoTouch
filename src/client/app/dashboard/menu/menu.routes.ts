@@ -6,7 +6,7 @@ export const MenuRoutes: Route[] = [
   	path: 'menu',
   	component: MenuComponent
   }, {
-    path: 'menu/:name',
+    path: 'menu/:name',//TODO change name to id
   	component: MenuComponent
   }
 ];
