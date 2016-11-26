@@ -4,6 +4,7 @@ var restaurantLanguageModel;
 var restaurantsTranslations;
 var businessHoursModel;
 var menuModel;
+var menuTranslationModel;
 var _ = require('lodash');
 
 
@@ -22,6 +23,7 @@ function setDatabase(m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
   menuModel = models.getMenuModel();
+  menuTranslationModel = models.getMenuTranslationsModel();
   restaurantLanguageModel = models.getRestaurantsLanguageModel();
   restaurantsTranslations = models.getRestaurantsTranslationModel();
   businessHoursModel = models.getBusinessHoursModel();
@@ -35,7 +37,10 @@ function getAll(req, res) {
       model: restaurantsTranslations,
       as: 'translations'
     }, {
-      model: menuModel
+      model: menuModel, include: [{
+        model: menuTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: businessHoursModel,
       as: 'businessHours'
@@ -80,7 +85,10 @@ function get(req, res) {
       model: restaurantsTranslations,
       as: 'translations'
     }, {
-      model: menuModel
+      model: menuModel, include: [{
+        model: menuTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: businessHoursModel,
       as: 'businessHours'

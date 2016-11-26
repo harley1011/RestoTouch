@@ -14,8 +14,8 @@ export class MenuService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getMenu (name: string): Observable<Menu> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
+  getMenu (menuId: number): Observable<Menu> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + menuId)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -36,18 +36,18 @@ export class MenuService {
       .catch(this.handleError);
   }
 
-  updateMenu (menu: Menu, oldName: string): Observable<GeneralResponse> {
+  updateMenu (menu: Menu): Observable<GeneralResponse> {
     let body = JSON.stringify(menu);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + oldName, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + menu.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteMenu (name: string): Observable<Menu> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + name)
+  deleteMenu (menu: Menu): Observable<Menu> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + menu.id)
       .map(this.extractData)
       .catch(this.handleError);
   }

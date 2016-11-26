@@ -7,6 +7,8 @@ var restaurantsLanguageModel = {};
 var restaurantsTranslationModel = {};
 var itemModel = {};
 var itemSizesModel = {};
+var menuLanguageModel = {};
+var menuTranslationModel = {};
 var itemLanguageModel = {};
 var itemTranslationModel = {};
 
@@ -51,10 +53,20 @@ itemLanguageModel.update = update;
 itemLanguageModel.findAll = findAll;
 itemLanguageModel.destroy = destroy;
 
+menuLanguageModel.create = create;
+menuLanguageModel.update = update;
+menuLanguageModel.findAll = findAll;
+menuLanguageModel.destroy = destroy;
+
 itemTranslationModel.create = create;
 itemTranslationModel.update = update;
 itemTranslationModel.findAll = findAll;
 itemTranslationModel.destroy = destroy;
+
+menuTranslationModel.create = create;
+menuTranslationModel.update = update;
+menuTranslationModel.findAll = findAll;
+menuTranslationModel.destroy = destroy;
 
 addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
@@ -81,6 +93,14 @@ exports.getBusinessHoursModel = function () {
 
 exports.getMenuModel = function () {
   return menuModel;
+}
+
+exports.getMenuLanguageModel = function () {
+  return menuLanguageModel;
+}
+
+exports.getMenuTranslationsModel = function () {
+  return menuTranslationModel;
 }
 
 exports.getRestaurantMenuModel = function () {
