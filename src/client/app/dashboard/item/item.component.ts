@@ -29,7 +29,7 @@ export class ItemComponent implements OnInit {
   uploading: boolean = false;
   finished: boolean = false;
 
-  constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
+
   //Translation Support
   languages: Array<Language>;
   addedLanguage: string;
