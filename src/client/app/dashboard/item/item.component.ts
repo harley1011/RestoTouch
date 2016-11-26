@@ -6,6 +6,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
+import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 
 @Component({
   moduleId: module.id,
@@ -40,7 +41,19 @@ export class ItemComponent implements OnInit {
   constructor(private itemService: ItemService,
               private router: Router,
               private route: ActivatedRoute,
-              private languageService: LanguageService) {
+              private languageService: LanguageService,
+              private element: ElementRef,
+              private imageUploadService: ImageUploadService,
+              private zone: NgZone) {
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 300;
+    this.cropperSettings.height = 300;
+
+    this.cropperSettings.croppedWidth = 300;
+    this.cropperSettings.croppedHeight = 300;
+
+    this.cropperSettings.canvasWidth = 300;
+    this.cropperSettings.canvasHeight = 300;
     this.languages = languageService.languages();
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
@@ -55,6 +68,13 @@ export class ItemComponent implements OnInit {
     //default to english
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
     languageService.announceSupportedLanguages(this.supportedLanguages);
+
+    this.cropperSettings.minWidth = 100;
+    this.cropperSettings.minHeight = 100;
+
+    this.cropperSettings.rounded = false;
+
+    this.cropperSettings.noFileInput = true;
     this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(64,64,64,1)';
     this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
     this.croppedImageContainer = {};
@@ -179,6 +199,12 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  isFinished() {
+    if (this.finished) {
+      this.router.navigate(['/dashboard/items']);
+    } else {
+      this.finished = true;
+    }
   }
 
   addLanguage() {
