@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item} from './../../shared/models/items';
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ImageUploadService} from '../../services/image-upload.service';
+import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
+import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
+
 @Component({
   moduleId: module.id,
   selector: 'item-cmp',
@@ -15,45 +19,164 @@ export class ItemComponent implements OnInit {
   item: Item;
   size = new Size('', 0);
   errorMessage: any;
+  cropperSettings: CropperSettings;
+  name: string;
+  croppedImageContainer: any;
+  croppedImage: any = 'assets/img/default-placeholder.png';
+  pictureMode: PictureMode = PictureMode.Select;
+  pictureModes = PictureMode;
+  progress: number = 0;
+  uploading: boolean = false;
+  finished: boolean = false;
 
-  constructor(private itemService: ItemService, private router: Router, private route: ActivatedRoute) {
+  @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
+
+  constructor(private itemService: ItemService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private element: ElementRef,
+              private imageUploadService: ImageUploadService,
+              private zone: NgZone) {
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 300;
+    this.cropperSettings.height = 300;
+
+    this.cropperSettings.croppedWidth = 300;
+    this.cropperSettings.croppedHeight = 300;
+
+    this.cropperSettings.canvasWidth = 300;
+    this.cropperSettings.canvasHeight = 300;
+
+    this.cropperSettings.minWidth = 100;
+    this.cropperSettings.minHeight = 100;
+
+    this.cropperSettings.rounded = false;
+
+    this.cropperSettings.noFileInput = true;
+
+    this.cropperSettings.cropperDrawSettings.strokeColor = 'rgba(64,64,64,1)';
+    this.cropperSettings.cropperDrawSettings.strokeWidth = 2;
+    this.croppedImageContainer = {};
   }
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         this.itemService.getItem(params['id']).subscribe(item => {
+          if (item.imageUrl.length !== 0) {
+            this.croppedImage = item.imageUrl;
+          }
           this.item = item;
           this.create = false;
+          this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
         });
       } else {
         this.item = new Item('', '', '', []);
         this.create = true;
+        this.pictureMode = PictureMode.Select;
       }
     });
   }
 
-  onSubmit() {
-    if (this.create) {
-      this.itemService.addItem(this.item).subscribe(
-        generalResponse => {
-          this.router.navigate(['/dashboard/items']);
-        },
-        error => {
-          this.errorMessage = <any> error;
-        });
+  selectFile() {
+    if (this.pictureMode === PictureMode.CropSelected) {
+      this.pictureMode = PictureMode.Crop;
+    } else if (this.pictureMode === PictureMode.Crop) {
+      this.croppedImage = this.croppedImageContainer.image;
+      this.pictureMode = PictureMode.CropSelected;
     } else {
-      this.itemService.updateItem(this.item).subscribe(
-        generalResponse => {
-          this.router.navigate(['/dashboard/items']);
-        },
-        error => {
-          this.errorMessage = <any> error;
-        });
-    }
+      var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
+      imageSelector.click();
 
+    }
+  }
+
+
+  onChange(fileInput: File) {
+    this.cropper.fileChangeListener(fileInput);
+    this.pictureMode = PictureMode.Crop;
+  }
+
+  clearImage() {
+    this.pictureMode = PictureMode.Select;
+    this.croppedImage = 'assets/img/default-placeholder.png';
+    this.item.imageUrl = '';
+  }
+
+  onSubmit() {
+    this.uploading = true;
+    if (this.create) {
+      var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+
+      if (imageSelector) {
+        this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+          this.item.imageUrl = response.url;
+
+          this.uploadImage(response.url, response.signedRequest);
+
+          this.itemService.addItem(this.item).subscribe(result => {
+              this.isFinished();
+            },
+            error => {
+              this.errorMessage = <any> error;
+            });
+        });
+      } else {
+        this.itemService.addItem(this.item).subscribe(generalResponse => {
+            this.router.navigate(['/dashboard/items']);
+          },
+          error => {
+            this.errorMessage = <any> error;
+          });
+      }
+    } else {
+      if (this.item.imageUrl !== this.croppedImage && this.croppedImage !== 'assets/img/default-placeholder.png') {
+        var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
+
+        this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
+          this.item.imageUrl = response.url;
+
+          this.itemService.updateItem(this.item).subscribe(result => {
+              this.isFinished();
+            },
+            error => {
+              this.errorMessage = <any> error;
+            });
+
+          this.uploadImage(response.url, response.signedRequest);
+        });
+      } else {
+        this.itemService.updateItem(this.item).subscribe(
+          generalResponse => {
+            this.router.navigate(['/dashboard/items']);
+          },
+          error => {
+            this.errorMessage = <any> error;
+          });
+      }
+    }
+  }
+
+  uploadImage(url: string, signedRequest: string) {
+    this.imageUploadService.progress$.subscribe(data => {
+      this.zone.run(() => {
+        this.progress = data;
+      });
+    });
+    this.imageUploadService.uploadImage(url, signedRequest,
+      this.croppedImageContainer.image).subscribe((result: number) => {
+      this.isFinished();
+    });
+  }
+
+  isFinished() {
+    if (this.finished) {
+      this.router.navigate(['/dashboard/items']);
+    } else {
+      this.finished = true;
+    }
   }
 
   addSize() {
@@ -75,4 +198,11 @@ export class ItemComponent implements OnInit {
   cancelItem() {
     this.router.navigate(['/dashboard/items']);
   }
+}
+
+enum PictureMode {
+  Select,
+  Edit,
+  Crop,
+  CropSelected
 }

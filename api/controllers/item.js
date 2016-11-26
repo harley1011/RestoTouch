@@ -1,4 +1,5 @@
 var models = require("../../database/models");
+var s3File = require("./s3File");
 var itemModel;
 var itemSizeModel;
 
@@ -42,7 +43,7 @@ function save(req, res) {
     return res.json({message: "At least one size is required"});
   }
 
-  return itemModel.create(item, {
+  itemModel.create(item, {
     include: [{
       model: itemSizeModel,
       as: 'sizes'
@@ -74,13 +75,20 @@ function get(req, res) {
 function update(req, res) {
   var item = req.body;
 
-  return itemModel.findOne({
+  itemModel.findOne({
     where: {id: item.id},
     include: [{model: itemSizeModel, as: 'sizes'}]
   }).then(function (oldItem) {
 
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
     var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
+
+    if (item.imageUrl != oldItem.imageUrl)
+    {
+      var split = oldItem.imageUrl.split('/');
+      req.imageKey = split[split.length - 1];
+      s3File.deleteImage(req,res);
+    }
 
     for (var prop in item) {
       oldItem[prop] = item[prop];
@@ -104,12 +112,23 @@ function update(req, res) {
 //DELETE /item/{item}
 function del(req, res) {
   var id = req.swagger.params.id.value;
-  return itemModel.destroy({
+  return itemModel.findOne({
     where: {
       id: id,
       userId: req.userId
     }
-  }).then(function (result) {
-    return res.json({success: 1, description: "Item Deleted"});
+  }).then(function (item) {
+    if (item) {
+      if (item.imageUrl) {
+        var split = item.imageUrl.split('/');
+        req.imageKey = split[split.length - 1];
+        s3File.deleteImage(req,res);
+      }
+      item.destroy();
+      return res.json({success: 1, description: "Item Deleted"});
+    } else {
+      res.status(204).send();
+    }
   });
-}
+};
+

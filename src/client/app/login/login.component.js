@@ -6,12 +6,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
+var user_1 = require('../shared/models/user');
 /**
-*	This class represents the lazy loaded LoginComponent.
-*/
+ *  This class represents the lazy loaded LoginComponent.
+ */
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
+        this.user = new user_1.User('', '');
+        this.errorMessage = '';
     }
+    LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        this.authService.authenticateUser(this.user)
+            .subscribe(function (generalResponse) {
+            return _this.router.navigate(['/dashboard/home']);
+        }, function (error) { return _this.errorMessage = error; });
+    };
     LoginComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -22,4 +34,3 @@ var LoginComponent = (function () {
     return LoginComponent;
 }());
 exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
