@@ -7,6 +7,7 @@ import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
+import {ImageUploadService} from '../../services/image-upload.service';
 
 @Component({
   moduleId: module.id,
