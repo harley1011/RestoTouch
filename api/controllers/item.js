@@ -2,6 +2,8 @@ var models = require("../../database/models");
 var s3File = require("./s3File");
 var itemModel;
 var itemSizeModel;
+var itemLanguageModel;
+var itemTranslationModel;
 
 var _ = require('lodash');
 
@@ -21,14 +23,17 @@ function setDatabase(m) {
   models = m;
   itemModel = models.getItemModel();
   itemSizeModel = models.getItemSizesModel();
+  itemLanguageModel = models.getItemLanguageModel();
+  itemTranslationModel = models.getItemTranslationModel();
 }
 
 
 function getAll(req, res) {
   return itemModel.findAll({
     where: {userId: req.userId},
-    include: [{model: itemSizeModel, as: 'sizes'}],
-    order: ['name']
+    include: [{model: itemSizeModel, as: 'sizes'},
+              {model: itemTranslationModel, as: 'translations'}],
+    //order: ['name']
   }).then(function (items) {
     return res.json({items: items});
   });
@@ -47,6 +52,12 @@ function save(req, res) {
     include: [{
       model: itemSizeModel,
       as: 'sizes'
+    }, {
+      model: itemLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: itemTranslationModel,
+      as: 'translations'
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Item Added"});
@@ -61,7 +72,16 @@ function get(req, res) {
       id: id,
       userId: req.userId
     },
-    include: [{model: itemSizeModel, as: 'sizes'}]
+    include: [{
+      model: itemSizeModel, 
+      as: 'sizes'
+    }, {
+      model: itemLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: itemTranslationModel,
+      as: 'translations'
+    }]
   }).then(function (item) {
     if (item) {
       return res.json(item);
@@ -77,11 +97,15 @@ function update(req, res) {
 
   itemModel.findOne({
     where: {id: item.id},
-    include: [{model: itemSizeModel, as: 'sizes'}]
+    include: [{model: itemSizeModel, as: 'sizes'},
+              {model: itemLanguageModel, as: 'supportedLanguages'},
+              {model: itemTranslationModel, as: 'translations'}]
   }).then(function (oldItem) {
 
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
     var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
+    var languagesToRemove = _.differenceBy(oldItem.supportedLanguages, item.supportedLanguages, 'languageCode');
+    var languagesToAdd = _.differenceBy(item.supportedLanguages, oldItem.supportedLanguages, 'languageCode');
 
     if (item.imageUrl != oldItem.imageUrl)
     {
@@ -91,7 +115,8 @@ function update(req, res) {
     }
 
     for (var prop in item) {
-      oldItem[prop] = item[prop];
+      if(prop != 'translations')
+        oldItem[prop] = item[prop];
     }
     sizesToAdd.forEach(function (size) {
       size.itemId = oldItem.id;
@@ -102,8 +127,35 @@ function update(req, res) {
       itemSizeModel.destroy({where: {id: size.id}})
     })
 
+    oldItem.translations.forEach(function(translation) {
+      var newTranslation = _.find(item.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      for (var prop in newTranslation ) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(item.translations, function (tr) {return tr.languageCode === translation.languageCode});
+    });
+
+    item.translations.forEach(function (translation) {
+      translation.itemId = item.id;
+    })
+
+    itemTranslationModel.bulkCreate(item.translations);
+
     oldItem.save().then(function (result) {
-      return res.json({success: 1, description: "Item updated"});
+      languagesToRemove.forEach(function (language) {
+        itemLanguageModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
+        itemTranslationModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
+        _.remove(oldItem.translations, function (translation) {return translation.languageCode == language.languageCode})
+      })
+
+      languagesToAdd.forEach(function (language) {
+        language.itemId = item.id;
+      })
+
+      itemLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
+        return res.json({success: 1, description: "Item updated"});
+      })
     })
 
   });

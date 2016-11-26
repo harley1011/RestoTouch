@@ -737,18 +737,21 @@ definitions:
   Item:
     type: object
     properties:
-      name:
-        type: string
-      description:
-        type: string
       imageUrl:
         type: string
       itemSizes:
         type: array
         items:
           "$ref": "#/definitions/ItemSize"
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ItemTranslations"
     required:
-      - name
       - imageUrl
   ItemSize:
     type: object
@@ -760,6 +763,19 @@ definitions:
     required:
       - name
       - price
+  ItemTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - description
+      - languageCode
   RestaurantListResponse:
     required:
       - restaurants
