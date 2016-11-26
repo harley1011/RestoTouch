@@ -30,6 +30,7 @@ export class ItemComponent implements OnInit {
   uploading: boolean = false;
   finished: boolean = false;
 
+  @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
   //Translation Support
   languages: Array<Language>;
