@@ -5,8 +5,7 @@ function __export(m) {
 /**
  * This barrel file provides the exports for the shared resources (services, components).
  */
-__export(require('./topnav/index'));
-__export(require('./sidebar/index'));
 __export(require('./name-list/index'));
+__export(require('./navbar/index'));
+__export(require('./toolbar/index'));
 __export(require('./config/env.config'));
-//# sourceMappingURL=index.js.map

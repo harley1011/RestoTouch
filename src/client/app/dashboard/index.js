@@ -7,4 +7,3 @@ function __export(m) {
 */
 __export(require('./dashboard.component'));
 __export(require('./dashboard.routes'));
-//# sourceMappingURL=index.js.map
