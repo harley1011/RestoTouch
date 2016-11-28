@@ -17,8 +17,12 @@ function setDatabase (m) {
 
 //POST /menuCategory
 function saveMenuCategory(req, res) {
-
   var menuCategory = req.body;
+
+  menuCategory.userId = req.userId;
+  menuCategory.categoryId = req.categoryId;
+  menuCategory.order = req.order;
+
   return menuCategoryModel.create(menuCategory).then(function(result){
     return res.json({success: 1, description: "Added Category to Menu"});
   });

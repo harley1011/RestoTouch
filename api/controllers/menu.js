@@ -1,6 +1,6 @@
 var models = require("../../database/models");
 var menuModel;
-var categoryModel;
+//var categoryModel;
 setDatabase(models);
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
-  categoryModel = models.getCategoryModel();
+  //categoryModel = models.getCategoryModel(); // TODO check why this causing error
 }
 
 //GET /menu
@@ -46,9 +46,10 @@ function getMenu(req, res) {
       name: name,
       userId: req.userId
     },
-    include: [{
-      model: categoryModel
-    }]
+   /*include: [{
+      model: categoryModel,
+      as: 'categories'
+    }]*/
   }).then(function(menu) {
     if (menu) {
       res.json(menu);

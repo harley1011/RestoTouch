@@ -14,11 +14,11 @@ export class MenuCategoryService {
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
 
-  addMenuCategory (menuId: number, categoryId: number): Observable<GeneralResponse> {//TODO , order: number
+  addMenuCategory (menuId: number, categoryId: number, order: number): Observable<GeneralResponse> {
     var categoryMenu = {
       menuId: menuId,
       categoryId: categoryId,
-      //order: order,
+      order: order,
     };
     let body = JSON.stringify(categoryMenu);
     let headers = new Headers({ 'Content-Type': 'application/json' });

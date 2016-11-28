@@ -37,6 +37,9 @@ describe("The MenuCategory API", function() {
           },
           categoryId: {
             value: 1
+          },
+          order: {
+            value: 2
           }
         }
       }

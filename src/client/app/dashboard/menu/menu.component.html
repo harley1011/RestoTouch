@@ -17,23 +17,23 @@
       </div>
 
 
-        <div class="row" *ngIf="!create">
-          <div *ngFor="let category of menu.categories">
+        <div class="row" *ngIf="!create && !menuCatUndefinedYet">
+
+          <h3>Selected Categories</h3>
+          <div *ngFor="let category of userSelectedCategories">
             <ul class="col col-lg-12">
-              <i class="fa fa-fw fa-minus-square cat-delete" (click)="deleteCatClick($event, menu.id, category.id)"></i>
+              <i class="fa fa-fw fa-minus-square" (click)="deleteCatClick($event, category.id)"></i>
                 {{category.categoryName}}
             </ul>
           </div>
 
-          <h2 class="col col-lg-12">-----------------------------------------------------------------------</h2>
-
-            <div class="col-lg-12" *ngFor="let category of availableCategories">
-              <div (click)="addCatClick($event, menu.id, category.id)">
-                <i class="fa fa-fw fa-plus-square cat-delete" ></i>
-                {{category.categoryName}}
-              </div>
+            <h3>Available Categories</h3>
+            <div *ngFor="let category of availableCategories">
+              <ul class="col col-lg-12">
+                <i class="fa fa-fw fa-plus-square" (click)="addCatClick($event, category.id)"></i>
+                 {{category.categoryName}}
+              </ul>
             </div>
-
         </div>
 
 
@@ -45,30 +45,7 @@
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">Cancel</button>
         </div>
       </div>
-
-
-
     </form>
 
     </div>
   </div>
-
-
-<!--
-<div class="container-fluid">
-
-  <div id= "fatherOfSections" class="row">
-    <div *ngFor="let section of sections; let i = index" class="col-lg-12 menuSection">
-      A Section
-      <div id="rmvSectionBtn" class="removeButtonhover" (click)="removeSection(section)">
-        -
-      </div>
-    </div>
-    <div id="addSectionBtn" class="col-lg-6 menuSection addButtonhover" (click)="addSection()">
-      +
-    </div>
-
-  </div>
-
-</div>
--->

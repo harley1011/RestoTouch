@@ -15,7 +15,7 @@ export class MenuService {
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
   getMenu (name: string): Observable<Menu> { //TODO id: number
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)//TODO id: number
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + name)
       .map(this.extractData)
       .catch(this.handleError);
   }

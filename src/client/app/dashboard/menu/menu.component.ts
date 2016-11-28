@@ -20,7 +20,9 @@ export class MenuComponent implements OnInit {
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Category [];// This is the Available Category List
-
+  userSelectedCategories: Category [];
+  menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
+  categoriesInDb: Category [];
 
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
@@ -40,33 +42,42 @@ export class MenuComponent implements OnInit {
         this.create = true;
       }
     });
-    // TODO Don't i have to check if there is categories or not ??
-      this.getCategories();
+    this.getCategories();
   }
 
   getMenu(name: string): void {//TODO id: number
     this.menuService.getMenu(name).subscribe(//TODO id: number
       menu => {
         this.menu = menu;
-        console.log(menu);//TODO------------------- for some reason the categories are not stored..
+        //this.getCategories();
+        if(!(menu.categories)) {
+          this.menu.categories = [];
+        }
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
   }
+
    getCategories(): void {
      this.categoryService.getCategories().subscribe(
        categories => {
+         this.categoriesInDb = categories;
+         this.availableCategories = [];
+         for(let i = 0; i < categories.length; i++) {
+           this.availableCategories.push(categories[i]);
+         }
 
-         for (let i = 0; i < categories.length; i++) {
-           for (let j = 0; j < this.menu.categories.length; j++) {
-             if(categories[i] === this.menu.categories[j]) {
-               //Do nothing; don't push
+         if (this.menu.categories.length !== 0) {
+           for(let i = 0; i < this.availableCategories.length; i++) {
+             if(this.menu.categories[i].id === this.availableCategories[i].id) {
+               this.availableCategories.splice(i, 1);
              }
-             this.availableCategories.push(categories[i]);
            }
          }
+
+         this.menuCatUndefinedYet = false;
        },
        error => {
         this.errorMessage = <any>error;
@@ -88,6 +99,16 @@ export class MenuComponent implements OnInit {
     } else {
       this.update(oldName);
     }
+    // 1. clean the database for menuCategory model
+    for(let i = 0; i < this.categoriesInDb.length; i++) {
+     this.menuCategoryService.deleteMenuCategory(this.menu.id, this.categoriesInDb[i].id);
+    }
+
+    // 2. add new user selected categories (menu.categories) into the database
+    // The order is the order of the index i of menu.categories
+    for(let i = 0; i < this.menu.categories.length; i++) {
+      this.menuCategoryService.addMenuCategory(this.menu.id, this.menu.categories[i].id, i);
+    }
   }
 
   add(): void {
@@ -104,8 +125,13 @@ export class MenuComponent implements OnInit {
   addCatClick(event: Event, catid: number): void {
     if(catid) {
       event.preventDefault();
-      if(this.create = false) {
-        this.menuCategoryService.addMenuCategory(this.menu.id, catid);//, order);//TODO
+      if(!(this.create)) {
+        for(let i = 0; i < this.availableCategories.length; i++) {
+          if(this.availableCategories[i].id === catid) {
+            this.menu.categories.push(this.availableCategories[i]);
+            this.availableCategories.splice(i,1);
+          }
+        }
       }
     }
   }
@@ -137,10 +163,17 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  deleteCatClick(event: Event, menuid: number, catid: number): void {
-    if(catid && menuid) {
+  deleteCatClick(event: Event, catid: number): void {
+    if(catid) {
       event.preventDefault();
-      this.menuCategoryService.deleteMenuCategory(menuid, catid);
+      if(!(this.create)) {
+        for(let i = 0; i < this.menu.categories.length; i++) {
+          if(this.menu.categories[i].id === catid) {
+            this.availableCategories.push(this.menu.categories[i]);
+            this.menu.categories.splice(i,1);
+          }
+        }
+      }
     }
   }
 }

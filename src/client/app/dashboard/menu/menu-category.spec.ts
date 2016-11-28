@@ -51,12 +51,12 @@ export function main() {
 
     it('should add category to Menu', () => {
 
-      var mockCategories = Category[new Category('Salads'), new Category('Burgers'),new Category('Sweets')];
+      var mockCategories = [new Category('Salads'), new Category('Burgers'),new Category('Sweets')];
 
       var mockMenu = new Menu('Lunch Menu', mockCategories);
       var mockSandwishes = new Category('Sandwishes');
 
-        initialResponse = menuCategoryService.addMenuCategory(mockMenu.id, mockSandwishes.id);
+        initialResponse = menuCategoryService.addMenuCategory(mockMenu.id, mockSandwishes.id, 1);
 
         connection.mockRespond(new Response(new ResponseOptions({body: '{"success": 1, "description": "Menu Category Added"}'})));
 
@@ -74,6 +74,7 @@ export function main() {
 
     });
 
+    /* Not need
     it('should update category to Menu', () => {
       var mockCategories = [new Category('Salads'), new Category('Burgers') , new Category('Sweets')];
 
@@ -97,7 +98,7 @@ export function main() {
           description: 'Menu Category Updated'
         });
       }
-    });
+    });*/
 
     it('should delete category to Menu', () => {
 
