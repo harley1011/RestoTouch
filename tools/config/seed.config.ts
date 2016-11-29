@@ -50,6 +50,9 @@ export class SeedConfig {
    */
   PORT = argv['port'] || 5555;
 
+  FONTS_DEST = '';
+
+  FONTS_SRC = ['node_modules/font-awesome/css/**', 'node_modules/font-awesome/fonts/**'];
   /**
    * The root folder of the project (up two levels from the current directory).
    */

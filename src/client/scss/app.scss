@@ -1,41 +1,41 @@
 @font-face {
     font-family: 'Maven Pro';
-    src: url('../fonts/Maven_Pro/MavenPro-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Maven_Pro/MavenPro-Regular.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Maven Pro';
-    src: url('../fonts/Maven_Pro/MavenPro-Bold.ttf') format('truetype');
+    src: url('../assets/fonts/Maven_Pro/MavenPro-Bold.ttf') format('truetype');
     font-weight: 700;
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('../fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Montserrat';
-    src: url('../fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+    src: url('../assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
 }
 
 
 @font-face {
     font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Regular.ttf') format('truetype');
+    src: url('../assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Lato';
-    src: url('../fonts/Lato/Lato-Light.ttf') format('truetype');
+    src: url('../assets/fonts/Lato/Lato-Light.ttf') format('truetype');
     font-weight: 300;
 }
 
 $green: #5cb85c;
 $red: #d9534f;
 
-@import "../bootstrap/_variables";
+@import "../assets/bootstrap/_variables";
 @import "app-base";
 @import "category";
 @import "login";
