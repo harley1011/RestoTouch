@@ -19,10 +19,9 @@ var AppComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'sd-app',
-            templateUrl: 'app.component.html'
+            templateUrl: 'app.component.html',
         })
     ], AppComponent);
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map

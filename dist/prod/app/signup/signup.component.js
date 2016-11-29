@@ -6,12 +6,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
+var user_1 = require('../shared/models/user');
 /**
 *	This class represents the lazy loaded SignupComponent.
 */
 var SignupComponent = (function () {
-    function SignupComponent() {
+    function SignupComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
+        this.user = new user_1.User('', '', '', '', '');
+        this.errorMessage = '';
     }
+    SignupComponent.prototype.onSubmit = function () {
+        var _this = this;
+        if (this.user.password !== this.user.passwordConfirm) {
+            this.errorMessage = 'Passwords do not match';
+            return;
+        }
+        this.authService.registerUser(this.user)
+            .subscribe(function (loginResponse) {
+            console.log(loginResponse);
+            _this.router.navigate(['/dashboard/restaurants']);
+        }, function (error) { return _this.errorMessage = error; });
+    };
     SignupComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -22,4 +39,3 @@ var SignupComponent = (function () {
     return SignupComponent;
 }());
 exports.SignupComponent = SignupComponent;
-//# sourceMappingURL=signup.component.js.map

@@ -18,6 +18,35 @@ consumes:
 produces:
   - application/json
 paths:
+  /s3ImageUploadUrl:
+    x-swagger-router-controller: s3File
+    get:
+      # used as the method name of the controller
+      operationId: getS3UploadImageKey
+      description: Returns an upload url for an image
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/S3ImageUploadResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      parameters:
+      - name: imageName
+        in: query
+        description: name of image
+        required: true
+        type: string
+        format: string
+      - name: imageType
+        in: query
+        description: type of image
+        required: true
+        type: string
+        format: string
   /item:
      # binds a127 app logic to a route
     x-swagger-router-controller: item
@@ -373,7 +402,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /menu/{name}:
+  /menu/{menuId}:
     # binds a127 app logic to a route
     x-swagger-router-controller: menu
     get:
@@ -381,8 +410,8 @@ paths:
       # used as the method name of the controller
       operationId: getMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
       responses:
@@ -401,8 +430,8 @@ paths:
       # used as the method name of the controller
       operationId: updateMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
         - name: menu
@@ -427,8 +456,8 @@ paths:
       # used as the method name of the controller
       operationId: delMenu
       parameters:
-        - name: name
-          type: string
+        - name: menuId
+          type: number
           in: path
           required: true
       responses:
@@ -650,6 +679,16 @@ definitions:
       - firstName
       - lastName
       - email
+  S3ImageUploadResponse:
+    type: object
+    properties:
+      signedRequest:
+        type: string
+      url:
+        type: string
+    required:
+        - signedRequest
+        - url
   Auth:
     type: object
     properties:
@@ -698,16 +737,22 @@ definitions:
   Item:
     type: object
     properties:
-      name:
-        type: string
-      description:
+      imageUrl:
         type: string
       itemSizes:
         type: array
         items:
           "$ref": "#/definitions/ItemSize"
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ItemTranslations"
     required:
-      - name
+      - imageUrl
   ItemSize:
     type: object
     properties:
@@ -718,6 +763,19 @@ definitions:
     required:
       - name
       - price
+  ItemTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - description
+      - languageCode
   RestaurantListResponse:
     required:
       - restaurants
@@ -745,38 +803,39 @@ definitions:
       - name
       - description
       - languageCode
+  MenuTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
+  BusinessHour:
+    type: object
+    properties:
+      day:
+        type: number
+      shift:
+        type: number
+      openTime:
+        type: string
+      closeTime:
+        type: string
+      active:
+        type: boolean
+    required:
+      - day
+      - shift
+      - openTime
+      - closeTime
+      - active
   Restaurant:
     type: object
     properties:
       address:
-        type: string
-      mOpen:
-        type: string
-      mClose:
-        type: string
-      tuOpen:
-        type: string
-      tuClose:
-        type: string
-      wOpen:
-        type: string
-      wClose:
-        type: string
-      thOpen:
-        type: string
-      thClose:
-        type: string
-      fOpen:
-        type: string
-      fClose:
-        type: string
-      saOpen:
-        type: string
-      saClose:
-        type: string
-      suOpen:
-        type: string
-      suClose:
         type: string
       supportedLanguages:
         type: array
@@ -786,22 +845,12 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/RestaurantTranslations"
+      businessHours:
+        type: array
+        items:
+          "$ref": "#/definitions/BusinessHour"
     required:
       - address
-      - mOpen
-      - mClose
-      - tuOpen
-      - tuClose
-      - wOpen
-      - wClose
-      - thOpen
-      - thClose
-      - fOpen
-      - fClose
-      - saOpen
-      - saClose
-      - suOpen
-      - suClose
   MenuListResponse:
     required:
       - menus
@@ -814,10 +863,14 @@ definitions:
   Menu:
     type: object
     properties:
-      name:
-        type: string
-    required:
-      - name
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/MenuTranslations"
   RestaurantMenu:
     type: object
     properties:
