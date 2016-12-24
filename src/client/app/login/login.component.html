@@ -5,10 +5,11 @@
     <div class="col col-md-5 loginFormContainer">
         <!-- register/language emplacement -->
         <div class="row loginFormNav">
-            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'register.register' | translate }}</span></a> &emsp;|&emsp;
-        <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'loginTop.register' | translate }}</span></a> 
+            &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; {{ 'loginTop.choose' | translate }} &nbsp;
         <select #langSelect (change)="translate.use(langSelect.value)">
-          <option *ngFor="let lang of translate.getLangs()" [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+          <option value="en" [selected]="en === translate.currentLang">English</option>
+          <option value="fr" [selected]="fr === translate.currentLang">Français</option>
         </select>
         </div>
 
@@ -24,7 +25,7 @@
             <div class="form-content">
                 <!-- input box for email-->
                 <div class="form-group">
-                    <input type="email" class="form-control input-underline input-lg" id="email" placeholder="Email" required
+                    <input type="email" class="form-control input-underline input-lg" id="email" placeholder="{{ 'loginForm.emailHolder' | translate }}" required
             [(ngModel)]="user.email" name="email" #email="ngModel">
                 </div>
                 <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> {{ 'loginForm.emailRequired' | translate }}</div>

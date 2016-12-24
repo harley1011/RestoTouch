@@ -1,6 +1,7 @@
 {
-  "register": {
-    "register": "Register"
+  "loginTop": {
+    "register": "Register",
+    "choose" : "Choose language"
   },
 
   "loginFormHeader": {
@@ -11,6 +12,7 @@
   "loginForm": {
     "emailRequired": "E-mail is required",
     "passwordRequired": "Password is required",
+    "emailHolder": "E-mail",
     "passwordHolder": "Password",
     "logButton": "Log in"
   }
