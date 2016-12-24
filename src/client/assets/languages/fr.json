@@ -1,19 +1,13 @@
 {
-  "loginTop": {
+  "login": {
     "register": "Inscrire",
-    "choose" : "Choisir la langue:"
-  },
-
-  "loginFormHeader": {
-    "title": "Allo",
-    "bodyText": "Veuillez entrer vos informations d'identification."
-  },
-
-  "loginForm": {
-    "emailRequired": "Courrier électronique est requis",
-    "passwordRequired": "Mot de passe requis",
-    "emailHolder": "Courrier électronique",
-    "passwordHolder": "Mot de passe",
+    "choose" : "Choisir la langue:",
+    "titleHeader": "Allo",
+    "bodyTextHeader": "Veuillez entrer vos informations d'identification.",
+    "emailRequiredAlert": "Le courrier électronique est requis",
+    "passwordRequiredAlert": "Le mot de passe est requis",
+    "emailHolderFieldForm": "Courrier électronique",
+    "passwordHolderFieldForm": "Mot de passe",
     "logButton": "Entrer"
   }
 }

@@ -1,19 +1,13 @@
 {
-  "loginTop": {
+  "login": {
     "register": "Register",
-    "choose" : "Choose language"
-  },
-
-  "loginFormHeader": {
-    "title": "Hello",
-    "bodyText": "Please enter your login information."
-  },
-
-  "loginForm": {
-    "emailRequired": "E-mail is required",
-    "passwordRequired": "Password is required",
-    "emailHolder": "E-mail",
-    "passwordHolder": "Password",
+    "choose" : "Choose language",
+    "titleHeader": "Hello",
+    "bodyTextHeader": "Please enter your login information.",
+    "emailRequiredAlert": "E-mail is required",
+    "passwordRequiredAlert": "Password is required",
+    "emailHolderFieldForm": "E-mail",
+    "passwordHolderFieldForm": "Password",
     "logButton": "Log in"
   }
 }

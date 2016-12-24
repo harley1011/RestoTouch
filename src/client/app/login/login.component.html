@@ -5,8 +5,8 @@
     <div class="col col-md-5 loginFormContainer">
         <!-- register/language emplacement -->
         <div class="row loginFormNav">
-            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'loginTop.register' | translate }}</span></a> 
-            &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; {{ 'loginTop.choose' | translate }} &nbsp;
+            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'login.register' | translate }}</span></a> 
+            &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; {{ 'login.choose' | translate }} &nbsp;
         <select #langSelect (change)="translate.use(langSelect.value)">
           <option value="en" [selected]="en === translate.currentLang">English</option>
           <option value="fr" [selected]="fr === translate.currentLang">Français</option>
@@ -16,8 +16,8 @@
         <!-- login form -->
         <div class="row loginPageContent">
         <div class="row loginFormHeader">
-            <h1 class="loginPageTitle">{{ 'loginFormHeader.title' | translate }}</h1>
-            <p class="loginPageBodyText">{{ 'loginFormHeader.bodyText' | translate }}</p>
+            <h1 class="loginPageTitle">{{ 'login.titleHeader' | translate }}</h1>
+            <p class="loginPageBodyText">{{ 'login.bodyTextHeader' | translate }}</p>
         </div>
 
         <!-- login elements form -->
@@ -25,20 +25,20 @@
             <div class="form-content">
                 <!-- input box for email-->
                 <div class="form-group">
-                    <input type="email" class="form-control input-underline input-lg" id="email" placeholder="{{ 'loginForm.emailHolder' | translate }}" required
+                    <input type="email" class="form-control input-underline input-lg" id="email" placeholder="{{ 'login.emailHolderFieldForm' | translate }}" required
             [(ngModel)]="user.email" name="email" #email="ngModel">
                 </div>
-                <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> {{ 'loginForm.emailRequired' | translate }}</div>
+                <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> {{ 'login.emailRequiredAlert' | translate }}</div>
 
                 <!-- input box for password-->
                 <div class="form-group">
-                    <input type="password" class="form-control input-underline input-lg" id="password" placeholder="{{ 'loginForm.passwordHolder' | translate }}" required
+                    <input type="password" class="form-control input-underline input-lg" id="password" placeholder="{{ 'login.passwordHolderFieldForm' | translate }}" required
             [(ngModel)]="user.password" name="password" #password="ngModel">
                 </div>
-                <div [hidden]="password.valid || password.pristine" class="alert alert-danger">{{ 'loginForm.passwordRequired' | translate }}</div>
+                <div [hidden]="password.valid || password.pristine" class="alert alert-danger">{{ 'login.passwordRequiredAlert' | translate }}</div>
                 <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
                 <!-- buttons -->
-                <button type="submit" class="btn btn-success loginBtn rounded-btn">{{ 'loginForm.logButton' | translate }}</button></div>
+                <button type="submit" class="btn btn-success loginBtn rounded-btn">{{ 'login.logButton' | translate }}</button></div>
         </form>
         </div>
     </div>
