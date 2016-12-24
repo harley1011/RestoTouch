@@ -8,7 +8,7 @@
     "passwordRequiredAlert": "Le mot de passe est requis",
     "emailHolderFieldForm": "Courrier électronique",
     "passwordHolderFieldForm": "Mot de passe",
-    "logButton": "Entrer"
+    "logButton": "Se connecter"
   },
 
   "logout": {
@@ -18,5 +18,22 @@
     "formSousTitle": "Déconnecté par erreur?",
     "formTitle2": "Se connecter à nouveau:",
     "formLogButton": "Reconnecter"
+  },
+
+     "registration": {
+    "loginLink": "Se Connecter",
+    "title": "Bienvenue",
+    "sousTitle": "Joignez RestoTouch aujourd'hui",
+    "firstNameAlert": "Le prénom est requis",
+    "lastNameAlert": "Le nom de famille est requis",
+    "emailAlert": "Une adresse électonique valide est requise",
+    "passwordAlert": "Un mot de passe est requis",
+    "confirmPasswordAlert": "Veuillez confirmer votre mot de passe",
+    "firstNameFieldForm": "Prénom",
+    "lastNameFieldForm": "Nom de famille",
+    "emailFieldForm": "Adresse électronique",
+    "passwordFieldForm": "Mot de passe",
+    "confirmPasswordFieldForm": "Confirmez le mot de passe",
+    "registerButton": "S'enregistrer"
   }
 }

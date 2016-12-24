@@ -18,5 +18,22 @@
     "formSousTitle": "Got sign out by mistake?",
     "formTitle2": "Sign back in:",
     "formLogButton": "Log back in"
+  },
+
+   "registration": {
+    "loginLink": "Log In",
+    "title": "Welcome",
+    "sousTitle": "Join RestoTouch today",
+    "firstNameAlert": "First name is required",
+    "lastNameAlert": "Last name is required",
+    "emailAlert": "A valid email is required",
+    "passwordAlert": "A password is required",
+    "confirmPasswordAlert": "Please confirm your password",
+    "firstNameFieldForm": "First name",
+    "lastNameFieldForm": "Last name",
+    "emailFieldForm": "E-mail",
+    "passwordFieldForm": "Password",
+    "confirmPasswordFieldForm": "Confirm password",
+    "registerButton": "Register"
   }
 }
