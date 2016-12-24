@@ -9,5 +9,14 @@
     "emailHolderFieldForm": "Courrier électronique",
     "passwordHolderFieldForm": "Mot de passe",
     "logButton": "Entrer"
+  },
+
+  "logout": {
+    "title": "Sortez?",
+    "sousTitle": "Pas d'inquiètude! Nous avons terminé votre session.\nVenez nous voir bientôt!",
+    "formTitle": "Oups",
+    "formSousTitle": "Déconnecté par erreur?",
+    "formTitle2": "Se connecter à nouveau:",
+    "formLogButton": "Reconnecter"
   }
 }

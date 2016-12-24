@@ -9,5 +9,14 @@
     "emailHolderFieldForm": "E-mail",
     "passwordHolderFieldForm": "Password",
     "logButton": "Log in"
+  },
+
+  "logout": {
+    "title": "Heading Out?",
+    "sousTitle": "We got your back! We've closed your session.\nCome see us again!",
+    "formTitle": "Oops",
+    "formSousTitle": "Got sign out by mistake?",
+    "formTitle2": "Sign back in:",
+    "formLogButton": "Log back in"
   }
 }
