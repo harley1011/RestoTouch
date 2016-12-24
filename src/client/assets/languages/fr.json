@@ -12,7 +12,7 @@
   },
 
   "logout": {
-    "title": "Sortez?",
+    "title": "Vous sortez?",
     "sousTitle": "Pas d'inquiètude! Nous avons terminé votre session.\nVenez nous voir bientôt!",
     "formTitle": "Oups",
     "formSousTitle": "Déconnecté par erreur?",
