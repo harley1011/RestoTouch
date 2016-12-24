@@ -4,8 +4,8 @@
   },
 
   "loginFormHeader": {
-    "title": "BONJOUR",
-    "bodyText": "Veuillez entrer vos informations."
+    "title": "Allo",
+    "bodyText": "Veuillez entrer vos informations d'identification."
   },
 
   "loginForm": {

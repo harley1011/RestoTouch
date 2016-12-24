@@ -2,9 +2,9 @@
   "register": {
     "register": "Register"
   },
-  
+
   "loginFormHeader": {
-    "title": "HELLO",
+    "title": "Hello",
     "bodyText": "Please enter your login information."
   },
 
