@@ -1,0 +1,17 @@
+{
+  "register": {
+    "register": "Inscrire"
+  },
+
+  "loginFormHeader": {
+    "title": "BONJOUR",
+    "bodyText": "Veuillez entrer vos informations."
+  },
+
+  "loginForm": {
+    "emailRequired": "E-mail est requis",
+    "passwordRequired": "Mot de passe requis",
+    "passwordHolder": "Mot de passe",
+    "logButton": "Entrer"
+  }
+}

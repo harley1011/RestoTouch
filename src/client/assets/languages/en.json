@@ -1,0 +1,17 @@
+{
+  "register": {
+    "register": "Register"
+  },
+  
+  "loginFormHeader": {
+    "title": "HELLO",
+    "bodyText": "Please enter your login information."
+  },
+
+  "loginForm": {
+    "emailRequired": "E-mail is required",
+    "passwordRequired": "Password is required",
+    "passwordHolder": "Password",
+    "logButton": "Log in"
+  }
+}

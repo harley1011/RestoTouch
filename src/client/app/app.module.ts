@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 
@@ -16,6 +16,7 @@ import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
 import { LanguageService } from './services/language.service';
 import { ImageUploadService } from './services/image-upload.service';
+import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 
 @NgModule({
 	imports: [
@@ -26,7 +27,15 @@ import { ImageUploadService } from './services/image-upload.service';
 		LogoutModule,
 		SignupModule,
 		DashboardModule,
-		SharedModule.forRoot()
+		SharedModule.forRoot(),
+		TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/languages', '.json'),
+            deps: [Http]
+        })
+	],
+	exports: [
+		TranslateModule
 	],
 	declarations: [AppComponent],
 	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, ImageUploadService, {
