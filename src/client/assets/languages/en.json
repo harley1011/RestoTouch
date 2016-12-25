@@ -106,6 +106,8 @@
     "langSelect":"Select a language",
     "addLangButton":"Add",
     "saveButton":"Save",
-    "deleteButton":"Delete"
+    "deleteButton":"Delete",
+    "confirmButton": "Confirm",
+    "categoryCard": "Categories"
   }
 }

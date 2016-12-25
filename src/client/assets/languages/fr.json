@@ -101,11 +101,13 @@
     "createButtonTopbar":"Créer",
     "cancelButtonTopbar":"Annuler",
     "menuName":"Nom du Menu",
-    "menuNameFieldHolder":"e.g. Menu du dîner",
+    "menuNameFieldHolder":"p. ex. Menu du dîner",
     "langTitle":"Langues",
     "langSelect":"Sélectionner une langue:",
     "addLangButton":"Ajouter",
     "saveButton":"Sauvegarder",
-    "deleteButton":"Effacer"
+    "deleteButton":"Effacer",
+    "confirmButton": "Confirmer",
+    "categoryCard": "Catégories"
   }
 }
