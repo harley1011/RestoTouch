@@ -109,5 +109,22 @@
     "deleteButton":"Effacer",
     "confirmButton": "Confirmer",
     "categoryCard": "Catégories"
+  },
+
+    "category":{
+    "titleManage":"Gestion des catégories",
+    "sousTitleManage":"Sélectionner la catégorie que vous désirez faire des changements",
+    "addmenuButtonManage":"+ Ajouter une catégorie",
+    "titleCreate": "Création d'une catégorie",
+    "titleEdit":"Éditer la catégorie",
+    "sousTitleMenusetting":"Paramètres de la catégorie",
+    "createButtonTopbar":"Créer",
+    "cancelButtonTopbar":"Annuler",
+    "menuName":"Nom de la catégorie",
+    "menuNameFieldHolder":"p. ex. Entrées",
+    "saveButton":"Sauvegarder",
+    "deleteButton":"Effacer",
+    "confirmButton": "Confirmer",
+    "itemsCard": "Articles"
   }
 }

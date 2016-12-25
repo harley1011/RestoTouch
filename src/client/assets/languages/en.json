@@ -109,5 +109,22 @@
     "deleteButton":"Delete",
     "confirmButton": "Confirm",
     "categoryCard": "Categories"
+  },
+
+    "category":{
+    "titleManage":"Manage Categories",
+    "sousTitleManage":"You can select any category below to make changes",
+    "addmenuButtonManage":"+ Add Category",
+    "titleCreate": "Create Category",
+    "titleEdit":"Edit Category",
+    "sousTitleMenusetting":"Category settings",
+    "createButtonTopbar":"Create",
+    "cancelButtonTopbar":"Cancel",
+    "menuName":"Category Name",
+    "menuNameFieldHolder":"e.g. Appetizers",
+    "saveButton":"Save",
+    "deleteButton":"Delete",
+    "confirmButton": "Confirm",
+    "itemsCard": "Items"
   }
 }
