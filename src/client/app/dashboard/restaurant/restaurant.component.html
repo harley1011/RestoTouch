@@ -1,6 +1,6 @@
 <div id="restaurant">
   <div class="manage-header">
-    <h2>{{ restaurant?.id ? "Edit Restaurant" : "Create Restaurant" }}</h2>
+    <h2>{{ restaurant?.id ? ('restaurant.titleEdit' | translate) : ('restaurant.titleCreate' | translate) }}</h2>
 <!--        <h1>{{ restaurant?.id ? restaurant?.selectedTranslation?.name || 'Add a translation for the selected language': "Create Restaurant" }}</h1>-->
     <nav class="nav navbar-nav">
       <ul class="nav nav-pills">

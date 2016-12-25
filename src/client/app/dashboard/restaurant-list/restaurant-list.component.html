@@ -16,7 +16,7 @@
         
        <p class="card-text">
           {{ restaurant.selectedTranslation.description }}  </p>
-           <h6 style="margin:0">Menus <span class="label label-default"> {{ restaurant?.Menus.length }} </span></h6>
+           <h6 style="margin:0">{{ 'restaurant.menuTitle' | translate }} <span class="label label-default"> {{ restaurant?.Menus.length }} </span></h6>
             <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.translations[0].name }}</span>
            
             

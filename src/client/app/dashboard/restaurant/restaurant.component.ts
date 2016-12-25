@@ -47,7 +47,7 @@ export class RestaurantComponent implements OnInit {
         this.restaurant.translations.push(this.restaurant.selectedTranslation);
       }
 
-      // this language will be used as a fallback when a translation isn't found in the current language
+      // this language of website will be used as a fallback when a translation of website isn't found in the current language
       translate.setDefaultLang('en');
 
   });
