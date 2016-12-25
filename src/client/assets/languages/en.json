@@ -19,7 +19,7 @@
     "formLogButton": "Log back in"
   },
 
-   "registration": {
+  "registration": {
     "loginLink": "Log In",
     "title": "Welcome",
     "sousTitle": "Join RestoTouch today",
@@ -34,5 +34,19 @@
     "passwordFieldForm": "Password",
     "confirmPasswordFieldForm": "Confirm password",
     "registerButton": "Register"
+  },
+
+  "dashboard":{
+    "title": "Welcome to your dashboard, ",
+    "sousTitle": "What would you like to do today?",
+    "restoSidebar": "RESTAURANTS",
+    "menuSidebar": "MENUS",
+    "catSidebar": "CATEGORIES",
+    "foodItemSidebar": "FOOD ITEMS",
+    "orderSidebar": "ORDERS",
+    "statSidebar": "STATISTICS",
+    "cashierModeSidebar":"CASHIER MODE",
+    "socialSidebar": "SOCIAL",
+    "currentSales": "Current Sales: $"
   }
 }
