@@ -1,13 +1,13 @@
 
 <div id="homeContainer">
     <div class="home-inside">
-        <h1>Welcome to your dashboard, <span style="text-transform:capitalize">{{user.firstName}}</span>.</h1>
-        <h4>What would you like to do today?</h4>
+        <h1>{{ 'dashboard.title' | translate }} <span style="text-transform:capitalize">{{user.firstName}}</span>.</h1>
+        <h4>{{ 'dashboard.sousTitle' | translate }}</h4>
      <div class="row resto">
         <div class="col col-md-9">
             <div class="resto-name">Coffee To Go</div>
             <div class="resto-address">1 rue Principal</div>
-            <div class="resto-sales">Current Sales: $1000.00</div>
+            <div class="resto-sales">{{ 'dashboard.currentSales' | translate }}1000.00</div>
         </div>
         <div class="col col-md-3" style="text-align: right">
          <button class="btn btn-default btn-circle">
