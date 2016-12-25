@@ -103,7 +103,7 @@
     "menuName":"Menu Name",
     "menuNameFieldHolder":"e.g. Lunch Menu",
     "langTitle":"Languages",
-    "langSelect":"Select a language",
+    "langSelect":"Select a language:",
     "addLangButton":"Add",
     "saveButton":"Save",
     "deleteButton":"Delete",
@@ -111,7 +111,7 @@
     "categoryCard": "Categories"
   },
 
-    "category":{
+  "category":{
     "titleManage":"Manage Categories",
     "sousTitleManage":"You can select any category below to make changes",
     "addcatButtonManage":"+ Add Category",
@@ -124,7 +124,27 @@
     "catNameFieldHolder":"e.g. Appetizers",
     "saveButton":"Save",
     "deleteButton":"Delete",
-    "confirmButton": "Confirm",
     "itemsCard": "Items"
+  },
+
+   "foodItem":{
+    "titleManage":"Manage Food Items",
+    "sousTitleManage":"You can select any item below to make changes",
+    "addFoodItemButtonManage":"+ Add Item",
+    "titleCreate": "Create Item",
+    "titleEdit":"Edit Item",
+    "sousTitleFoodItemsetting":"Food Item settings",
+    "createButtonTopbar":"Create",
+    "cancelButtonTopbar":"Cancel",
+    "foodItemName":"Item Name",
+    "foodItemDescription":"Description",
+    "foodItemSize":"Size",
+    "foodItemPrice":"Price",
+    "foodItemSizeWarningDetail":"At least one size is required",
+    "langTitle":"Languages",
+    "langSelect":"Select a language:",
+    "addLangButton":"Add",
+    "saveButton":"Save",
+    "deleteButton":"Delete"
   }
 }

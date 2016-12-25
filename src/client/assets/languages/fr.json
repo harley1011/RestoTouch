@@ -111,7 +111,7 @@
     "categoryCard": "Catégories"
   },
 
-    "category":{
+  "category":{
     "titleManage":"Gestion des catégories",
     "sousTitleManage":"Sélectionner la catégorie que vous désirez faire des changements",
     "addcatButtonManage":"+ Ajouter une catégorie",
@@ -124,7 +124,27 @@
     "catNameFieldHolder":"p. ex. Entrées",
     "saveButton":"Sauvegarder",
     "deleteButton":"Effacer",
-    "confirmButton": "Confirmer",
     "itemsCard": "Articles"
+  },
+
+  "foodItem":{
+    "titleManage":"Gestion des produits alimentaires",
+    "sousTitleManage":"Sélectionner le produit que vous désirez faire des changements",
+    "addFoodItemButtonManage":"+ Ajouter un Produit",
+    "titleCreate": "Création d'un produit",
+    "titleEdit":"Éditer le produit",
+    "sousTitleFoodItemsetting":"Paramètres du produit",
+    "createButtonTopbar":"Créer",
+    "cancelButtonTopbar":"Annuler",
+    "foodItemName":"Nom du produit",
+    "foodItemDescription":"Description",
+    "foodItemSize":"Taille",
+    "foodItemPrice":"Prix",
+    "foodItemSizeWarningDetail":"Minimum d'une taille doit être indiqué",
+    "langTitle":"Langue",
+    "langSelect":"Sélectionner une langue:",
+    "addLangButton":"Ajouter",
+    "saveButton":"Sauvegarder",
+    "deleteButton":"Effacer"
   }
 }
