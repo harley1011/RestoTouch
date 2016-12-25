@@ -137,6 +137,7 @@
     "createButtonTopbar":"Créer",
     "cancelButtonTopbar":"Annuler",
     "foodItemName":"Nom du produit",
+    "foodItemNameAlert":"Nom du produit est requis",
     "foodItemDescription":"Description",
     "foodItemSize":"Taille",
     "foodItemPrice":"Prix",
@@ -145,6 +146,10 @@
     "langSelect":"Sélectionner une langue:",
     "addLangButton":"Ajouter",
     "saveButton":"Sauvegarder",
-    "deleteButton":"Effacer"
+    "deleteButton":"Effacer",
+    "foodItemAddImgMsg":"Ajouter une image",
+    "foodItemChangeImgMsg":"Changer l'image",
+    "foodItemSelectCroppedImgMsg":"Sauvegarder l'image cadrée",
+    "foodItemRecroppedImgMsg":"Recadrer l'image"
   }
 }
