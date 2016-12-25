@@ -1,7 +1,6 @@
 {
   "login": {
     "register": "S'inscrire",
-    "choose" : "Choisir la langue:",
     "titleHeader": "Allo",
     "bodyTextHeader": "Veuillez entrer vos informations d'identification.",
     "emailRequiredAlert": "Le courrier électronique est requis",

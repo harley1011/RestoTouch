@@ -1,7 +1,6 @@
 {
   "login": {
     "register": "Register",
-    "choose" : "Choose language",
     "titleHeader": "Hello",
     "bodyTextHeader": "Please enter your login information.",
     "emailRequiredAlert": "E-mail is required",

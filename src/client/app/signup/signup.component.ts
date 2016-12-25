@@ -18,7 +18,7 @@ import {TranslateService} from 'ng2-translate';
 export class SignupComponent {
   user = new User('', '', '', '', '');
   errorMessage = '';
-  currentLanguage ='';
+  currentLanguage = '';
 
   constructor (private authService: AuthService,
                private router: Router,
