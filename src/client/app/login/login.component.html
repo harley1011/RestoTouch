@@ -6,10 +6,10 @@
         <!-- register/language emplacement -->
         <div class="row loginFormNav">
             <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'login.register' | translate }}</span></a> 
-            &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp; {{ 'login.choose' | translate }} &nbsp;
+            &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;
         <select #langSelect (change)="translate.use(langSelect.value)">
-          <option value="en" [selected]="en === translate.currentLang">English</option>
-          <option value="fr" [selected]="fr === translate.currentLang">Français</option>
+          <option value="en" [selected]="'en' === translate.currentLang">English </option>
+          <option value="fr" [selected]="'fr' === translate.currentLang">Français </option>
         </select>
         </div>
 
