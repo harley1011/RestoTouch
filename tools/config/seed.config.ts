@@ -50,6 +50,9 @@ export class SeedConfig {
    */
   PORT = argv['port'] || 5555;
 
+  FONTS_DEST = '';
+
+  FONTS_SRC = ['node_modules/font-awesome/css/**', 'node_modules/font-awesome/fonts/**'];
   /**
    * The root folder of the project (up two levels from the current directory).
    */
@@ -144,7 +147,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'RestoTouch';
+  APP_TITLE = 'Welcome to angular2-seed!';
 
   /**
    * The base folder of the applications source files.
@@ -191,6 +194,18 @@ export class SeedConfig {
    * The directory of the tasks provided by the seed.
    */
   SEED_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'seed');
+
+  /**
+   * Seed tasks which are composition of other tasks.
+   */
+  SEED_COMPOSITE_TASKS = join(process.cwd(), this.TOOLS_DIR, 'config', 'seed.tasks.json');
+
+  /**
+   * Project tasks which are composition of other tasks
+   * and aim to override the tasks defined in
+   * SEED_COMPOSITE_TASKS.
+   */
+  PROJECT_COMPOSITE_TASKS = join(process.cwd(), this.TOOLS_DIR, 'config', 'project.tasks.json');
 
   /**
    * The destination folder for the generated documentation.

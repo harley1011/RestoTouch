@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
-import { RouterModule } from '@angular/router';
+
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { routes } from './app.routes';
+import { AppRoutingModule } from './app-routing.module';
 
 import { LoginModule } from './login/login.module';
 import { LogoutModule } from './logout/logout.module';
@@ -20,8 +20,8 @@ import { ImageUploadService } from './services/image-upload.service';
 @NgModule({
 	imports: [
 		BrowserModule,
+    AppRoutingModule,
 		HttpModule,
-		RouterModule.forRoot(routes),
 		LoginModule,
 		LogoutModule,
 		SignupModule,
