@@ -58,8 +58,9 @@
     "sousTitleManage":"You can select any restaurant below to make changes",
     "addRestoButton":"+ Add Restaurant",
     "titleCreate": "Create a Restaurant",
-    "giTitle": "General Information",
-    "ohTitle": "Opening Hours",
+    "titleEdit": "Edit the Restaurant",
+    "geninfoTitle": "General Information",
+    "openhourTitle": "Opening Hours",
     "langTitle": "Languages",
     "menuTitle": "Menu",
     "createButtonTopbar": "Create",
@@ -69,7 +70,7 @@
     "giDescription":"Description",
     "giDescriptionFieldHolder":"Ex: A fast food restaurant",
     "giAddress":"Address",
-    "giAddressFieldHolder:": "Ex: 7141 Sherbrooke W st., Montreal, Qc, H4B 1R6",
+    "giAddressFieldHolder": "Ex: 7141 Sherbrooke W st., Montreal, Qc, H4B 1R6",
     "ohDay": "Day",
     "ohOpening": "Opening",
     "ohClosing": "Closing",
@@ -81,6 +82,12 @@
     "ohFriday": "Friday",
     "ohSaturday": "Saturday",
     "ohSunday": "Sunday",
-    "langSelect":"Select a language"
+    "ohTimeconflictAlert":"Time Conflict",
+    "langSelect":"Select a language:",
+    "addLangButton": "Add",
+    "nomenuButton":"No Menu",
+    "addRemoveButton":"Add/Remove Menu",
+    "saveButton":"Save",
+    "deleteButton":"Delete"
   }
 }

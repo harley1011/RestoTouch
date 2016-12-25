@@ -8,6 +8,7 @@ import {Language} from '../../shared/models/language';
 
 import {Menu} from '../../shared/models/menu';
 import {BusinessHour} from '../../shared/models/business-hour';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -27,8 +28,11 @@ export class RestaurantComponent implements OnInit {
   editingLanguage: Language = new Language('', '', '', 0);
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
 
-  constructor(private route: ActivatedRoute, private router: Router, private languageService: LanguageService,
-              private restaurantService: RestaurantService) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private languageService: LanguageService,
+              private restaurantService: RestaurantService,
+              private translate: TranslateService,) {
 
     this.languages = languageService.languages();
     languageService.setSupportedLanguages(this.supportedLanguages);
@@ -42,7 +46,11 @@ export class RestaurantComponent implements OnInit {
         this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
         this.restaurant.translations.push(this.restaurant.selectedTranslation);
       }
-    });
+
+      // this language will be used as a fallback when a translation isn't found in the current language
+      translate.setDefaultLang('en');
+
+  });
 
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
     let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
