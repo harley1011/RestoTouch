@@ -12,7 +12,7 @@ import {MenuModule} from './menu/menu.module';
 import {ItemListModule} from './item-list/item-list.module';
 import {ItemModule} from './item/item.module';
 import {HomeModule} from './home/home.module';
-
+import {TranslateModule} from 'ng2-translate';
 
 import {DashboardComponent} from './dashboard.component';
 
@@ -33,7 +33,8 @@ import {SidebarComponent} from '../shared/index';
         MenuModule,
         HomeModule,
         ItemListModule,
-        ItemModule
+        ItemModule,
+        TranslateModule
     ],
     declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
     exports: [DashboardComponent, TopNavComponent, SidebarComponent]

@@ -7,24 +7,38 @@
     <a class="sidebar-logo" routerLink="/dashboard/home"><img src="assets/img/logo2.png"
                                                               width="180"/></a>
     <a routerLink="/dashboard/restaurants" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      Restaurants
+      {{ 'dashboard.restoSidebar' | translate }}
     </a>
     <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      Menus
+      {{ 'dashboard.menuSidebar' | translate }}
     </a>
     <a routerLink="/dashboard/categories" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      Categories
+      {{ 'dashboard.catSidebar' | translate }}
     </a>
 
     <a routerLink="/dashboard/items" [routerLinkActive]="['router-link-active']" class="list-group-item">
-      Food Items
+      {{ 'dashboard.foodItemSidebar' | translate }}
     </a>
 
+    <!-- order-->
+    <a class="list-group-item">
+      {{ 'dashboard.orderSidebar' | translate }}
+    </a>
 
-    <a class="list-group-item">Orders</a>
-    <a class="list-group-item">Statistics</a>
-    <a class="list-group-item">Cashier Mode</a>
-    <a class="list-group-item">Social</a>
+    <!-- statistic -->
+    <a class="list-group-item">
+      {{ 'dashboard.statSidebar' | translate }}  
+    </a>
+
+    <!-- cashier mode -->
+    <a class="list-group-item">
+      {{ 'dashboard.cashierModeSidebar' | translate }}
+    </a>
+
+    <!-- social -->
+    <a class="list-group-item">
+      {{ 'dashboard.socialSidebar' | translate }}
+    </a>
 
 
     <!--<a [routerLink]="['chart']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->
