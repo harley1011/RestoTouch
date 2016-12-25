@@ -30,7 +30,7 @@ export class SignupComponent {
                        .subscribe(
                          loginResponse => {
                            console.log(loginResponse);
-                           this.router.navigate(['/dashboard/restaurants']); },
+                           this.router.navigate(['/dashboard/home']); },
                          error =>  this.errorMessage = <any>error);
 
   }
