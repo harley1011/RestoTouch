@@ -47,6 +47,9 @@
     "statSidebar": "STATISTICS",
     "cashierModeSidebar":"CASHIER MODE",
     "socialSidebar": "SOCIAL",
-    "currentSales": "Current Sales: $"
+    "currentSales": "Current Sales: $",
+    "profileTopnav": "Profile",
+    "settingTopnav": "Settings",
+    "logoutTopnav": "Log Out"
   }
 }

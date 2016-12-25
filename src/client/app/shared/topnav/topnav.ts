@@ -4,6 +4,7 @@ import {User} from '../models/user';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import { Router } from '@angular/router';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -18,10 +19,12 @@ export class TopNavComponent implements OnInit {
   selectedLanguage: Language = new Language('','','',0);
   errorMessage = '';
 
-  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router) {
+  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router, private translate: TranslateService) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
       this.hideLanguageSelect = supportedLanguages.length === 0;
       this.languages = supportedLanguages;
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('en');
     });
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;

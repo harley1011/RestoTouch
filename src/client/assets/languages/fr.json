@@ -47,6 +47,9 @@
     "statSidebar": "STATISTIQUES",
     "cashierModeSidebar":"MODE DE CAISSE",
     "socialSidebar": "SOCIAL",
-    "currentSales": "Ventes en cours: $"
+    "currentSales": "Ventes en cours: $",
+    "profileTopnav": "Profil",
+    "settingTopnav": "Paramètres",
+    "logoutTopnav": "Se Déconnecter"
   }
 }
