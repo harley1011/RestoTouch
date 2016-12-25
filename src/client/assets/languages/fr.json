@@ -51,5 +51,36 @@
     "profileTopnav": "Profil",
     "settingTopnav": "Paramètres",
     "logoutTopnav": "Se Déconnecter"
+  },
+
+  "restaurant":{
+    "titleManage":"Gestion des restaurants",
+    "sousTitleManage":"Sélectionner le restaurant que vous désirez faire des changements",
+    "addRestoButton":"+ Ajouter un Restaurant",
+    "titleCreate": "Création d'un restaurant",
+    "giTitle": "Information Générale",
+    "ohTitle": "Heures d'ouverture",
+    "langTitle": "Langues",
+    "menuTitle": "Menu",
+    "createButtonTopbar": "Créer",
+    "cancelButtonTopbar": "Annuler",
+    "giName":"Nom du restaurant",
+    "giNameFieldHoder":"Ex: Restaurant Resto Touch",
+    "giDescription":"Description",
+    "giDescriptionFieldHolder":"Ex: Un restaurant de restauration rapide",
+    "giAddress":"Adresse",
+    "giAddressFieldHolder:": "Ex: 7141 rue Sherbrooke O, Montréal, Qc, H4B 1R6",
+    "ohDay": "Jour",
+    "ohOpening": "Ouverture",
+    "ohClosing": "Fermeture",
+    "ohBreak": "Pause",
+    "ohMonday": "Lundi",
+    "ohTuesday": "Mardi",
+    "ohWednesday": "Mercredi",
+    "ohThursday": "Jeudi",
+    "ohFriday": "Vendredi",
+    "ohSaturday": "Samedi",
+    "ohSunday": "Dimanche",
+    "langSelect":"Sélectionner une langue"
   }
 }

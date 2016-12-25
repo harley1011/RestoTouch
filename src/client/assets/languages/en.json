@@ -51,5 +51,36 @@
     "profileTopnav": "Profile",
     "settingTopnav": "Settings",
     "logoutTopnav": "Log Out"
+  },
+
+  "restaurant":{
+    "titleManage":"Manage Restaurants",
+    "sousTitleManage":"You can select any restaurant below to make changes",
+    "addRestoButton":"+ Add Restaurant",
+    "titleCreate": "Create a Restaurant",
+    "giTitle": "General Information",
+    "ohTitle": "Opening Hours",
+    "langTitle": "Languages",
+    "menuTitle": "Menu",
+    "createButtonTopbar": "Create",
+    "cancelButtonTopbar": "Cancel",
+    "giName":"Restaurant Name",
+    "giNameFieldHoder":"Ex: Resto Touch Restaurant",
+    "giDescription":"Description",
+    "giDescriptionFieldHolder":"Ex: A fast food restaurant",
+    "giAddress":"Address",
+    "giAddressFieldHolder:": "Ex: 7141 Sherbrooke W st., Montreal, Qc, H4B 1R6",
+    "ohDay": "Day",
+    "ohOpening": "Opening",
+    "ohClosing": "Closing",
+    "ohBreak": "Break",
+    "ohMonday": "Monday",
+    "ohTuesday": "Tuesday",
+    "ohWednesday": "Wednesday",
+    "ohThursday": "Thursday",
+    "ohFriday": "Friday",
+    "ohSaturday": "Saturday",
+    "ohSunday": "Sunday",
+    "langSelect":"Select a language"
   }
 }
