@@ -19,7 +19,9 @@ export class TopNavComponent implements OnInit {
   selectedLanguage: Language = new Language('','','',0);
   errorMessage = '';
 
-  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router, private translate: TranslateService) {
+  constructor(private authService: AuthService,
+              private languageService: LanguageService, private router: Router,
+              private translate: TranslateService) {
     languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
       this.hideLanguageSelect = supportedLanguages.length === 0;
       this.languages = supportedLanguages;
