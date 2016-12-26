@@ -27,6 +27,7 @@ export class MenuListComponent implements OnInit {
 		private menuListService: MenuListService) { }
 
 	getMenus(): void {
+		console.log('GET MENUS');
 		this.menuService.getMenus().subscribe(
 			menus => {
 				this.menus = menus;
@@ -42,10 +43,12 @@ export class MenuListComponent implements OnInit {
 				this.numOfMenus = 0;
 				this.updates = [];
 
+				console.log('Selecting Menus');
 				for (var i = 0; i < this.menus.length; i++) {
 					this.menusInRestaurant[i] = false;
 					for (var j = 0; j < this.restaurant.Menus.length; j++) {
 						if (this.menus[i].id === this.restaurant.Menus[j].id) {
+							console.log('Selected ' + this.menus[i].id);
 							this.menusInRestaurant[i] = true;
 							this.numOfMenus++;
 							break;
@@ -63,6 +66,7 @@ export class MenuListComponent implements OnInit {
 		this.restaurantService.getRestaurant(id).subscribe(
 			restaurant => {
 				this.restaurant = restaurant;
+				this.getMenus();
 			}
 		);
 	}
