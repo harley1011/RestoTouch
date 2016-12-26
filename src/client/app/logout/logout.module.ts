@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LogoutComponent } from './logout.component';
 import { FormsModule } from '@angular/forms';
-import {TranslateModule} from 'ng2-translate';
+import { LogoutRoutingModule } from './logout-routing.module';
 
 @NgModule({
-   imports: [CommonModule, RouterModule, FormsModule, TranslateModule],
+   imports: [CommonModule, RouterModule, FormsModule, LogoutRoutingModule],
    declarations: [LogoutComponent],
    exports: [LogoutComponent]
 })
