@@ -66,7 +66,7 @@ export function main() {
     it('should add a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
       var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], 1
+        [], [], mockTranslation, [], [], [], 1
       );
 
       initialResponse = restaurantService.addRestaurant(mockRestaurant);
@@ -89,7 +89,7 @@ export function main() {
     it('should update a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
       var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], 1);
+        [], [], mockTranslation, [], [], [], 1);
 
       initialResponse = restaurantService.updateRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -111,7 +111,7 @@ export function main() {
     it('should delete a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
       var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], 1);
+        [], [], mockTranslation, [], [], [], 1);
 
       initialResponse = restaurantService.deleteRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
