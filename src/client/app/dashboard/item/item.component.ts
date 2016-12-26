@@ -10,6 +10,7 @@ import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
+import {Ingredient} from '../../shared/models/ingredient';
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,8 @@ export class ItemComponent implements OnInit {
   progress: number = 0;
   uploading: boolean = false;
   finished: boolean = false;
-  newIngredientGroup: IngredientGroup = new IngredientGroup([], 1, null);
+  newIngredientGroup: IngredientGroup = new IngredientGroup([], 1);
+  newIngredient: Ingredient = new Ingredient('hg', false, 0);
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -225,7 +227,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    console.log("Fix");
+    console.log('Fix');
     //let ingredient = new IngredientGroup([], [], []);
   }
 
