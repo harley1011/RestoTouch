@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
 import {DropdownModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import {RestaurantListModule} from './restaurant-list/restaurant-list.module';
@@ -14,6 +13,8 @@ import {ItemModule} from './item/item.module';
 import {HomeModule} from './home/home.module';
 import {TranslateModule} from 'ng2-translate';
 
+import {DashboardRoutingModule} from './dashboard-routing.module';
+
 import {DashboardComponent} from './dashboard.component';
 
 import {TopNavComponent} from '../shared/index';
@@ -23,7 +24,6 @@ import {SidebarComponent} from '../shared/index';
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule,
         DropdownModule,
         RestaurantListModule,
         RestaurantModule,
@@ -33,6 +33,7 @@ import {SidebarComponent} from '../shared/index';
         MenuModule,
         HomeModule,
         ItemListModule,
+        DashboardRoutingModule,
         ItemModule,
         TranslateModule
     ],

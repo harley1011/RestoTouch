@@ -73,7 +73,8 @@ function imageCleanUp() {
   s3.listObjectVersions(params, function(err, imagesUrls) {
     if (err) console.log(err, err.stack); // an error occurred
     else     console.log(imagesUrls);           // successful response
-
+    if (!imagesUrls)
+      return;
     itemModel.findAll().then(function (items) {
       var unlinkedItems = _.differenceWith(imagesUrls.Versions, items,
         function(imageUrl, item) {
