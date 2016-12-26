@@ -65,10 +65,17 @@ export class RestaurantComponent implements OnInit {
       new BusinessHour(6, 1, '9:00', '21:00', false)
     ];
 
+    let payments = [
+      new Payment('cash', false),
+      new Payment('debit', false),
+      new Payment('credit', false)
+    ];
+
     this.restaurant = new Restaurant('',
       this.supportedLanguages,
       [translation],
-      translation, [], [],
+      translation, [],
+      payments,
       businessHours
     );
 

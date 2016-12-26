@@ -837,8 +837,11 @@ definitions:
     properties:
       name:
         type: string
+      used:
+        type: boolean
     required:
       - name
+      - used
   Restaurant:
     type: object
     properties:
