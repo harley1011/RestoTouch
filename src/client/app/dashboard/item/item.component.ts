@@ -221,6 +221,10 @@ export class ItemComponent implements OnInit {
     this.item.translations.push(newTranslation);
   }
 
+  addIngredientGroup() {
+
+  }
+
   removeLanguage(language: Language) {
     if (this.supportedLanguages.length < 1) {
       console.log('At least one language is required.');
