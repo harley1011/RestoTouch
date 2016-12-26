@@ -1,5 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from './../../shared/models/items';
+import {IngredientGroup} from './../../shared/models/ingredient-group';
 
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
@@ -31,6 +32,7 @@ export class ItemComponent implements OnInit {
   progress: number = 0;
   uploading: boolean = false;
   finished: boolean = false;
+  newIngredientGroup: IngredientGroup = new IngredientGroup([], 1, null);
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -223,7 +225,8 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-
+    console.log("Fix");
+    //let ingredient = new IngredientGroup([], [], []);
   }
 
   removeLanguage(language: Language) {
