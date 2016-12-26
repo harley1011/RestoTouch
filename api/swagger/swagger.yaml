@@ -832,6 +832,13 @@ definitions:
       - openTime
       - closeTime
       - active
+  Payment:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
   Restaurant:
     type: object
     properties:
@@ -849,6 +856,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/BusinessHour"
+      payments:
+        type: array
+        items:
+          "$ref": "#/definitions/Payment"
     required:
       - address
   MenuListResponse:

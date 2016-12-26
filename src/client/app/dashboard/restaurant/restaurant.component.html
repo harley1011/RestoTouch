@@ -367,6 +367,22 @@
 -->
       </div>
 
+      <div id="resto-payment" *ngIf="!create" class="edit-section">
+        <h4>Payment Methods</h4>
+        <div class="row">
+          <div class="col col-md-5">
+              <div class="list-group">
+                <button *ngFor="let payment of restaurant?.payments;" (click)="openPayment(payment)" type="button" class="list-group-item">{{ payment.name }}</button>
+                <button *ngIf="restaurant?.payments.length == 0"  type="button" class="list-group-item label-empty-menu">No Payments</button>
+            </div>
+          </div>
+
+          <div class="col col-md-2 col-md-offset-1">
+            <button class="btn btn-success btn-green" (click)="addRemovePayment()" type="button">Add/Remove Payments</button>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">Save</button>

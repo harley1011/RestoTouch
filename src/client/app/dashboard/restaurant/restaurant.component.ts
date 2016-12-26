@@ -7,6 +7,7 @@ import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
 import {Menu} from '../../shared/models/menu';
+import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 
 @Component({
@@ -67,7 +68,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurant = new Restaurant('',
       this.supportedLanguages,
       [translation],
-      translation, [],
+      translation, [], [],
       businessHours
     );
 
@@ -144,6 +145,14 @@ export class RestaurantComponent implements OnInit {
 
   openMenu(menu: Menu): void {
     this.router.navigate(['/dashboard/menu', menu.id]);
+  }
+
+  addRemovePayment(): void {
+    this.router.navigate(['/dashboard/payments', this.restaurant.id]);
+  }
+
+  openPayment(payment: Payment): void {
+    this.router.navigate(['/dashboard/payment', payment.id]);
   }
 
   ngOnInit(): void {
