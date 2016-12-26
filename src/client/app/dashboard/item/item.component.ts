@@ -1,5 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from './../../shared/models/items';
+
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
@@ -103,7 +104,7 @@ export class ItemComponent implements OnInit {
         });
       } else {
         let translation = new ItemTranslations('','', this.supportedLanguages[0].languageCode);
-        this.item = new Item(this.supportedLanguages, [translation], translation, '', []);
+        this.item = new Item(this.supportedLanguages, [translation], translation, [], '', []);
         this.create = true;
         this.pictureMode = PictureMode.Select;
       }
