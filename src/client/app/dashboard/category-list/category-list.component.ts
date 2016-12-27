@@ -29,7 +29,6 @@ export class CategoryListComponent implements OnInit {
         categories => {
             this.categories = categories;
             categories.forEach(function(category) {
-                console.log(category.translations[0]);
                 category.selectedTranslation = category.translations[0];
             });
         },
