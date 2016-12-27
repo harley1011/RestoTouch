@@ -22,15 +22,15 @@ export class TopNavComponent implements OnInit {
   constructor(private authService: AuthService,
               private languageService: LanguageService, private router: Router,
               private translate: TranslateService) {
-    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
-      this.hideLanguageSelect = supportedLanguages.length === 0;
-      this.languages = supportedLanguages;
-    // this language will be used as a fallback when a translation isn't found in the current language
-    translate.setDefaultLang('en');
-    });
-    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-      this.selectedLanguage = selectedLanguage;
-    });
+//    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
+//      this.hideLanguageSelect = supportedLanguages.length === 0;
+//      this.languages = supportedLanguages;
+//    // this language will be used as a fallback when a translation isn't found in the current language
+//    translate.setDefaultLang('en');
+//    });
+//    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+//      this.selectedLanguage = selectedLanguage;
+//    });
   }
 
   ngOnInit() {
@@ -38,10 +38,10 @@ export class TopNavComponent implements OnInit {
     this.initLanguages();
   }
 
-  selectLanguage(language: Language) {
-  	this.selectedLanguage = language;
-  	this.languageService.announceSelectedLanguage(language);
-  }
+//  selectLanguage(language: Language) {
+//  	this.selectedLanguage = language;
+//  	this.languageService.announceSelectedLanguage(language);
+//  }
 
   changeTheme(color: string): void {
     var link: any = $('<link>');
