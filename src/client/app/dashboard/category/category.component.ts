@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from './category.service';
 import { Category } from '../../shared/models/category';
+import { LanguageService } from '../../services/language.service';
+import { Language } from '../../shared/models/language';
 
 @Component({
 	moduleId: module.id,
@@ -15,9 +17,18 @@ export class CategoryComponent implements OnInit {
   category: Category;
   errorMessage: string;
 
+  //Multiple translation support
+  languages: Array<Language>;
+  addedLanguage: string;
+  supportedLanguages: Array<Language> = [];
+  hideManageLanguage = false;
+
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
-              private router: Router) {}
+              private router: Router,
+              private languageService: LanguageService) {
+    this.languages = languageService.languages();
+  }
 
     getCategory(id: number): void {
 	  this.categoryService.getCategory(id).subscribe(
@@ -56,7 +67,6 @@ export class CategoryComponent implements OnInit {
       this.update();
     }
   }
-
 
 
   add(): void {
@@ -99,6 +109,24 @@ export class CategoryComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
+  }
+
+  addLanguage() {
+    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+    if(language) {
+      console.log('Language is already supported.');
+      return;
+    }
+    language = this.languages.find(language => language.languageCode === this.addedLanguage);
+    this.supportedLanguages.push(language);
+  }
+
+  removeLanguage(language: Language) {
+    if(this.supportedLanguages.length < 1) {
+      console.log('At least one language is required.');
+    }
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
   }
 
 }
