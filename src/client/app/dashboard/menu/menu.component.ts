@@ -97,6 +97,16 @@ export class MenuComponent implements OnInit {
         this.create = true;
       }
     });
+    //TODO (0) I see the association is appearing in PgAdmin but i did not include yet
+    //TODO (1) Figuring out why adding to the database does not work
+    //TODO (3) Figuring out why the solution for reading undefined categories is not working when I launch the website from the first time
+    //TODO (4) Figuring out error related to association problem when I did include
+    //TODO (NOTE) If i figured (4) then I guess (3)&(1) should work
+    /*
+    console.log('TESTING!!!!!!');
+    debugger;
+    this.menuCategoryService.addMenuCategory(1, 1, 1);
+    */
     this.getCategories();
   }
 
@@ -104,7 +114,6 @@ export class MenuComponent implements OnInit {
     this.menuService.getMenu(id).subscribe(
       menu => {
         this.menu = menu;
-        //this.getCategories();
         if(!(menu.categories)) {
           this.menu.categories = [];
         }
@@ -129,15 +138,14 @@ export class MenuComponent implements OnInit {
          for(let i = 0; i < categories.length; i++) {
            this.availableCategories.push(categories[i]);
          }
-
-         if (this.menu.categories.length !== 0) {
+          // TODO (2) Figuring out why the category length is undefined
+        /* if (this.menu.categories.length !== 0) {
            for(let i = 0; i < this.availableCategories.length; i++) {
              if(this.menu.categories[i].id === this.availableCategories[i].id) {
                this.availableCategories.splice(i, 1);
              }
            }
-         }
-
+         }*/
          this.menuCatUndefinedYet = false;
        },
        error => {

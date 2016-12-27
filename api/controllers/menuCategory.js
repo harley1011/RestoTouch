@@ -4,10 +4,9 @@ setDatabase(models);
 
 
 module.exports = {
-  setDatabase: setDatabase,
   saveMenuCategory: saveMenuCategory,
-  delMenuCategory: delMenuCategory
-
+  delMenuCategory: delMenuCategory,
+  setDatabase: setDatabase
 };
 
 function setDatabase (m) {
