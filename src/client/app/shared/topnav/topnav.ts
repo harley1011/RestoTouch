@@ -35,6 +35,7 @@ export class TopNavComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.loggedInUser;
+    this.initLanguages();
   }
 
   selectLanguage(language: Language) {
@@ -61,4 +62,12 @@ export class TopNavComponent implements OnInit {
     sidebar.toggleClass('sidebar-left-zero');
     mainContainer.toggleClass('main-container-ml-zero');
   }
+    
+  initLanguages():void {
+      this.translate.addLangs(['en', 'fr']);
+      this.translate.setDefaultLang('en');
+      const browserLang = this.translate.getBrowserLang();
+      this.translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+
+    }
 }

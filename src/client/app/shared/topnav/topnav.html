@@ -84,6 +84,7 @@
                 <!--&lt;!&ndash; </div> &ndash;&gt;-->
             <!--</li>-->
 
+<!--
             <li [hidden]="hideLanguageSelect" class="dropdown nav-item" dropdown>
                 <a href="javascript:;" id="lang-button" class="nav-link dropdown-toggle" dropdownToggle >
                     <label>Selected Language: </label> {{selectedLanguage.name}} <b class="caret"></b>
@@ -94,7 +95,15 @@
                     </li>
                 </ul>
             </li>
+-->
 
+            <li class="dropdown nav-item nav-link" dropdown>
+            
+            <select #langSelect (change)="translate.use(langSelect.value)">
+          <option value="en" [selected]="'en' === translate.currentLang">English </option>
+          <option value="fr" [selected]="'fr' === translate.currentLang">Français </option>
+        </select>
+            </li>
 
             <li class="dropdown nav-item" dropdown>
                 <a href="javascript:;" id="single-button" class="nav-link dropdown-toggle" dropdownToggle >

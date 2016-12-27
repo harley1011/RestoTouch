@@ -16,33 +16,18 @@
 -->
       <h5 class="subtitle"><small>All inputs can be changed in a different language as well.</small></h5>
     <hr>
-             <div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
+    <div class="form-group input-group manage-lang row">
+        <div class="col col-sm-6 manage-lang-lbl">
+            <label for="language">Currently showing in: </label>  
+        </div>
+        <div class="col col-sm-6" style="padding-left:0">
+            <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
+            <option *ngFor="let language of supportedLanguages" [ngValue]="language.languageCode" (click)="selectLanguage(language)">{{language.name}}</option>
+      </select>
+         </div>
   </div>
-</div>
 
-      <div class="dropdown">
-<button class="btn btn-default dropdown-toggle" type="button" id="lang-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   <label>Selected Language: </label> {{selectedLanguage}}
-    <span class="caret"></span>
-  </button>          
-                
-                <div class="dropdown-menu" aria-labelledby="lang-button">
-                    <a *ngFor="let language of supportedLanguages" class="dropdown-item" (click)="selectLanguage(language)">
-                        {{language.name}}
-                    </a>
-                </div>
-          
-          </div>
-  </div>
+</div>
  
   <div class="formContainer" #formContainer>
     <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">

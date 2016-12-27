@@ -40,6 +40,7 @@ export class RestaurantComponent implements OnInit {
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
       this.editingLanguage = editingLanguage;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
+//      translation.languageCode === this.editingLanguage.languageCode);
       translation.languageCode === this.editingLanguage.languageCode);
 
       if (!this.restaurant.selectedTranslation) {
@@ -49,6 +50,7 @@ export class RestaurantComponent implements OnInit {
 
       // this language of website will be used as a fallback when a translation of website isn't found in the current language
       translate.setDefaultLang('en');
+      this.selectedLanguage = 'en';
 
   });
 
@@ -161,6 +163,12 @@ export class RestaurantComponent implements OnInit {
         this.create = false;
       }
     });
+  }
+
+      
+  selectLanguage(language: Language) {
+  	this.editingLanguage = language;
+  	this.languageService.announceSelectedLanguage(language);
   }
 
   addAndUpdate(): void {
