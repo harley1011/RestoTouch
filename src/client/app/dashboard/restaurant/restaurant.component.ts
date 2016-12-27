@@ -66,9 +66,9 @@ export class RestaurantComponent implements OnInit {
     ];
 
     let payments = [
-      new Payment('cash', false),
-      new Payment('debit', false),
-      new Payment('credit', false)
+      new Payment('Cash', false),
+      new Payment('Debit', false),
+      new Payment('Credit', false)
     ];
 
     this.restaurant = new Restaurant('',
