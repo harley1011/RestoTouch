@@ -11,6 +11,7 @@ var restaurantMenuModel = sequelize.import('./models/restaurantMenu.js');
 var menuCategoryModel = sequelize.import('./models/menuCategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
 var categoryLanguageModel = sequelize.import('./models/categoriesLanguages.js');
+var categoryTranslationModel = sequelize.import('./models/categoriesTranslations.js');
 var restaurantsLanguagesModel = sequelize.import('./models/restaurantsLanguages.js');
 var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTranslations.js');
 var itemModel = sequelize.import('./models/items.js');
@@ -61,6 +62,13 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'categoryId'
     });
     categoryLanguageModel.sync({force: dropTable});
+
+    categoryModel.hasMany(categoryTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
+    categoryTranslationModel.sync({force: dropTable});
 
   });
 
@@ -133,6 +141,10 @@ exports.getCategoryModel = function () {
 exports.getCategoryLanguageModel = function () {
   return categoryLanguageModel;
 };
+
+exports.getCategoryLanguageModel = function () {
+  return categoryTranslationModel;
+}
 
 exports.getMenuModel = function () {
   return menuModel;
