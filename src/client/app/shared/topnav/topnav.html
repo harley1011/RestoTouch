@@ -98,11 +98,11 @@
 -->
 
             <li class="dropdown nav-item nav-link" dropdown>
-            
+            <i class="fa fa-globe" aria-hidden="true"></i> 
             <select #langSelect (change)="translate.use(langSelect.value)">
-          <option value="en" [selected]="'en' === translate.currentLang">English </option>
-          <option value="fr" [selected]="'fr' === translate.currentLang">Français </option>
-        </select>
+                <option value="en" [selected]="'en' === translate.currentLang">English </option>
+                <option value="fr" [selected]="'fr' === translate.currentLang">Français </option>
+            </select>
             </li>
 
             <li class="dropdown nav-item" dropdown>
