@@ -9,7 +9,8 @@
       
         <div class="form-group">
             <label>Category Name</label>
-          <input id="name" class="form-control" name="name" placeholder="Appetizers" value="{{category?.categoryName }}">
+          <input id="name" class="form-control" name="name" placeholder="Appetizers" 
+          [(ngModel)]="category?.selectedTranslation.name" #name="ngModel">
           </div>
      
         <div class="row">

@@ -47,7 +47,9 @@ export class CategoryComponent implements OnInit {
 	    category => {
 	      this.category = category;
         this.supportedLanguages = category.supportedLanguages;
-        this.selectedLanguage = category.supportedLanguages[0];
+        this.category.selectedTranslation = category.translations[0];
+        this.selectedLanguage = this.languages.find(language =>
+          language.languageCode === this.category.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
@@ -76,7 +78,8 @@ export class CategoryComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    this.category.categoryName = values['name'];
+    //this.category.categoryName = values['name'];
+    this.category.selectedTranslation.name = values['name'];
 
     if (this.create) {
       this.add();
