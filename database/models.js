@@ -10,6 +10,7 @@ var menuTranslationsModel = sequelize.import('./models/menuTranslations');
 var restaurantMenuModel = sequelize.import('./models/restaurantMenu.js');
 var menuCategoryModel = sequelize.import('./models/menuCategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
+var categoryLanguageModel = sequelize.import('./models/categoriesLanguages.js');
 var restaurantsLanguagesModel = sequelize.import('./models/restaurantsLanguages.js');
 var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTranslations.js');
 var itemModel = sequelize.import('./models/items.js');
@@ -52,7 +53,16 @@ userModel.sync({force: dropTable}).then(function () {
   });
 
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
-  categoryModel.sync({force: dropTable});
+  categoryModel.sync({force: dropTable}).then(function () {
+
+    categoryModel.hasMany(categoryLanguageModel, {
+      as: 'supportedLanguages',
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
+    categoryLanguageModel.sync({force: dropTable});
+
+  });
 
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
   menuModel.sync({force: dropTable}).then(function () {
@@ -118,6 +128,10 @@ exports.getRestaurantModel = function () {
 
 exports.getCategoryModel = function () {
   return categoryModel;
+};
+
+exports.getCategoryLanguageModel = function () {
+  return categoryLanguageModel;
 };
 
 exports.getMenuModel = function () {
