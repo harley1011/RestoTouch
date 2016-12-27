@@ -34,8 +34,6 @@ export class ItemComponent implements OnInit {
   progress: number = 0;
   uploading: boolean = false;
   finished: boolean = false;
-  newIngredientGroup: IngredientGroup = new IngredientGroup('', [], 1);
-  newIngredient: Ingredient = new Ingredient('', false, 0);
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
 
@@ -228,7 +226,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    console.log('Fix');
+    this.item.ingredientGroup.push(new IngredientGroup('', [], 1, new Ingredient('', false, 0)));
     //let ingredient = new IngredientGroup([], [], []);
   }
 

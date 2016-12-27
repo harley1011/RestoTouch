@@ -5,6 +5,7 @@ export class IngredientGroup {
                 public name: string,
                 public ingredients: Array<Ingredient>,
                 public numberOfIngredientsAllowed: number,
+                public newIngredient: Ingredient,
                 public id?: number) { }
 }
 
