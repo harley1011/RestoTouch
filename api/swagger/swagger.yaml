@@ -728,8 +728,22 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/CategoryTranslations"
     required:
       - categoryName
+  CategoryTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
   ItemsResponse:
     required:
       - items

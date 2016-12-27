@@ -142,7 +142,7 @@ exports.getCategoryLanguageModel = function () {
   return categoryLanguageModel;
 };
 
-exports.getCategoryLanguageModel = function () {
+exports.getCategoryTranslationModel = function () {
   return categoryTranslationModel;
 }
 

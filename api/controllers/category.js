@@ -1,6 +1,7 @@
 var models = require("../../database/models");
 var categoryModel;
 var categoryLanguageModel;
+var categoryTranslationModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -18,6 +19,7 @@ function setDatabase (m) {
   models = m;
   categoryModel = models.getCategoryModel();
   categoryLanguageModel = models.getCategoryLanguageModel();
+  categoryTranslationModel = models.getCategoryTranslationModel();
 }
 
 // GET /category
@@ -38,6 +40,9 @@ function getCategory(req, res) {
     include: [{
       model: categoryLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
     }]
   }).then(function(category) {
       if(category) {
@@ -56,6 +61,9 @@ function addCategory(req, res) {
     include: [{
       model: categoryLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
     }]
   }).then(function(result) {
     return res.json({success: 1, description: "New Category added"});
