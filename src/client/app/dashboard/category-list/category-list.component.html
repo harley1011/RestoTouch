@@ -13,7 +13,7 @@
     <div class="manage-list-container">
   <div class="col-sm-3" *ngFor="let category of categories; let i = index">
       <div (click)="modify(category)" class="card card-block">
-        <h4 class="card-title">{{ category.categoryName }} </h4>
+        <h4 class="card-title">{{ category?.selectedTranslation?.name }} </h4>
         
            <h6 style="margin:0">Items <span class="label label-default"> 0 </span></h6>
 <!--            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>-->

@@ -66,7 +66,7 @@ export class CategoryComponent implements OnInit {
 				this.create = false;
 			} else {
         let translation = new CategoryTranslations('', this.supportedLanguages[0].languageCode);
-        this.category = new Category('', this.supportedLanguages, [translation], translation);
+        this.category = new Category(this.supportedLanguages, [translation], translation);
 				this.create = true;
       }
 		});

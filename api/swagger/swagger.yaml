@@ -722,8 +722,6 @@ definitions:
   Category:
     type: object
     properties:
-      categoryName:
-        type: string
       supportedLanguages:
         type: array
         items:
@@ -732,8 +730,6 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/CategoryTranslations"
-    required:
-      - categoryName
   CategoryTranslations:
     type: object
     properties:
