@@ -22,11 +22,11 @@ export class TopNavComponent implements OnInit {
   constructor(private authService: AuthService,
               private languageService: LanguageService, private router: Router,
               private translate: TranslateService) {
+      // this language of website will be used as a fallback when a translation isn't found in the current language
+      translate.setDefaultLang('en');
 //    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
 //      this.hideLanguageSelect = supportedLanguages.length === 0;
 //      this.languages = supportedLanguages;
-//    // this language will be used as a fallback when a translation isn't found in the current language
-//    translate.setDefaultLang('en');
 //    });
 //    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
 //      this.selectedLanguage = selectedLanguage;
@@ -35,7 +35,6 @@ export class TopNavComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.loggedInUser;
-    this.initLanguages();
   }
 
 //  selectLanguage(language: Language) {
@@ -62,12 +61,4 @@ export class TopNavComponent implements OnInit {
     sidebar.toggleClass('sidebar-left-zero');
     mainContainer.toggleClass('main-container-ml-zero');
   }
-
-  initLanguages():void {
-      this.translate.addLangs(['en', 'fr']);
-      this.translate.setDefaultLang('en');
-      const browserLang = this.translate.getBrowserLang();
-      this.translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-
-    }
 }
