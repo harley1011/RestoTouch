@@ -148,8 +148,8 @@
                 </div>
               </td>
               <td>
-                <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!newIngredient.name"
-                        (click)="addSize()"></button>
+                <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredient.name"
+                        (click)="addIngredient(newIngredientGroup, newIngredient)"></button>
               </td>
             </tr>
             </tbody>
