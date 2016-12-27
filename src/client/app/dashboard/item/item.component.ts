@@ -236,6 +236,11 @@ export class ItemComponent implements OnInit {
     ingredient.name = '';
   }
 
+  removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
+    let ingredientToRemove = ingredientGroup.ingredients.find(currentIngredient => currentIngredient.name === ingredient.name);
+    ingredientGroup.ingredients.splice(ingredientGroup.ingredients.indexOf(ingredientToRemove), 1);
+  }
+
   removeLanguage(language: Language) {
     if (this.supportedLanguages.length < 1) {
       console.log('At least one language is required.');

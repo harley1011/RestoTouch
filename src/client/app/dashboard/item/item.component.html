@@ -132,7 +132,7 @@
               <td>{{ingredient.name}}</td>
               <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
               <td>
-                <button class="fa fa-times-circle icon-remove icon-align" (click)="removeSize(size)"></button>
+                <button class="fa fa-times-circle icon-remove icon-align" (click)="removeIngredient(newIngredientGroup, ingredient)"></button>
               </td>
             </tr>
             <tr class="td-size-input">
