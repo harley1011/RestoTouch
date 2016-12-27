@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from './category.service';
-import { Category } from '../../shared/models/category';
+import { Category, CategoryTranslations } from '../../shared/models/category';
 import { LanguageService } from '../../services/language.service';
 import { Language } from '../../shared/models/language';
 
@@ -30,6 +30,13 @@ export class CategoryComponent implements OnInit {
     this.languages = languageService.languages();
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
+      this.category.selectedTranslation = this.category.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode);
+
+      if(!this.category.selectedTranslation) {
+        this.category.selectedTranslation = new CategoryTranslations('',this.selectedLanguage.languageCode);
+        this.category.translations.push(this.category.selectedTranslation);
+      }
     });
     this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
     this.languageService.announceSupportedLanguages(this.supportedLanguages);
@@ -56,9 +63,10 @@ export class CategoryComponent implements OnInit {
 			  this.getCategory(params['id']);
 				this.create = false;
 			} else {
-                 this.category = new Category('', this.supportedLanguages);
+        let translation = new CategoryTranslations('', this.supportedLanguages[0].languageCode);
+        this.category = new Category('', this.supportedLanguages, [translation], translation);
 				this.create = true;
-            }
+      }
 		});
   }
 
