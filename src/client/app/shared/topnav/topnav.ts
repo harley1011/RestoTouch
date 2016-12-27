@@ -62,7 +62,7 @@ export class TopNavComponent implements OnInit {
     sidebar.toggleClass('sidebar-left-zero');
     mainContainer.toggleClass('main-container-ml-zero');
   }
-    
+
   initLanguages():void {
       this.translate.addLangs(['en', 'fr']);
       this.translate.setDefaultLang('en');
