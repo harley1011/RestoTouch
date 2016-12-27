@@ -95,6 +95,9 @@ function updateCategory(req, res) {
     include: [{
       model: categoryLanguageModel,
       as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
     }]
   }).then(function (oldCategory) {
 
@@ -102,12 +105,30 @@ function updateCategory(req, res) {
     var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
 
     for(var prop in category) {
-      oldCategory[prop] = category[prop];
+      if(prop != 'translations')
+        oldCategory[prop] = category[prop];
     }
+
+    oldCategory.translations.forEach(function (translation) {
+      var newTranslation = _.find(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      for (var prop in newTranslation) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+    });
+
+    category.translations.forEach(function (translation) {
+      translation.categoryId = category.id;
+    });
+
+    categoryTranslationModel.bulkCreate(category.translations);
 
     oldCategory.save().then(function (result) {
       languagesToRemove.forEach(function (language) {
         categoryLanguageModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
+        categoryTranslationModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
+        _.remove(oldCategory.translations, function (translation) {return translation.languageCode == language.languageCode});
       })
 
       languagesToAdd.forEach(function (language) {
