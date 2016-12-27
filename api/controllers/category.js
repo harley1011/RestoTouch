@@ -1,6 +1,7 @@
 var models = require("../../database/models");
 var categoryModel;
 var categoryLanguageModel;
+var _ = require('lodash');
 
 setDatabase(models);
 
@@ -78,12 +79,37 @@ function deleteCategory(req, res) {
 function updateCategory(req, res) {
   var category = req.body;
   var id = req.swagger.params.id.value;
-  return categoryModel.update(category, {
+  return categoryModel.findOne({
     where: {
       id: id,
       userId: req.userId
+    },
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function (oldCategory) {
+
+    var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
+    var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
+
+    for(var prop in category) {
+      oldCategory[prop] = category[prop];
     }
-  }).then(function(result) {
-    return res.json({success: 1, description: "Category updated"});
+
+    oldCategory.save().then(function (result) {
+      languagesToRemove.forEach(function (language) {
+        categoryLanguageModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
+      })
+
+      languagesToAdd.forEach(function (language) {
+        language.categoryId = category.id;
+      })
+
+      categoryLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
+        return res.json({success: 1, description: 'Category Updated'});
+      })
+
+    })
   });
 }
