@@ -21,19 +21,28 @@ export class CategoryComponent implements OnInit {
   languages: Array<Language>;
   addedLanguage: string;
   supportedLanguages: Array<Language> = [];
-  hideManageLanguage = false;
+  selectedLanguage: Language = new Language('','','',0);
 
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
               private router: Router,
               private languageService: LanguageService) {
     this.languages = languageService.languages();
+    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+      this.selectedLanguage = selectedLanguage;
+    });
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    this.languageService.announceSupportedLanguages(this.supportedLanguages);
   }
 
     getCategory(id: number): void {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
+        //this.supportedLanguages = category.supportedLanguages;
+        //this.selectedLanguage = category.supportedLanguages[0];
+        //this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        //this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;
@@ -47,7 +56,7 @@ export class CategoryComponent implements OnInit {
 			  this.getCategory(params['id']);
 				this.create = false;
 			} else {
-                 this.category = new Category('');
+                 this.category = new Category('', this.supportedLanguages);
 				this.create = true;
             }
 		});
