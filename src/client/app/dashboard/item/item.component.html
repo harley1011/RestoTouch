@@ -67,14 +67,17 @@
           <div class="row">
             <div class="col col-md-5">
               <ul class="list-group">
-                <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
+                <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i
+                  class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                  (click)="removeLanguage(language)"></i></li>
               </ul>
             </div>
             <div class="col col-md-4 col-md-offset-1">
               <div class="form-group input-group">
                 <label for="language">Select a language:</label>
                 <select name="language" class="form-control" [(ngModel)]="addedLanguage">
-                  <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+                  <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -101,9 +104,11 @@
         </span>
         <div style="width: 300px">
           <button class="btn-upload-image btn-primary btn" type="button" (click)="selectFile()">
-            {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": pictureMode == pictureModes.Select? "Add an Image": "Change Image": "Select Cropped Image"}}
+            {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": pictureMode
+            == pictureModes.Select? "Add an Image": "Change Image": "Select Cropped Image"}}
           </button><!--
-          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button" (click)="clearImage()"></button>
+          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button"
+                  (click)="clearImage()"></button>
         </div>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
@@ -153,25 +158,47 @@
               </tbody>
             </table>
           </div>
+          <div class=" col-sm-3">
+            <div class="form-group">
+              <label for="name">Ingredient Group Name</label>
+              <input type="text" class="form-control" id="ingredientGroupNamr"
+                     required
+                     [(ngModel)]="newIngredientGroup.name" name="name"
+                     #name="ngModel">
+            </div>
+            <div class="form-group">
+              <label>Number of ingredients allowed</label>
+              <input class="form-control ng-pristine ng-valid ng-touched" id="newIngredientAllowNo"
+                     name="ingredientPrice" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" type="number"
+                     ng-reflect-name="ingredientPrice">
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                Allow Ingredient Price
+              </label>
+            </div>
+          </div>
           <div class=" col-sm-12">
             <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
             </button>
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="manage-button">
           <button type="submit" class="btn btn-success btn-green"
                   [disabled]="!itemForm.form.valid || item.sizes.length == 0">{{ create? 'Create' : 'Save'}}
           </button>
-          <button *ngIf="!create" type="button" (click)="deleteItem()" class="btn btn-danger btn-red">Delete</button>
+          <button *ngIf="!create" type="bGrouputton" (click)="deleteItem()" class="btn btn-danger btn-red">Delete
+          </button>
           <button class="btn btn-default btn-normal" (click)="cancelItem()" type="button">Cancel</button>
         </div>
       </div>
     </form>
     <div *ngIf="uploading" class="row progress-div">
-      <progress class="progress progress-success progress-striped progress-animated" max="100" [(value)]="progress" ></progress>
+      <progress class="progress progress-success progress-striped progress-animated" max="100"
+                [(value)]="progress"></progress>
     </div>
   </div>
 </div>

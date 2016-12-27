@@ -12,6 +12,7 @@ import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {Ingredient} from '../../shared/models/ingredient';
 
+
 @Component({
   moduleId: module.id,
   selector: 'item-cmp',
@@ -33,7 +34,7 @@ export class ItemComponent implements OnInit {
   progress: number = 0;
   uploading: boolean = false;
   finished: boolean = false;
-  newIngredientGroup: IngredientGroup = new IngredientGroup([], 1);
+  newIngredientGroup: IngredientGroup = new IngredientGroup('', [], 1);
   newIngredient: Ingredient = new Ingredient('', false, 0);
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
