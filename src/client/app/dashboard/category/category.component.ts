@@ -39,10 +39,10 @@ export class CategoryComponent implements OnInit {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
-        //this.supportedLanguages = category.supportedLanguages;
-        //this.selectedLanguage = category.supportedLanguages[0];
-        //this.languageService.announceSupportedLanguages(this.supportedLanguages);
-        //this.languageService.announceSelectedLanguage(this.selectedLanguage);
+        this.supportedLanguages = category.supportedLanguages;
+        this.selectedLanguage = category.supportedLanguages[0];
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;

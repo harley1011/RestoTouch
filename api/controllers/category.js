@@ -1,5 +1,6 @@
 var models = require("../../database/models");
 var categoryModel;
+var categoryLanguageModel;
 
 setDatabase(models);
 
@@ -15,6 +16,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   categoryModel = models.getCategoryModel();
+  categoryLanguageModel = models.getCategoryLanguageModel();
 }
 
 // GET /category
@@ -31,7 +33,11 @@ function getCategory(req, res) {
     where: {
       id: id,
       userId: req.userId
-    }
+    },
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }]
   }).then(function(category) {
       if(category) {
         return res.json(category);
@@ -45,7 +51,12 @@ function getCategory(req, res) {
 function addCategory(req, res) {
   var newCat = req.body;
   newCat.userId = req.userId;
-  return categoryModel.create(newCat).then(function(result) {
+  return categoryModel.create(newCat, {
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function(result) {
     return res.json({success: 1, description: "New Category added"});
   });
 }

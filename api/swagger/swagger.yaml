@@ -724,6 +724,10 @@ definitions:
     properties:
       categoryName:
         type: string
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
     required:
       - categoryName
   ItemsResponse:
