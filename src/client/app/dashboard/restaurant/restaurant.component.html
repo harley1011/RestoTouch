@@ -14,11 +14,11 @@
       </ul>
     </nav>
 -->
-      <h5 class="subtitle"><small>All inputs can be changed in a different language as well.</small></h5>
+      <h5 class="subtitle"><small>{{ 'restaurant.sousTitleRestoSetting' | translate}}</small></h5>
     <hr>
     <div class="form-group input-group manage-lang row">
         <div class="col col-sm-6 manage-lang-lbl">
-            <label for="language">Currently showing in: </label>  
+            <label for="language">{{ 'restaurant.langType2' | translate}}</label>  
         </div>
         <div class="col col-sm-6" style="padding-left:0">
             <select name="language" class="form-control" [(ngModel)]="selectedLanguage" (change)="selectLanguage($event.target.value)">
