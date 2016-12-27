@@ -2,6 +2,7 @@
   <div class="manage-header">
     <h2>{{ restaurant?.id ? ('restaurant.titleEdit' | translate) : ('restaurant.titleCreate' | translate) }}</h2>
 <!--        <h1>{{ restaurant?.id ? restaurant?.selectedTranslation?.name || 'Add a translation for the selected language': "Create Restaurant" }}</h1>-->
+<!--
     <nav class="nav navbar-nav">
       <ul class="nav nav-pills">
         <li class="nav-item" role="presentation">
@@ -12,13 +13,42 @@
         <li class="nav-item" role="presentation"><a class="nav-link" href="/dashboard/restaurant/#resto-menu">{{ 'restaurant.menuTitle' | translate}}</a></li>
       </ul>
     </nav>
+-->
+      <h5 class="subtitle"><small>All inputs can be changed in a different language as well.</small></h5>
     <hr>
+             <div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
   </div>
+</div>
 
+      <div class="dropdown">
+<button class="btn btn-default dropdown-toggle" type="button" id="lang-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <label>Selected Language: </label> {{selectedLanguage}}
+    <span class="caret"></span>
+  </button>          
+                
+                <div class="dropdown-menu" aria-labelledby="lang-button">
+                    <a *ngFor="let language of supportedLanguages" class="dropdown-item" (click)="selectLanguage(language)">
+                        {{language.name}}
+                    </a>
+                </div>
+          
+          </div>
+  </div>
+ 
   <div class="formContainer" #formContainer>
     <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">
       <div id="basic-info" class="edit-section">
       <h4>{{ 'restaurant.geninfoTitle' | translate}}</h4>
+  
         <div class="form-group">
           <label>{{ 'restaurant.giName' | translate}}</label>
           <input id="name" class="form-control" name="name"
@@ -368,6 +398,7 @@
       </div>
 
       <div class="row">
+         
         <div class="manage-button">
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.saveButton' | translate}}</button>
           <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >{{ 'restaurant.deleteButton' | translate}}</button>
