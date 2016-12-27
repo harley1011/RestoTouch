@@ -67,17 +67,14 @@
           <div class="row">
             <div class="col col-md-5">
               <ul class="list-group">
-                <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i
-                  class="fa fa-times-circle icon-remove icon-align fa-pull-right"
-                  (click)="removeLanguage(language)"></i></li>
+                <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
               </ul>
             </div>
             <div class="col col-md-4 col-md-offset-1">
               <div class="form-group input-group">
                 <label for="language">Select a language:</label>
                 <select name="language" class="form-control" [(ngModel)]="addedLanguage">
-                  <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}
-                  </option>
+                  <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
                 </select>
               </div>
             </div>
@@ -104,60 +101,62 @@
         </span>
         <div style="width: 300px">
           <button class="btn-upload-image btn-primary btn" type="button" (click)="selectFile()">
-            {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": pictureMode
-            == pictureModes.Select? "Add an Image": "Change Image": "Select Cropped Image"}}
+            {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": pictureMode == pictureModes.Select? "Add an Image": "Change Image": "Select Cropped Image"}}
           </button><!--
-          -->
-          <button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button"
-                  (click)="clearImage()"></button>
+          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button" (click)="clearImage()"></button>
         </div>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
 
-      <div class="col-sm-12">
-        <div class="col-sm-6">
-          <table class="table table-sm td-size-table">
-            <thead>
-            <tr>
-              <th>Add By Default</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let ingredient of newIngredientGroup.ingredients">
-              <td>{{ingredient.addByDefault}}</td>
-              <td>{{ingredient.name}}</td>
-              <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
-              <td>
-                <button class="fa fa-times-circle icon-remove icon-align" (click)="removeIngredient(newIngredientGroup, ingredient)"></button>
-              </td>
-            </tr>
-            <tr class="td-size-input">
-              <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredient.addByDefault" name="ingredientAddByDefault">
-              </td>
-              <td><input class="form-control" type="text" [(ngModel)]="newIngredient.name" name="ingredientName"
-                         placeholder="Ingredient Name">
-              </td>
-              <td>
-                <div class="input-group"><span class="input-group-addon">$</span>
-                  <input class="form-control" #price="ngModel" id="ingredientPrice" [(ngModel)]="newIngredient.price" name="ingredientPrice"
-                         type="number">
-                </div>
-              </td>
-              <td>
-                <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredient.name"
-                        (click)="addIngredient(newIngredientGroup, newIngredient)"></button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class=" col-sm-12">
-          <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
-          </button>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="col-sm-6">
+            <table class="table table-sm td-size-table">
+              <thead>
+              <tr>
+                <th>Add By Default</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let ingredient of newIngredientGroup.ingredients">
+                <td>{{ingredient.addByDefault}}</td>
+                <td>{{ingredient.name}}</td>
+                <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
+                <td>
+                  <button class="fa fa-times-circle icon-remove icon-align"
+                          (click)="removeIngredient(newIngredientGroup, ingredient)"></button>
+                </td>
+              </tr>
+              <tr class="td-size-input">
+                <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredient.addByDefault"
+                           name="ingredientAddByDefault">
+                </td>
+                <td><input class="form-control" type="text" [(ngModel)]="newIngredient.name" name="ingredientName"
+                           placeholder="Ingredient Name">
+                </td>
+                <td>
+                  <div class="input-group"><span class="input-group-addon">$</span>
+                    <input class="form-control" #price="ngModel" id="ingredientPrice" [(ngModel)]="newIngredient.price"
+                           name="ingredientPrice"
+                           type="number">
+                  </div>
+                </td>
+                <td>
+                  <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredient.name"
+                          (click)="addIngredient(newIngredientGroup, newIngredient)"></button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class=" col-sm-12">
+            <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
+            </button>
+          </div>
         </div>
       </div>
 
@@ -172,8 +171,7 @@
       </div>
     </form>
     <div *ngIf="uploading" class="row progress-div">
-      <progress class="progress progress-success progress-striped progress-animated" max="100"
-                [(value)]="progress"></progress>
+      <progress class="progress progress-success progress-striped progress-animated" max="100" [(value)]="progress" ></progress>
     </div>
   </div>
 </div>
