@@ -1,5 +1,5 @@
 {
-  "rulesDirectory": ["node_modules/codelyzer"],
+  "extends": "./tools/config/seed.tslint.json",
   "rules": {
     "class-name": true,
     "curly": false,

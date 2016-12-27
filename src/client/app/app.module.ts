@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_BASE_HREF } from '@angular/common';
-import { RouterModule } from '@angular/router';
+
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
-import { routes } from './app.routes';
+import { AppRoutingModule } from './app-routing.module';
 
 import { LoginModule } from './login/login.module';
 import { LogoutModule } from './logout/logout.module';
@@ -15,13 +15,13 @@ import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
 import { LanguageService } from './services/language.service';
-
+import { ImageUploadService } from './services/image-upload.service';
 
 @NgModule({
 	imports: [
 		BrowserModule,
+    AppRoutingModule,
 		HttpModule,
-		RouterModule.forRoot(routes),
 		LoginModule,
 		LogoutModule,
 		SignupModule,
@@ -29,7 +29,7 @@ import { LanguageService } from './services/language.service';
 		SharedModule.forRoot()
 	],
 	declarations: [AppComponent],
-	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, {
+	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, ImageUploadService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],

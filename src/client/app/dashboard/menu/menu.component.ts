@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
-import {Menu} from '../../shared/models/menu';
 import {Category} from '../../shared/models/category';
 import {MenuCategoryService} from '../menu/menu-catergory.service';
-import {CategoryService} from '../categories/category.service';
+import {CategoryService} from '../category/category.service';
+import {Menu, MenuTranslations} from '../../shared/models/menu';
+import {LanguageService} from '../../services/language.service';
+import {Language} from '../../shared/models/language';
 
 // This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({
@@ -23,36 +25,95 @@ export class MenuComponent implements OnInit {
   userSelectedCategories: Category [];
   menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
   categoriesInDb: Category [];
+  sections: string[];
+
+  //Translation support
+  languages: Array<Language>;
+  addedLanguage: string;
+  supportedLanguages: Array<Language> = [];
+  selectedLanguage: Language = new Language('','','',0);
+
 
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
               private menuService: MenuService,
               private menuCategoryService: MenuCategoryService,
               private categoryService: CategoryService,
-              private router: Router) { }
+              private languageService: LanguageService,
+              private router: Router) {
+    this.languages = languageService.languages();
+    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+      this.selectedLanguage = selectedLanguage;
+      this.menu.selectedTranslation = this.menu.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode);
+
+      if(!this.menu.selectedTranslation) {
+        this.menu.selectedTranslation = new MenuTranslations('',this.selectedLanguage.languageCode);
+        this.menu.translations.push(this.menu.selectedTranslation);
+      }
+    });
+    //default to english
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+
+    this.languageService.announceSupportedLanguages(this.supportedLanguages);
+  }
+
+  addLanguage() {
+    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+    if (language) {
+      console.log('Language is already supported.');
+      return;
+    }
+    language = this.languages.find(language => language.languageCode === this.addedLanguage);
+    this.supportedLanguages.push(language);
+    let newTranslation = new MenuTranslations('', language.languageCode);
+    this.menu.translations.push(newTranslation);
+  }
+
+  removeLanguage(language: Language) {
+    if (this.supportedLanguages.length < 1) {
+      console.log('At least one supported language is required.');
+    }
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.menu.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let j = this.menu.translations.indexOf(removedTranslation);
+    this.menu.translations.splice(j, 1);
+  }
+
+
 
   ngOnInit(): void {
 
+    this.sections = [];
     this.route.params.forEach((params: Params) => {
-      if (params['name']) {//TODO change name to id
-        this.getMenu(params['name']);//TODO change name to id
+      if (params['menuId']) {
+        this.getMenu(params['menuId']);
         this.create = false;
       } else {
-        this.menu = new Menu('',[]);
+        let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
+        this.menu = new Menu(this.supportedLanguages, [translation], translation,[]);
         this.create = true;
       }
     });
     this.getCategories();
   }
 
-  getMenu(name: string): void {//TODO id: number
-    this.menuService.getMenu(name).subscribe(//TODO id: number
+  getMenu(id: number): void {
+    this.menuService.getMenu(id).subscribe(
       menu => {
         this.menu = menu;
         //this.getCategories();
         if(!(menu.categories)) {
           this.menu.categories = [];
         }
+        this.supportedLanguages = menu.supportedLanguages;
+        this.menu.selectedTranslation = menu.translations[0];
+        this.selectedLanguage = this.languages.find(language =>
+        language.languageCode === this.menu.selectedTranslation.languageCode);
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;
@@ -91,8 +152,8 @@ export class MenuComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    var oldName = this.menu.name;
-    this.menu.name = values['name'];
+    var oldName = this.menu.selectedTranslation.name;
+    this.menu.selectedTranslation.name = values['name'];
 
     if (this.create) {
       this.add();
@@ -136,8 +197,8 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  update(oldName: string): void {
-    this.menuService.updateMenu(this.menu, oldName).subscribe(
+  update(oldName : string): void {
+    this.menuService.updateMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
       },
@@ -152,7 +213,7 @@ export class MenuComponent implements OnInit {
   }
 
   delete(): void {
-    this.menuService.deleteMenu(this.menu.name).subscribe(
+    this.menuService.deleteMenu(this.menu).subscribe(
       generalResponse => {
         console.log('response', generalResponse);
         this.router.navigate(['/dashboard/menus']);
@@ -213,5 +274,3 @@ export class MenuComponent implements OnInit {
   function hasNoError(element: HTMLInputElement) {
     element.className = element.className.replace(/\bform-error\b/, '');
   }
-
-

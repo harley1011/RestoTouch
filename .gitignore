@@ -37,6 +37,8 @@ typings/
 .vscode
 *.iml
 
+src/client/assets/fonts/**/*
+src/client/*.js
 /tools/**/*.js
 dist/dev
 dist/tmp

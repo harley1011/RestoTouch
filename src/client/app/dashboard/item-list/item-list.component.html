@@ -12,18 +12,18 @@
     <div class="manage-list-container">
     <div class="row">
     <div class="col-sm-3" *ngFor="let item of items">
-      <div (click)="modify(item)" class="card">
+      <div (click)="modify(item)" style="max-width:300px;" class="card">
         <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl" />
         <div class="card-block">
-          <h4 class="card-title">{{ item.name }} </h4>
-            <p class="card-text"> {{item.description}} </p>
+          <h4 class="card-title">{{ item.selectedTranslation.name }} </h4>
+            <p class="card-text"> {{item.selectedTranslation.description}} </p>
           </div>
       </div>
     </div>
 
   </div>
     </div>
-    
+
 </div>
 
 <!--

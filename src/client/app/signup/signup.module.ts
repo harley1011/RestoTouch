@@ -4,9 +4,10 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { SignupComponent } from './signup.component';
+import { SignupRoutingModule } from './signup-routing.module';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, FormsModule],
+    imports: [CommonModule, RouterModule, FormsModule, SignupRoutingModule],
     declarations: [SignupComponent],
     exports: [SignupComponent]
 })

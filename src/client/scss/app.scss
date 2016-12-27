@@ -1,0 +1,155 @@
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../assets/fonts/Maven_Pro/MavenPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../assets/fonts/Maven_Pro/MavenPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../assets/fonts/Lato/Lato-Light.ttf') format('truetype');
+    font-weight: 300;
+}
+
+$green: #5cb85c;
+$red: #d9534f;
+
+@import "../assets/bootstrap/_variables";
+@import "app-base";
+@import "category";
+@import "login";
+@import "logout";
+@import "menu-list";
+@import "menu";
+@import "restaurant";
+@import "restaurant-list";
+@import "home";
+@import "item-list";
+@import "item";
+@import "manage-list";
+@import "manage";
+html, body {
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+    background-color: #f3f3f3;
+}
+.icon-remove {
+  font-weight: normal;
+  color: $brand-danger;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+    color: #c9302c;
+  }
+
+  &:active {
+    cursor: pointer;
+    color: #c9302c;
+  }
+
+}
+
+.icon-add {
+  font-weight: normal;
+  color: $brand-primary;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+    color: #0c5fa7;
+  }
+
+  &:active {
+    cursor: pointer;
+    color: #0c5fa7;
+  }
+}
+
+.btn-circle {
+  width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 22px;
+    line-height: 0.428571;
+    border-radius: 20px;
+    background: transparent;
+    border: 2px solid white;
+    margin: 10px 5px;
+}
+
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-green {
+    background: transparent;
+    color: $green;
+    border-radius: 30px;
+}
+
+.btn-green:hover {
+    background: $green;
+    border-color: $green;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.btn-red {
+    background: transparent;
+    color: $red;
+    border-radius: 30px;
+}
+
+.btn-red:hover {
+    background: $red;
+    border-color: $red;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.btn-normal {
+    border-radius: 30px;
+    background-color: transparent;
+    color: #666;
+    border-color: #999;
+}
+
+.btn {
+    margin-right: 6px;
+}

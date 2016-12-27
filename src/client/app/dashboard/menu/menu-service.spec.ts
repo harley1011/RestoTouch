@@ -5,7 +5,7 @@ import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 import { MenuService } from '../menu/menu.service';
-import { Menu } from '../../shared/models/menu';
+import { Menu, MenuTranslations } from '../../shared/models/menu';
 
 
 export function main() {
@@ -47,7 +47,7 @@ export function main() {
 
     it('should get a Menu', () => {
 
-      initialResponse = menuService.getMenu('Lunch Menu');
+      initialResponse = menuService.getMenu(1);
 
       connection.mockRespond(new Response(new ResponseOptions({body: '{"name": "Lunch Menu"}'})));
 
@@ -81,7 +81,8 @@ export function main() {
 
     it('should add a Menu', () => {
 
-      var mockMenu = new Menu('Lunch Menu',[]);
+      var mockTranslation = new MenuTranslations('', '');
+      var mockMenu = new Menu([], [], mockTranslation, 1);
 
       initialResponse = menuService.addMenu(mockMenu);
 
@@ -102,9 +103,10 @@ export function main() {
 
     it('should update a Menu', () => {
 
-     var mockMenu = new Menu('Dinner Menu',[]);
+      var mockTranslation = new MenuTranslations('', '');
+      var mockMenu = new Menu([], [], mockTranslation, 1);
 
-      initialResponse = menuService.updateMenu(mockMenu,'Lunch Menu');
+      initialResponse = menuService.updateMenu(mockMenu);
 
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success": 1, "description": "Menu Updated"}' })));
 
@@ -123,7 +125,10 @@ export function main() {
 
     it('should delete a Menu', () => {
 
-      initialResponse = menuService.deleteMenu('Lunch Menu');
+      var mockTranslation = new MenuTranslations('', '');
+      var mockMenu = new Menu([], [], mockTranslation, 1);
+
+      initialResponse = menuService.deleteMenu(mockMenu);
       connection.mockRespond(new Response(new ResponseOptions({body: '{"success": 1, "description": "Menu Deleted"}'})));
 
       let response: any;
