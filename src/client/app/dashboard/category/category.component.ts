@@ -136,6 +136,8 @@ export class CategoryComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.addedLanguage);
     this.supportedLanguages.push(language);
+    let newTranslation = new CategoryTranslations('', language.languageCode);
+    this.category.translations.push(newTranslation);
   }
 
   removeLanguage(language: Language) {
@@ -144,6 +146,10 @@ export class CategoryComponent implements OnInit {
     }
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.category.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let j = this.category.translations.indexOf(removedTranslation);
+    this.category.translations.splice(j, 1);
   }
 
 }
