@@ -236,8 +236,15 @@ export class ItemComponent implements OnInit {
   }
 
   removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    let ingredientToRemove = ingredientGroup.ingredients.find(currentIngredient => currentIngredient.name === ingredient.name);
+    let ingredientToRemove = ingredientGroup.ingredients.find((currentIngredient: Ingredient) =>
+    currentIngredient.name === ingredient.name);
     ingredientGroup.ingredients.splice(ingredientGroup.ingredients.indexOf(ingredientToRemove), 1);
+  }
+
+  removeIngredientGroup(ingredientGroup: IngredientGroup) {
+    let ingredientGroupToRemove = this.item.ingredientGroup.find(currentIngredientGroup =>
+    currentIngredientGroup.name === ingredientGroup.name);
+    this.item.ingredientGroup.splice(this.item.ingredientGroup.indexOf(ingredientGroupToRemove), 1);
   }
 
   removeLanguage(language: Language) {

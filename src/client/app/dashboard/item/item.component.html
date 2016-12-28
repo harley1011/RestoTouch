@@ -107,8 +107,7 @@
             {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? "Re-crop Image": pictureMode
             == pictureModes.Select? "Add an Image": "Change Image": "Select Cropped Image"}}
           </button><!--
-          -->
-          <button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button"
+          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button"
                   (click)="clearImage()"></button>
         </div>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
@@ -117,7 +116,7 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <span *ngFor="let newIngredientGroup of item.ingredientGroup">
+          <div class="row" *ngFor="let newIngredientGroup of item.ingredientGroup" style="border: 2px solid #eceeef">
             <div class=" col-sm-3">
               <div class="form-group">
                 <label for="name">Ingredient Group Name</label>
@@ -140,7 +139,8 @@
                   <th>Add By Default</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th></th>
+                  <th><button class="fa fa-times-circle icon-remove icon-align"
+                              (click)="removeIngredientGroup(newIngredientGroup)"></button></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -154,30 +154,30 @@
                   </td>
                 </tr>
                 <tr class="td-size-input">
-                  <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredient.addByDefault"
+                  <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredientGroup.newIngredient.addByDefault"
                              name="ingredientAddByDefault">
                   </td>
-                  <td><input class="form-control" type="text" [(ngModel)]="newIngredient.name" name="ingredientName"
+                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name" name="ingredientName"
                              placeholder="Ingredient Name">
                   </td>
                   <td>
                     <div class="input-group"><span class="input-group-addon">$</span>
-                      <input class="form-control" #price="ngModel" id="ingredientPrice" [(ngModel)]="newIngredient.price"
+                      <input class="form-control" #price="ngModel" id="ingredientPrice"
+                             [(ngModel)]="newIngredientGroup.newIngredient.price"
                              name="ingredientPrice"
                              type="number">
                     </div>
                   </td>
                   <td>
-                    <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredient.name"
-                            (click)="addIngredient(newIngredientGroup, newIngredient)"></button>
+                    <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredientGroup.newIngredient.name"
+                            (click)="addIngredient(newIngredientGroup, newIngredientGroup.newIngredient)"></button>
                   </td>
                 </tr>
                 </tbody>
               </table>
             </div>
-          </span>
-
-          <div class=" col-sm-12">
+          </div>
+          <div class="col-sm-12 add-ingredient-button">
             <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
             </button>
           </div>
