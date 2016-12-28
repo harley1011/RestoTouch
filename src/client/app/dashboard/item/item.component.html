@@ -116,18 +116,17 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <div class="row" *ngFor="let newIngredientGroup of item.ingredientGroup" style="border: 2px solid #eceeef">
+          <div class="row" *ngFor="let newIngredientGroup of item.ingredientGroups; let i = index" style="border: 2px solid #eceeef">
             <div class=" col-sm-3">
               <div class="form-group">
                 <label for="name">Ingredient Group Name</label>
-                <input type="text" class="form-control" id="ingredientGroupName"
+                <input type="text" class="form-control"
                        required
-                       [(ngModel)]="newIngredientGroup.name" name="ingredientGroupName"
-                       #ingredientGroupName="ngModel">
+                       [(ngModel)]="newIngredientGroup.name" name="ingredientGroupName{{i}}">
               </div>
               <div class="form-group">
                 <label>Number of ingredients allowed</label>
-                <input class="form-control" min="1" #newIngredientPrice="ngModel" id="newIngredientAllowNo" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" name="newIngredientAllowNo"
+                <input class="form-control" min="1" #newIngredientPrice="ngModel" id="newIngredientAllowNo{{i}}" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" name="newIngredientAllowNo{{i}}"
                        type="number">
               </div>
             </div>
@@ -156,18 +155,16 @@
                 </tr>
                 <tr class="td-size-input">
                   <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredientGroup.newIngredient.addByDefault"
-                             name="ingredientAddByDefault">
+                             name="ingredientAddByDefault{{i}}">
                   </td>
-                  <td><input class="form-control" #allowQuantity="ngModel" id="allowQuantity" [(ngModel)]="newIngredientGroup.newIngredient.allowQuantity" min="1" name="allowQuantity" type="number"></td>
-                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name" name="ingredientName"
+                  <td><input class="form-control" #allowQuantity="ngModel" id="allowQuantity" [(ngModel)]="newIngredientGroup.newIngredient.allowQuantity" min="1" name="allowQuantity{{i}}" type="number"></td>
+                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name" name="ingredientName{{i}}"
                              placeholder="Ingredient Name">
                   </td>
                   <td>
                     <div class="input-group"><span class="input-group-addon">$</span>
-                      <input class="form-control" #price="ngModel" id="ingredientPrice"
-                             [(ngModel)]="newIngredientGroup.newIngredient.price"
-                             name="ingredientPrice"
-                             type="number">
+                      <input class="form-control" #price="ngModel"
+                             [(ngModel)]="newIngredientGroup.newIngredient.price" name="ingredientPrice{{i}}" type="number">
                     </div>
                   </td>
                   <td>

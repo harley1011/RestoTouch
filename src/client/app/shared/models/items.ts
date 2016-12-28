@@ -7,7 +7,7 @@ export class Item {
                 public supportedLanguages: Array<Language>,
                 public translations: Array<ItemTranslations>,
                 public selectedTranslation: ItemTranslations,
-                public ingredientGroup?: Array<IngredientGroup>,
+                public ingredientGroups?: Array<IngredientGroup>,
                 public imageUrl?: string,
                 public sizes?: Array<Size>,
                 public id?: number,

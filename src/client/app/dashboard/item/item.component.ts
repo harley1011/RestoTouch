@@ -226,7 +226,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroup.push(new IngredientGroup('', [], 1, new Ingredient('', false, 1, 0)));
+    this.item.ingredientGroups.push(new IngredientGroup('', [], 1, new Ingredient('', false, 0, 1)));
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
@@ -241,9 +241,9 @@ export class ItemComponent implements OnInit {
   }
 
   removeIngredientGroup(ingredientGroup: IngredientGroup) {
-    let ingredientGroupToRemove = this.item.ingredientGroup.find(currentIngredientGroup =>
+    let ingredientGroupToRemove = this.item.ingredientGroups.find(currentIngredientGroup =>
     currentIngredientGroup.name === ingredientGroup.name);
-    this.item.ingredientGroup.splice(this.item.ingredientGroup.indexOf(ingredientGroupToRemove), 1);
+    this.item.ingredientGroups.splice(this.item.ingredientGroups.indexOf(ingredientGroupToRemove), 1);
   }
 
   removeLanguage(language: Language) {
