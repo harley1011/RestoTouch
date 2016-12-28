@@ -93,6 +93,9 @@ export class ItemComponent implements OnInit {
           if (item.imageUrl.length !== 0) {
             this.croppedImage = item.imageUrl;
           }
+          item.ingredientGroups.forEach(ingredientGroup => {
+            ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
+          });
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];

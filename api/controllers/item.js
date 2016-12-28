@@ -92,6 +92,13 @@ function get(req, res) {
     }, {
       model: itemTranslationModel,
       as: 'translations'
+    }, {
+      model: ingredientGroupModel,
+      as: 'ingredientGroups',
+      include: [{
+        model: ingredientModel,
+        as: 'ingredients'
+      }]
     }]
   }).then(function (item) {
     if (item) {
