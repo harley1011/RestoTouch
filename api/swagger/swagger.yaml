@@ -760,9 +760,23 @@ definitions:
         type: string
       price:
         type: number
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ItemSizeTranslations"
     required:
       - name
       - price
+  ItemSizeTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
   ItemTranslations:
     type: object
     properties:
