@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from './../../shared/models/items';
-import {Size} from './../../shared/models/size';
+import {Size, SizeTranslations} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {LanguageService} from '../../services/language.service';
@@ -19,7 +19,8 @@ import {ImageUploadService} from '../../services/image-upload.service';
 export class ItemComponent implements OnInit {
   create: boolean;
   item: Item;
-  size = new Size('', 0);
+  sizeTranslation = new SizeTranslations('','en');
+  size = new Size('', 0, [this.sizeTranslation], this.sizeTranslation);
   errorMessage: any;
   cropperSettings: CropperSettings;
   name: string;
@@ -61,10 +62,24 @@ export class ItemComponent implements OnInit {
       this.selectedLanguage = selectedLanguage;
       this.item.selectedTranslation = this.item.translations.find(translation =>
         translation.languageCode === this.selectedLanguage.languageCode);
+      for (let size of this.item.sizes) {
+        size.selectedTranslation = size.translations.find(translation =>
+          translation.languageCode === this.selectedLanguage.languageCode);
+      }
+      this.size.selectedTranslation = this.size.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode); 
 
       if(!this.item.selectedTranslation) {
         this.item.selectedTranslation = new ItemTranslations('','',this.selectedLanguage.languageCode);
         this.item.translations.push(this.item.selectedTranslation);
+        for (let size of this.item.sizes) {
+          size.selectedTranslation = new SizeTranslations('', this.selectedLanguage.languageCode);
+          size.translations.push(size.selectedTranslation);
+        }
+      }
+      if(!this.size.selectedTranslation) {
+        this.size.selectedTranslation = new SizeTranslations('', this.selectedLanguage.languageCode);
+        this.size.translations.push(this.size.selectedTranslation);
       }
     });
     //default to english
@@ -92,6 +107,7 @@ export class ItemComponent implements OnInit {
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];
+          this.size.selectedTranslation = this.item.sizes[0].translations[0];
           this.selectedLanguage = this.languages.find(language =>
             language.languageCode === this.item.selectedTranslation.languageCode);
           this.languageService.announceSupportedLanguages(this.supportedLanguages);
@@ -235,7 +251,8 @@ export class ItemComponent implements OnInit {
 
   addSize() {
     this.item.sizes.push(this.size);
-    this.size = new Size('', 0);
+    let newSizeTranslation = new SizeTranslations('', this.selectedLanguage.languageCode);
+    this.size = new Size('', 0, [newSizeTranslation], newSizeTranslation);
   }
 
   removeSize(size: Size) {
