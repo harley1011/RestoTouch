@@ -4,6 +4,8 @@ var itemModel;
 var itemSizeModel;
 var itemLanguageModel;
 var itemTranslationModel;
+var ingredientGroupModel;
+var ingredientModel;
 
 var _ = require('lodash');
 
@@ -25,6 +27,8 @@ function setDatabase(m) {
   itemSizeModel = models.getItemSizesModel();
   itemLanguageModel = models.getItemLanguageModel();
   itemTranslationModel = models.getItemTranslationModel();
+  ingredientGroupModel = models.getIngredientGroupModel();
+  ingredientModel = models.getIngredientModel();
 }
 
 
@@ -58,6 +62,13 @@ function save(req, res) {
     }, {
       model: itemTranslationModel,
       as: 'translations'
+    }, {
+      model: ingredientGroupModel,
+      as: 'ingredientGroups',
+      include: [{
+        model: ingredientModel,
+        as: 'ingredients'
+      }]
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Item Added"});
@@ -73,7 +84,7 @@ function get(req, res) {
       userId: req.userId
     },
     include: [{
-      model: itemSizeModel, 
+      model: itemSizeModel,
       as: 'sizes'
     }, {
       model: itemLanguageModel,
