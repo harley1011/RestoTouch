@@ -235,6 +235,11 @@ export class ItemComponent implements OnInit {
     this.supportedLanguages.push(language);
     let newTranslation = new ItemTranslations('','', language.languageCode);
     this.item.translations.push(newTranslation);
+    let newSizeTranslation = new SizeTranslations('', language.languageCode);
+    this.size.translations.push(newSizeTranslation);
+    for (let size of this.item.sizes) {
+      size.translations.push(newSizeTranslation);
+    }
   }
 
   removeLanguage(language: Language) {
@@ -247,6 +252,14 @@ export class ItemComponent implements OnInit {
       translation.languageCode === language.languageCode);
     let j = this.item.translations.indexOf(removedTranslation);
     this.item.translations.splice(j, 1);
+    let removedSizeTranslation = this.size.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let k = this.size.translations.indexOf(removedSizeTranslation);
+    this.size.translations.splice(k, 1);
+    for (let size of this.item.sizes) {
+      let i = size.translations.indexOf(removedSizeTranslation);
+      size.translations.splice(i, 1);
+    }
   }
 
   addSize() {
