@@ -366,8 +366,9 @@ export class SeedConfig {
       '@angular/platform-browser/testing':
         'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
       '@angular/platform-browser-dynamic/testing':
-        'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
+      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js',
 
       'app/*': '/app/*',
       // For test config
@@ -403,7 +404,8 @@ export class SeedConfig {
       [join(this.TMP_DIR, this.BOOTSTRAP_DIR, '*')]: `${this.TMP_DIR}/${this.BOOTSTRAP_DIR}/*`,
       'dist/tmp/node_modules/*': 'dist/tmp/node_modules/*',
       'node_modules/*': 'node_modules/*',
-      '*': 'node_modules/*'
+      '*': 'node_modules/*',
+      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
     },
     packages: {
       '@angular/common': {
@@ -444,6 +446,9 @@ export class SeedConfig {
       },
       'rxjs': {
         main: 'Rx.js',
+        defaultExtension: 'js'
+      },
+      'ng2-translate': {
         defaultExtension: 'js'
       }
     }
