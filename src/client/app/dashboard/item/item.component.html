@@ -136,7 +136,7 @@
               <table class="table table-sm td-size-table">
                 <thead>
                 <tr>
-                  <th>Add By Default</th>
+                  <th class="add-by-default-table">Add By Default</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th><button class="fa fa-times-circle icon-remove icon-align"
@@ -145,7 +145,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let ingredient of newIngredientGroup.ingredients">
-                  <td>{{ingredient.addByDefault}}</td>
+                  <td class="add-by-default-table">{{ingredient.addByDefault? 'Yes': 'No'}}</td>
                   <td>{{ingredient.name}}</td>
                   <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
                   <td>
