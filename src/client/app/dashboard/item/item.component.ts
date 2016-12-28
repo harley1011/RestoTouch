@@ -226,12 +226,11 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroup.push(new IngredientGroup('', [], 1, new Ingredient('', false, 0)));
-    //let ingredient = new IngredientGroup([], [], []);
+    this.item.ingredientGroup.push(new IngredientGroup('', [], 1, new Ingredient('', false, 1, 0)));
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.price));
+    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.allowQuantity, ingredient.price));
     ingredient.name = '';
   }
 

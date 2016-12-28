@@ -127,9 +127,8 @@
               </div>
               <div class="form-group">
                 <label>Number of ingredients allowed</label>
-                <input class="form-control ng-pristine ng-valid ng-touched" id="newIngredientAllowNo"
-                       name="ingredientPrice" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" type="number"
-                       ng-reflect-name="ingredientPrice">
+                <input class="form-control" min="1" #newIngredientPrice="ngModel" id="newIngredientAllowNo" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" name="newIngredientAllowNo"
+                       type="number">
               </div>
             </div>
             <div class="col-sm-9">
@@ -137,6 +136,7 @@
                 <thead>
                 <tr>
                   <th class="add-by-default-table">Add By Default</th>
+                  <th class="add-by-default-table">Allow Quantity</th>
                   <th>Name</th>
                   <th>Price</th>
                   <th><button class="fa fa-times-circle icon-remove icon-align"
@@ -146,6 +146,7 @@
                 <tbody>
                 <tr *ngFor="let ingredient of newIngredientGroup.ingredients">
                   <td class="add-by-default-table">{{ingredient.addByDefault? 'Yes': 'No'}}</td>
+                  <td>{{ingredient.allowQuantity}}</td>
                   <td>{{ingredient.name}}</td>
                   <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
                   <td>
@@ -157,6 +158,7 @@
                   <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredientGroup.newIngredient.addByDefault"
                              name="ingredientAddByDefault">
                   </td>
+                  <td><input class="form-control" #allowQuantity="ngModel" id="allowQuantity" [(ngModel)]="newIngredientGroup.newIngredient.allowQuantity" min="1" name="allowQuantity" type="number"></td>
                   <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name" name="ingredientName"
                              placeholder="Ingredient Name">
                   </td>
