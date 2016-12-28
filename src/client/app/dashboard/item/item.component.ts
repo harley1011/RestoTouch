@@ -237,9 +237,6 @@ export class ItemComponent implements OnInit {
     this.item.translations.push(newTranslation);
     let newSizeTranslation = new SizeTranslations('', language.languageCode);
     this.size.translations.push(newSizeTranslation);
-    for (let size of this.item.sizes) {
-      size.translations.push(newSizeTranslation);
-    }
   }
 
   removeLanguage(language: Language) {
@@ -257,8 +254,14 @@ export class ItemComponent implements OnInit {
     let k = this.size.translations.indexOf(removedSizeTranslation);
     this.size.translations.splice(k, 1);
     for (let size of this.item.sizes) {
-      let i = size.translations.indexOf(removedSizeTranslation);
-      size.translations.splice(i, 1);
+      let removedTran = size.translations.find(translation =>
+        translation.languageCode === language.languageCode);
+      let l = size.translations.indexOf(removedTran);
+      size.translations.splice(l, 1);
+    }
+    if(language.languageCode === this.selectedLanguage.languageCode) {
+      this.selectedLanguage = this.supportedLanguages[0];
+      this.languageService.announceSelectedLanguage(this.selectedLanguage);
     }
   }
 
