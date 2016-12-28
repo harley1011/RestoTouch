@@ -2,7 +2,9 @@ var models = require("../../database/models");
 var restaurantModel;
 var restaurantLanguageModel;
 var restaurantsTranslations;
+var businessHoursModel;
 var menuModel;
+var menuTranslationModel;
 var _ = require('lodash');
 
 
@@ -21,16 +23,27 @@ function setDatabase(m) {
   models = m;
   restaurantModel = models.getRestaurantModel();
   menuModel = models.getMenuModel();
+  menuTranslationModel = models.getMenuTranslationsModel();
   restaurantLanguageModel = models.getRestaurantsLanguageModel();
   restaurantsTranslations = models.getRestaurantsTranslationModel();
+  businessHoursModel = models.getBusinessHoursModel();
 }
 
 //GET /restaurant
 function getAll(req, res) {
   return restaurantModel.findAll({
     where: {userId: req.userId},
-    include: [{model: restaurantsTranslations, as: 'translations'}, {
-      model: menuModel
+    include: [{
+      model: restaurantsTranslations,
+      as: 'translations'
+    }, {
+      model: menuModel, include: [{
+        model: menuTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: businessHoursModel,
+      as: 'businessHours'
     }]
   }).then(function (restaurants) {
     return res.json({restaurants: restaurants});
@@ -45,7 +58,13 @@ function save(req, res) {
     include: [{
       model: restaurantLanguageModel,
       as: 'supportedLanguages'
-    }, {model: restaurantsTranslations, as: 'translations'}]
+    }, {
+      model: restaurantsTranslations,
+      as: 'translations'
+    }, {
+      model: businessHoursModel,
+      as: 'businessHours'
+    }]
   }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Added"});
   });
@@ -59,9 +78,21 @@ function get(req, res) {
       id: name,
       userId: req.userId
         },
-    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
-      {model: restaurantsTranslations, as: 'translations'},
-      {model: menuModel}]
+    include: [{
+      model: restaurantLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: restaurantsTranslations,
+      as: 'translations'
+    }, {
+      model: menuModel, include: [{
+        model: menuTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: businessHoursModel,
+      as: 'businessHours'
+    }]
   }).then(function (restaurant) {
     if (restaurant) {
       return res.json(restaurant);
@@ -77,20 +108,42 @@ function update(req, res) {
 
   return restaurantModel.findOne({
     where: {id: restaurant.id},
-    include: [{model: restaurantLanguageModel, as: 'supportedLanguages'},
-      {model: restaurantsTranslations, as: 'translations'}]
+    include: [{
+      model: restaurantLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: restaurantsTranslations,
+      as: 'translations'
+    }, {
+      model: businessHoursModel,
+      as: 'businessHours'
+    }]
   }).then(function (oldRestaurant) {
-
 
     //Find what's new and what has been removed
     var languagesToRemove = _.differenceBy(oldRestaurant.supportedLanguages, restaurant.supportedLanguages, 'languageCode');
     var newLanguagesToAdd = _.differenceBy(restaurant.supportedLanguages, oldRestaurant.supportedLanguages, 'languageCode');
-
+    var businessHoursToRemove = _.differenceBy(oldRestaurant.businessHours, restaurant.businessHours, 'id');
+    var businessHoursToAdd = _.differenceBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
+    var businessHoursToUpdate = _.intersectionBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
 
     for (var prop in restaurant) {
       if (prop != 'translations')
         oldRestaurant[prop] = restaurant[prop];
     }
+
+    businessHoursToAdd.forEach(function (businessHour) {
+      businessHour.restaurantId = oldRestaurant.id;
+    });
+    businessHoursModel.bulkCreate(businessHoursToAdd);
+
+    businessHoursToRemove.forEach(function (businessHour) {
+      businessHoursModel.destroy({where: {id: businessHour.id}});
+    });
+
+    businessHoursToUpdate.forEach(function (businessHour) {
+      businessHoursModel.update(businessHour, {where: {id: businessHour.id}});
+    });
 
     oldRestaurant.translations.forEach(function(translation) {
       var newTranslation = _.find(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
@@ -124,9 +177,6 @@ function update(req, res) {
       restaurantLanguageModel.bulkCreate(newLanguagesToAdd).then(function (result) {
         return res.json({success: 1, description: "Restaurant Updated"});
       })
-
-
-
     });
   });
 }

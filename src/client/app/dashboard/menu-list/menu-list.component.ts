@@ -30,6 +30,9 @@ export class MenuListComponent implements OnInit {
 		this.menuService.getMenus().subscribe(
 			menus => {
 				this.menus = menus;
+				menus.forEach(function(menu){
+					menu.selectedTranslation = menu.translations[0];
+				});
 				this.numOfMenus = this.menus.length;
 				this.menusInRestaurant = new Array(this.menus.length);
 
@@ -42,7 +45,7 @@ export class MenuListComponent implements OnInit {
 				for (var i = 0; i < this.menus.length; i++) {
 					this.menusInRestaurant[i] = false;
 					for (var j = 0; j < this.restaurant.Menus.length; j++) {
-						if (this.menus[i].name === this.restaurant.Menus[j].name) {
+						if (this.menus[i].id === this.restaurant.Menus[j].id) {
 							this.menusInRestaurant[i] = true;
 							this.numOfMenus++;
 							break;
@@ -112,7 +115,7 @@ export class MenuListComponent implements OnInit {
 			this.menusInRestaurant[index] = !inRestaurant;
 			this.modifyUpdates(menu, this.menusInRestaurant[index]);
 		} else {
-			this.router.navigate(['/dashboard/menu', menu.name]);
+			this.router.navigate(['/dashboard/menu', menu.id]);
 		}
 	}
 

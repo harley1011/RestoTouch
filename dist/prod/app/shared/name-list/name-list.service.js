@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require('@angular/core');
 var Observable_1 = require('rxjs/Observable');
-require('rxjs/add/operator/map');
-require('rxjs/add/operator/catch');
+// import 'rxjs/add/operator/do';  // for debugging
 /**
  * This class provides the NameList service with methods to read names and add names.
  */
@@ -47,4 +46,3 @@ var NameListService = (function () {
     return NameListService;
 }());
 exports.NameListService = NameListService;
-//# sourceMappingURL=name-list.service.js.map

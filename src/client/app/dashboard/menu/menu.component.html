@@ -1,3 +1,56 @@
+<div id="menu">
+  <div class="manage-header">
+    <h2>{{ menu?.id ? ('menu.titleEdit' | translate) : ('menu.titleCreate' | translate) }}</h2>
+<h5 class="subtitle"><small>{{ 'menu.sousTitleMenusetting' | translate}}</small></h5>
+    <hr>
+  </div>
+  <div class="formContainer">
+    <form id="menuForm" role="form">
+      
+        <div class="form-group">
+            <label>{{ 'menu.menuName' | translate}}</label>
+          <input id="name" class="form-control" name="name" placeholder="{{ 'menu.menuNameFieldHolder' | translate}}" 
+          [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
+          </div>
+     
+        <div class="row">
+        <div class="manage-button">
+          <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">{{ 'menu.saveButton' | translate}}</button>
+          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >{{ 'menu.deleteButton' | translate}}</button>
+          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">{{ 'menu.createButtonTopbar' | translate}}</button>
+          <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'menu.cancelButtonTopbar' | translate}}</button>
+        </div>
+      </div>
+
+      <div id="menu-lang" class="edit-section">
+        <h5>{{ 'menu.langTitle' | translate}}</h5>
+        <div class="row">
+            <div class="col col-md-5">
+                <ul class="list-group">
+                    <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
+              </ul>
+            </div>
+            <div class="col col-md-4 col-md-offset-1">
+              <div class="form-group input-group">
+                  <label for="language">{{ 'menu.langSelect' | translate}}</label>
+                  <select name="language" class="form-control" [(ngModel)]="addedLanguage">
+                   <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="col col-md-2" style="padding-top:10px"><br>
+              <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">{{ 'menu.addLangButton' | translate}}</button>
+            </div>
+        </div>
+      </div>
+      
+      </form>
+    </div>
+</div>
+
+
+
+<!--
 <div class="container-fluid">
 <h1>Create Menu</h1>
   <div class="row">
@@ -33,3 +86,4 @@
   </div>
 
 </div>
+-->

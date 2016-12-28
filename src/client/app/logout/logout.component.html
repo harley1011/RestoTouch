@@ -1,0 +1,51 @@
+<div class="row logoutContainer">
+  <a href="/"><img src ="assets/img/logo2.png" id="logoutLogo"></a>
+  <div class="container logoutCenter">
+
+    <!-- top -->
+    <div class="row" id="logoutPadding">
+      <h1 class="logoutTitle"> {{ 'logout.title' | translate }}</h1>
+      <p class="logoutBodyText">
+       {{ 'logout.sousTitle' | translate }}
+      </p>
+    </div>
+
+    <!-- bottom -->
+    <div class="row logoutSigningBkgd">
+
+      <!--left-->
+      <div class="col-md-4 logoutSigningPadding">
+        <h1 class="logoutTitle">{{ 'logout.formTitle' | translate }}</h1>
+        <p class="logoutSigningText">
+          {{ 'logout.formSousTitle' | translate }}</p>
+      </div>
+
+      <!-- right-->
+      <div class="col-md-8 logoutSigningText logoutSigningPadding">
+        {{ 'logout.formTitle2' | translate }}<br/>
+        <form role="form" (ngSubmit)="onSubmit()">
+          <div class="form-content">
+
+            <!-- input box for email-->
+            <div class="form-group">
+              <input type="email" class="form-control input-underline input-lg" id="email" placeholder="{{ 'login.emailHolderFieldForm' | translate }}" required
+              [(ngModel)]="user.email" name="email" #email="ngModel">
+            </div>
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger"> {{ 'login.emailRequiredAlert' | translate }} </div>
+
+            <!-- input box for password-->
+            <div class="form-group">
+              <input type="password" class="form-control input-underline input-lg" id="password" placeholder="{{ 'login.passwordHolderFieldForm' | translate }}" required
+              [(ngModel)]="user.password" name="password" #password="ngModel">
+            </div>
+            <div [hidden]="password.valid || password.pristine" class="alert alert-danger"> {{ 'login.passwordRequiredAlert' | translate }} </div>
+            <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+            <!-- buttons -->
+            <button type="submit" class="btn btn-success rounded-btn"> {{ 'logout.formLogButton' | translate }} </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
