@@ -751,8 +751,38 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/ItemTranslations"
+      ingredientGroup:
+        type: array
+        items:
+          "$ref": "#/definitions/IngredientGroup"
     required:
       - imageUrl
+  Ingredient:
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      allowQuantity:
+        type: number
+    required:
+      - name
+  IngredientGroup:
+    type: object
+    properties:
+      name:
+        type: string
+      numberOfIngredientsAllowed:
+        type: number
+      allowQuantity:
+        type: number
+      ingredients:
+        type: array
+        items:
+          "$ref": "#/definitions/Ingredient"
+    required:
+      - name
   ItemSize:
     type: object
     properties:
