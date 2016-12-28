@@ -5,7 +5,7 @@
     <div class="col col-md-5 loginFormContainer">
         <!-- register/language emplacement -->
         <div class="row loginFormNav">
-            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'login.register' | translate }}</span></a> 
+            <a type="submit" routerLink="/signup"><span style="font-weight: bold;">{{ 'login.register' | translate }}</span></a>
             &emsp;|&emsp;<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;
         <select #langSelect (change)="translate.use(langSelect.value)">
           <option value="en" [selected]="'en' === translate.currentLang">English </option>
@@ -38,7 +38,7 @@
                 <div [hidden]="password.valid || password.pristine" class="alert alert-danger">{{ 'login.passwordRequiredAlert' | translate }}</div>
                 <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
                 <!-- buttons -->
-                <button type="submit" class="btn btn-success loginBtn rounded-btn">{{ 'login.logButton' | translate }}</button></div>
+                <button id="loginBtn" type="submit" class="btn btn-success loginBtn rounded-btn">{{ 'login.logButton' | translate }}</button></div>
         </form>
         </div>
     </div>
