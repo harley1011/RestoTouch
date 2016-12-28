@@ -230,7 +230,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.allowQuantity, ingredient.price));
+    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity));
     ingredient.name = '';
   }
 
