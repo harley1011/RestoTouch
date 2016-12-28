@@ -11,6 +11,8 @@ var menuLanguageModel = {};
 var menuTranslationModel = {};
 var itemLanguageModel = {};
 var itemTranslationModel = {};
+var ingredientGroupModel = {};
+var ingredientModel = {};
 
 var Promise = require('promise');
 
@@ -70,6 +72,8 @@ menuTranslationModel.destroy = destroy;
 
 addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
+addMethodsToObject(ingredientModel);
+addMethodsToObject(ingredientGroupModel);
 
 function addMethodsToObject(obj) {
   obj.create = create;
@@ -129,6 +133,14 @@ exports.getItemLanguageModel = function () {
 
 exports.getItemTranslationModel = function () {
   return itemTranslationModel;
+}
+
+exports.getIngredientGroupModel  = function () {
+  return ingredientGroupModel;
+}
+
+exports.getIngredientModel = function () {
+  return ingredientModel;
 }
 
 
