@@ -102,9 +102,9 @@ userModel.sync({force: dropTable}).then(function () {
     itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});
     itemTranslationModel.sync({force: dropTable});
 
-    itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'ingredientGroupId'});
+    itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
     ingredientGroupModel.sync({force: dropTable});
-    ingredientGroupModel.hasMany(ingredientModel, {as: 'ingredients', onDelete: 'cascade', foreignKey: 'ingredientId'});
+    ingredientGroupModel.hasMany(ingredientModel, {as: 'ingredients', onDelete: 'cascade', foreignKey: 'ingredientGroupId'});
     ingredientModel.sync({force: dropTable});
   })
 

@@ -133,9 +133,9 @@ function update(req, res) {
     var languagesToRemove = _.differenceBy(oldItem.supportedLanguages, item.supportedLanguages, 'languageCode');
     var languagesToAdd = _.differenceBy(item.supportedLanguages, oldItem.supportedLanguages, 'languageCode');
 
-    var ingredientGroupsToAdd = _.differenceBy(item.ingredientGroups, oldItem.ingredientGroups, 'name');
-    var ingredientGroupsToRemove = _.differenceBy(oldItem.ingredientGroups, item.ingredientGroups, 'name');
-    var ingredientGroupsToCheckForUpdate = _.differenceBy(_.differenceBy(item.ingredientGroups, ingredientGroupsToRemove, 'name'), ingredientGroupsToRemove, 'name');
+    var ingredientGroupsToAdd = _.differenceBy(item.ingredientGroups, oldItem.ingredientGroups, 'id');
+    var ingredientGroupsToRemove = _.differenceBy(oldItem.ingredientGroups, item.ingredientGroups, 'id');
+    var ingredientGroupsToCheckForUpdate = _.differenceBy(_.differenceBy(item.ingredientGroups, ingredientGroupsToAdd, 'id'), ingredientGroupsToRemove, 'id');
 
     if (item.imageUrl != oldItem.imageUrl) {
       var split = oldItem.imageUrl.split('/');
@@ -144,7 +144,7 @@ function update(req, res) {
     }
 
     for (var prop in item) {
-      if (prop != 'translations')
+      if (prop != 'translations' && prop != 'ingredientGroups')
         oldItem[prop] = item[prop];
     }
 
@@ -162,6 +162,10 @@ function update(req, res) {
       var ingredientGroupToCheck = _.find(oldItem.ingredientGroups, {'id': ingredientGroup.id});
       var ingredientToAdd = _.differenceBy(ingredientGroup.ingredients, ingredientGroupToCheck.ingredients, 'id');
       var ingredientToRemove = _.differenceBy(ingredientGroupToCheck.ingredients, ingredientGroup.ingredients, 'id');
+
+      ingredientGroupToCheck.name = ingredientGroup.name;
+      ingredientGroupToCheck.numberOfIngredientsAllowed = ingredientGroup.numberOfIngredientsAllowed;
+
       ingredientToAdd.forEach(function (ingredient) {
         ingredient.ingredientGroupId = ingredientGroup.id;
       });
