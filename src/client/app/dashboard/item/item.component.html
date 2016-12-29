@@ -8,6 +8,7 @@
   </div>
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
+      <div class="row">
       <div class="col-sm-7">
         <div class="form-group">
           <label for="name">Item Name</label>
@@ -113,10 +114,20 @@
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
-
+      </div>
       <div class="row">
+        <div [hidden]="item.ingredientGroups.length == 0" class="col-sm-12">
+          <i class="fa fa-exclamation-circle"></i> The ingredient groups bellow will be displayed in the order as shown below, use the up and down arrow to change the order of an ingredient group with another one
+        </div>
         <div class="col-sm-12">
-          <div class="row" *ngFor="let newIngredientGroup of item.ingredientGroups; let i = index" style="border: 2px solid #eceeef">
+          <div class="row ingredient-group-div" *ngFor="let newIngredientGroup of item.ingredientGroups; let i = index" >
+            <div class="col-sm-1 ingredient-group-button-div">
+              <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                <button type="button" class="btn btn-primary ingredient-group-up-button"><i class="fa fa-chevron-up"></i></button>
+                <button type="button" class="btn btn-primary ingredient-group-middle-button">1</button>
+                <button type="button" class="btn btn-primary ingredient-group-down-button"><i class="fa fa-chevron-down"></i></button>
+              </div>
+            </div>
             <div class=" col-sm-3">
               <div class="form-group">
                 <label for="name">Ingredient Group Name</label>
@@ -135,7 +146,7 @@
                        type="number">
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
               <table class="table table-sm td-size-table">
                 <thead>
                 <tr>
