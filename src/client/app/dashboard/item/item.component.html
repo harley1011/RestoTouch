@@ -125,8 +125,13 @@
                        [(ngModel)]="newIngredientGroup.name" name="ingredientGroupName{{i}}">
               </div>
               <div class="form-group">
-                <label>Number of ingredients allowed</label>
+                <label>Max number of ingredients allowed</label>
                 <input class="form-control" min="1" #newIngredientPrice="ngModel" id="newIngredientAllowNo{{i}}" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" name="newIngredientAllowNo{{i}}"
+                       type="number">
+              </div>
+              <div class="form-group">
+                <label>Min number of ingredients required</label>
+                <input class="form-control" min="1" #newIngredientPrice="ngModel" id="newIngredientMinimumAllowNo{{i}}" [(ngModel)]="newIngredientGroup.numberOfIngredientsAllowed" name="newIngredientAllowNo{{i}}"
                        type="number">
               </div>
             </div>

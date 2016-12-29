@@ -165,6 +165,7 @@ function update(req, res) {
 
       ingredientGroupToCheck.name = ingredientGroup.name;
       ingredientGroupToCheck.numberOfIngredientsAllowed = ingredientGroup.numberOfIngredientsAllowed;
+      ingredientGroupToCheck.save();
 
       ingredientToAdd.forEach(function (ingredient) {
         ingredient.ingredientGroupId = ingredientGroup.id;
