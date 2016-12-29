@@ -229,7 +229,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroups.push(new IngredientGroup('', [], 1, new Ingredient('', false, 0, 1)));
+    this.item.ingredientGroups.push(new IngredientGroup('', [], 1, 1, new Ingredient('', false, 0, 1)));
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {

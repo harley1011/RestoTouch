@@ -164,7 +164,8 @@ function update(req, res) {
       var ingredientToRemove = _.differenceBy(ingredientGroupToCheck.ingredients, ingredientGroup.ingredients, 'id');
 
       ingredientGroupToCheck.name = ingredientGroup.name;
-      ingredientGroupToCheck.numberOfIngredientsAllowed = ingredientGroup.numberOfIngredientsAllowed;
+      ingredientGroupToCheck.maxNumberOfIngredients = ingredientGroup.maxNumberOfIngredients;
+      ingredientGroupToCheck.minNumberOfIngredients = ingredientGroup.minNumberOfIngredients;
       ingredientGroupToCheck.save();
 
       ingredientToAdd.forEach(function (ingredient) {

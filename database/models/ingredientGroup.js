@@ -1,6 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define("IngredientGroup", {
     name: DataTypes.TEXT,
-    numberOfIngredientsAllowed: DataTypes.INTEGER
+    maxNumberOfIngredients: DataTypes.INTEGER,
+    minNumberOfIngredients: DataTypes.INTEGER
   });
 };
