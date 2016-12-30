@@ -66,7 +66,7 @@
         </div>
       </div>
       <div id="resto-payment" class="col-md-3 payment-container-div">
-        <h4>Payment Methods</h4>
+        <h4>{{ 'restaurant.paymethTitle' | translate}}</h4>
         <div class="checkbox" *ngFor="let payment of restaurant.payments; let i = index">
           <label><input type="checkbox" name="payment{{i}}" [(ngModel)]="payment.used"> {{payment.name}}</label>
         </div>
