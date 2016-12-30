@@ -166,14 +166,6 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/dashboard/menu', menu.id]);
   }
 
-  addRemovePayment(): void {
-    this.router.navigate(['/dashboard/payments', this.restaurant.id]);
-  }
-
-  openPayment(payment: Payment): void {
-    this.router.navigate(['/dashboard/payment', payment.id]);
-  }
-
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
