@@ -9,7 +9,7 @@
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
       <div class="row">
-      <div class="col-sm-7">
+      <div class="col-sm-9">
         <div class="form-group">
           <label for="name">Item Name</label>
           <input type="text" class="form-control" id="name"
@@ -94,7 +94,7 @@
         </div>
 
       </div>
-      <div class="col-sm-5 image-crop-div">
+      <div class="col-sm-3 image-crop-div">
         <img-cropper [(hidden)]="pictureMode != pictureModes.Crop"
                      class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
                      [image]="croppedImageContainer" [settings]="cropperSettings">
@@ -117,7 +117,8 @@
       </div>
       <div class="row">
         <div [hidden]="item.ingredientGroups.length <= 1" class="col-sm-12">
-          <i class="fa fa-exclamation-circle"></i> The ingredient groups bellow will be displayed in the order as shown below, use the up and down arrow to change the order of an ingredient group with another one
+          <i class="fa fa-exclamation-circle"></i> The ingredient groups below will be displayed in the order as shown below to the customer <br>
+          Use the up and down arrow to change the order of an ingredient group with another one
         </div>
         <div class="col-sm-12">
           <div class="row ingredient-group-div" *ngFor="let newIngredientGroup of item.ingredientGroups; let i = index" >
@@ -128,7 +129,7 @@
                 <button type="button" class="btn btn-primary ingredient-group-down-button" (click)="changeOrder(newIngredientGroup, 1)"><i class="fa fa-chevron-down"></i></button>
               </div>
             </div>
-            <div class=" col-sm-3">
+            <div class=" col-sm-2">
               <div class="form-group">
                 <label for="name">Ingredient Group Name</label>
                 <input type="text" class="form-control"
@@ -146,7 +147,7 @@
                        type="number">
               </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
               <table class="table table-sm td-size-table">
                 <thead>
                 <tr>
