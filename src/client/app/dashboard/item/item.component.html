@@ -134,12 +134,12 @@
               </div>
               <div class="form-group">
                 <label>Max num of ingredients</label>
-                <input class="form-control" min="1" #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.maxNumberOfIngredients" [ngModelOptions]="{standalone: true}"
+                <input class="form-control" min="1"  #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.maxNumberOfIngredients" [ngModelOptions]="{standalone: true}"
                        type="number">
               </div>
               <div class="form-group">
                 <label>Min num of ingredients</label>
-                <input class="form-control" min="1" #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.minNumberOfIngredients" [ngModelOptions]="{standalone: true}"
+                <input class="form-control" min="0" [max]="newIngredientGroup.maxNumberOfIngredients" #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.minNumberOfIngredients" [ngModelOptions]="{standalone: true}"
                        type="number">
               </div>
             </div>
