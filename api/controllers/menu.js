@@ -1,6 +1,6 @@
 var models = require("../../database/models");
 var menuModel;
-//var categoryModel;
+var categoryModel;
 var menuLanguageModel;
 var menuTranslationsModel;
 var _ = require('lodash');
@@ -19,7 +19,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
-  //categoryModel = models.getCategoryModel(); // TODO check why this causing error
+  categoryModel = models.getCategoryModel(); // TODO check why this causing error
   menuLanguageModel = models.getMenuLanguageModel();
   menuTranslationsModel = models.getMenuTranslationsModel();
 }
@@ -68,11 +68,9 @@ function getMenu(req, res) {
     }, {
       model: menuTranslationsModel,
       as: 'translations'
+    }, {
+      model: categoryModel
     }]
-   /*include: [{
-      model: categoryModel,
-      as: 'categories'
-    }]*/
   }).then(function(menu) {
     if (menu) {
       res.json(menu);
@@ -97,6 +95,10 @@ function updateMenu(req, res) {
     }, {
       model: menuTranslationsModel,
       as: 'translations'
+    }],
+    include: [{
+      model: categoryModel,
+      as: 'categories'
     }]
   }).then(function (oldMenu) {
 
