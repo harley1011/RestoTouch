@@ -722,10 +722,24 @@ definitions:
   Category:
     type: object
     properties:
-      categoryName:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/CategoryTranslations"
+  CategoryTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
         type: string
     required:
-      - categoryName
+      - name
+      - languageCode
   ItemsResponse:
     required:
       - items
