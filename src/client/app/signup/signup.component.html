@@ -5,15 +5,19 @@
     <div class="col col-md-5 loginFormContainer">
         <!-- register/language emplacement -->
         <div class="row loginFormNav">
-            <a type="submit" routerLink="/"><span style="font-weight: bold;">Log In</span></a> &emsp;|&emsp;
-        <i class="fa fa-globe" aria-hidden="true"></i> &nbsp; English
+            <a type="submit" routerLink="/"><span style="font-weight: bold;">{{ 'registration.loginLink' | translate }}</span></a> &emsp;|&emsp;
+        <i class="fa fa-globe" aria-hidden="true"></i> &nbsp;
+        <select #langSelect (change)="translate.use(langSelect.value)">
+            <option value="en" [selected]="'en' === translate.currentLang">English </option>
+            <option value="fr" [selected]="'fr' === translate.currentLang">Français </option>
+          </select>
         </div>
 
         <!-- login form -->
         <div class="row loginPageContent">
         <div class="row loginFormHeader">
-            <h1 class="loginPageTitle">Hello</h1>
-            <p class="loginPageBodyText">Join RestoTouch today.</p>
+            <h1 class="loginPageTitle">{{ 'registration.title' | translate }}</h1>
+            <p class="loginPageBodyText">{{ 'registration.sousTitle' | translate }}</p>
         </div>
         <!-- login elements form -->
         <form role="form" (ngSubmit)="onSubmit()">
@@ -21,58 +25,58 @@
 
              <!-- input box for first name -->
               <input type="text" class="form-control input-underline input-lg" id="firstName"
-                     placeholder="First Name"
+                     placeholder="{{ 'registration.firstNameFieldForm' | translate }}"
                      required
                      [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
             </div>
             <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
-              First Name is required
+              {{ 'registration.firstNameAlert' | translate }}
             </div>
             <!-- input box for last name -->
             <div class="form-group">
               <input type="text" class="form-control input-underline input-lg" id="lastName"
-                     placeholder="Last Name"
+                     placeholder="{{ 'registration.lastNameFieldForm' | translate }}"
                      required
                      [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
             </div>
             <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
-              Last Name is required
+              {{ 'registration.lastNameAlert' | translate }}
             </div>
             <!-- input box for email -->
             <div class="form-group">
-              <input type="text" class="form-control input-underline input-lg" id="email"
-                     placeholder="Email"
+              <input type="email" class="form-control input-underline input-lg" id="email"
+                     placeholder="{{ 'registration.emailFieldForm' | translate }}" required
                      [(ngModel)]="user.email" name="email" #email="ngModel">
             </div>
             <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-              A valid email is required
+              {{ 'registration.emailAlert' | translate }}
             </div>
             <!-- input box for password -->
             <div class="form-group">
               <input type="password" class="form-control input-underline input-lg" id="password"
-                     placeholder="Password"
+                     placeholder="{{ 'registration.passwordFieldForm' | translate }}"
                      required
                      [(ngModel)]="user.password" name="password" #password="ngModel">
             </div>
             <div [hidden]="password.valid || password.pristine" class="alert alert-danger">
-              A password is required
+              {{ 'registration.passwordAlert' | translate }}
             </div>
 
             <div class="form-group">
               <input type="password" class="form-control input-underline input-lg" id="passRepeat"
                      required
                      [(ngModel)]="user.passwordConfirm"
-                     placeholder="Repeat Password" name="passRepeat" #passRepeat="ngModel">
+                     placeholder="{{ 'registration.confirmPasswordFieldForm' | translate }}" name="passRepeat" #passRepeat="ngModel">
             </div>
             <div [hidden]="passRepeat.valid || passRepeat.pristine" class="alert alert-danger">
-              Please repeat your password
+              {{ 'registration.confirmPasswordAlert' | translate }}
             </div>
 
             <div [hidden]="!errorMessage" class="alert alert-danger">
               {{errorMessage}}
             </div>
 
-            <button type="submit" class="btn btn-success loginBtn rounded-btn"> Register </button>
+            <button type="submit" class="btn btn-success loginBtn rounded-btn"> {{ 'registration.registerButton' | translate }} </button>
           </form>
 
         </div>
