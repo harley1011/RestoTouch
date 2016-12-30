@@ -6,6 +6,7 @@ export class IngredientGroup {
                 public ingredients: Array<Ingredient>,
                 public maxNumberOfIngredients: number,
                 public minNumberOfIngredients: number,
+                public orderPriority: number,
                 public newIngredient: Ingredient,
                 public id?: number) { }
 }

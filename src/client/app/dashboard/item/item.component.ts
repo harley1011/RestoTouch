@@ -216,6 +216,17 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  changeOrder(ingredientGroup: IngredientGroup, changeIndex: number) {
+    let newIndex =  ((ingredientGroup.orderPriority - 1 + changeIndex)
+      % this.item.ingredientGroups.length + this.item.ingredientGroups.length) % this.item.ingredientGroups.length;
+    let currentIndex = ingredientGroup.orderPriority - 1;
+    ingredientGroup.orderPriority = newIndex + 1;
+    this.item.ingredientGroups[newIndex].orderPriority = currentIndex + 1;
+    this.item.ingredientGroups[currentIndex] = this.item.ingredientGroups[newIndex];
+    this.item.ingredientGroups[newIndex] = ingredientGroup;
+
+  }
+
   addLanguage() {
     let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
     if(language) {
@@ -229,7 +240,8 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroups.push(new IngredientGroup('', [], 1, 1, new Ingredient('', false, 0, 1)));
+    this.item.ingredientGroups.push(
+      new IngredientGroup('', [], 1, 1, this.item.ingredientGroups.length + 1, new Ingredient('', false, 0, 1)));
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
