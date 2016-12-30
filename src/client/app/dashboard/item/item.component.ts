@@ -97,7 +97,7 @@ export class ItemComponent implements OnInit {
             ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
           });
 
-          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority});
+          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority;});
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];
@@ -255,7 +255,11 @@ export class ItemComponent implements OnInit {
   }
 
   removeIngredientGroup(ingredientGroup: IngredientGroup) {
-    this.item.ingredientGroups.splice(this.item.ingredientGroups.indexOf(ingredientGroup), 1);
+    let removeIndex = this.item.ingredientGroups.indexOf(ingredientGroup);
+    this.item.ingredientGroups.splice(removeIndex, 1);
+    for (let i = removeIndex; i < this.item.ingredientGroups.length; i++) {
+      this.item.ingredientGroups[i].orderPriority = i + 1;
+    }
   }
 
   removeLanguage(language: Language) {
