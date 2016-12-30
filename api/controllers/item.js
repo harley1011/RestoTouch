@@ -68,8 +68,7 @@ function save(req, res) {
       include: [{
         model: ingredientModel,
         as: 'ingredients'
-      }],
-      order: 'orderPriority'
+      }]
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Item Added"});

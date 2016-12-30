@@ -96,6 +96,8 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.forEach(ingredientGroup => {
             ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
           });
+
+          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority});
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];
