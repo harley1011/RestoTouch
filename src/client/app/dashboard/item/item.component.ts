@@ -224,7 +224,6 @@ export class ItemComponent implements OnInit {
     this.item.ingredientGroups[newIndex].orderPriority = currentIndex + 1;
     this.item.ingredientGroups[currentIndex] = this.item.ingredientGroups[newIndex];
     this.item.ingredientGroups[newIndex] = ingredientGroup;
-
   }
 
   addLanguage() {
