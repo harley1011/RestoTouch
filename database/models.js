@@ -19,6 +19,8 @@ var itemModel = sequelize.import('./models/items.js');
 var itemSizesModel = sequelize.import('./models/itemSizes.js');
 var itemLanguageModel = sequelize.import('./models/itemsLanguages.js');
 var itemTranslationModel = sequelize.import('./models/itemsTranslations.js');
+var ingredientModel = sequelize.import('./models/ingredient.js');
+var ingredientGroupModel = sequelize.import('./models/ingredientGroup.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -117,6 +119,7 @@ userModel.sync({force: dropTable}).then(function () {
 
   userModel.hasMany(itemModel, {as: 'items', onDelete: 'cascade', foreignKey: 'userId'});
 
+
   itemModel.sync({force: dropTable}).then(function () {
     itemModel.hasMany(itemSizesModel, {as: 'sizes', onDelete: 'cascade', foreignKey: 'itemId'});
     itemSizesModel.sync({force: dropTable});
@@ -124,6 +127,11 @@ userModel.sync({force: dropTable}).then(function () {
     itemLanguageModel.sync({force: dropTable});
     itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});
     itemTranslationModel.sync({force: dropTable});
+
+    itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
+    ingredientGroupModel.sync({force: dropTable});
+    ingredientGroupModel.hasMany(ingredientModel, {as: 'ingredients', onDelete: 'cascade', foreignKey: 'ingredientGroupId'});
+    ingredientModel.sync({force: dropTable});
   })
 
 
@@ -205,3 +213,12 @@ exports.getItemLanguageModel = function () {
 exports.getItemTranslationModel = function () {
   return itemTranslationModel;
 }
+
+exports.getIngredientModel = function () {
+  return ingredientModel;
+}
+
+exports.getIngredientGroupModel = function () {
+  return ingredientGroupModel;
+}
+

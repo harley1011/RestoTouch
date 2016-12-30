@@ -1,5 +1,7 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from './../../shared/models/items';
+import {IngredientGroup} from './../../shared/models/ingredient-group';
+
 import {Size} from './../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
@@ -8,6 +10,8 @@ import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
+import {Ingredient} from '../../shared/models/ingredient';
+
 
 @Component({
   moduleId: module.id,
@@ -89,6 +93,11 @@ export class ItemComponent implements OnInit {
           if (item.imageUrl.length !== 0) {
             this.croppedImage = item.imageUrl;
           }
+          item.ingredientGroups.forEach(ingredientGroup => {
+            ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
+          });
+
+          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority;});
           this.item = item;
           this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];
@@ -103,7 +112,7 @@ export class ItemComponent implements OnInit {
         });
       } else {
         let translation = new ItemTranslations('','', this.supportedLanguages[0].languageCode);
-        this.item = new Item(this.supportedLanguages, [translation], translation, '', []);
+        this.item = new Item(this.supportedLanguages, [translation], translation, [], '', []);
         this.create = true;
         this.pictureMode = PictureMode.Select;
       }
@@ -209,6 +218,16 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  changeOrder(ingredientGroup: IngredientGroup, changeIndex: number) {
+    let newIndex =  ((ingredientGroup.orderPriority - 1 + changeIndex)
+      % this.item.ingredientGroups.length + this.item.ingredientGroups.length) % this.item.ingredientGroups.length;
+    let currentIndex = ingredientGroup.orderPriority - 1;
+    ingredientGroup.orderPriority = newIndex + 1;
+    this.item.ingredientGroups[newIndex].orderPriority = currentIndex + 1;
+    this.item.ingredientGroups[currentIndex] = this.item.ingredientGroups[newIndex];
+    this.item.ingredientGroups[newIndex] = ingredientGroup;
+  }
+
   addLanguage() {
     let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
     if(language) {
@@ -219,6 +238,28 @@ export class ItemComponent implements OnInit {
     this.supportedLanguages.push(language);
     let newTranslation = new ItemTranslations('','', language.languageCode);
     this.item.translations.push(newTranslation);
+  }
+
+  addIngredientGroup() {
+    this.item.ingredientGroups.push(
+      new IngredientGroup('', [], 1, 1, this.item.ingredientGroups.length + 1, new Ingredient('', false, 0, 1)));
+  }
+
+  addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
+    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity));
+    ingredient.name = '';
+  }
+
+  removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
+    ingredientGroup.ingredients.splice(ingredientGroup.ingredients.indexOf(ingredient), 1);
+  }
+
+  removeIngredientGroup(ingredientGroup: IngredientGroup) {
+    let removeIndex = this.item.ingredientGroups.indexOf(ingredientGroup);
+    this.item.ingredientGroups.splice(removeIndex, 1);
+    for (let i = removeIndex; i < this.item.ingredientGroups.length; i++) {
+      this.item.ingredientGroups[i].orderPriority = i + 1;
+    }
   }
 
   removeLanguage(language: Language) {
