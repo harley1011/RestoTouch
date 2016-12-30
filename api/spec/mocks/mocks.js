@@ -1,6 +1,7 @@
 var userModel = {};
 var restaurantModel = {};
 var businessHoursModel = {};
+var paymentsModel = {};
 var menuModel = {};
 var restaurantMenuModel = {};
 var restaurantsLanguageModel = {};
@@ -30,6 +31,12 @@ businessHoursModel.update = update;
 businessHoursModel.findAll = findAll;
 businessHoursModel.findOne = findOne;
 businessHoursModel.destroy = destroy;
+
+paymentsModel.create = create;
+paymentsModel.update = update;
+paymentsModel.findAll = findAll;
+paymentsModel.findOne = findOne;
+paymentsModel.destroy = destroy;
 
 menuModel.create = create;
 menuModel.update = update;
@@ -93,6 +100,10 @@ exports.getRestaurantModel = function () {
 
 exports.getBusinessHoursModel = function () {
   return businessHoursModel;
+}
+
+exports.getPaymentsModel = function () {
+  return paymentsModel;
 }
 
 exports.getMenuModel = function () {

@@ -4,12 +4,15 @@ var sequelize = new Sequelize(configDB.url, {logging: true});
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var businessHoursModel = sequelize.import('./models/businessHours.js');
+var paymentsModel = sequelize.import('./models/payments.js');
 var menuModel = sequelize.import('./models/menus.js');
 var menuLanguageModel = sequelize.import('./models/menusLanguages.js');
 var menuTranslationsModel = sequelize.import('./models/menuTranslations');
 var restaurantMenuModel = sequelize.import('./models/restaurantMenu.js');
 var menuCategoryModel = sequelize.import('./models/menuCategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
+var categoryLanguageModel = sequelize.import('./models/categoriesLanguages.js');
+var categoryTranslationModel = sequelize.import('./models/categoriesTranslations.js');
 var restaurantsLanguagesModel = sequelize.import('./models/restaurantsLanguages.js');
 var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTranslations.js');
 var itemModel = sequelize.import('./models/items.js');
@@ -51,10 +54,33 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'restaurantId'
     });
     businessHoursModel.sync({force: dropTable});
+
+    restaurantModel.hasMany(paymentsModel, {
+      as: 'payments',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
+    paymentsModel.sync({force: dropTable});
   });
 
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
-  categoryModel.sync({force: dropTable});
+  categoryModel.sync({force: dropTable}).then(function () {
+
+    categoryModel.hasMany(categoryLanguageModel, {
+      as: 'supportedLanguages',
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
+    categoryLanguageModel.sync({force: dropTable});
+
+    categoryModel.hasMany(categoryTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
+    categoryTranslationModel.sync({force: dropTable});
+
+  });
 
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
   menuModel.sync({force: dropTable}).then(function () {
@@ -128,6 +154,14 @@ exports.getCategoryModel = function () {
   return categoryModel;
 };
 
+exports.getCategoryLanguageModel = function () {
+  return categoryLanguageModel;
+};
+
+exports.getCategoryTranslationModel = function () {
+  return categoryTranslationModel;
+}
+
 exports.getMenuModel = function () {
   return menuModel;
 };
@@ -158,6 +192,10 @@ exports.getRestaurantsTranslationModel = function () {
 
 exports.getBusinessHoursModel = function () {
   return businessHoursModel;
+}
+
+exports.getPaymentsModel = function () {
+  return paymentsModel;
 }
 
 exports.getItemModel = function () {

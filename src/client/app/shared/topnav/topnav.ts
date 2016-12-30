@@ -4,6 +4,7 @@ import {User} from '../models/user';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import { Router } from '@angular/router';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   moduleId: module.id,
@@ -18,24 +19,28 @@ export class TopNavComponent implements OnInit {
   selectedLanguage: Language = new Language('','','',0);
   errorMessage = '';
 
-  constructor(private authService: AuthService, private languageService: LanguageService, private router: Router) {
-    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
-      this.hideLanguageSelect = supportedLanguages.length === 0;
-      this.languages = supportedLanguages;
-    });
-    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-      this.selectedLanguage = selectedLanguage;
-    });
+  constructor(private authService: AuthService,
+              private languageService: LanguageService, private router: Router,
+              private translate: TranslateService) {
+      // this language of website will be used as a fallback when a translation isn't found in the current language
+      translate.setDefaultLang('en');
+//    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
+//      this.hideLanguageSelect = supportedLanguages.length === 0;
+//      this.languages = supportedLanguages;
+//    });
+//    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+//      this.selectedLanguage = selectedLanguage;
+//    });
   }
 
   ngOnInit() {
     this.user = this.authService.loggedInUser;
   }
 
-  selectLanguage(language: Language) {
-  	this.selectedLanguage = language;
-  	this.languageService.announceSelectedLanguage(language);
-  }
+//  selectLanguage(language: Language) {
+//  	this.selectedLanguage = language;
+//  	this.languageService.announceSelectedLanguage(language);
+//  }
 
   changeTheme(color: string): void {
     var link: any = $('<link>');

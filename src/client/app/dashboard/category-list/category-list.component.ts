@@ -26,7 +26,12 @@ export class CategoryListComponent implements OnInit {
     getCategories(): void {
       // Subscribe to the getCategories observable
       this.categoryService.getCategories().subscribe(
-        categories => {this.categories = categories;},
+        categories => {
+            this.categories = categories;
+            categories.forEach(function(category) {
+                category.selectedTranslation = category.translations[0];
+            });
+        },
         error => {console.log(error);}
       );
     }

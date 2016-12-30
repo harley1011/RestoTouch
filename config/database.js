@@ -13,5 +13,3 @@ var password = "soen490resto";
 module.exports = {
   'url' : dbtype + "://" + user + ":" + password + "@" + host + ":" + port + "/" + database
 }
-
-

@@ -3,6 +3,7 @@ var restaurantModel;
 var restaurantLanguageModel;
 var restaurantsTranslations;
 var businessHoursModel;
+var paymentsModel;
 var menuModel;
 var menuTranslationModel;
 var _ = require('lodash');
@@ -27,6 +28,7 @@ function setDatabase(m) {
   restaurantLanguageModel = models.getRestaurantsLanguageModel();
   restaurantsTranslations = models.getRestaurantsTranslationModel();
   businessHoursModel = models.getBusinessHoursModel();
+  paymentsModel = models.getPaymentsModel();
 }
 
 //GET /restaurant
@@ -44,6 +46,9 @@ function getAll(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
+    }, {
+      model: paymentsModel,
+      as: 'payments'
     }]
   }).then(function (restaurants) {
     return res.json({restaurants: restaurants});
@@ -64,6 +69,9 @@ function save(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
+    }, {
+      model: paymentsModel,
+      as: 'payments'
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Restaurant Added"});
@@ -92,6 +100,9 @@ function get(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
+    }, {
+      model: paymentsModel,
+      as: 'payments'
     }]
   }).then(function (restaurant) {
     if (restaurant) {
@@ -117,6 +128,9 @@ function update(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
+    }, {
+      model: paymentsModel,
+      as: 'payments'
     }]
   }).then(function (oldRestaurant) {
 
@@ -126,6 +140,9 @@ function update(req, res) {
     var businessHoursToRemove = _.differenceBy(oldRestaurant.businessHours, restaurant.businessHours, 'id');
     var businessHoursToAdd = _.differenceBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
     var businessHoursToUpdate = _.intersectionBy(restaurant.businessHours, oldRestaurant.businessHours, 'id');
+    var paymentsToRemove = _.differenceBy(oldRestaurant.payments, restaurant.payments, 'id');
+    var paymentsToAdd = _.differenceBy(restaurant.payments, oldRestaurant.payments, 'id');
+    var paymentsToUpdate = _.intersectionBy(restaurant.payments, oldRestaurant.payments, 'id');
 
     for (var prop in restaurant) {
       if (prop != 'translations')
@@ -143,6 +160,19 @@ function update(req, res) {
 
     businessHoursToUpdate.forEach(function (businessHour) {
       businessHoursModel.update(businessHour, {where: {id: businessHour.id}});
+    });
+
+    paymentsToAdd.forEach(function (businessHour) {
+      businessHour.restaurantId = oldRestaurant.id;
+    });
+    paymentsModel.bulkCreate(paymentsToAdd);
+
+    paymentsToRemove.forEach(function (payment) {
+      paymentsModel.destroy({where: {id: payment.id}});
+    });
+
+    paymentsToUpdate.forEach(function (payment) {
+      paymentsModel.update(payment, {where: {id: payment.id}});
     });
 
     oldRestaurant.translations.forEach(function(translation) {
