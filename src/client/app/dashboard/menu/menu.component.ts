@@ -102,12 +102,12 @@ export class MenuComponent implements OnInit {
     //TODO (3) Figuring out why the solution for reading undefined categories is not working when I launch the website from the first time
     //TODO (4) Figuring out error related to association problem when I did include
     //TODO (NOTE) If i figured (4) then I guess (3)&(1) should work
-    /*
-    console.log('TESTING!!!!!!');
-    debugger;
-    this.menuCategoryService.addMenuCategory(1, 1, 1);
-    */
+
+    //console.log('TESTING!!!!!!');
+
+    debugger; //TODO : To remove
     this.getCategories();
+    this.menuCategoryService.addMenuCategory(1, 1, 1); //TODO : To remove
   }
 
   getMenu(id: number): void {

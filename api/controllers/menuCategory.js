@@ -18,7 +18,7 @@ function setDatabase (m) {
 function saveMenuCategory(req, res) {
   var menuCategory = req.body;
 
-  menuCategory.userId = req.userId;
+  menuCategory.menuId = req.menuId;
   menuCategory.categoryId = req.categoryId;
   menuCategory.order = req.order;
 
