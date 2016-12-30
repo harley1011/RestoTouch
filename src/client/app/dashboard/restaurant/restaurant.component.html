@@ -369,31 +369,16 @@
 
       <div id="resto-payment" class="edit-section">
         <h4>Payment Methods</h4>
-        <div class="row">
-          <div class="col col-md-2">
+        <div class="row payment-method-div">
+          <div class="col col-md-2" *ngFor="let payment of restaurant.payments; let i = index">
             <div class="form-group">
-              <label style="margin-right:15px;">{{ restaurant.payments[0].name }}</label>
-              <input id="paymentOne" type="checkbox" name="paymentOne"
-                     [(ngModel)]="restaurant.payments[0].used" #paymentOne="ngModel">
-            </div>
-          </div>
-          <div class="col col-md-2">
-            <div class="form-group">
-              <label style="margin-right:15px;">{{ restaurant.payments[1].name }}</label>
-              <input id="paymentTwo" type="checkbox" name="paymentTwo"
-                     [(ngModel)]="restaurant.payments[1].used" #paymentTwo="ngModel">
-            </div>
-          </div>
-          <div class="col col-md-2">
-            <div class="form-group">
-              <label style="margin-right:15px;">{{ restaurant.payments[2].name }}</label>
-              <input id="paymentThree" type="checkbox" name="paymentThree"
-                     [(ngModel)]="restaurant.payments[2].used" #paymentThree="ngModel">
+              <label>{{ payment.name }}</label>
+              <input id="paymentOne" type="checkbox" name="payment{{i}}"
+                     [(ngModel)]="payment.used">
             </div>
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">Save</button>
