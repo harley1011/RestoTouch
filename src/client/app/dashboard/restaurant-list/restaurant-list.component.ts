@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Restaurant } from '../../shared/models/restaurant';
 import { RestaurantService } from '../restaurant/restaurant.service';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
 	moduleId: module.id,
@@ -15,7 +16,12 @@ export class RestaurantListComponent implements OnInit {
   numOfRestaurants: number;
   restaurants: Restaurant[];
 
-  constructor(private restaurantListService: RestaurantService, private router: Router) { }
+  constructor(private restaurantListService: RestaurantService,
+							private router: Router,
+							private translate: TranslateService,) {
+				// this language will be used as a fallback when a translation isn't found in the current language
+        translate.setDefaultLang('en');
+							}
 
 	getRestaurants(): void {
 		this.restaurantListService.getRestaurants().subscribe(

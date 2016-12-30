@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
 	moduleId: module.id,
@@ -9,6 +10,12 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
 	isActive = false;
 	showMenu: string = '';
+
+    constructor(private translate: TranslateService) {
+        // this language will be used as a fallback when a translation isn't found in the current language
+        translate.setDefaultLang('en');
+        }
+
 	eventCalled() {
 		this.isActive = !this.isActive;
 	}
