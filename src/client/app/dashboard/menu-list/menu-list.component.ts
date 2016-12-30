@@ -63,6 +63,7 @@ export class MenuListComponent implements OnInit {
 		this.restaurantService.getRestaurant(id).subscribe(
 			restaurant => {
 				this.restaurant = restaurant;
+				this.getMenus();
 			}
 		);
 	}

@@ -37,12 +37,12 @@
     right: 3%;
     display: inline-block;
     width: 400px;
-    
+
     .manage-lang-lbl {
         text-align: right;
         padding: 8px;
     }
-    
+
     select {
         height: 40px;
         width: 80px;
@@ -94,4 +94,14 @@
 .time-conflict-error {
   color: red;
   background-color: #ff9999;
+}
+
+.payment-method-div {
+  label {
+    margin-right:15px;
+  }
+}
+
+.payment-container-div {
+  margin-top: 30px;
 }
