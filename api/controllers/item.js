@@ -68,7 +68,8 @@ function save(req, res) {
       include: [{
         model: ingredientModel,
         as: 'ingredients'
-      }]
+      }],
+      order: 'orderPriority'
     }]
   }).then(function (result) {
     return res.json({success: 1, description: "Item Added"});
@@ -166,6 +167,7 @@ function update(req, res) {
       ingredientGroupToCheck.name = ingredientGroup.name;
       ingredientGroupToCheck.maxNumberOfIngredients = ingredientGroup.maxNumberOfIngredients;
       ingredientGroupToCheck.minNumberOfIngredients = ingredientGroup.minNumberOfIngredients;
+      ingredientGroupToCheck.orderPriority = ingredientGroup.orderPriority;
       ingredientGroupToCheck.save();
 
       ingredientToAdd.forEach(function (ingredient) {
