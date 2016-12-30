@@ -20,7 +20,7 @@
 
   <div class="formContainer" #formContainer>
     <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">
-      <div id="basic-info" class="edit-section">
+      <div id="basic-info" class=" col-md-9">
         <h4>General Information</h4>
         <div class="form-group">
           <label>Name</label>
@@ -49,9 +49,14 @@
                  [ngClass]="{'form-error': !address.valid && !address.pristine}">
         </div>
       </div>
-      <div id="business-hours" class="edit-section">
+      <div id="resto-payment" class="col-md-3">
+        <h4>Payment Methods</h4>
+        <div class="checkbox" *ngFor="let payment of restaurant.payments; let i = index">
+          <label><input type="checkbox" name="payment{{i}}" [(ngModel)]="payment.used"> {{payment.name}}</label>
+        </div>
+      </div>
+      <div id="business-hours" class="edit-section col-md-12">
         <h4>Opening Hours</h4>
-
         <table class="table">
           <thead>
           <tr>
@@ -349,7 +354,7 @@
         </table>
       </div>
 
-      <div id="resto-lang" class="edit-section">
+      <div id="resto-lang" class="edit-section col-md-12">
         <h4>Languages</h4>
         <div class="row">
           <div class="col col-md-5">
@@ -372,7 +377,7 @@
           </div>
         </div>
       </div>
-      <div id="resto-menu" *ngIf="!create" class="edit-section">
+      <div id="resto-menu" *ngIf="!create" class="edit-section col-md-12">
         <h4>Menus</h4>
         <div class="row">
           <div class="col col-md-5">
@@ -403,12 +408,7 @@
         -->
       </div>
 
-      <div id="resto-payment" class="edit-section">
-        <h4>Payment Methods</h4>
-        <div class="checkbox" *ngFor="let payment of restaurant.payments; let i = index">
-          <label><input type="checkbox" name="payment{{i}}" [(ngModel)]="payment.used"> {{payment.name}}</label>
-        </div>
-      </div>
+
       <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">Save</button>
