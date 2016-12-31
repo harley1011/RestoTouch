@@ -16,7 +16,7 @@
       <div class="row" *ngIf="!create && !menuCatUndefinedYet">
 
         <h3>Selected Categories</h3>
-        <div *ngFor="let category of userSelectedCategories">
+        <div *ngFor="let category of this.menu.categories">
           <ul class="col col-lg-12">
             <i class="fa fa-fw fa-minus-square" (click)="deleteCatClick($event, category.id)"></i>
             {{category.categoryName}}

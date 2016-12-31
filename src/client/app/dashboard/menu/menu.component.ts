@@ -19,10 +19,10 @@ import {Language} from '../../shared/models/language';
 export class MenuComponent implements OnInit {
 
   create: boolean;
+  undef_error: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Category [];// This is the Available Category List
-  userSelectedCategories: Category [];
   menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
   categoriesInDb: Category [];
   sections: string[];
@@ -97,26 +97,20 @@ export class MenuComponent implements OnInit {
         this.create = true;
       }
     });
-    //TODO (0) I see the association is appearing in PgAdmin but i did not include yet
-    //TODO (1) Figuring out why adding to the database does not work
-    //TODO (3) Figuring out why the solution for reading undefined categories is not working when I launch the website from the first time
-    //TODO (4) Figuring out error related to association problem when I did include
-    //TODO (NOTE) If i figured (4) then I guess (3)&(1) should work
 
-    //console.log('TESTING!!!!!!');
-
-    debugger; //TODO : To remove
     this.getCategories();
-    this.menuCategoryService.addMenuCategory(1, 1, 1); //TODO : To remove
+    //this.menuCategoryService.addMenuCategory(1, 1, 1); //TODO : TESTING To remove
   }
 
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
-        this.menu = menu;
-        if(!(menu.categories)) {
-          this.menu.categories = [];
+
+        if(!menu.categories) {
+          this.undef_error = true;
         }
+
+        this.menu = menu;
         this.supportedLanguages = menu.supportedLanguages;
         this.menu.selectedTranslation = menu.translations[0];
         this.selectedLanguage = this.languages.find(language =>
@@ -133,19 +127,19 @@ export class MenuComponent implements OnInit {
    getCategories(): void {
      this.categoryService.getCategories().subscribe(
        categories => {
+         if(this.undef_error) { this.menu.categories = []; }
          this.categoriesInDb = categories;
          this.availableCategories = [];
          for(let i = 0; i < categories.length; i++) {
            this.availableCategories.push(categories[i]);
          }
-          // TODO (2) Figuring out why the category length is undefined
-        /* if (this.menu.categories.length !== 0) {
+         if (this.menu.categories.length !== 0) {
            for(let i = 0; i < this.availableCategories.length; i++) {
              if(this.menu.categories[i].id === this.availableCategories[i].id) {
                this.availableCategories.splice(i, 1);
              }
            }
-         }*/
+         }
          this.menuCatUndefinedYet = false;
        },
        error => {

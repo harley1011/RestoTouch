@@ -14,6 +14,7 @@ function setDatabase (m) {
   menuCategoryModel = models.getMenuCategoryModel();
 }
 
+
 //POST /menuCategory
 function saveMenuCategory(req, res) {
   var menuCategory = req.body;
@@ -22,11 +23,27 @@ function saveMenuCategory(req, res) {
   menuCategory.categoryId = req.categoryId;
   menuCategory.order = req.order;
 
+
   return menuCategoryModel.create(menuCategory).then(function(result){
     return res.json({success: 1, description: "Added Category to Menu"});
   });
 
 }
+
+
+/*//POST /menuCategory
+function saveMenuCategory(req, res) {
+
+  return menuCategoryModel.create({
+    menuId: req.Body.menuId,
+    categoryId: req.Body.categoryId,
+    orderId: req.Body.order
+
+  }).then(function(result){
+    return res.json({success: 1, description: "Added Category to Menu"});
+  });
+
+}*/
 
 //DELETE /menuCategory/{menuId}{categoryId}
 function delMenuCategory(req, res) {

@@ -19,7 +19,7 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   menuModel = models.getMenuModel();
-  categoryModel = models.getCategoryModel(); // TODO check why this causing error
+  categoryModel = models.getCategoryModel();
   menuLanguageModel = models.getMenuLanguageModel();
   menuTranslationsModel = models.getMenuTranslationsModel();
 }
@@ -95,10 +95,6 @@ function updateMenu(req, res) {
     }, {
       model: menuTranslationsModel,
       as: 'translations'
-    }],
-    include: [{
-      model: categoryModel,
-      as: 'categories'
     }]
   }).then(function (oldMenu) {
 
