@@ -104,11 +104,28 @@ function updateMenu(req, res) {
     }, {
       model: menuTranslationsModel,
       as: 'translations'
+    },  {
+      model: categoryModel,
+      as: 'categories'
     }]
   }).then(function (oldMenu) {
 
     var languagesToRemove = _.differenceBy(oldMenu.supportedLanguages, menu.supportedLanguages, 'languageCode');
     var languagesToAdd = _.differenceBy(menu.supportedLanguages, oldMenu.supportedLanguages, 'languageCode');
+
+    var categoriesToAdd = _.differenceBy(menu.categories, oldMenu.categories, 'id');
+    var categoriesToRemove = _.differenceBy(oldMenu.categories, menu.categories, 'id');
+
+    var menuCategoryAssociations = [];
+    categoriesToAdd.forEach(function (category) {
+      menuCategoryAssociations.push({menuId: oldMenu.id, categoryId: category.id});
+    })
+
+    menuCategoryModel.bulkCreate(menuCategoryAssociations);
+
+    categoriesToRemove.forEach(function (category) {
+      menuCategoryModel.destroy({where: {menuId: oldMenu.id, categoryId: category.id}});
+    })
 
     for (var prop in menu) {
       if(prop != 'translations')

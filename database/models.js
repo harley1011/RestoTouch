@@ -90,7 +90,7 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'menuId'
     });
     categoryModel.belongsToMany(menuModel, {
-      as: 'menus',
+      as: 'categories',
       through: menuCategoryModel,
       onDelete: 'cascade',
       foreignKey: 'categoryId'
