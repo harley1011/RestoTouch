@@ -84,11 +84,13 @@ userModel.sync({force: dropTable}).then(function () {
     menuTranslationsModel.sync({force: dropTable});
 
     menuModel.belongsToMany(categoryModel, {
+      as: 'categories',
       through: menuCategoryModel,
       onDelete: 'cascade',
       foreignKey: 'menuId'
     });
     categoryModel.belongsToMany(menuModel, {
+      as: 'menus',
       through: menuCategoryModel,
       onDelete: 'cascade',
       foreignKey: 'categoryId'

@@ -77,7 +77,8 @@ function getMenu(req, res) {
       model: menuTranslationsModel,
       as: 'translations'
     }, {
-      model: categoryModel
+      model: categoryModel,
+      as: 'categories'
     }]
   }).then(function(menu) {
     if (menu) {
