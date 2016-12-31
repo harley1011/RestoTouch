@@ -1,4 +1,4 @@
-<div id="menu">
+<div *ngIf="menu" id="menu">
   <div class="manage-header">
     <h2>{{ menu?.id ? "Edit Menu" : "Create Menu" }}</h2>
 <h5 class="subtitle"><small>Change Menu Settings</small></h5>
@@ -17,7 +17,7 @@
         <h3>Selected Categories</h3>
         <div *ngFor="let category of menu.categories">
           <ul class="col col-lg-12">
-            <i class="fa fa-fw fa-minus-square" (click)="deleteCatClick($event, category.id)"></i>
+            <i class="fa fa-fw fa-minus-square" (click)="removeCategoryFromMenu(category)"></i>
             {{category.categoryName}}
           </ul>
         </div>

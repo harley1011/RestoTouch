@@ -7,7 +7,7 @@ export class Item {
                 public translations: Array<ItemTranslations>,
                 public selectedTranslation: ItemTranslations,
                 public imageUrl?: string,
-                public sizes?: Array<Size>,
+                public  sizes?: Array<Size>,
                 public id?: number) { }
 }
 

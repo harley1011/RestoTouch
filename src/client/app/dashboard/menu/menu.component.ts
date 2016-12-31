@@ -17,15 +17,12 @@ import {Language} from '../../shared/models/language';
 })
 
 export class MenuComponent implements OnInit {
-
   create: boolean;
-  undef_error: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Array<Category> = [];// This is the Available Category List
   menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
   categoriesInDb: Array<Category> = [];
-  sections: string[];
 
   //Translation support
   languages: Array<Language>;
@@ -84,20 +81,18 @@ export class MenuComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    this.sections = [];
     this.route.params.forEach((params: Params) => {
       if (params['menuId']) {
         this.getMenu(params['menuId']);
         this.create = false;
       } else {
+        this.getCategories();
         let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
         this.menu = new Menu(this.supportedLanguages, [translation], translation, []);
         this.create = true;
       }
     });
 
-    this.getCategories();
     //this.menuCategoryService.addMenuCategory(1, 1, 1); //TODO : TESTING To remove
   }
 
@@ -111,6 +106,7 @@ export class MenuComponent implements OnInit {
         language.languageCode === this.menu.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
+        this.getCategories();
       },
       error => {
         this.errorMessage = <any>error;
@@ -121,6 +117,12 @@ export class MenuComponent implements OnInit {
   getCategories(): void {
     this.categoryService.getCategories().subscribe(
       categories => {
+        this.menu.categories.forEach(menuCategory => {
+          let categoryToRemove = categories.find(category => menuCategory.id == category.id);
+          if (categoryToRemove) {
+            categories.splice(categories.indexOf(categoryToRemove), 1);
+          }
+        } );
         this.availableCategories = categories;
       },
       error => {
@@ -199,18 +201,9 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  deleteCatClick(event: Event, catid: number): void {
-    if (catid) {
-      event.preventDefault();
-      if (!(this.create)) {
-        for (let i = 0; i < this.menu.categories.length; i++) {
-          if (this.menu.categories[i].id === catid) {
-            this.availableCategories.push(this.menu.categories[i]);
-            this.menu.categories.splice(i, 1);
-          }
-        }
-      }
-    }
+  removeCategoryFromMenu(category: Category): void {
+    this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
+    this.availableCategories.push(category);
   }
 }
 
