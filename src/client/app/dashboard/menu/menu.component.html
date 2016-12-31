@@ -1,41 +1,47 @@
 <div *ngIf="menu" id="menu">
   <div class="manage-header">
     <h2>{{ menu?.id ? "Edit Menu" : "Create Menu" }}</h2>
-<h5 class="subtitle"><small>Change Menu Settings</small></h5>
+    <h5 class="subtitle">
+      <small>Change Menu Settings</small>
+    </h5>
     <hr>
   </div>
   <div class="formContainer">
     <form id="menuForm" role="form">
 
-        <div class="form-group">
-            <label>Menu Name</label>
-          <input id="name" class="form-control" placeholder="ex: Lunch Menu"
-          [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
-          </div>
+      <div class="form-group">
+        <label>Menu Name</label>
+        <input id="name" class="form-control" placeholder="ex: Lunch Menu"
+               [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
+      </div>
 
       <div class="row">
-        <h3>Selected Categories</h3>
-        <div *ngFor="let category of menu.categories">
-          <ul class="col col-lg-12">
-            <i class="fa fa-fw fa-minus-square" (click)="removeCategoryFromMenu(category)"></i>
-            {{category.categoryName}}
-          </ul>
+        <div class="col-md-6">
+          <h5>Available Categories</h5>
+          <div *ngFor="let category of availableCategories">
+            <ul class="col col-lg-12">
+              <i class="fa fa-fw fa-plus-square" (click)="addCategoryToMenu(category)"></i>
+              {{category.categoryName}}
+            </ul>
+          </div>
         </div>
-
-        <h3>Available Categories</h3>
-        <div *ngFor="let category of availableCategories">
-          <ul class="col col-lg-12">
-            <i class="fa fa-fw fa-plus-square" (click)="addCategoryToMenu(category)"></i>
-            {{category.categoryName}}
-          </ul>
+        <div class="col-md-6">
+          <h5>Selected Categories</h5>
+          <div *ngFor="let category of menu.categories">
+            <ul class="col col-lg-12">
+              <i class="fa fa-fw fa-minus-square" (click)="removeCategoryFromMenu(category)"></i>
+              {{category.categoryName}}
+            </ul>
+          </div>
         </div>
       </div>
 
-        <div class="row">
+      <div class="row">
         <div class="manage-button">
           <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Save</button>
-          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >Delete</button>
-          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create</button>
+          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red">Delete</button>
+          <button *ngIf="create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">Create
+          </button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">Cancel</button>
         </div>
       </div>
@@ -43,25 +49,27 @@
       <div id="menu-lang" class="edit-section">
         <h5>Languages</h5>
         <div class="row">
-            <div class="col col-md-5">
-                <ul class="list-group">
-                    <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
-              </ul>
+          <div class="col col-md-5">
+            <ul class="list-group">
+              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i
+                class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i>
+              </li>
+            </ul>
+          </div>
+          <div class="col col-md-4 col-md-offset-1">
+            <div class="form-group input-group">
+              <label for="language">Select a language:</label>
+              <select name="language" class="form-control" [(ngModel)]="addedLanguage">
+                <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+              </select>
             </div>
-            <div class="col col-md-4 col-md-offset-1">
-              <div class="form-group input-group">
-                  <label for="language">Select a language:</label>
-                  <select name="language" class="form-control" [(ngModel)]="addedLanguage">
-                   <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
-                  </select>
-              </div>
-            </div>
-            <div class="col col-md-2" style="padding-top:10px"><br>
-              <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">Add</button>
-            </div>
+          </div>
+          <div class="col col-md-2" style="padding-top:10px"><br>
+            <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">Add</button>
+          </div>
         </div>
       </div>
 
-      </form>
-    </div>
+    </form>
+  </div>
 </div>
