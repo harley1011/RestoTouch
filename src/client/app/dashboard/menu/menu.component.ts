@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
 import {Category} from '../../shared/models/category';
-import {MenuCategoryService} from '../menu/menu-catergory.service';
 import {CategoryService} from '../category/category.service';
 import {Menu, MenuTranslations} from '../../shared/models/menu';
 import {LanguageService} from '../../services/language.service';
@@ -13,7 +12,7 @@ import {Language} from '../../shared/models/language';
   moduleId: module.id,
   selector: 'menu-cmp',
   templateUrl: 'menu.component.html',
-  providers: [MenuService, CategoryService, MenuCategoryService], //Registering Services with angular.
+  providers: [MenuService, CategoryService], //Registering Services with angular.
 })
 
 export class MenuComponent implements OnInit {
@@ -34,7 +33,6 @@ export class MenuComponent implements OnInit {
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
               private menuService: MenuService,
-              private menuCategoryService: MenuCategoryService,
               private categoryService: CategoryService,
               private languageService: LanguageService,
               private router: Router) {
@@ -143,18 +141,8 @@ export class MenuComponent implements OnInit {
     if (this.create) {
       this.add();
     } else {
-      this.update(oldName);
+      this.update();
     }
-    // // 1. clean the database for menuCategory model
-    // for(let i = 0; i < this.categoriesInDb.length; i++) {
-    //  this.menuCategoryService.deleteMenuCategory(this.menu.id, this.categoriesInDb[i].id);
-    // }
-    //
-    // // 2. add new user selected categories (menu.categories) into the database
-    // // The order is the order of the index i of menu.categories
-    // for(let i = 0; i < this.menu.categories.length; i++) {
-    //   this.menuCategoryService.addMenuCategory(this.menu.id, this.menu.categories[i].id, i);
-    // }
   }
 
   add(): void {
@@ -169,12 +157,11 @@ export class MenuComponent implements OnInit {
   }
 
   addCategoryToMenu(category: Category): void {
-      //event.preventDefault();
     this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
     this.menu.categories.push(category);
   }
 
-  update(oldName: string): void {
+  update(): void {
     this.menuService.updateMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
