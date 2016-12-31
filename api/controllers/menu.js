@@ -2,8 +2,9 @@ var models = require("../../database/models");
 var menuModel;
 var categoryModel;
 var menuLanguageModel;
-var menuTranslationsModel;
+var  menuCategoryModel;
 var _ = require('lodash');
+
 
 setDatabase(models);
 
@@ -22,6 +23,7 @@ function setDatabase (m) {
   categoryModel = models.getCategoryModel();
   menuLanguageModel = models.getMenuLanguageModel();
   menuTranslationsModel = models.getMenuTranslationsModel();
+  menuCategoryModel = models.getMenuCategoryModel();
 }
 
 //GET /menu
@@ -41,6 +43,7 @@ function getAllMenu(req, res) {
 function saveMenu(req, res) {
   var menu = req.body;
   menu.userId = req.userId;
+
   return menuModel.create(menu, {
     include: [{
       model: menuLanguageModel,
@@ -50,6 +53,11 @@ function saveMenu(req, res) {
       as: 'translations'
     }]
   }).then(function(result) {
+    var menuCategoryAssociations = [];
+    menu.categories.forEach(function (category) {
+      menuCategoryAssociations.push({menuId: result.id, categoryId: category.id});
+    })
+    menuCategoryModel.bulkCreate(menuCategoryAssociations);
     return res.json({success: 1, description: "Menu Added"});
   });
 }

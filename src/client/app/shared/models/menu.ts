@@ -7,7 +7,7 @@ export class Menu {
     public supportedLanguages: Array<Language>,
     public translations: Array<MenuTranslations>,
     public selectedTranslation: MenuTranslations,
-    public categories: Category [], // This menu will contain the list of selected categories.
+    public categories: Array<Category>, // This menu will contain the list of selected categories.
     public id?: number
 	) { }
 }

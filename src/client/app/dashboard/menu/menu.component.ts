@@ -22,16 +22,16 @@ export class MenuComponent implements OnInit {
   undef_error: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
-  availableCategories: Category [];// This is the Available Category List
+  availableCategories: Array<Category> = [];// This is the Available Category List
   menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
-  categoriesInDb: Category [];
+  categoriesInDb: Array<Category> = [];
   sections: string[];
 
   //Translation support
   languages: Array<Language>;
   addedLanguage: string;
   supportedLanguages: Array<Language> = [];
-  selectedLanguage: Language = new Language('','','',0);
+  selectedLanguage: Language = new Language('', '', '', 0);
 
 
   // We are using dependency injection to get instances of these services into our component.
@@ -45,10 +45,10 @@ export class MenuComponent implements OnInit {
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
       this.menu.selectedTranslation = this.menu.translations.find(translation =>
-        translation.languageCode === this.selectedLanguage.languageCode);
+      translation.languageCode === this.selectedLanguage.languageCode);
 
-      if(!this.menu.selectedTranslation) {
-        this.menu.selectedTranslation = new MenuTranslations('',this.selectedLanguage.languageCode);
+      if (!this.menu.selectedTranslation) {
+        this.menu.selectedTranslation = new MenuTranslations('', this.selectedLanguage.languageCode);
         this.menu.translations.push(this.menu.selectedTranslation);
       }
     });
@@ -77,11 +77,10 @@ export class MenuComponent implements OnInit {
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
     let removedTranslation = this.menu.translations.find(translation =>
-      translation.languageCode === language.languageCode);
+    translation.languageCode === language.languageCode);
     let j = this.menu.translations.indexOf(removedTranslation);
     this.menu.translations.splice(j, 1);
   }
-
 
 
   ngOnInit(): void {
@@ -93,7 +92,7 @@ export class MenuComponent implements OnInit {
         this.create = false;
       } else {
         let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
-        this.menu = new Menu(this.supportedLanguages, [translation], translation,[]);
+        this.menu = new Menu(this.supportedLanguages, [translation], translation, []);
         this.create = true;
       }
     });
@@ -105,11 +104,6 @@ export class MenuComponent implements OnInit {
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
-
-        if(!menu.categories) {
-          this.undef_error = true;
-        }
-
         this.menu = menu;
         this.supportedLanguages = menu.supportedLanguages;
         this.menu.selectedTranslation = menu.translations[0];
@@ -124,29 +118,16 @@ export class MenuComponent implements OnInit {
     );
   }
 
-   getCategories(): void {
-     this.categoryService.getCategories().subscribe(
-       categories => {
-         if(this.undef_error) { this.menu.categories = []; }
-         this.categoriesInDb = categories;
-         this.availableCategories = [];
-         for(let i = 0; i < categories.length; i++) {
-           this.availableCategories.push(categories[i]);
-         }
-         if (this.menu.categories.length !== 0) {
-           for(let i = 0; i < this.availableCategories.length; i++) {
-             if(this.menu.categories[i].id === this.availableCategories[i].id) {
-               this.availableCategories.splice(i, 1);
-             }
-           }
-         }
-         this.menuCatUndefinedYet = false;
-       },
-       error => {
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.availableCategories = categories;
+      },
+      error => {
         this.errorMessage = <any>error;
-       }
-     );
-   }
+      }
+    );
+  }
 
   // 'Create' button functionality
   addAndUpdate(): void {
@@ -162,16 +143,16 @@ export class MenuComponent implements OnInit {
     } else {
       this.update(oldName);
     }
-    // 1. clean the database for menuCategory model
-    for(let i = 0; i < this.categoriesInDb.length; i++) {
-     this.menuCategoryService.deleteMenuCategory(this.menu.id, this.categoriesInDb[i].id);
-    }
-
-    // 2. add new user selected categories (menu.categories) into the database
-    // The order is the order of the index i of menu.categories
-    for(let i = 0; i < this.menu.categories.length; i++) {
-      this.menuCategoryService.addMenuCategory(this.menu.id, this.menu.categories[i].id, i);
-    }
+    // // 1. clean the database for menuCategory model
+    // for(let i = 0; i < this.categoriesInDb.length; i++) {
+    //  this.menuCategoryService.deleteMenuCategory(this.menu.id, this.categoriesInDb[i].id);
+    // }
+    //
+    // // 2. add new user selected categories (menu.categories) into the database
+    // // The order is the order of the index i of menu.categories
+    // for(let i = 0; i < this.menu.categories.length; i++) {
+    //   this.menuCategoryService.addMenuCategory(this.menu.id, this.menu.categories[i].id, i);
+    // }
   }
 
   add(): void {
@@ -185,21 +166,13 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  addCatClick(event: Event, catid: number): void {
-    if(catid) {
-      event.preventDefault();
-      if(!(this.create)) {
-        for(let i = 0; i < this.availableCategories.length; i++) {
-          if(this.availableCategories[i].id === catid) {
-            this.menu.categories.push(this.availableCategories[i]);
-            this.availableCategories.splice(i,1);
-          }
-        }
-      }
-    }
+  addCategoryToMenu(category: Category): void {
+      //event.preventDefault();
+    this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
+    this.menu.categories.push(category);
   }
 
-  update(oldName : string): void {
+  update(oldName: string): void {
     this.menuService.updateMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
@@ -227,13 +200,13 @@ export class MenuComponent implements OnInit {
   }
 
   deleteCatClick(event: Event, catid: number): void {
-    if(catid) {
+    if (catid) {
       event.preventDefault();
-      if(!(this.create)) {
-        for(let i = 0; i < this.menu.categories.length; i++) {
-          if(this.menu.categories[i].id === catid) {
+      if (!(this.create)) {
+        for (let i = 0; i < this.menu.categories.length; i++) {
+          if (this.menu.categories[i].id === catid) {
             this.availableCategories.push(this.menu.categories[i]);
-            this.menu.categories.splice(i,1);
+            this.menu.categories.splice(i, 1);
           }
         }
       }
@@ -242,37 +215,37 @@ export class MenuComponent implements OnInit {
 }
 
 
-  function validateInputs() {
+function validateInputs() {
 
-    var validationError = false;
+  var validationError = false;
 
-    var nameValue = validateInput('name', null);
-    if (nameValue === null) validationError = true;
+  var nameValue = validateInput('name', null);
+  if (nameValue === null) validationError = true;
 
-    if (validationError) return null;
+  if (validationError) return null;
 
-    return {
-      name: nameValue,
-    };
+  return {
+    name: nameValue,
+  };
 
+}
+
+function validateInput(id: string, callback: any) {
+  var input = (<HTMLInputElement>document.getElementById(id));
+  var value = input.value;
+  if (value === '' || (callback && !callback(input, value))) {
+    hasError(input);
+    return null;
   }
 
-  function validateInput(id: string, callback: any) {
-    var input = (<HTMLInputElement>document.getElementById(id));
-    var value = input.value;
-    if (value === '' || (callback && !callback(input, value))) {
-      hasError(input);
-      return null;
-    }
+  hasNoError(input);
+  return value;
+}
 
-    hasNoError(input);
-    return value;
-  }
+function hasError(element: HTMLInputElement) {
+  element.className += ' form-error';
+}
 
-  function hasError(element: HTMLInputElement) {
-    element.className += ' form-error';
-  }
-
-  function hasNoError(element: HTMLInputElement) {
-    element.className = element.className.replace(/\bform-error\b/, '');
-  }
+function hasNoError(element: HTMLInputElement) {
+  element.className = element.className.replace(/\bform-error\b/, '');
+}

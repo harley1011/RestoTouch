@@ -13,10 +13,9 @@
           [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
           </div>
 
-      <div class="row" *ngIf="!create && !menuCatUndefinedYet">
-
+      <div class="row">
         <h3>Selected Categories</h3>
-        <div *ngFor="let category of this.menu.categories">
+        <div *ngFor="let category of menu.categories">
           <ul class="col col-lg-12">
             <i class="fa fa-fw fa-minus-square" (click)="deleteCatClick($event, category.id)"></i>
             {{category.categoryName}}
@@ -26,7 +25,7 @@
         <h3>Available Categories</h3>
         <div *ngFor="let category of availableCategories">
           <ul class="col col-lg-12">
-            <i class="fa fa-fw fa-plus-square" (click)="addCatClick($event, category.id)"></i>
+            <i class="fa fa-fw fa-plus-square" (click)="addCategoryToMenu(category)"></i>
             {{category.categoryName}}
           </ul>
         </div>
