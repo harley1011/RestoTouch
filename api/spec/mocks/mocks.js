@@ -1,6 +1,7 @@
 var userModel = {};
 var restaurantModel = {};
 var businessHoursModel = {};
+var paymentsModel = {};
 var menuModel = {};
 var menuCategoryModel = {};
 var restaurantMenuModel = {};
@@ -12,6 +13,8 @@ var menuLanguageModel = {};
 var menuTranslationModel = {};
 var itemLanguageModel = {};
 var itemTranslationModel = {};
+var ingredientGroupModel = {};
+var ingredientModel = {};
 
 var Promise = require('promise');
 
@@ -29,6 +32,12 @@ businessHoursModel.update = update;
 businessHoursModel.findAll = findAll;
 businessHoursModel.findOne = findOne;
 businessHoursModel.destroy = destroy;
+
+paymentsModel.create = create;
+paymentsModel.update = update;
+paymentsModel.findAll = findAll;
+paymentsModel.findOne = findOne;
+paymentsModel.destroy = destroy;
 
 menuModel.create = create;
 menuModel.update = update;
@@ -74,6 +83,8 @@ menuTranslationModel.destroy = destroy;
 
 addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
+addMethodsToObject(ingredientModel);
+addMethodsToObject(ingredientGroupModel);
 
 function addMethodsToObject(obj) {
   obj.create = create;
@@ -93,6 +104,10 @@ exports.getRestaurantModel = function () {
 
 exports.getBusinessHoursModel = function () {
   return businessHoursModel;
+}
+
+exports.getPaymentsModel = function () {
+  return paymentsModel;
 }
 
 exports.getMenuModel = function () {
@@ -137,6 +152,14 @@ exports.getItemLanguageModel = function () {
 
 exports.getItemTranslationModel = function () {
   return itemTranslationModel;
+}
+
+exports.getIngredientGroupModel  = function () {
+  return ingredientGroupModel;
+}
+
+exports.getIngredientModel = function () {
+  return ingredientModel;
 }
 
 
