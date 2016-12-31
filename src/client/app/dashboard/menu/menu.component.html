@@ -18,7 +18,7 @@
           <h5>Available Categories</h5>
           <div *ngFor="let category of availableCategories">
             <ul class="list-group">
-              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{category.categoryName}}
+              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{category.translations[0].name}}
                 <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                    (click)="addCategoryToMenu(category)"></i>
               </li>
@@ -32,14 +32,14 @@
           <h5>Added Categories</h5>
           <div *ngFor="let category of menu.categories">
             <ul class="list-group">
-              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{category.categoryName}}
+              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{category.translations[0].name}}
                 <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
                    (click)="removeCategoryFromMenu(category)"></i>
               </li>
             </ul>
           </div>
           <div [hidden]="menu.categories.length != 0">
-            <i class="fa fa-exclamation-circle"></i>Add some categories to this menu
+            <i class="fa fa-exclamation-circle"></i> Add some categories to this menu
           </div>
         </div>
       </div>

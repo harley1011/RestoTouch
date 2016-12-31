@@ -3,6 +3,8 @@ var menuModel;
 var categoryModel;
 var menuLanguageModel;
 var  menuCategoryModel;
+var categoryLanguageModel;
+var categoryTranslationModel;
 var _ = require('lodash');
 
 
@@ -24,6 +26,8 @@ function setDatabase (m) {
   menuLanguageModel = models.getMenuLanguageModel();
   menuTranslationsModel = models.getMenuTranslationsModel();
   menuCategoryModel = models.getMenuCategoryModel();
+  categoryLanguageModel = models.getCategoryLanguageModel();
+  categoryTranslationModel = models.getCategoryTranslationModel();
 }
 
 //GET /menu
@@ -78,9 +82,15 @@ function getMenu(req, res) {
       as: 'translations'
     }, {
       model: categoryModel,
-      as: 'categories'
-    }]
-  }).then(function(menu) {
+      as: 'categories',
+      include: [{
+        model: categoryLanguageModel,
+        as: 'supportedLanguages'
+      }, {
+        model: categoryTranslationModel,
+        as: 'translations'
+      }]
+  }]}).then(function(menu) {
     if (menu) {
       res.json(menu);
     } else {

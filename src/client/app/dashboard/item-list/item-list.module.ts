@@ -5,7 +5,7 @@ import { ItemListComponent } from './item-list.component';
 import {TranslateModule} from 'ng2-translate';
 
 @NgModule({
-    imports: [CommonModule, TranslateModule,, FormsModule],
+    imports: [CommonModule, TranslateModule, FormsModule],
     declarations: [ItemListComponent],
     exports: [ItemListComponent]
 })
