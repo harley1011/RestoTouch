@@ -156,6 +156,15 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  changeOrder(category: Category, changeIndex: number) {
+    // let newIndex =  ((category.orderPriority - 1 + changeIndex)
+    //   % this.item.ingredientGroups.length + this.item.ingredientGroups.length) % this.item.ingredientGroups.length;
+    // let currentIndex = ingredientGroup.orderPriority - 1;
+    // ingredientGroup.orderPriority = newIndex + 1;
+    // this.item.ingredientGroups[newIndex].orderPriority = currentIndex + 1;
+    // this.item.ingredientGroups[currentIndex] = this.item.ingredientGroups[newIndex];
+    // this.item.ingredientGroups[newIndex] = ingredientGroup;
+  }
   addCategoryToMenu(category: Category): void {
     this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
     this.menu.categories.push(category);
