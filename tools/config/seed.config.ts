@@ -1,3 +1,4 @@
+
 import { join } from 'path';
 import * as slash from 'slash';
 import { argv } from 'yargs';
@@ -147,7 +148,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'RestoTouch';
+  APP_TITLE = 'Welcome to angular2-seed!';
 
   /**
    * The base folder of the applications source files.
@@ -194,6 +195,18 @@ export class SeedConfig {
    * The directory of the tasks provided by the seed.
    */
   SEED_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'seed');
+
+  /**
+   * Seed tasks which are composition of other tasks.
+   */
+  SEED_COMPOSITE_TASKS = join(process.cwd(), this.TOOLS_DIR, 'config', 'seed.tasks.json');
+
+  /**
+   * Project tasks which are composition of other tasks
+   * and aim to override the tasks defined in
+   * SEED_COMPOSITE_TASKS.
+   */
+  PROJECT_COMPOSITE_TASKS = join(process.cwd(), this.TOOLS_DIR, 'config', 'project.tasks.json');
 
   /**
    * The destination folder for the generated documentation.
@@ -354,8 +367,9 @@ export class SeedConfig {
       '@angular/platform-browser/testing':
         'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
       '@angular/platform-browser-dynamic/testing':
-        'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
+      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js',
 
       'app/*': '/app/*',
       // For test config
@@ -391,7 +405,8 @@ export class SeedConfig {
       [join(this.TMP_DIR, this.BOOTSTRAP_DIR, '*')]: `${this.TMP_DIR}/${this.BOOTSTRAP_DIR}/*`,
       'dist/tmp/node_modules/*': 'dist/tmp/node_modules/*',
       'node_modules/*': 'node_modules/*',
-      '*': 'node_modules/*'
+      '*': 'node_modules/*',
+      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
     },
     packages: {
       '@angular/common': {
@@ -433,6 +448,9 @@ export class SeedConfig {
       'rxjs': {
         main: 'Rx.js',
         defaultExtension: 'js'
+      },
+      'ng2-translate': {
+        defaultExtension: 'js'
       }
     }
   };
@@ -457,8 +475,7 @@ export class SeedConfig {
    * White list for CSS color guard
    * @type {[string, string][]}
    */
-  COLOR_GUARD_WHITE_LIST: [string, string][] = [
-  ];
+  COLOR_GUARD_WHITE_LIST: [string, string][] = [];
 
   /**
    * Configurations for NPM module configurations. Add to or override in project.config.ts.

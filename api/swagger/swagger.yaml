@@ -587,12 +587,12 @@ paths:
       operationId: delMenuCategory
       parameters:
         - name: menuId
-          description: a Category Id
+          description: a Menu Id
           type: number
           in: path
           required: true
         - name: categoryId
-          description: a Menu Id
+          description: a Category Id
           type: number
           in: path
           required: true
@@ -722,10 +722,24 @@ definitions:
   Category:
     type: object
     properties:
-      categoryName:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/CategoryTranslations"
+  CategoryTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
         type: string
     required:
-      - categoryName
+      - name
+      - languageCode
   ItemsResponse:
     required:
       - items
@@ -751,8 +765,38 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/ItemTranslations"
+      ingredientGroup:
+        type: array
+        items:
+          "$ref": "#/definitions/IngredientGroup"
     required:
       - imageUrl
+  Ingredient:
+    type: object
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      allowQuantity:
+        type: number
+    required:
+      - name
+  IngredientGroup:
+    type: object
+    properties:
+      name:
+        type: string
+      numberOfIngredientsAllowed:
+        type: number
+      allowQuantity:
+        type: number
+      ingredients:
+        type: array
+        items:
+          "$ref": "#/definitions/Ingredient"
+    required:
+      - name
   ItemSize:
     type: object
     properties:
@@ -832,6 +876,16 @@ definitions:
       - openTime
       - closeTime
       - active
+  Payment:
+    type: object
+    properties:
+      name:
+        type: string
+      used:
+        type: boolean
+    required:
+      - name
+      - used
   Restaurant:
     type: object
     properties:
@@ -849,6 +903,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/BusinessHour"
+      payments:
+        type: array
+        items:
+          "$ref": "#/definitions/Payment"
     required:
       - address
   MenuListResponse:

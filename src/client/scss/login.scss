@@ -52,7 +52,7 @@
     text-align: center;
 }
 .loginPageTitle{
-	font-size:92px;
+	font-size:76px;
 	font-weight:bold;
 	color: white;
     font-family: 'Open Sans', sans-serif;
@@ -92,4 +92,9 @@ a {
 
 a:hover{
 	color:red;
+}
+
+select{ 
+    background-color: transparent;
+    border: none;
 }

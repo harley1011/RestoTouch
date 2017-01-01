@@ -64,6 +64,13 @@ export class ProjectConfig extends SeedConfig {
     //   }
     // });
     //
+    // Add packages (e.g. ng2-translate)
+    // let additionalPackages: ExtendPackages[] = [{
+    //   name: 'ng2-translate',
+    //   // Path to the package's bundle
+    //   path: 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
+    // }];
+    //
     // this.addPackagesBundles(additionalPackages);
 
     /* Add to or override NPM module configurations: */
