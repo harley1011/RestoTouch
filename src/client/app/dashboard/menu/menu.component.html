@@ -35,8 +35,8 @@
           <div *ngFor="let category of menu.categories">
             <div class="added-categories">
               <div>
-                <i class="fa fa-chevron-up increase-decrease-order-icon" (click)="changeOrder(-1, category)"></i>
-                <i class="fa fa-chevron-down increase-decrease-order-icon" (click)="changeOrder(1, category)"></i>
+                <i class="fa fa-chevron-up increase-decrease-order-icon" (click)="changeOrder(category, -1)"></i>
+                <i class="fa fa-chevron-down increase-decrease-order-icon" (click)="changeOrder(category, 1)"></i>
               </div>
               <div class="added-categories-name">
                 {{category.translations[0].name}}

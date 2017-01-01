@@ -157,13 +157,12 @@ export class MenuComponent implements OnInit {
   }
 
   changeOrder(category: Category, changeIndex: number) {
-    // let newIndex =  ((category.orderPriority - 1 + changeIndex)
-    //   % this.item.ingredientGroups.length + this.item.ingredientGroups.length) % this.item.ingredientGroups.length;
-    // let currentIndex = ingredientGroup.orderPriority - 1;
-    // ingredientGroup.orderPriority = newIndex + 1;
-    // this.item.ingredientGroups[newIndex].orderPriority = currentIndex + 1;
-    // this.item.ingredientGroups[currentIndex] = this.item.ingredientGroups[newIndex];
-    // this.item.ingredientGroups[newIndex] = ingredientGroup;
+     let newIndex = ((this.menu.categories.indexOf(category) - 1 + changeIndex)
+       % this.menu.categories.length + this.menu.categories.length) % this.menu.categories.length;
+     let currentIndex = this.menu.categories.indexOf(category);
+
+     this.menu.categories[currentIndex] = this.menu.categories[newIndex];
+     this.menu.categories[newIndex] = category;
   }
   addCategoryToMenu(category: Category): void {
     this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
