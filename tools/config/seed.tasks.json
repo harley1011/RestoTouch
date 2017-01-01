@@ -22,6 +22,7 @@
     "check.tools",
     "clean.prod",
     "tslint",
+    "build.fonts",
     "build.assets.prod",
     "build.html_css",
     "copy.prod",
