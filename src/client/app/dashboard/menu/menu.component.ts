@@ -116,7 +116,7 @@ export class MenuComponent implements OnInit {
     this.categoryService.getCategories().subscribe(
       categories => {
         this.menu.categories.forEach(menuCategory => {
-          let categoryToRemove = categories.find(category => menuCategory.id == category.id);
+          let categoryToRemove = categories.find(category => menuCategory.id === category.id);
           if (categoryToRemove) {
             categories.splice(categories.indexOf(categoryToRemove), 1);
           }
@@ -134,8 +134,6 @@ export class MenuComponent implements OnInit {
 
     var values = validateInputs();
     if (values === null) return;
-
-    var oldName = this.menu.selectedTranslation.name;
     this.menu.selectedTranslation.name = values['name'];
 
     if (this.create) {
