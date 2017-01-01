@@ -175,8 +175,7 @@ export class RestaurantComponent implements OnInit {
     });
   }
 
-  selectLanguage(language: Language) {
-      console.log('came');
+  selectLanguage(language: string) {
       language = language.substr(3, 2);
       console.log(language);
   	this.editingLanguage = new Language(language, 'French', '', 0);
