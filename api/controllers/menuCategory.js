@@ -4,31 +4,51 @@ setDatabase(models);
 
 
 module.exports = {
-  setDatabase: setDatabase,
   saveMenuCategory: saveMenuCategory,
-  delMenuCategory: delMenuCategory
-
+  delMenuCategory: delMenuCategory,
+  setDatabase: setDatabase
 };
 
 function setDatabase (m) {
   models = m;
-  menuCategoryModel = models.getmenuCategoryModel();
+  menuCategoryModel = models.getMenuCategoryModel();
 }
+
 
 //POST /menuCategory
 function saveMenuCategory(req, res) {
-
   var menuCategory = req.body;
+
+  menuCategory.menuId = req.menuId;
+  menuCategory.categoryId = req.categoryId;
+  menuCategory.order = req.order;
+
+
   return menuCategoryModel.create(menuCategory).then(function(result){
-    return res.json({success: 1, description: "Added Categor(y/ies) to Menu"});
+    return res.json({success: 1, description: "Added Category to Menu"});
   });
 
 }
 
+
+/*//POST /menuCategory
+function saveMenuCategory(req, res) {
+
+  return menuCategoryModel.create({
+    menuId: req.Body.menuId,
+    categoryId: req.Body.categoryId,
+    orderId: req.Body.order
+
+  }).then(function(result){
+    return res.json({success: 1, description: "Added Category to Menu"});
+  });
+
+}*/
+
 //DELETE /menuCategory/{menuId}{categoryId}
 function delMenuCategory(req, res) {
   var menuId = req.swagger.params.menuId.value;
-  var categoryId = req.swagger.params.restaurantId.value;
+  var categoryId = req.swagger.params.categoryId.value;
 
  return menuCategoryModel.destroy({
    where: {
@@ -36,7 +56,7 @@ function delMenuCategory(req, res) {
      categoryId: categoryId
    }
  }).then(function (result) {
- return res.json({success: 1, description: "Deleted Categories from a Menu"});
+ return res.json({success: 1, description: "Deleted Category from Menu"});
  });
 
 }

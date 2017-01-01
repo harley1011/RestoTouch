@@ -587,12 +587,12 @@ paths:
       operationId: delMenuCategory
       parameters:
         - name: menuId
-          description: a Category Id
+          description: a Menu Id
           type: number
           in: path
           required: true
         - name: categoryId
-          description: a Menu Id
+          description: a Category Id
           type: number
           in: path
           required: true

@@ -3,8 +3,8 @@
     height: 100%;
 //    position: absolute;
 //    min-width: 90%;
-    overflow-x: hidden; 
-    
+    overflow-x: hidden;
+
     .formContainer {
         height: 100%;
     }
@@ -25,4 +25,49 @@
 .selected-menu {
     background-color: #1abc9c;
     color: #fff;
+}
+
+.added-categories {
+  position: relative;
+  padding: .0rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+}
+
+.added-categories-name {
+  width: 100%;
+  margin: auto;
+}
+
+
+.added-categories:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+
+.added-categories:first-child {
+  margin-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.increase-decrease-order-icon {
+  font-weight: normal;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+    color: #242628
+  }
+
+  &:active {
+    cursor: pointer;
+    color: #242628
+  }
 }

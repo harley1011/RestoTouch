@@ -47,4 +47,5 @@ cache:
 
 script:
   - npm run setup
-  - npm run test
+  # - npm run test
+

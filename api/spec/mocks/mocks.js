@@ -3,6 +3,7 @@ var restaurantModel = {};
 var businessHoursModel = {};
 var paymentsModel = {};
 var menuModel = {};
+var menuCategoryModel = {};
 var restaurantMenuModel = {};
 var restaurantsLanguageModel = {};
 var restaurantsTranslationModel = {};
@@ -43,6 +44,9 @@ menuModel.update = update;
 menuModel.findAll = findAll;
 menuModel.findOne = findOne;
 menuModel.destroy = destroy;
+
+menuCategoryModel.create = create;
+menuCategoryModel.destroy = destroy;
 
 restaurantMenuModel.create = create;
 restaurantMenuModel.destroy = destroy;
@@ -116,6 +120,10 @@ exports.getMenuLanguageModel = function () {
 
 exports.getMenuTranslationsModel = function () {
   return menuTranslationModel;
+}
+
+exports.getMenuCategoryModel = function () {
+    return menuCategoryModel;
 }
 
 exports.getRestaurantMenuModel = function () {
