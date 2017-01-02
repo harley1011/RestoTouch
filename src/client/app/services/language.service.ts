@@ -2,6 +2,9 @@ import {Injectable}     from '@angular/core';
 import {Language} from '../shared/models/language';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import  {ApiEndpointService} from './api-endpoint.service';
+import { AuthHttpService } from './auth-http.services';
+import { Response} from '@angular/http';
 
 @Injectable()
 export class LanguageService {
@@ -13,7 +16,7 @@ export class LanguageService {
   private supportedLanguagesAnnounced = new Subject<Array<Language>>();
 	private supportedLanguages: Array<Language> = [];
 	private selectedLanguage: Language;
-
+  private url = '/supportedLanguages';
   private isoLanguages = [new Language('ab', 'Abkhaz', 'аҧсуа', 2),
  new Language('aa', 'Afar', 'Afaraf', 2),
  new Language('af', 'Afrikaans', 'Afrikaans', 2),
@@ -197,7 +200,7 @@ export class LanguageService {
  new Language('yo', 'Yoruba', 'Yorùbá', 2),
  new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
 
-  constructor() {
+  constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
   }
@@ -222,12 +225,28 @@ export class LanguageService {
   	this.selectedLanguage = language;
   }
 
-  getSupportedLanguages(): Array<Language> {
-  	return this.supportedLanguages;
+  getSupportedLanguages(): Observable<Array<Language>> {
+    return this.http.get(this.api.getEndpoint() + this.url)
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   getSelectedLanguage(): Language {
   	return this.selectedLanguage;
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body || { };
+  }
+
+  private handleError (error: any) {
+    // In a real world app, we might use a remote logging infrastructure
+    // We'd also dig deeper into the error to get a better message
+    let errMsg = (error.message) ? error.message :
+      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
   }
 }
 

@@ -1,5 +1,6 @@
-<div class="col col-sm-6" style="padding-left:0">
-  <select name="language" class="form-control" [(ngModel)]="selectedLanguage"
+<div>
+  <label for="language">{{ 'restaurant.langType2' | translate}}</label>
+  <select style="width: 200px; display: inline-block;" name="language" class="form-control" [(ngModel)]="selectedLanguage"
           (change)="selectLanguage($event.target.value)">
     <option *ngFor="let language of supportedLanguages" [ngValue]="language.languageCode">{{language.name}}
     </option>

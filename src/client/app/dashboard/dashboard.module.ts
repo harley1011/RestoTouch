@@ -18,8 +18,7 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 
 import {DashboardComponent} from './dashboard.component';
 
-import {TopNavComponent} from '../shared/index';
-import {SidebarComponent} from '../shared/index';
+import {TopNavComponent, SidebarComponent} from '../shared/index';
 
 
 @NgModule({

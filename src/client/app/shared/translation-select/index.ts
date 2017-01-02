@@ -1,1 +1,1 @@
-export * from './translation-select.component';
+export * from './translation-select.module';

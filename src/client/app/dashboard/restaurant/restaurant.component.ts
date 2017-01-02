@@ -39,7 +39,6 @@ export class RestaurantComponent implements OnInit {
     languageService.setSupportedLanguages(this.supportedLanguages);
 
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
-    console.log('changing');
       this.editingLanguage = editingLanguage;
       this.selectedLanguage = editingLanguage.languageCode;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>

@@ -23,13 +23,8 @@ export class AccountSettingsComponent implements OnInit {
     translate.setDefaultLang('en');
     this.accountSettingsService.getAccountSettings().subscribe(accountSettings => {
       this.accountSettings = accountSettings;
-
-      if (this.accountSettings.supportedLanguages.length === 0) {
-        this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-      }
     });
     this.languages = languageService.languages();
-
   }
 
   ngOnInit(): void {
@@ -41,5 +36,24 @@ export class AccountSettingsComponent implements OnInit {
       console.log('Success');
     });
   }
+
+  addLanguage() {
+    let language = this.accountSettings.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
+    if (language) {
+      //todo: remove this once the supported languages are removed from the languages
+      console.log('Language is already supported');
+      return;
+    }
+    this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === this.selectedLanguage));
+  }
+
+  removeLanguage(language: Language) {
+    if (this.accountSettings.supportedLanguages.length <= 1) {
+      //todo: error message
+      console.log('At least one supported language is required');
+    }
+    this.accountSettings.supportedLanguages.splice(this.accountSettings.supportedLanguages.indexOf(language), 1);
+  }
+
 
 }
