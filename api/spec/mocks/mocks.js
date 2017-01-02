@@ -15,6 +15,7 @@ var itemLanguageModel = {};
 var itemTranslationModel = {};
 var ingredientGroupModel = {};
 var ingredientModel = {};
+var supportedLanguageModel = {};
 
 var Promise = require('promise');
 
@@ -85,6 +86,7 @@ addMethodsToObject(itemModel);
 addMethodsToObject(itemSizesModel);
 addMethodsToObject(ingredientModel);
 addMethodsToObject(ingredientGroupModel);
+addMethodsToObject(supportedLanguageModel);
 
 function addMethodsToObject(obj) {
   obj.create = create;
@@ -161,6 +163,11 @@ exports.getIngredientGroupModel  = function () {
 exports.getIngredientModel = function () {
   return ingredientModel;
 }
+
+exports.getSupportedLanguageModel = function () {
+  return supportedLanguageModel;
+}
+
 
 
 function create(object) {
