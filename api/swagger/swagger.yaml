@@ -663,6 +663,13 @@ paths:
     put:
       operationId: saveAccountSettings
       description: Get the users account settings
+      parameters:
+        - name: accountSettings
+          description: User properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/AccountSettings"
       responses:
         "200":
           description: Success

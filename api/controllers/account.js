@@ -53,7 +53,7 @@ function getAccountSettings(req, res) {
 }
 
 function saveAccountSettings(req, res) {
-  var accountSettings = req.accountSettings;
+  var accountSettings = req.body;
   return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
 
     var languagesToRemove = _.differenceBy(supportedLanguages.supportedLanguages, accountSettings.supportedLanguages, 'languageCode');

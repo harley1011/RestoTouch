@@ -7,7 +7,7 @@ import {AccountSettings} from '../../shared/models/accountSettings';
 
 @Component({
   moduleId: module.id,
-  selector: 'settings-cmp',
+  selector: 'account-settings-cmp',
   templateUrl: 'account-settings.component.html',
   providers: [AccountSettingsService]
 })
@@ -27,7 +27,7 @@ export class AccountSettingsComponent implements OnInit {
       if (this.accountSettings.supportedLanguages.length === 0) {
         this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
       }
-    })
+    });
     this.languages = languageService.languages();
 
   }
@@ -37,7 +37,9 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   save(): void {
-    console.log('h');
+    this.accountSettingsService.updateAccountSettings(this.accountSettings).subscribe(generalResponse => {
+      console.log('Success');
+    });
   }
 
 }
