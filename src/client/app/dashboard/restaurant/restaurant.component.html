@@ -43,7 +43,7 @@
                  [ngClass]="{'form-error': !address.valid && !address.pristine}">
         </div>
       </div>
-      <div id="resto-payment" class="col-md-3 payment-container-div">
+      <div id="resto-payment" class="col-md-3">
         <h4>{{ 'restaurant.paymethTitle' | translate}}</h4>
         <div class="checkbox" *ngFor="let payment of restaurant.payments; let i = index">
           <label><input type="checkbox" name="payment{{i}}" [(ngModel)]="payment.used"> {{payment.name}}</label>
