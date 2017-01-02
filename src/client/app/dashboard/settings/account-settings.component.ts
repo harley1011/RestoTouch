@@ -12,7 +12,6 @@ import {AccountSettings} from '../../shared/models/accountSettings';
 
 export class SettingsComponent implements OnInit {
   accountSettings: AccountSettings;
-  supportedLanguages: Array<Language> = [];
   languages: Array<Language>;
   selectedLanguage: string;
 
@@ -20,9 +19,8 @@ export class SettingsComponent implements OnInit {
               private translate: TranslateService,) {
     translate.setDefaultLang('en');
     this.languages = languageService.languages();
-    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
   }
-
 
   ngOnInit(): void {
     console.log('h');
