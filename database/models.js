@@ -21,6 +21,7 @@ var itemLanguageModel = sequelize.import('./models/itemsLanguages.js');
 var itemTranslationModel = sequelize.import('./models/itemsTranslations.js');
 var ingredientModel = sequelize.import('./models/ingredient.js');
 var ingredientGroupModel = sequelize.import('./models/ingredientGroup.js');
+var supportedLanguageModel = sequelize.import('./models/supportedLanguages.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -30,6 +31,12 @@ userModel.sync({force: dropTable}).then(function () {
 
   // User has to be created before these tables are created
   userModel.hasMany(restaurantModel, {as: 'restaurants', onDelete: 'cascade', foreignKey: 'userId'});
+
+  userModel.hasMany(supportedLanguageModel, {
+    as: 'supportedLanguages',
+    onDelete: 'cascade',
+    foreignKey: 'userId'
+  });
 
   restaurantModel.sync({force: dropTable}).then(function () {
     //Restaurant has to be created before these tables are created
