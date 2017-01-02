@@ -56,7 +56,7 @@ function getAccountSettings(req, res) {
 
 function getSupportedLanguages(req, res) {
   return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
-    return res.json({success: 1, 'supportedLanguages': supportedLanguages});
+    return res.json(supportedLanguages);
   })
 }
 
