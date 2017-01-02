@@ -1,10 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-// import {AuthService} from '../../services/auth.service';
-// import {User} from '../models/user';
-// import {LanguageService} from '../../services/language.service';
-// import {Language} from '../../shared/models/language';
-// import { Router } from '@angular/router';
-// import {TranslateService} from 'ng2-translate';
+import {Language} from '../../shared/models/language';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +8,8 @@ import {Component, OnInit} from '@angular/core';
 })
 
 export class TranslationSelectComponent implements OnInit {
-
+  selectedLanguage: string;
+  supportedLanguages: Array<Language> = [];
   constructor() {
     console.log('temp');
   }
