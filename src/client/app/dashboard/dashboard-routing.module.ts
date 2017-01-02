@@ -14,7 +14,7 @@ import {ItemListRoutes} from './item-list/item-list.routes';
 import {MenuRoutes} from './menu/menu.routes';
 import {MenuListRoutes} from './menu-list/menu-list.routes';
 
-import {SettingsRoutes} from './settings/settings.routes';
+import {SettingsRoutes} from './settings/account-settings.routes';
 
 import { NgModule } from '@angular/core';
 import {AuthService} from '../services/auth.service';

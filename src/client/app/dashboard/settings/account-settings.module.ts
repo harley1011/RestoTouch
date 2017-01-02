@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SettingsComponent } from './settings.component';
+import { SettingsComponent } from './account-settings.component';
 import {TranslateModule} from 'ng2-translate';
 import { FormsModule } from '@angular/forms';
 

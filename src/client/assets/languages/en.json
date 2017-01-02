@@ -161,7 +161,9 @@
 
   "setting": {
     "titleManage": "Account Settings",
-    "sousTitleManage":"You can select any item below to make changes"
+    "sousTitleManage":"Make changes below and then select the save button to persist the changes",
+    "supportedLanguage": "Supported Languages",
+    "save": "Save"
 
   }
 }

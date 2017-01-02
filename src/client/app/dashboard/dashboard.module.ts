@@ -11,7 +11,7 @@ import {MenuModule} from './menu/menu.module';
 import {ItemListModule} from './item-list/item-list.module';
 import {ItemModule} from './item/item.module';
 import {HomeModule} from './home/home.module';
-import {SettingsModule} from './settings/settings.module';
+import {SettingsModule} from './settings/account-settings.module';
 import {TranslateModule} from 'ng2-translate';
 
 import {DashboardRoutingModule} from './dashboard-routing.module';
