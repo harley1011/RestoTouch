@@ -157,5 +157,11 @@
     "foodItemChangeImgMsg":"Change Image",
     "foodItemSelectCroppedImgMsg":"Select Cropped Image",
     "foodItemRecroppedImgMsg":"Re-crop Image"
+  },
+
+  "setting": {
+    "titleManage": "Account Settings",
+    "sousTitleManage":"You can select any item below to make changes"
+
   }
 }
