@@ -13,7 +13,8 @@ module.exports = {
   login: login,
   setDatabase: setDatabase,
   getAccountSettings: getAccountSettings,
-  saveAccountSettings: saveAccountSettings
+  saveAccountSettings: saveAccountSettings,
+  getSupportedLanguages: getSupportedLanguages
 };
 
 function setDatabase(m) {
@@ -47,6 +48,13 @@ function userInfo(user) {
 }
 
 function getAccountSettings(req, res) {
+  //will eventually have more than just supported language model to return
+  return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
+    return res.json({success: 1, 'supportedLanguages': supportedLanguages});
+  })
+}
+
+function getSupportedLanguages(req, res) {
   return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
     return res.json({success: 1, 'supportedLanguages': supportedLanguages});
   })
@@ -56,9 +64,8 @@ function saveAccountSettings(req, res) {
   var accountSettings = req.body;
   return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
 
-    var languagesToRemove = _.differenceBy(supportedLanguages.supportedLanguages, accountSettings.supportedLanguages, 'languageCode');
-    var newLanguagesToAdd = _.differenceBy(accountSettings.supportedLanguages, supportedLanguages.supportedLanguages, 'languageCode');
-
+    var languagesToRemove = _.differenceBy(supportedLanguages, accountSettings.supportedLanguages, 'languageCode');
+    var newLanguagesToAdd = _.differenceBy(accountSettings.supportedLanguages, supportedLanguages, 'languageCode');
 
     languagesToRemove.forEach(function (language) {
       supportedLanguageModel.destroy({where: {'languageCode': language.languageCode, 'userId': req.userId}});

@@ -658,6 +658,26 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /supportedLanguages:
+    x-swagger-router-controller: account
+    get:
+      operationId: getSupportedLanguages
+      description: Get the users supported languages
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Language"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"         
   /accountSettings:
     x-swagger-router-controller: account
     put:
