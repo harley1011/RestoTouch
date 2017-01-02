@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-
 import {TranslateService} from 'ng2-translate';
+import {LanguageService} from '../../services/language.service';
+import {Language} from '../../shared/models/language';
 
 @Component({
   moduleId: module.id,
@@ -10,16 +10,22 @@ import {TranslateService} from 'ng2-translate';
 })
 
 export class SettingsComponent implements OnInit {
+  supportedLanguages: Array<Language> = [];
+  languages: Array<Language>;
+  selectedLanguage: string;
 
-
-  constructor(private router: Router,
+  constructor(private languageService: LanguageService,
               private translate: TranslateService,) {
-    // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
+    this.languages = languageService.languages();
   }
 
 
   ngOnInit(): void {
+    console.log('h');
+  }
+
+  save(): void {
     console.log('h');
   }
 
