@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { SettingsComponent } from './account-settings.component';
+import { AccountSettingsComponent } from './account-settings.component';
 
 export const SettingsRoutes: Route[] = [
   	{
     	path: 'settings',
-    	component: SettingsComponent
+    	component: AccountSettingsComponent
   	}
 ];

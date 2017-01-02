@@ -10,7 +10,7 @@ import  {ApiEndpointService} from '../../services/api-endpoint.service';
 
 @Injectable()
 export class AccountSettingsService {
-  private url = '/restaurant';
+  private url = '/accountSettings';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 

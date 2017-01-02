@@ -19,7 +19,7 @@ module.exports = {
 function setDatabase(m) {
   models = m;
   userModel = models.getUserModel();
-  userModel = models.getSupportedLanguageModel();
+  supportedLanguageModel = models.getSupportedLanguageModel();
 }
 
 function register(req, res) {
@@ -47,14 +47,14 @@ function userInfo(user) {
 }
 
 function getAccountSettings(req, res) {
-  supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
-    return ({success: 1, accountSettings: {supportedLanguages: supportedLanguages}});
+  return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
+    return res.json({success: 1, 'supportedLanguages': supportedLanguages});
   })
 }
 
 function saveAccountSettings(req, res) {
   var accountSettings = req.accountSettings;
-  supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
+  return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
 
     var languagesToRemove = _.differenceBy(supportedLanguages.supportedLanguages, accountSettings.supportedLanguages, 'languageCode');
     var newLanguagesToAdd = _.differenceBy(accountSettings.supportedLanguages, supportedLanguages.supportedLanguages, 'languageCode');

@@ -37,6 +37,7 @@ userModel.sync({force: dropTable}).then(function () {
     onDelete: 'cascade',
     foreignKey: 'userId'
   });
+  supportedLanguageModel.sync({force: dropTable});
 
   restaurantModel.sync({force: dropTable}).then(function () {
     //Restaurant has to be created before these tables are created
