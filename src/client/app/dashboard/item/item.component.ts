@@ -21,6 +21,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 })
 
 export class ItemComponent implements OnInit {
+
   create: boolean;
   item: Item;
   size = new Size('', 0);
@@ -77,7 +78,9 @@ export class ItemComponent implements OnInit {
             ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
           });
 
-          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority;});
+          item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
+            return a.orderPriority - b.orderPriority;
+          });
           this.item = item;
           this.item.selectedTranslation = item.translations[0];
           this.create = false;
@@ -86,10 +89,12 @@ export class ItemComponent implements OnInit {
           console.log(error);
         });
       } else {
-        let translation = new ItemTranslations('','', this.translationSelectComponent.selectedLanguage.languageCode);
-        this.item = new Item([translation], translation, [], '', []);
-        this.create = true;
-        this.pictureMode = PictureMode.Select;
+        this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
+          let translation = new ItemTranslations('', '', language.languageCode);
+          this.item = new Item([translation], translation, [], '', []);
+          this.create = true;
+          this.pictureMode = PictureMode.Select;
+        });
       }
     });
   }
@@ -204,7 +209,7 @@ export class ItemComponent implements OnInit {
   }
 
   changeOrder(ingredientGroup: IngredientGroup, changeIndex: number) {
-    let newIndex =  ((ingredientGroup.orderPriority - 1 + changeIndex)
+    let newIndex = ((ingredientGroup.orderPriority - 1 + changeIndex)
       % this.item.ingredientGroups.length + this.item.ingredientGroups.length) % this.item.ingredientGroups.length;
     let currentIndex = ingredientGroup.orderPriority - 1;
     ingredientGroup.orderPriority = newIndex + 1;

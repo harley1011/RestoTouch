@@ -200,16 +200,23 @@ export class LanguageService {
     new Language('yi', 'Yiddish', 'ייִדיש', 2),
     new Language('yo', 'Yoruba', 'Yorùbá', 2),
     new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
-  private replaySubject = new ReplaySubject<Array<Language>>();
+  private replaySubjectLanguages = new ReplaySubject<Array<Language>>();
+  private replaySubjectSelectedLanguage = new ReplaySubject<Language>();
 
   constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
 
     this.http.get(this.api.getEndpoint() + this.url).map(this.extractData).subscribe(languages => {
-        this.replaySubject.next(languages);
+        this.replaySubjectLanguages.next(languages);
+        if (!this.selectedLanguage) {
+          this.setSelectedLanguage(languages[0]);
+        }
       }
     );
+  }
+  getSelectedLanguage(): ReplaySubject<Language> {
+    return this.replaySubjectSelectedLanguage;
   }
 
   languages(): Array<Language> {
@@ -230,14 +237,11 @@ export class LanguageService {
 
   setSelectedLanguage(language: Language): void {
     this.selectedLanguage = language;
+    this.replaySubjectSelectedLanguage.next(language);
   }
 
   getSupportedLanguages(): ReplaySubject<Array<Language>> {
-    return this.replaySubject;
-  }
-
-  getSelectedLanguage(): Language {
-    return this.selectedLanguage;
+    return this.replaySubjectLanguages;
   }
 
   private extractData(res: Response) {
