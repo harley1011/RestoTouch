@@ -81,24 +81,18 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
-
-          this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
-            this.item = item;
-            this.onSelectLanguage(language);
-            this.create = false;
-            this.pictureMode = PictureMode.Edit;
-          });
-
+          this.item = item;
+          this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+          this.create = false;
+          this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
         });
       } else {
-        this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
-          let translation = new ItemTranslations('', '', language.languageCode);
-          this.item = new Item([translation], translation, [], '', []);
-          this.create = true;
-          this.pictureMode = PictureMode.Select;
-        });
+        let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+        this.item = new Item([translation], translation, [], '', []);
+        this.create = true;
+        this.pictureMode = PictureMode.Select;
       }
     });
   }

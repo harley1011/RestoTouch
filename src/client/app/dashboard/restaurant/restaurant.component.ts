@@ -38,7 +38,7 @@ export class RestaurantComponent implements OnInit {
               private restaurantService: RestaurantService,
               private translate: TranslateService,) {
 
-
+    this.create = true;
     translate.setDefaultLang('en');
   }
 
@@ -83,9 +83,6 @@ export class RestaurantComponent implements OnInit {
       restaurant => {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
-        // this.supportedLanguages.forEach(language => {
-        //   this.languages.splice(this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode)), 1);
-        // });
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {

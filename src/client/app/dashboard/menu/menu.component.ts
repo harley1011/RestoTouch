@@ -34,7 +34,6 @@ export class MenuComponent implements OnInit {
               private router: Router) {
   }
 
-
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['menuId']) {

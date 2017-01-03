@@ -1,35 +1,34 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { CategoryService } from './category.service';
-import { Category, CategoryTranslations } from '../../shared/models/category';
-import { Language } from '../../shared/models/language';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {CategoryService} from './category.service';
+import {Category, CategoryTranslations} from '../../shared/models/category';
+import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
-	moduleId: module.id,
-	selector: 'category-cmp',
-	templateUrl: 'category.component.html',
+  moduleId: module.id,
+  selector: 'category-cmp',
+  templateUrl: 'category.component.html',
   providers: [CategoryService]
 })
 
 export class CategoryComponent implements OnInit {
-	create: boolean;
+  create: boolean;
   category: Category;
   errorMessage: string;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
-	constructor(private route: ActivatedRoute,
+
+  constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
               private router: Router) {
 
   }
 
-    getCategory(id: number): void {
-	  this.categoryService.getCategory(id).subscribe(
-	    category => {
-        this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
-          this.category = category;
-          this.onSelectLanguage(language);
-        });
+  getCategory(id: number): void {
+    this.categoryService.getCategory(id).subscribe(
+      category => {
+        this.category = category;
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;
@@ -38,20 +37,16 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.route.params.forEach((params: Params) => {
-			if (params['id']) {
-			  this.getCategory(params['id']);
-				this.create = false;
-			} else {
-        let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
-          let translation = new CategoryTranslations('', language.languageCode);
-          this.category = new Category([translation], translation);
-          this.create = true;
-          sub.unsubscribe();
-        });
-
+    this.route.params.forEach((params: Params) => {
+      if (params['id']) {
+        this.getCategory(params['id']);
+        this.create = false;
+      } else {
+        let translation = new CategoryTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
+        this.category = new Category([translation], translation);
+        this.create = true;
       }
-		});
+    });
   }
 
   onSelectLanguage(language: Language) {
@@ -110,7 +105,7 @@ export class CategoryComponent implements OnInit {
   delete(): void {
     this.categoryService.deleteCategory(this.category).subscribe(
       generalResponse => {
-        console.log('response', generalResponse );
+        console.log('response', generalResponse);
         this.router.navigate(['/dashboard/categories']);
       },
       error => {
@@ -119,7 +114,7 @@ export class CategoryComponent implements OnInit {
     );
   }
 }
-function validateInputs () {
+function validateInputs() {
 
   var validationError = false;
 
@@ -133,7 +128,7 @@ function validateInputs () {
   };
 }
 
-function validateInput (id: string, callback: any) {
+function validateInput(id: string, callback: any) {
   var input = (<HTMLInputElement>document.getElementById(id));
   var value = input.value;
   if (value === '' || (callback && !callback(input, value))) {
@@ -145,10 +140,10 @@ function validateInput (id: string, callback: any) {
   return value;
 }
 
-function hasError (element: HTMLInputElement) {
+function hasError(element: HTMLInputElement) {
   element.className += ' form-error';
 }
 
-function hasNoError (element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/,'');
+function hasNoError(element: HTMLInputElement) {
+  element.className = element.className.replace(/\bform-error\b/, '');
 }
