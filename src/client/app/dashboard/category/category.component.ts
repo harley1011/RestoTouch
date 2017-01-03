@@ -68,9 +68,15 @@ export class CategoryComponent implements OnInit {
 	getItems(): void {
 		this.itemService.getItems().subscribe(
 			items => {
-        items.forEach(function(item) {
+        items.forEach(item => {
           item.selectedTranslation = item.translations[0];
         });
+
+				this.category.items.forEach(categoryItem => {
+          let itemToRemove = items.find(item => categoryItem.id === item.id);
+          if (itemToRemove) items.splice(items.indexOf(itemToRemove), 1);
+        });
+
         this.items = items;
 				console.log(this.items);
     	},
@@ -92,6 +98,16 @@ export class CategoryComponent implements OnInit {
 				this.create = true;
       }
 		});
+  }
+
+	addItemToCategory(item: Item): void {
+    this.items.splice(this.items.indexOf(item), 1);
+    this.category.items.push(item);
+  }
+
+	removeItemFromCategory(item: Item): void {
+    this.category.items.splice(this.category.items.indexOf(item), 1);
+    this.items.push(item);
   }
 
   // 'Create' button functionality

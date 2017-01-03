@@ -3,6 +3,8 @@ var categoryModel;
 var categoryLanguageModel;
 var categoryTranslationModel;
 var itemModel;
+var itemLanguageModel;
+var itemTranslationModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -22,6 +24,8 @@ function setDatabase (m) {
   categoryLanguageModel = models.getCategoryLanguageModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
+  itemLanguageModel = models.getItemLanguageModel();
+  itemTranslationModel = models.getItemTranslationModel();
 }
 
 // GET /category
@@ -56,7 +60,14 @@ function getCategory(req, res) {
       as: 'translations'
     }, {
       model: itemModel,
-      as: 'items'
+      as: 'items',
+      include: [{
+        model: itemLanguageModel,
+        as: 'supportedLanguages'
+      }, {
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
     }]
   }).then(function(category) {
       if(category) {
@@ -78,9 +89,6 @@ function addCategory(req, res) {
     }, {
       model: categoryTranslationModel,
       as: 'translations'
-    }, {
-      model: itemModel,
-      as: 'items'
     }]
   }).then(function(result) {
     return res.json({success: 1, description: "New Category added"});
@@ -120,7 +128,6 @@ function updateCategory(req, res) {
       as: 'items'
     }]
   }).then(function (oldCategory) {
-
     var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
     var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
     var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
@@ -134,15 +141,17 @@ function updateCategory(req, res) {
 
     itemsToAdd.forEach(function (item) {
       item.categoryId = oldCategory.id;
+      itemModel.update(item, {where: {id: item.id}});
     });
-    itemModel.bulkCreate(itemsToAdd);
 
     itemsToRemove.forEach(function (item) {
       item.categoryId = null;
+      itemModel.update(item.dataValues, {where: {id: item.id}});
     });
 
     itemsToUpdate.forEach(function (item) {
       item.categoryId = oldCategory.id;
+      itemModel.update(item, {where: {id: item.id}});
     });
 
     oldCategory.translations.forEach(function (translation) {
