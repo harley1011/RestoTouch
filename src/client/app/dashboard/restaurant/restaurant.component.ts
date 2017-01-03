@@ -173,9 +173,7 @@ export class RestaurantComponent implements OnInit {
           businessHours
         );
       }
-
-    })
-
+    });
   }
 
   addAndUpdate(): void {
