@@ -4,7 +4,6 @@ import {Category} from './category';
 export class Menu {
   //id: number;
   constructor (
-    public supportedLanguages: Array<Language>,
     public translations: Array<MenuTranslations>,
     public selectedTranslation: MenuTranslations,
     public categories: Array<Category>, // This menu will contain the list of selected categories.

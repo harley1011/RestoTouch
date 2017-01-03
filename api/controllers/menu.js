@@ -76,9 +76,6 @@ function getMenu(req, res) {
       model: categoryModel,
       as: 'categories',
       include: [{
-        model: categoryLanguageModel,
-        as: 'supportedLanguages'
-      }, {
         model: categoryTranslationModel,
         as: 'translations'
       }]
