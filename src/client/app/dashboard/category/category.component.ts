@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from './category.service';
 import { Category, CategoryTranslations } from '../../shared/models/category';
+import { ItemService } from '../item/item.service';
+import { Item } from '../../shared/models/items';
 import { LanguageService } from '../../services/language.service';
 import { Language } from '../../shared/models/language';
 
@@ -9,12 +11,13 @@ import { Language } from '../../shared/models/language';
 	moduleId: module.id,
 	selector: 'category-cmp',
 	templateUrl: 'category.component.html',
-  providers: [CategoryService]
+  providers: [CategoryService, ItemService]
 })
 
 export class CategoryComponent implements OnInit {
 	create: boolean;
   category: Category;
+	items: Array<Item>;
   errorMessage: string;
 
   //Multiple translation support
@@ -25,6 +28,7 @@ export class CategoryComponent implements OnInit {
 
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
+							private itemService: ItemService,
               private router: Router,
               private languageService: LanguageService) {
     this.languages = languageService.languages();
@@ -46,12 +50,14 @@ export class CategoryComponent implements OnInit {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
+				console.log(this.category);
         this.supportedLanguages = category.supportedLanguages;
         this.category.selectedTranslation = category.translations[0];
         this.selectedLanguage = this.languages.find(language =>
           language.languageCode === this.category.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
+        this.getItems();
       },
       error => {
         this.errorMessage = <any>error;
@@ -59,14 +65,30 @@ export class CategoryComponent implements OnInit {
     );
   }
 
+	getItems(): void {
+		this.itemService.getItems().subscribe(
+			items => {
+        items.forEach(function(item) {
+          item.selectedTranslation = item.translations[0];
+        });
+        this.items = items;
+				console.log(this.items);
+    	},
+      error =>  {
+        console.log(error);
+      }
+    );
+	}
+
   ngOnInit(): void {
       this.route.params.forEach((params: Params) => {
 			if (params['id']) {
 			  this.getCategory(params['id']);
 				this.create = false;
 			} else {
+        this.getItems();
         let translation = new CategoryTranslations('', this.supportedLanguages[0].languageCode);
-        this.category = new Category(this.supportedLanguages, [translation], translation);
+        this.category = new Category(this.supportedLanguages, [translation], translation, []);
 				this.create = true;
       }
 		});

@@ -730,6 +730,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/CategoryTranslations"
+      items:
+        type: array
+        items:
+          "$ref": "#/definitions/Item"
   CategoryTranslations:
     type: object
     properties:

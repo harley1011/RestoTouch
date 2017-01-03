@@ -1,10 +1,12 @@
 import { Language } from './language';
+import { Item } from './items';
 
 export class Category {
   constructor (
     public supportedLanguages: Array<Language>,
     public translations: Array<CategoryTranslations>,
     public selectedTranslation: CategoryTranslations,
+    public items: Array<Item>,
     public id?: number
   ) { }
 }

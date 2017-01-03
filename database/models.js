@@ -80,6 +80,13 @@ userModel.sync({force: dropTable}).then(function () {
     });
     categoryTranslationModel.sync({force: dropTable});
 
+    categoryModel.hasMany(itemModel, {
+      as: 'items',
+      onDelete: 'cascade',
+      foreignKey: 'categoryId'
+    });
+    itemModel.sync({force: dropTable});
+
   });
 
   menuModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
