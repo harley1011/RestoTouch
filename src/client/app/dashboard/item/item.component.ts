@@ -81,10 +81,14 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
-          this.item = item;
-          this.item.selectedTranslation = item.translations[0];
-          this.create = false;
-          this.pictureMode = PictureMode.Edit;
+
+          this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
+            this.item = item;
+            this.onSelectLanguage(language);
+            this.create = false;
+            this.pictureMode = PictureMode.Edit;
+          });
+
         }, error => {
           console.log(error);
         });
