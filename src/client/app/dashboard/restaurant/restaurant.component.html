@@ -1,7 +1,7 @@
 <div id="restaurant">
   <div class="manage-header">
     <h2>{{ restaurant?.id ? ('restaurant.titleEdit' | translate) : ('restaurant.titleCreate' | translate) }}</h2>
-    <translation-select-cmp></translation-select-cmp>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
   <div class="formContainer" #formContainer>

@@ -107,6 +107,10 @@ export class RestaurantComponent implements OnInit {
     this.restaurant.translations.push(newTranslation);
   }
 
+  onSelectLanguage(language: Language) {
+    console.log(language);
+  }
+
   removeLanguage(language: Language) {
     if (this.supportedLanguages.length <= 1) {
       //todo: error message

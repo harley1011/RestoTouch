@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Language} from '../../shared/models/language';
 import {LanguageService} from '../../services/language.service';
 
@@ -9,16 +9,26 @@ import {LanguageService} from '../../services/language.service';
 })
 
 export class TranslationSelectComponent implements OnInit {
-  selectedLanguage: string;
+  @Output() onSelectLanguage = new EventEmitter<Language>();
+  selectedLanguage: Language;
   supportedLanguages: Array<Language> = [];
   constructor(private languageService: LanguageService) {
-    languageService.getSupportedLanguages().subscribe(supportedLanguages => {
+    this.languageService.getSupportedLanguages().subscribe(supportedLanguages => {
       this.supportedLanguages = supportedLanguages;
+      this.selectedLanguage = this.supportedLanguages[0];
+      console.log(this.selectedLanguage);
     });
   }
 
   ngOnInit() {
-    console.log('temp');
+    console.log('h');
+
+  }
+
+  selectLanguage(language: Language) {
+    console.log(language);
+    console.log(this.selectedLanguage);
+    this.onSelectLanguage.emit(language);
   }
 
 }
