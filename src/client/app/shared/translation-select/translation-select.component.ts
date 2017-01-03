@@ -31,6 +31,7 @@ export class TranslationSelectComponent implements OnInit {
   }
 
   selectLanguage() {
+    this.languageService.setSelectedLanguage(this.selectedLanguage);
     this.onSelectLanguage.emit(this.selectedLanguage);
   }
 
