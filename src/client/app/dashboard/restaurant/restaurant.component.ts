@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
 import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
+import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 import {Menu} from '../../shared/models/menu';
 import {Payment} from '../../shared/models/payment';
@@ -26,8 +27,10 @@ export class RestaurantComponent implements OnInit {
   supportedLanguages: Array<Language> = [];
   languages: Array<Language>;
   selectedLanguage: string;
-  editingLanguage: Language = new Language('', '', '', 0);
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
+
+  @ViewChild(TranslationSelectComponent)
+  private translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -39,10 +42,9 @@ export class RestaurantComponent implements OnInit {
     languageService.setSupportedLanguages(this.supportedLanguages);
 
     languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
-      this.editingLanguage = editingLanguage;
       this.selectedLanguage = editingLanguage.languageCode;
       this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
-      translation.languageCode === this.editingLanguage.languageCode);
+      translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
 
       if (!this.restaurant.selectedTranslation) {
         this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
@@ -103,12 +105,17 @@ export class RestaurantComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
     this.supportedLanguages.push(language);
-    let newTranslation = new RestaurantTranslations('', '', language.languageCode);
-    this.restaurant.translations.push(newTranslation);
+    //let newTranslation = new RestaurantTranslations('', '', language.languageCode);
+    //this.restaurant.translations.push(newTranslation);
   }
 
   onSelectLanguage(language: Language) {
-    console.log(language);
+    let restaurantTranslation = this.restaurant.translations.find(translation =>
+    translation.languageCode === language.languageCode);
+    if (!restaurantTranslation) {
+      restaurantTranslation = new RestaurantTranslations('', '', language.languageCode);
+    }
+    this.restaurant.selectedTranslation = restaurantTranslation;
   }
 
   removeLanguage(language: Language) {
@@ -133,11 +140,7 @@ export class RestaurantComponent implements OnInit {
       restaurant => {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
-        this.restaurant.selectedTranslation = this.restaurant.translations[0];
-        this.editingLanguage = this.languages.find(language =>
-        language.languageCode === this.restaurant.selectedTranslation.languageCode);
-        this.languageService.announceSelectedLanguage(this.editingLanguage);
-        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
 
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
@@ -175,14 +178,6 @@ export class RestaurantComponent implements OnInit {
         this.create = false;
       }
     });
-  }
-
-  selectLanguage(language: string) {
-      language = language.substr(3, 2);
-      console.log(language);
-  	this.editingLanguage = new Language(language, 'French', '', 0);
-//  	this.editingLanguage = language;
-  	this.languageService.announceSelectedLanguage(this.editingLanguage);
   }
 
   addAndUpdate(): void {
