@@ -11,8 +11,11 @@
 
       <div class="form-group">
         <label>{{ 'menu.menuName' | translate}}</label>
-        <input id="name" class="form-control" name="name" placeholder="{{ 'menu.menuNameFieldHolder' | translate}}"
-               [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel">
+        <input id="name" class="form-control" name="name"
+          placeholder="{{ 'menu.menuNameFieldHolder' | translate}}"
+          required
+          [(ngModel)]="menu?.selectedTranslation.name" name="name" #name="ngModel"
+          [ngClass]="{'form-error': !name.valid && !name.pristine}">
       </div>
 
       <div class="row">
