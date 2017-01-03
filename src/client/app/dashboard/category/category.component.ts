@@ -42,7 +42,7 @@ export class CategoryComponent implements OnInit {
     this.languageService.announceSupportedLanguages(this.supportedLanguages);
   }
 
-    getCategory(id: number): void {
+  getCategory(id: number): void {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
@@ -87,7 +87,6 @@ export class CategoryComponent implements OnInit {
       this.update();
     }
   }
-
 
   add(): void {
 
@@ -156,6 +155,7 @@ export class CategoryComponent implements OnInit {
   }
 
 }
+
 function validateInputs () {
 
   var validationError = false;
