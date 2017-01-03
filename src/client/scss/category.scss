@@ -1,5 +1,5 @@
 .cat-container {
-    margin-top: 50px;   
+    margin-top: 50px;
 }
 
 .category {
@@ -23,7 +23,7 @@
     text-align: center;
     display: inline-block;
     left: 0;
-    margin-bottom: 35px;   
+    margin-bottom: 35px;
 }
 
 .cat-label-input {
@@ -33,7 +33,7 @@
 }
 
 .cat-label-input input[type="text"] {
-    width: 100%;   
+    width: 100%;
     border: 2px solid white;
     border-radius: 5px;
     background-color: transparent;
@@ -52,3 +52,6 @@
     right: 20px;
 }
 
+.form-error {
+  border-color: red;
+}
