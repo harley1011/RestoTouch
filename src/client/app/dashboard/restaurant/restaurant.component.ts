@@ -114,7 +114,8 @@ export class RestaurantComponent implements OnInit {
   }
 
   checkIfInSupportedLanguages(language: Language): boolean {
-    return this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode))? true : false;
+    let result = this.supportedLanguages.indexOf(this.supportedLanguages.find(languageToRemove => languageToRemove.languageCode === language.languageCode))? true : false;
+    return result;
   }
 
   removeRestaurantsSupportedLanguagesFromLanguage(): void {
