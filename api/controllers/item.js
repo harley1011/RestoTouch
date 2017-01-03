@@ -2,7 +2,6 @@ var models = require("../../database/models");
 var s3File = require("./s3File");
 var itemModel;
 var itemSizeModel;
-var itemLanguageModel;
 var itemTranslationModel;
 var ingredientGroupModel;
 var ingredientModel;
@@ -25,7 +24,6 @@ function setDatabase(m) {
   models = m;
   itemModel = models.getItemModel();
   itemSizeModel = models.getItemSizesModel();
-  itemLanguageModel = models.getItemLanguageModel();
   itemTranslationModel = models.getItemTranslationModel();
   ingredientGroupModel = models.getIngredientGroupModel();
   ingredientModel = models.getIngredientModel();
@@ -57,9 +55,6 @@ function save(req, res) {
       model: itemSizeModel,
       as: 'sizes'
     }, {
-      model: itemLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: itemTranslationModel,
       as: 'translations'
     }, {
@@ -87,9 +82,6 @@ function get(req, res) {
       model: itemSizeModel,
       as: 'sizes'
     }, {
-      model: itemLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: itemTranslationModel,
       as: 'translations'
     }, {
@@ -116,7 +108,6 @@ function update(req, res) {
   itemModel.findOne({
       where: {id: item.id},
       include: [{model: itemSizeModel, as: 'sizes'},
-        {model: itemLanguageModel, as: 'supportedLanguages'},
         {model: itemTranslationModel, as: 'translations'},
         {
           model: ingredientGroupModel, as: 'ingredientGroups',
@@ -130,8 +121,6 @@ function update(req, res) {
 
     var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
     var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
-    var languagesToRemove = _.differenceBy(oldItem.supportedLanguages, item.supportedLanguages, 'languageCode');
-    var languagesToAdd = _.differenceBy(item.supportedLanguages, oldItem.supportedLanguages, 'languageCode');
 
     var ingredientGroupsToAdd = _.differenceBy(item.ingredientGroups, oldItem.ingredientGroups, 'id');
     var ingredientGroupsToRemove = _.differenceBy(oldItem.ingredientGroups, item.ingredientGroups, 'id');
@@ -209,23 +198,8 @@ function update(req, res) {
     itemTranslationModel.bulkCreate(item.translations);
 
     oldItem.save().then(function (result) {
-      languagesToRemove.forEach(function (language) {
-        itemLanguageModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
-        itemTranslationModel.destroy({where: {'languageCode': language.languageCode, 'itemId': item.id}});
-        _.remove(oldItem.translations, function (translation) {
-          return translation.languageCode == language.languageCode
-        })
-      })
-
-      languagesToAdd.forEach(function (language) {
-        language.itemId = item.id;
-      })
-
-      itemLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
-        return res.json({success: 1, description: "Item updated"});
-      })
+      return res.json({success: 1, description: "Item updated"});
     })
-
   });
 }
 
