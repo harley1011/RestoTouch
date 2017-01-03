@@ -231,4 +231,3 @@ exports.getIngredientModel = function () {
 exports.getIngredientGroupModel = function () {
   return ingredientGroupModel;
 }
-
