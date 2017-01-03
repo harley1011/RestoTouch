@@ -18,7 +18,6 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   categoryModel = models.getCategoryModel();
-  categoryLanguageModel = models.getCategoryLanguageModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
 }
 
