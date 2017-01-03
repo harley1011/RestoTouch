@@ -11,7 +11,6 @@ var itemModel = {};
 var itemSizesModel = {};
 var menuLanguageModel = {};
 var menuTranslationModel = {};
-var itemLanguageModel = {};
 var itemTranslationModel = {};
 var ingredientGroupModel = {};
 var ingredientModel = {};
@@ -61,16 +60,6 @@ restaurantsTranslationModel.create = create;
 restaurantsTranslationModel.update = update;
 restaurantsTranslationModel.findAll = findAll;
 restaurantsTranslationModel.destroy = destroy;
-
-itemLanguageModel.create = create;
-itemLanguageModel.update = update;
-itemLanguageModel.findAll = findAll;
-itemLanguageModel.destroy = destroy;
-
-menuLanguageModel.create = create;
-menuLanguageModel.update = update;
-menuLanguageModel.findAll = findAll;
-menuLanguageModel.destroy = destroy;
 
 itemTranslationModel.create = create;
 itemTranslationModel.update = update;
@@ -146,10 +135,6 @@ exports.getItemModel = function () {
 
 exports.getItemSizesModel = function () {
   return itemSizesModel;
-}
-
-exports.getItemLanguageModel = function () {
-  return itemLanguageModel;
 }
 
 exports.getItemTranslationModel = function () {

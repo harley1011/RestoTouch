@@ -6,18 +6,15 @@ var restaurantModel = sequelize.import('./models/restaurants.js');
 var businessHoursModel = sequelize.import('./models/businessHours.js');
 var paymentsModel = sequelize.import('./models/payments.js');
 var menuModel = sequelize.import('./models/menus.js');
-var menuLanguageModel = sequelize.import('./models/menusLanguages.js');
 var menuTranslationsModel = sequelize.import('./models/menuTranslations');
 var restaurantMenuModel = sequelize.import('./models/restaurantMenu.js');
 var menuCategoryModel = sequelize.import('./models/menuCategory.js');
 var categoryModel = sequelize.import('./models/categories.js');
-var categoryLanguageModel = sequelize.import('./models/categoriesLanguages.js');
 var categoryTranslationModel = sequelize.import('./models/categoriesTranslations.js');
 var restaurantsLanguagesModel = sequelize.import('./models/restaurantsLanguages.js');
 var restaurantsTranslationsModel = sequelize.import('./models/restaurantsTranslations.js');
 var itemModel = sequelize.import('./models/items.js');
 var itemSizesModel = sequelize.import('./models/itemSizes.js');
-var itemLanguageModel = sequelize.import('./models/itemsLanguages.js');
 var itemTranslationModel = sequelize.import('./models/itemsTranslations.js');
 var ingredientModel = sequelize.import('./models/ingredient.js');
 var ingredientGroupModel = sequelize.import('./models/ingredientGroup.js');
@@ -74,13 +71,6 @@ userModel.sync({force: dropTable}).then(function () {
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
   categoryModel.sync({force: dropTable}).then(function () {
 
-    categoryModel.hasMany(categoryLanguageModel, {
-      as: 'supportedLanguages',
-      onDelete: 'cascade',
-      foreignKey: 'categoryId'
-    });
-    categoryLanguageModel.sync({force: dropTable});
-
     categoryModel.hasMany(categoryTranslationModel, {
       as: 'translations',
       onDelete: 'cascade',
@@ -104,13 +94,6 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: "menuId"
     });
     restaurantMenuModel.sync({force: dropTable});
-
-    menuModel.hasMany(menuLanguageModel, {
-      as: 'supportedLanguages',
-      onDelete: 'cascade',
-      foreignKey: 'menuId'
-    });
-    menuLanguageModel.sync({force: dropTable});
 
     menuModel.hasMany(menuTranslationsModel, {
       as: 'translations',
@@ -141,8 +124,6 @@ userModel.sync({force: dropTable}).then(function () {
   itemModel.sync({force: dropTable}).then(function () {
     itemModel.hasMany(itemSizesModel, {as: 'sizes', onDelete: 'cascade', foreignKey: 'itemId'});
     itemSizesModel.sync({force: dropTable});
-    itemModel.hasMany(itemLanguageModel, {as: 'supportedLanguages', onDelete: 'cascade', foreignKey: 'itemId'});
-    itemLanguageModel.sync({force: dropTable});
     itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});
     itemTranslationModel.sync({force: dropTable});
 
@@ -172,20 +153,12 @@ exports.getCategoryModel = function () {
   return categoryModel;
 };
 
-exports.getCategoryLanguageModel = function () {
-  return categoryLanguageModel;
-};
-
 exports.getCategoryTranslationModel = function () {
   return categoryTranslationModel;
 }
 
 exports.getMenuModel = function () {
   return menuModel;
-};
-
-exports.getMenuLanguageModel = function () {
-  return menuLanguageModel;
 };
 
 exports.getMenuTranslationsModel = function () {
@@ -222,10 +195,6 @@ exports.getItemModel = function () {
 
 exports.getItemSizesModel = function () {
   return itemSizesModel;
-}
-
-exports.getItemLanguageModel = function () {
-  return itemLanguageModel;
 }
 
 exports.getItemTranslationModel = function () {
