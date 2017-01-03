@@ -91,6 +91,10 @@ function addCategory(req, res) {
       as: 'translations'
     }]
   }).then(function(result) {
+    newCat.items.forEach(function (item) {
+      item.categoryId = result.id;
+      itemModel.update(item, {where: {id: item.id}});
+    });
     return res.json({success: 1, description: "New Category added"});
   });
 }

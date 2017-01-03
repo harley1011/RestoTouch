@@ -82,7 +82,6 @@ userModel.sync({force: dropTable}).then(function () {
 
     categoryModel.hasMany(itemModel, {
       as: 'items',
-      onDelete: 'cascade',
       foreignKey: 'categoryId'
     });
     itemModel.sync({force: dropTable});
