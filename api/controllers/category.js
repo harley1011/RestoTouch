@@ -1,6 +1,5 @@
 var models = require("../../database/models");
 var categoryModel;
-var categoryLanguageModel;
 var categoryTranslationModel;
 var _ = require('lodash');
 
@@ -15,7 +14,7 @@ module.exports = {
   setDatabase: setDatabase
 };
 
-function setDatabase (m) {
+function setDatabase(m) {
   models = m;
   categoryModel = models.getCategoryModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
@@ -29,32 +28,29 @@ function getAllCategories(req, res) {
       model: categoryTranslationModel,
       as: 'translations'
     }]
-  }).then(function(categories) {
-    return res.json({ categories: categories });
+  }).then(function (categories) {
+    return res.json({categories: categories});
   });
 }
 
 // GET /category/{id}
 function getCategory(req, res) {
-    var id = req.swagger.params.id.value;
+  var id = req.swagger.params.id.value;
   return categoryModel.findOne({
     where: {
       id: id,
       userId: req.userId
     },
     include: [{
-      model: categoryLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: categoryTranslationModel,
       as: 'translations'
     }]
-  }).then(function(category) {
-      if(category) {
-        return res.json(category);
-      } else {
-        res.status(204).send();
-      }
+  }).then(function (category) {
+    if (category) {
+      return res.json(category);
+    } else {
+      res.status(204).send();
+    }
   });
 }
 
@@ -64,13 +60,10 @@ function addCategory(req, res) {
   newCat.userId = req.userId;
   return categoryModel.create(newCat, {
     include: [{
-      model: categoryLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: categoryTranslationModel,
       as: 'translations'
     }]
-  }).then(function(result) {
+  }).then(function (result) {
     return res.json({success: 1, description: "New Category added"});
   });
 }
@@ -83,7 +76,7 @@ function deleteCategory(req, res) {
       id: id,
       userId: req.userId
     }
-  }).then(function(result) {
+  }).then(function (result) {
     return res.json({success: 1, description: "Category deleted"});
   });
 }
@@ -98,29 +91,27 @@ function updateCategory(req, res) {
       userId: req.userId
     },
     include: [{
-      model: categoryLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: categoryTranslationModel,
       as: 'translations'
     }]
   }).then(function (oldCategory) {
 
-    var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
-    var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
-
-    for(var prop in category) {
-      if(prop != 'translations')
+    for (var prop in category) {
+      if (prop != 'translations')
         oldCategory[prop] = category[prop];
     }
 
     oldCategory.translations.forEach(function (translation) {
-      var newTranslation = _.find(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      var newTranslation = _.find(category.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
       for (var prop in newTranslation) {
         translation[prop] = newTranslation[prop];
       }
       translation.save();
-      _.remove(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      _.remove(category.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
     });
 
     category.translations.forEach(function (translation) {
@@ -130,20 +121,7 @@ function updateCategory(req, res) {
     categoryTranslationModel.bulkCreate(category.translations);
 
     oldCategory.save().then(function (result) {
-      languagesToRemove.forEach(function (language) {
-        categoryLanguageModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
-        categoryTranslationModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
-        _.remove(oldCategory.translations, function (translation) {return translation.languageCode == language.languageCode});
-      })
-
-      languagesToAdd.forEach(function (language) {
-        language.categoryId = category.id;
-      })
-
-      categoryLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
-        return res.json({success: 1, description: 'Category Updated'});
-      })
-
-    })
+      return res.json({success: 1, description: 'Category Updated'});
+    });
   });
 }

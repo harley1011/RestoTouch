@@ -2,7 +2,6 @@ import { Language } from './language';
 
 export class Category {
   constructor (
-    public supportedLanguages: Array<Language>,
     public translations: Array<CategoryTranslations>,
     public selectedTranslation: CategoryTranslations,
     public id?: number
