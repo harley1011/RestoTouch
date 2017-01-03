@@ -38,62 +38,8 @@ export class RestaurantComponent implements OnInit {
               private restaurantService: RestaurantService,
               private translate: TranslateService,) {
 
-    this.languages = languageService.languages();
-    languageService.setSupportedLanguages(this.supportedLanguages);
 
-    languageService.selectedLanguageAnnounced$.subscribe(editingLanguage => {
-      this.selectedLanguage = editingLanguage.languageCode;
-      this.restaurant.selectedTranslation = this.restaurant.translations.find(translation =>
-      translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-
-      if (!this.restaurant.selectedTranslation) {
-        this.restaurant.selectedTranslation = new RestaurantTranslations('', '', editingLanguage.languageCode);
-        this.restaurant.translations.push(this.restaurant.selectedTranslation);
-      }
-
-      // this language of website will be used as a fallback when a translation of website isn't found in the current language
-      translate.setDefaultLang('en');
-      this.selectedLanguage = 'en';
-
-  });
-
-    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-    let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
-
-    let businessHours = [
-      new BusinessHour(0, 0, '9:00', '21:00', false),
-      new BusinessHour(0, 1, '9:00', '21:00', false),
-      new BusinessHour(1, 0, '9:00', '21:00', false),
-      new BusinessHour(1, 1, '9:00', '21:00', false),
-      new BusinessHour(2, 0, '9:00', '21:00', false),
-      new BusinessHour(2, 1, '9:00', '21:00', false),
-      new BusinessHour(3, 0, '9:00', '21:00', false),
-      new BusinessHour(3, 1, '9:00', '21:00', false),
-      new BusinessHour(4, 0, '9:00', '21:00', false),
-      new BusinessHour(4, 1, '9:00', '21:00', false),
-      new BusinessHour(5, 0, '9:00', '21:00', false),
-      new BusinessHour(5, 1, '9:00', '21:00', false),
-      new BusinessHour(6, 0, '9:00', '21:00', false),
-      new BusinessHour(6, 1, '9:00', '21:00', false)
-    ];
-
-    let payments = [
-      new Payment('Cash', false),
-      new Payment('Debit', false),
-      new Payment('Credit', false)
-    ];
-
-    this.restaurant = new Restaurant('',
-      this.supportedLanguages,
-      [translation],
-      translation, [],
-      payments,
-      businessHours
-    );
-
-    // Add english by default because the restaurant needs to support at least one language
-    this.create = true;
-    this.languageService.announceSupportedLanguages(this.supportedLanguages);
+    translate.setDefaultLang('en');
   }
 
   addLanguage() {
@@ -105,8 +51,6 @@ export class RestaurantComponent implements OnInit {
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
     this.supportedLanguages.push(language);
-    //let newTranslation = new RestaurantTranslations('', '', language.languageCode);
-    //this.restaurant.translations.push(newTranslation);
   }
 
   onSelectLanguage(language: Language) {
@@ -114,6 +58,7 @@ export class RestaurantComponent implements OnInit {
     translation.languageCode === language.languageCode);
     if (!restaurantTranslation) {
       restaurantTranslation = new RestaurantTranslations('', '', language.languageCode);
+      this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
   }
@@ -172,12 +117,56 @@ export class RestaurantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      if (params['id']) {
-        this.getRestaurant(params['id']);
-        this.create = false;
+    this.languageService.getSupportedLanguages().subscribe((languages: Array<Language>)  => {
+      this.languages = languages;
+
+      this.route.params.forEach((params: Params) => {
+        if (params['id']) {
+          this.getRestaurant(params['id']);
+          this.create = false;
+        }
+      });
+
+      if (this.create) {
+
+        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+
+        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+
+        let businessHours = [
+          new BusinessHour(0, 0, '9:00', '21:00', false),
+          new BusinessHour(0, 1, '9:00', '21:00', false),
+          new BusinessHour(1, 0, '9:00', '21:00', false),
+          new BusinessHour(1, 1, '9:00', '21:00', false),
+          new BusinessHour(2, 0, '9:00', '21:00', false),
+          new BusinessHour(2, 1, '9:00', '21:00', false),
+          new BusinessHour(3, 0, '9:00', '21:00', false),
+          new BusinessHour(3, 1, '9:00', '21:00', false),
+          new BusinessHour(4, 0, '9:00', '21:00', false),
+          new BusinessHour(4, 1, '9:00', '21:00', false),
+          new BusinessHour(5, 0, '9:00', '21:00', false),
+          new BusinessHour(5, 1, '9:00', '21:00', false),
+          new BusinessHour(6, 0, '9:00', '21:00', false),
+          new BusinessHour(6, 1, '9:00', '21:00', false)
+        ];
+
+        let payments = [
+          new Payment('Cash', false),
+          new Payment('Debit', false),
+          new Payment('Credit', false)
+        ];
+
+        this.restaurant = new Restaurant('',
+          this.supportedLanguages,
+          [translation],
+          translation, [],
+          payments,
+          businessHours
+        );
       }
-    });
+
+    })
+
   }
 
   addAndUpdate(): void {
@@ -239,7 +228,7 @@ export class RestaurantComponent implements OnInit {
     var hourMatch2: Array<string>;
     var time1: number;
     var time2: number;
-    for (var i = 0; i < 14; i+=2) {
+    for (var i = 0; i < 14; i += 2) {
       businessHour = this.restaurant.businessHours[i];
 
       hourMatch1 = re.exec(businessHour.openTime);
@@ -260,7 +249,7 @@ export class RestaurantComponent implements OnInit {
         continue;
       }
 
-      businessHour = this.restaurant.businessHours[i+1];
+      businessHour = this.restaurant.businessHours[i + 1];
       if (!businessHour.active) {
         this.timeConflicts[i] = false;
         continue;

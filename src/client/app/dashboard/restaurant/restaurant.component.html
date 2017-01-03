@@ -4,7 +4,7 @@
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
-  <div class="formContainer" #formContainer>
+  <div *ngIf="restaurant"  class="formContainer" #formContainer>
     <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">
       <div id="basic-info" class="col-md-9">
         <h4>{{ 'restaurant.geninfoTitle' | translate}}</h4>

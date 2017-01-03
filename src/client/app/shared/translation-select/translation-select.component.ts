@@ -13,10 +13,9 @@ export class TranslationSelectComponent implements OnInit {
   selectedLanguage: Language;
   supportedLanguages: Array<Language> = [];
   constructor(private languageService: LanguageService) {
-    this.languageService.getSupportedLanguages().subscribe(supportedLanguages => {
-      this.supportedLanguages = supportedLanguages;
-      this.selectedLanguage = this.supportedLanguages[0];
-      console.log(this.selectedLanguage);
+     this.languageService.getSupportedLanguages().subscribe(languages => {
+       this.supportedLanguages = languages;
+       this.selectedLanguage = this.supportedLanguages[0];
     });
   }
 
