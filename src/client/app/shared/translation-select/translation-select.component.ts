@@ -24,10 +24,8 @@ export class TranslationSelectComponent implements OnInit {
 
   }
 
-  selectLanguage(language: Language) {
-    console.log(language);
-    console.log(this.selectedLanguage);
-    this.onSelectLanguage.emit(language);
+  selectLanguage() {
+    this.onSelectLanguage.emit(this.selectedLanguage);
   }
 
 }
