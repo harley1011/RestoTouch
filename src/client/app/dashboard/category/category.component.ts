@@ -68,17 +68,18 @@ export class CategoryComponent implements OnInit {
 	getItems(): void {
 		this.itemService.getItems().subscribe(
 			items => {
-        items.forEach(item => {
-          item.selectedTranslation = item.translations[0];
-        });
-
-				this.category.items.forEach(categoryItem => {
-          let itemToRemove = items.find(item => categoryItem.id === item.id);
-          if (itemToRemove) items.splice(items.indexOf(itemToRemove), 1);
-        });
+				let item: Item;
+				for (var i = 0; i < items.length; i++) {
+					item = items[i];
+					if (item.categoryId !== null) {
+						items.splice(i, 1);
+						i--;
+						continue;
+					}
+					item.selectedTranslation = item.translations[0];
+				}
 
         this.items = items;
-				console.log(this.items);
     	},
       error =>  {
         console.log(error);

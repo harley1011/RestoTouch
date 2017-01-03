@@ -10,6 +10,7 @@ export class Item {
                 public ingredientGroups?: Array<IngredientGroup>,
                 public imageUrl?: string,
                 public sizes?: Array<Size>,
+                public categoryId?: number,
                 public id?: number,
                 ) { }
 }
