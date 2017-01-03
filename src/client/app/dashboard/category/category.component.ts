@@ -50,7 +50,6 @@ export class CategoryComponent implements OnInit {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
-				console.log(this.category);
         this.supportedLanguages = category.supportedLanguages;
         this.category.selectedTranslation = category.translations[0];
         this.selectedLanguage = this.languages.find(language =>
@@ -60,6 +59,7 @@ export class CategoryComponent implements OnInit {
 				this.category.items.forEach(item => {
 					item.selectedTranslation = item.translations[0];
 				});
+				this.category.items.sort(compareItem);
         this.getItems();
       },
       error => {
@@ -83,6 +83,7 @@ export class CategoryComponent implements OnInit {
 				}
 
         this.items = items;
+				this.items.sort(compareItem);
     	},
       error =>  {
         console.log(error);
