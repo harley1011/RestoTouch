@@ -45,8 +45,6 @@ export class RestaurantComponent implements OnInit {
   addLanguage() {
     let language = this.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
     if (language) {
-      //todo: remove this once the supported languages are removed from the languages
-      console.log('Language is already supported');
       return;
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
