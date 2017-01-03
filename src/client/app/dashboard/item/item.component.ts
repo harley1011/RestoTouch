@@ -11,7 +11,7 @@ import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {Ingredient} from '../../shared/models/ingredient';
-
+import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
   moduleId: module.id,
@@ -36,13 +36,7 @@ export class ItemComponent implements OnInit {
   finished: boolean = false;
 
   @ViewChild(ImageCropperComponent) cropper: ImageCropperComponent;
-
-  //Translation Support
-  languages: Array<Language>;
-  addedLanguage: string;
-  supportedLanguages: Array<Language> = [];
-  selectedLanguage: Language = new Language('','','',0);
-
+  @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private itemService: ItemService,
               private router: Router,
@@ -60,20 +54,6 @@ export class ItemComponent implements OnInit {
 
     this.cropperSettings.canvasWidth = 300;
     this.cropperSettings.canvasHeight = 300;
-    this.languages = languageService.languages();
-    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-      this.selectedLanguage = selectedLanguage;
-      this.item.selectedTranslation = this.item.translations.find(translation =>
-        translation.languageCode === this.selectedLanguage.languageCode);
-
-      if(!this.item.selectedTranslation) {
-        this.item.selectedTranslation = new ItemTranslations('','',this.selectedLanguage.languageCode);
-        this.item.translations.push(this.item.selectedTranslation);
-      }
-    });
-    //default to english
-    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-    languageService.announceSupportedLanguages(this.supportedLanguages);
 
     this.cropperSettings.minWidth = 100;
     this.cropperSettings.minHeight = 100;
@@ -99,24 +79,29 @@ export class ItemComponent implements OnInit {
 
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {return a.orderPriority - b.orderPriority;});
           this.item = item;
-          this.supportedLanguages = item.supportedLanguages;
           this.item.selectedTranslation = item.translations[0];
-          this.selectedLanguage = this.languages.find(language =>
-            language.languageCode === this.item.selectedTranslation.languageCode);
-          this.languageService.announceSupportedLanguages(this.supportedLanguages);
-          this.languageService.announceSelectedLanguage(this.selectedLanguage);
           this.create = false;
           this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
         });
       } else {
-        let translation = new ItemTranslations('','', this.supportedLanguages[0].languageCode);
-        this.item = new Item(this.supportedLanguages, [translation], translation, [], '', []);
+        let translation = new ItemTranslations('','', this.translationSelectComponent.selectedLanguage.languageCode);
+        this.item = new Item([translation], translation, [], '', []);
         this.create = true;
         this.pictureMode = PictureMode.Select;
       }
     });
+  }
+
+  onSelectLanguage(language: Language) {
+    let restaurantTranslation = this.item.translations.find(translation =>
+    translation.languageCode === language.languageCode);
+    if (!restaurantTranslation) {
+      restaurantTranslation = new ItemTranslations('', '', language.languageCode);
+      this.item.translations.push(restaurantTranslation);
+    }
+    this.item.selectedTranslation = restaurantTranslation;
   }
 
   selectFile() {
@@ -228,18 +213,6 @@ export class ItemComponent implements OnInit {
     this.item.ingredientGroups[newIndex] = ingredientGroup;
   }
 
-  addLanguage() {
-    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
-    if(language) {
-      console.log('Language is already supported.');
-      return;
-    }
-    language = this.languages.find(language => language.languageCode === this.addedLanguage);
-    this.supportedLanguages.push(language);
-    let newTranslation = new ItemTranslations('','', language.languageCode);
-    this.item.translations.push(newTranslation);
-  }
-
   addIngredientGroup() {
     this.item.ingredientGroups.push(
       new IngredientGroup('', [], 1, 1, this.item.ingredientGroups.length + 1, new Ingredient('', false, 0, 1)));
@@ -260,18 +233,6 @@ export class ItemComponent implements OnInit {
     for (let i = removeIndex; i < this.item.ingredientGroups.length; i++) {
       this.item.ingredientGroups[i].orderPriority = i + 1;
     }
-  }
-
-  removeLanguage(language: Language) {
-    if (this.supportedLanguages.length < 1) {
-      console.log('At least one language is required.');
-    }
-    let i = this.supportedLanguages.indexOf(language);
-    this.supportedLanguages.splice(i, 1);
-    let removedTranslation = this.item.translations.find(translation =>
-      translation.languageCode === language.languageCode);
-    let j = this.item.translations.indexOf(removedTranslation);
-    this.item.translations.splice(j, 1);
   }
 
   addSize() {

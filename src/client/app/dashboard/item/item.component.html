@@ -1,9 +1,7 @@
 <div *ngIf="item" class="manage-content">
   <div class="manage-header">
     <h2>{{create? ('foodItem.titleCreate' | translate) : ('foodItem.titleEdit' | translate) }}</h2>
-    <h5 class="subtitle">
-      <small>{{ 'foodItem.sousTitleFoodItemsetting' | translate }}</small>
-    </h5>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
   <div class="formContainer">
@@ -62,28 +60,6 @@
             <i class="fa fa-exclamation-circle"></i> {{ 'foodItem.foodItemSizeWarningDetail' | translate }}
           </div>
         </div>
-
-      <div id="item-lang" class="edit-section">
-        <div class="row">
-            <div class="col col-md-5">
-              <label>{{ 'foodItem.langTitle' | translate }}</label>
-                <ul class="list-group">
-                    <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
-              </ul>
-            </div>
-            <div class="col col-md-4 col-md-offset-1">
-              <div class="form-group input-group">
-                  <label for="language">{{ 'foodItem.langSelect' | translate }}</label>
-                  <select name="language" class="form-control" [(ngModel)]="addedLanguage">
-                   <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
-                  </select>
-              </div>
-            </div>
-            <div class="col col-md-2" style="padding-top:10px"><br>
-              <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">{{ 'foodItem.saveButton' | translate }}</button>
-            </div>
-        </div>
-      </div>
 
         <div [hidden]="name.valid || name.pristine"
              class="alert alert-danger">
