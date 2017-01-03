@@ -83,8 +83,10 @@ export class RestaurantComponent implements OnInit {
       restaurant => {
         this.restaurant = restaurant;
         this.supportedLanguages = restaurant.supportedLanguages;
+        // this.supportedLanguages.forEach(language => {
+        //   this.languages.splice(this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode)), 1);
+        // });
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
           if (a.day < b.day) {
@@ -114,8 +116,18 @@ export class RestaurantComponent implements OnInit {
     this.router.navigate(['/dashboard/menu', menu.id]);
   }
 
+  checkIfInSupportedLanguages(language: Language): boolean {
+    return this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode))? true : false;
+  }
+
+  removeRestaurantsSupportedLanguagesFromLanguage(): void {
+    this.supportedLanguages.forEach(language => {
+        this.languages.splice(this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode)), 1);
+      });
+  }
+
   ngOnInit(): void {
-    this.languageService.getSupportedLanguages().subscribe((languages: Array<Language>)  => {
+    this.languageService.getSupportedLanguages().subscribe((languages: Array<Language>) => {
       this.languages = languages;
 
       this.route.params.forEach((params: Params) => {
@@ -126,9 +138,8 @@ export class RestaurantComponent implements OnInit {
       });
 
       if (this.create) {
-
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-
+        //this.removeRestaurantsSupportedLanguagesFromLanguage();
         let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
 
         let businessHours = [

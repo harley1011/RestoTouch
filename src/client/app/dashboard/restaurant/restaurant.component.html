@@ -4,7 +4,7 @@
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
-  <div *ngIf="restaurant"  class="formContainer" #formContainer>
+  <div *ngIf="restaurant" class="formContainer" #formContainer>
     <form id="restaurantForm" role="form" (ngSubmit)="addAndUpdate()">
       <div id="basic-info" class="col-md-9">
         <h4>{{ 'restaurant.geninfoTitle' | translate}}</h4>
@@ -356,7 +356,9 @@
             <div class="form-group input-group">
               <label for="language">{{ 'restaurant.langSelect' | translate}}</label>
               <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
-                <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+                <template ngFor let-language [ngForOf]="languages">
+                  <option [ngValue]="language.languageCode" *ngIf="checkIfInSupportedLanguages(language)">{{language.name}}</option>
+                </template>
               </select>
             </div>
           </div>
