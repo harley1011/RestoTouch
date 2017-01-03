@@ -57,6 +57,9 @@ export class CategoryComponent implements OnInit {
           language.languageCode === this.category.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
+				this.category.items.forEach(item => {
+					item.selectedTranslation = item.translations[0];
+				});
         this.getItems();
       },
       error => {
@@ -104,11 +107,17 @@ export class CategoryComponent implements OnInit {
 	addItemToCategory(item: Item): void {
     this.items.splice(this.items.indexOf(item), 1);
     this.category.items.push(item);
+
+		this.items.sort(compareItem);
+		this.category.items.sort(compareItem);
   }
 
 	removeItemFromCategory(item: Item): void {
     this.category.items.splice(this.category.items.indexOf(item), 1);
     this.items.push(item);
+
+		this.items.sort(compareItem);
+		this.category.items.sort(compareItem);
   }
 
   // 'Create' button functionality
@@ -186,4 +195,16 @@ export class CategoryComponent implements OnInit {
     this.category.translations.splice(j, 1);
   }
 
+}
+
+function compareItem(item1: Item, item2: Item) {
+	console.log(item1);
+	console.log(item2);
+  if (item1.selectedTranslation.name < item2.selectedTranslation.name) {
+    return -1;
+  } else if (item1.selectedTranslation.name > item2.selectedTranslation.name) {
+    return 1;
+	} else {
+		return 0;
+	}
 }
