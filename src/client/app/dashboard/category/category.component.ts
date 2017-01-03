@@ -199,8 +199,6 @@ export class CategoryComponent implements OnInit {
 }
 
 function compareItem(item1: Item, item2: Item) {
-	console.log(item1);
-	console.log(item2);
   if (item1.selectedTranslation.name < item2.selectedTranslation.name) {
     return -1;
   } else if (item1.selectedTranslation.name > item2.selectedTranslation.name) {
