@@ -5,6 +5,7 @@ var categoryTranslationModel;
 var itemModel;
 var itemLanguageModel;
 var itemTranslationModel;
+var itemCategoryModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -26,6 +27,7 @@ function setDatabase (m) {
   itemModel = models.getItemModel();
   itemLanguageModel = models.getItemLanguageModel();
   itemTranslationModel = models.getItemTranslationModel();
+  itemCategoryModel = models.getItemCategoryModel();
 }
 
 // GET /category
@@ -80,9 +82,9 @@ function getCategory(req, res) {
 
 // POST /category
 function addCategory(req, res) {
-  var newCat = req.body;
-  newCat.userId = req.userId;
-  return categoryModel.create(newCat, {
+  var category = req.body;
+  category.userId = req.userId;
+  return categoryModel.create(category, {
     include: [{
       model: categoryLanguageModel,
       as: 'supportedLanguages'
@@ -91,10 +93,11 @@ function addCategory(req, res) {
       as: 'translations'
     }]
   }).then(function(result) {
-    newCat.items.forEach(function (item) {
-      item.categoryId = result.id;
-      itemModel.update(item, {where: {id: item.id}});
-    });
+    var itemCategoryAssociations = [];
+    category.items.forEach(function (item) {
+      itemCategoryAssociations.push({itemId: item.id, categoryId: result.id});
+    })
+    itemCategoryModel.bulkCreate(itemCategoryAssociations);
     return res.json({success: 1, description: "New Category added"});
   });
 }
@@ -134,28 +137,23 @@ function updateCategory(req, res) {
   }).then(function (oldCategory) {
     var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
     var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
+
     var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
     var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
-    var itemsToUpdate = _.intersectionBy(category.items, oldCategory.items, 'id');
 
     for(var prop in category) {
       if(prop != 'translations')
         oldCategory[prop] = category[prop];
     }
 
+    var itemCategoryAssociations = [];
     itemsToAdd.forEach(function (item) {
-      item.categoryId = oldCategory.id;
-      itemModel.update(item, {where: {id: item.id}});
+      itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
     });
+    itemCategoryModel.bulkCreate(itemCategoryAssociations);
 
     itemsToRemove.forEach(function (item) {
-      item.categoryId = null;
-      itemModel.update(item.dataValues, {where: {id: item.id}});
-    });
-
-    itemsToUpdate.forEach(function (item) {
-      item.categoryId = oldCategory.id;
-      itemModel.update(item, {where: {id: item.id}});
+      itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
     });
 
     oldCategory.translations.forEach(function (translation) {

@@ -1,16 +1,17 @@
 import {Size} from './size';
 import {Language} from './language';
 import {IngredientGroup} from './ingredient-group';
+import {Category} from './category';
 
 export class Item {
     constructor(
                 public supportedLanguages: Array<Language>,
                 public translations: Array<ItemTranslations>,
                 public selectedTranslation: ItemTranslations,
+                public categories: Array<Category>,
                 public ingredientGroups?: Array<IngredientGroup>,
                 public imageUrl?: string,
                 public sizes?: Array<Size>,
-                public categoryId?: number,
                 public id?: number,
                 ) { }
 }

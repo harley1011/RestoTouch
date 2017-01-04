@@ -71,12 +71,22 @@ export class CategoryComponent implements OnInit {
 	getItems(): void {
 		this.itemService.getItems().subscribe(
 			items => {
+				let exists = false;
 				let item: Item;
+				let category: Category;
 				for (var i = 0; i < items.length; i++) {
 					item = items[i];
-					if (item.categoryId !== null) {
-						items.splice(i, 1);
-						i--;
+					for (var j = 0; j < item.categories.length; j++) {
+						category = item.categories[j];
+						if (category.id === this.category.id) {
+							exists = true;
+							break;
+						}
+					}
+
+					if (exists) {
+						exists = false;
+						items.splice(i--, 1);
 						continue;
 					}
 					item.selectedTranslation = item.translations[0];

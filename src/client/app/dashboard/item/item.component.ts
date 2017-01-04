@@ -112,7 +112,7 @@ export class ItemComponent implements OnInit {
         });
       } else {
         let translation = new ItemTranslations('','', this.supportedLanguages[0].languageCode);
-        this.item = new Item(this.supportedLanguages, [translation], translation, [], '', []);
+        this.item = new Item(this.supportedLanguages, [translation], translation, [], [], '', []);
         this.create = true;
         this.pictureMode = PictureMode.Select;
       }
