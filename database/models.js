@@ -19,6 +19,7 @@ var itemModel = sequelize.import('./models/items.js');
 var itemSizesModel = sequelize.import('./models/itemSizes.js');
 var itemLanguageModel = sequelize.import('./models/itemsLanguages.js');
 var itemTranslationModel = sequelize.import('./models/itemsTranslations.js');
+var itemCategoryModel = sequelize.import('./models/itemCategory.js');
 var ingredientModel = sequelize.import('./models/ingredient.js');
 var ingredientGroupModel = sequelize.import('./models/ingredientGroup.js');
 
@@ -138,6 +139,20 @@ userModel.sync({force: dropTable}).then(function () {
     itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});
     itemTranslationModel.sync({force: dropTable});
 
+    itemModel.belongsToMany(categoryModel, {
+      as: 'categories',
+      through: itemCategoryModel,
+      onDelete: 'cascade',
+      foreignKey: "itemId"
+    });
+    categoryModel.belongsToMany(itemModel, {
+      as: 'items',
+      through: itemCategoryModel,
+      onDelete: 'cascade',
+      foreignKey: "categoryId"
+    });
+    itemCategoryModel.sync({force: dropTable});
+
     itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
     ingredientGroupModel.sync({force: dropTable});
     ingredientGroupModel.hasMany(ingredientModel, {as: 'ingredients', onDelete: 'cascade', foreignKey: 'ingredientGroupId'});
@@ -224,6 +239,10 @@ exports.getItemTranslationModel = function () {
   return itemTranslationModel;
 }
 
+exports.getItemCategoryModel = function () {
+  return itemCategoryModel;
+}
+
 exports.getIngredientModel = function () {
   return ingredientModel;
 }
@@ -231,4 +250,3 @@ exports.getIngredientModel = function () {
 exports.getIngredientGroupModel = function () {
   return ingredientGroupModel;
 }
-

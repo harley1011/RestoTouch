@@ -162,8 +162,8 @@ function update(req, res) {
       businessHoursModel.update(businessHour, {where: {id: businessHour.id}});
     });
 
-    paymentsToAdd.forEach(function (businessHour) {
-      businessHour.restaurantId = oldRestaurant.id;
+    paymentsToAdd.forEach(function (payment) {
+      payment.restaurantId = oldRestaurant.id;
     });
     paymentsModel.bulkCreate(paymentsToAdd);
 

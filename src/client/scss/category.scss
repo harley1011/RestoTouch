@@ -1,5 +1,5 @@
 .cat-container {
-    margin-top: 50px;   
+    margin-top: 50px;
 }
 
 .category {
@@ -23,7 +23,7 @@
     text-align: center;
     display: inline-block;
     left: 0;
-    margin-bottom: 35px;   
+    margin-bottom: 35px;
 }
 
 .cat-label-input {
@@ -33,7 +33,7 @@
 }
 
 .cat-label-input input[type="text"] {
-    width: 100%;   
+    width: 100%;
     border: 2px solid white;
     border-radius: 5px;
     background-color: transparent;
@@ -52,3 +52,39 @@
     right: 20px;
 }
 
+.form-error {
+  border-color: red;
+}
+
+.added-items {
+  position: relative;
+  padding: .0rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+}
+
+.added-items:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+
+.added-items:first-child {
+  margin-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.added-items-name {
+  width: 100%;
+  margin: auto;
+}
+
+.scrollable-list {
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+}

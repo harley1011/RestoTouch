@@ -2,6 +2,10 @@ var models = require("../../database/models");
 var categoryModel;
 var categoryLanguageModel;
 var categoryTranslationModel;
+var itemModel;
+var itemLanguageModel;
+var itemTranslationModel;
+var itemCategoryModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -20,6 +24,10 @@ function setDatabase (m) {
   categoryModel = models.getCategoryModel();
   categoryLanguageModel = models.getCategoryLanguageModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
+  itemModel = models.getItemModel();
+  itemLanguageModel = models.getItemLanguageModel();
+  itemTranslationModel = models.getItemTranslationModel();
+  itemCategoryModel = models.getItemCategoryModel();
 }
 
 // GET /category
@@ -29,6 +37,9 @@ function getAllCategories(req, res) {
     include: [{
       model: categoryTranslationModel,
       as: 'translations'
+    }, {
+      model: itemModel,
+      as: 'items'
     }]
   }).then(function(categories) {
     return res.json({ categories: categories });
@@ -49,6 +60,16 @@ function getCategory(req, res) {
     }, {
       model: categoryTranslationModel,
       as: 'translations'
+    }, {
+      model: itemModel,
+      as: 'items',
+      include: [{
+        model: itemLanguageModel,
+        as: 'supportedLanguages'
+      }, {
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
     }]
   }).then(function(category) {
       if(category) {
@@ -61,9 +82,9 @@ function getCategory(req, res) {
 
 // POST /category
 function addCategory(req, res) {
-  var newCat = req.body;
-  newCat.userId = req.userId;
-  return categoryModel.create(newCat, {
+  var category = req.body;
+  category.userId = req.userId;
+  return categoryModel.create(category, {
     include: [{
       model: categoryLanguageModel,
       as: 'supportedLanguages'
@@ -72,6 +93,11 @@ function addCategory(req, res) {
       as: 'translations'
     }]
   }).then(function(result) {
+    var itemCategoryAssociations = [];
+    category.items.forEach(function (item) {
+      itemCategoryAssociations.push({itemId: item.id, categoryId: result.id});
+    })
+    itemCategoryModel.bulkCreate(itemCategoryAssociations);
     return res.json({success: 1, description: "New Category added"});
   });
 }
@@ -104,16 +130,31 @@ function updateCategory(req, res) {
     }, {
       model: categoryTranslationModel,
       as: 'translations'
+    }, {
+      model: itemModel,
+      as: 'items'
     }]
   }).then(function (oldCategory) {
-
     var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
     var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
+
+    var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
+    var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
 
     for(var prop in category) {
       if(prop != 'translations')
         oldCategory[prop] = category[prop];
     }
+
+    var itemCategoryAssociations = [];
+    itemsToAdd.forEach(function (item) {
+      itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
+    });
+    itemCategoryModel.bulkCreate(itemCategoryAssociations);
+
+    itemsToRemove.forEach(function (item) {
+      itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
+    });
 
     oldCategory.translations.forEach(function (translation) {
       var newTranslation = _.find(category.translations, function (tr) {return tr.languageCode === translation.languageCode});

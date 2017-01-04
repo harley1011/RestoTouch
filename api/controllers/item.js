@@ -6,6 +6,7 @@ var itemLanguageModel;
 var itemTranslationModel;
 var ingredientGroupModel;
 var ingredientModel;
+var categoryModel;
 
 var _ = require('lodash');
 
@@ -29,14 +30,23 @@ function setDatabase(m) {
   itemTranslationModel = models.getItemTranslationModel();
   ingredientGroupModel = models.getIngredientGroupModel();
   ingredientModel = models.getIngredientModel();
+  categoryModel = models.getCategoryModel();
 }
 
 
 function getAll(req, res) {
   return itemModel.findAll({
     where: {userId: req.userId},
-    include: [{model: itemSizeModel, as: 'sizes'},
-      {model: itemTranslationModel, as: 'translations'}],
+    include: [{
+      model: itemSizeModel,
+      as: 'sizes'
+    }, {
+      model: itemTranslationModel,
+      as: 'translations'
+    }, {
+      model: categoryModel,
+      as: 'categories'
+    }],
     //order: ['name']
   }).then(function (items) {
     return res.json({items: items});
@@ -99,6 +109,9 @@ function get(req, res) {
         model: ingredientModel,
         as: 'ingredients'
       }]
+    }, {
+      model: categoryModel,
+      as: 'categories'
     }]
   }).then(function (item) {
     if (item) {
@@ -251,4 +264,3 @@ function del(req, res) {
     }
   });
 };
-
