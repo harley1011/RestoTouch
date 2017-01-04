@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Item } from './../../shared/models/items';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Item} from './../../shared/models/items';
+import {Language} from './../../shared/models/language';
 import {ItemService} from '../item/item.service';
-import { Router } from '@angular/router';
-
+import {Router} from '@angular/router';
+import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 @Component({
   moduleId: module.id,
   selector: 'item-list-cmp',
@@ -12,22 +13,30 @@ import { Router } from '@angular/router';
 
 export class ItemListComponent implements OnInit {
   items: Array<Item>;
-  constructor(private itemService: ItemService, private router: Router) {}
-  ngOnInit(): void {
 
+  @ViewChild(TranslationSelectComponent)
+  private translationSelectComponent: TranslationSelectComponent;
+
+  constructor(private itemService: ItemService, private router: Router) {
+  }
+
+  ngOnInit(): void {
     this.itemService.getItems().subscribe(items => {
-        items.forEach(function(item) {
-          item.selectedTranslation = item.translations[0];
-          //todo: show the language the user is using for the application if available
-//          item.imageUrl = 'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg';
-            //item.imageUrl ='http://acrossthefader.org/wp-content/uploads/2013/05/bigmac.jpg';
+        items.forEach(item => {
+          item.selectedTranslation = item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
         });
         this.items = items;
       },
-      error =>  {
+      error => {
         console.log(error);
       }
     );
+  }
+
+  onSelectLanguage(language: Language) {
+    this.items.forEach(item => {
+      item.selectedTranslation = item.translations.find(translation => translation.languageCode === language.languageCode);
+    });
   }
 
   add(): void {
