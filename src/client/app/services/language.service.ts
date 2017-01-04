@@ -233,6 +233,11 @@ export class LanguageService {
 
   setSupportedLanguages(languages: Array<Language>): void {
     this.supportedLanguages = languages;
+    this.replaySubjectLanguages.next(languages);
+  }
+
+  addSupportedLanguage(language: Language): void {
+    this.supportedLanguages.push(language);
   }
 
   setSelectedLanguage(language: Language): void {

@@ -33,7 +33,7 @@ export class AccountSettingsComponent implements OnInit {
 
   save(): void {
     this.accountSettingsService.updateAccountSettings(this.accountSettings).subscribe(generalResponse => {
-      console.log('Success');
+      this.languageService.setSupportedLanguages(this.accountSettings.supportedLanguages);
     });
   }
 
