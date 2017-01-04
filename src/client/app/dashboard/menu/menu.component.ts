@@ -1,50 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
+import {Category} from '../../shared/models/category';
+import {CategoryService} from '../category/category.service';
 import {Menu, MenuTranslations} from '../../shared/models/menu';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
-//import {MenuCategoryService} from './menucatergory.service';
-//import {CategoryService} from './category.service';
-
+// This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({
-	moduleId: module.id,
-	selector: 'menu-cmp',
-	templateUrl: 'menu.component.html',
-  providers: [MenuService]
+  moduleId: module.id,
+  selector: 'menu-cmp',
+  templateUrl: 'menu.component.html',
+  providers: [MenuService, CategoryService], //Registering Services with angular.
 })
 
 export class MenuComponent implements OnInit {
-	create: boolean;
-  menu : Menu;
+  create: boolean;
   errorMessage: string;
-  sections: string[];
+  menu: Menu; // Menu has an array of selected categories that represent Category List
+  availableCategories: Array<Category> = [];// This is the Available Category List
+  menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
+  categoriesInDb: Array<Category> = [];
 
   //Translation support
   languages: Array<Language>;
   addedLanguage: string;
   supportedLanguages: Array<Language> = [];
-  selectedLanguage: Language = new Language('','','',0);
+  selectedLanguage: Language = new Language('', '', '', 0);
 
-  // dummy data
-  // categories:[{id:number , categoryName: string}];
 
-	constructor(private route: ActivatedRoute,
+  // We are using dependency injection to get instances of these services into our component.
+  constructor(private route: ActivatedRoute,
               private menuService: MenuService,
+              private categoryService: CategoryService,
               private languageService: LanguageService,
-              //private menuCategoryService: MenuCategoryService,
-              //private categoriyService: CategoryService,
               private router: Router) {
     this.languages = languageService.languages();
     languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
       this.selectedLanguage = selectedLanguage;
       this.menu.selectedTranslation = this.menu.translations.find(translation =>
-        translation.languageCode === this.selectedLanguage.languageCode);
+      translation.languageCode === this.selectedLanguage.languageCode);
 
-      if(!this.menu.selectedTranslation) {
-        this.menu.selectedTranslation = new MenuTranslations('',this.selectedLanguage.languageCode);
+      if (!this.menu.selectedTranslation) {
+        this.menu.selectedTranslation = new MenuTranslations('', this.selectedLanguage.languageCode);
         this.menu.translations.push(this.menu.selectedTranslation);
       }
     });
@@ -73,21 +72,39 @@ export class MenuComponent implements OnInit {
     let i = this.supportedLanguages.indexOf(language);
     this.supportedLanguages.splice(i, 1);
     let removedTranslation = this.menu.translations.find(translation =>
-      translation.languageCode === language.languageCode);
+    translation.languageCode === language.languageCode);
     let j = this.menu.translations.indexOf(removedTranslation);
     this.menu.translations.splice(j, 1);
   }
 
-	getMenu(id: number): void {
-	  this.menuService.getMenu(id).subscribe(
-	    menu => {
-	      this.menu = menu;
+
+  ngOnInit(): void {
+    this.route.params.forEach((params: Params) => {
+      if (params['menuId']) {
+        this.getMenu(params['menuId']);
+        this.create = false;
+      } else {
+        this.getCategories();
+        let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
+        this.menu = new Menu(this.supportedLanguages, [translation], translation, []);
+        this.create = true;
+      }
+    });
+
+    //this.menuCategoryService.addMenuCategory(1, 1, 1); //TODO : TESTING To remove
+  }
+
+  getMenu(id: number): void {
+    this.menuService.getMenu(id).subscribe(
+      menu => {
+        this.menu = menu;
         this.supportedLanguages = menu.supportedLanguages;
         this.menu.selectedTranslation = menu.translations[0];
         this.selectedLanguage = this.languages.find(language =>
-          language.languageCode === this.menu.selectedTranslation.languageCode);
+        language.languageCode === this.menu.selectedTranslation.languageCode);
         this.languageService.announceSupportedLanguages(this.supportedLanguages);
         this.languageService.announceSelectedLanguage(this.selectedLanguage);
+        this.getCategories();
       },
       error => {
         this.errorMessage = <any>error;
@@ -95,32 +112,21 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-
-    //get all categpries (api)
-    //for now Dummy data from category api
-/*    var categories = [
-      { id: 1, categoryName: 'hamburger'},
-      { id: 2, categoryName: 'drink'},
-      { id: 3, categoryName: 'sandowish'},
-      { id: 4, categoryName: 'salad'},
-      { id: 5, categoryName: 'icecream'},
-      { id: 6, categoryName: 'starter'},
-      { id: 7, categoryName: 'sweets'},
-      { id: 8, categoryName: 'specials'},
-    ];*/
-
-    this.sections = [];
-		this.route.params.forEach((params: Params) => {
-			if (params['menuId']) {
-			  this.getMenu(params['menuId']);
-				this.create = false;
-			} else {
-        let translation = new MenuTranslations('', this.supportedLanguages[0].languageCode);
-			  this.menu = new Menu(this.supportedLanguages, [translation], translation);
-				this.create = true;
-			}
-		});
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.menu.categories.forEach(menuCategory => {
+          let categoryToRemove = categories.find(category => menuCategory.id === category.id);
+          if (categoryToRemove) {
+            categories.splice(categories.indexOf(categoryToRemove), 1);
+          }
+        } );
+        this.availableCategories = categories;
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
   }
 
   // 'Create' button functionality
@@ -128,30 +134,16 @@ export class MenuComponent implements OnInit {
 
     var values = validateInputs();
     if (values === null) return;
-
-    var oldName = this.menu.selectedTranslation.name;
     this.menu.selectedTranslation.name = values['name'];
 
     if (this.create) {
       this.add();
     } else {
-      this.update(oldName);
+      this.update();
     }
   }
 
-  addSection(): void {
-    // get the list of categories
-    // select which category to add
-    this.sections.push('aCategory');
-  }
-
-  removeSection(): void {
-    this.sections.pop();
-  }
-
   add(): void {
-
-    // calling add menuservice
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
@@ -160,19 +152,22 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any> error;
       }
     );
-    // TODO loop
-    // calling add menucategoryservice
-    /*this.menuCategoryService.addMenuCategory(this.menu.id, this.categories.id).subscribe(
-      generalResponse => {
-        this.router.navigate(['/dashboard/menus']);
-      },
-      error => {
-        this.errorMessage = <any> error;
-      }
-    );*/
   }
 
-  update(oldName : string): void {
+  changeOrder(category: Category, changeIndex: number) {
+     let newIndex = ((this.menu.categories.indexOf(category) - 1 + changeIndex)
+       % this.menu.categories.length + this.menu.categories.length) % this.menu.categories.length;
+     let currentIndex = this.menu.categories.indexOf(category);
+
+     this.menu.categories[currentIndex] = this.menu.categories[newIndex];
+     this.menu.categories[newIndex] = category;
+  }
+  addCategoryToMenu(category: Category): void {
+    this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
+    this.menu.categories.push(category);
+  }
+
+  update(): void {
     this.menuService.updateMenu(this.menu).subscribe(
       generalResponse => {
         this.router.navigate(['/dashboard/menus']);
@@ -181,10 +176,6 @@ export class MenuComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
-
-    // calling update in  menucategoryservice
-    // updateMenuCategory(): void {}
-
   }
 
   cancel(): void {
@@ -194,7 +185,7 @@ export class MenuComponent implements OnInit {
   delete(): void {
     this.menuService.deleteMenu(this.menu).subscribe(
       generalResponse => {
-        console.log('response', generalResponse );
+        console.log('response', generalResponse);
         this.router.navigate(['/dashboard/menus']);
       },
       error => {
@@ -203,8 +194,14 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  removeCategoryFromMenu(category: Category): void {
+    this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
+    this.availableCategories.push(category);
+  }
 }
-function validateInputs () {
+
+
+function validateInputs() {
 
   var validationError = false;
 
@@ -216,9 +213,10 @@ function validateInputs () {
   return {
     name: nameValue,
   };
+
 }
 
-function validateInput (id: string, callback: any) {
+function validateInput(id: string, callback: any) {
   var input = (<HTMLInputElement>document.getElementById(id));
   var value = input.value;
   if (value === '' || (callback && !callback(input, value))) {
@@ -230,10 +228,10 @@ function validateInput (id: string, callback: any) {
   return value;
 }
 
-function hasError (element: HTMLInputElement) {
+function hasError(element: HTMLInputElement) {
   element.className += ' form-error';
 }
 
-function hasNoError (element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/,'');
+function hasNoError(element: HTMLInputElement) {
+  element.className = element.className.replace(/\bform-error\b/, '');
 }

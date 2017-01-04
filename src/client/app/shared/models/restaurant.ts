@@ -1,5 +1,6 @@
 import {Language} from './language';
 import { Menu } from './menu';
+import { Payment } from './payment';
 import { BusinessHour } from './business-hour';
 
 export class Restaurant {
@@ -10,6 +11,7 @@ export class Restaurant {
               public translations: Array<RestaurantTranslations>,
               public selectedTranslation: RestaurantTranslations,
               public Menus: Menu[],
+              public payments: Payment[],
               public businessHours: BusinessHour[],
               public id?: number) {
   }

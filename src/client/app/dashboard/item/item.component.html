@@ -8,7 +8,8 @@
   </div>
   <div class="formContainer">
     <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
-      <div class="col-sm-7">
+      <div class="row">
+      <div class="col-sm-9">
         <div class="form-group">
           <label for="name">{{ 'foodItem.foodItemName' | translate }}</label>
           <input type="text" class="form-control" id="name"
@@ -20,7 +21,7 @@
         <div class="form-group">
           <label for="name">{{ 'foodItem.foodItemDescription' | translate }}</label>
           <textarea type="text" rows="3" class="form-control" id="description"
-                 [(ngModel)]="item.selectedTranslation.description" name="description"
+                    [(ngModel)]="item.selectedTranslation.description" name="description"
                     #description="ngModel"></textarea>
         </div>
         <div>
@@ -62,10 +63,10 @@
           </div>
         </div>
 
-      <div id="menu-lang" class="edit-section">
-        <h5>{{ 'foodItem.langTitle' | translate }}</h5>
+      <div id="item-lang" class="edit-section">
         <div class="row">
             <div class="col col-md-5">
+              <label>{{ 'foodItem.langTitle' | translate }}</label>
                 <ul class="list-group">
                     <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i></li>
               </ul>
@@ -90,7 +91,7 @@
         </div>
 
       </div>
-      <div class="col-sm-5 image-crop-div">
+      <div class="col-sm-3 image-crop-div">
         <img-cropper [(hidden)]="pictureMode != pictureModes.Crop"
                      class="card-img-top img-thumbnail img-thumbnail-cust item-image-upload"
                      [image]="croppedImageContainer" [settings]="cropperSettings">
@@ -103,12 +104,98 @@
           <button class="btn-upload-image btn-primary btn" type="button" (click)="selectFile()">
             {{pictureMode != pictureModes.Crop ? pictureMode == pictureModes.CropSelected? ('foodItem.foodItemRecroppedImgMsg' | translate): pictureMode == pictureModes.Select? ('foodItem.foodItemAddImgMsg' | translate): ('foodItem.foodItemChangeImgMsg' | translate): ('foodItem.foodItemSelectCroppedImgMsg' | translate)}}
           </button><!--
-          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button" (click)="clearImage()"></button>
+          --><button class="btn btn-danger fa fa-times-circle btn-clear-image" type="button"
+                  (click)="clearImage()"></button>
         </div>
         <input style="display: none;" type="file" name="itemImage" class="item-image-select"
                (change)="onChange($event)" title="Upload an image for this item" accept="image/*"/>
       </div>
+      </div>
+      <div class="row">
+        <div [hidden]="item.ingredientGroups.length <= 1" class="col-sm-12">
+          <i class="fa fa-exclamation-circle"></i> The ingredient groups below will be displayed in the order as shown below to the customer <br>
+          Use the up and down arrow to change the order of an ingredient group with another one
+        </div>
+        <div class="col-sm-12">
+          <div class="row ingredient-group-div" *ngFor="let newIngredientGroup of item.ingredientGroups; let i = index" >
+            <div [hidden]="item.ingredientGroups.length <= 1" style="width: 70px;" class="col-sm-1 ingredient-group-button-div">
+              <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                <button type="button" class="btn btn-primary ingredient-group-up-button" (click)="changeOrder(newIngredientGroup, -1)"><i class="fa fa-chevron-up"></i></button>
+                <button type="button" class="btn btn-primary ingredient-group-middle-button">{{newIngredientGroup.orderPriority}}</button>
+                <button type="button" class="btn btn-primary ingredient-group-down-button" (click)="changeOrder(newIngredientGroup, 1)"><i class="fa fa-chevron-down"></i></button>
+              </div>
+            </div>
+            <div class=" col-sm-2">
+              <div class="form-group">
+                <label for="name">Ingredient Group Name</label>
+                <input type="text" class="form-control"
+                       required
+                       [(ngModel)]="newIngredientGroup.name" [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group">
+                <label>Max num of ingredients</label>
+                <input class="form-control" min="1"  #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.maxNumberOfIngredients" [ngModelOptions]="{standalone: true}"
+                       type="number">
+              </div>
+              <div class="form-group">
+                <label>Min num of ingredients</label>
+                <input class="form-control" min="0" [max]="newIngredientGroup.maxNumberOfIngredients" #newIngredientPrice="ngModel" [(ngModel)]="newIngredientGroup.minNumberOfIngredients" [ngModelOptions]="{standalone: true}"
+                       type="number">
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <table class="table table-sm td-size-table">
+                <thead>
+                <tr>
+                  <th class="add-by-default-table">Add By Default</th>
+                  <th class="add-by-default-table">Allow Quantity</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th><button class="fa fa-times-circle icon-remove icon-align" type="button"
+                              (click)="removeIngredientGroup(newIngredientGroup)"></button></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let ingredient of newIngredientGroup.ingredients; let k = index">
+                  <td class="add-by-default-table">{{ingredient.addByDefault? 'Yes': 'No'}}</td>
+                  <td>{{ingredient.allowQuantity}}</td>
+                  <td>{{ingredient.name}}</td>
+                  <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
+                  <td>
+                    <button class="fa fa-times-circle icon-remove icon-align" type="button"
+                            (click)="removeIngredient(newIngredientGroup, ingredient)"></button>
+                  </td>
+                </tr>
+                <tr class="td-size-input">
+                  <td><input class="form-control" type="checkbox" [(ngModel)]="newIngredientGroup.newIngredient.addByDefault"
+                             name="ingredientAddByDefault{{i}}">
+                  </td>
+                  <td><input class="form-control" #allowQuantity="ngModel" id="allowQuantity" [(ngModel)]="newIngredientGroup.newIngredient.allowQuantity" min="1" name="allowQuantity{{i}}" type="number"></td>
+                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name" name="ingredientName{{i}}"
+                             placeholder="Ingredient Name">
+                  </td>
+                  <td>
+                    <div class="input-group"><span class="input-group-addon">$</span>
+                      <input class="form-control" #price="ngModel"
+                             [(ngModel)]="newIngredientGroup.newIngredient.price" name="ingredientPrice{{i}}" type="number">
+                    </div>
+                  </td>
+                  <td>
+                    <button class="fa fa-plus-circle icon-add icon-align" type="button" [disabled]="!newIngredientGroup.newIngredient.name"
+                            (click)="addIngredient(newIngredientGroup, newIngredientGroup.newIngredient)"></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-sm-12 add-ingredient-button">
+            <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
+            </button>
+          </div>
+        </div>
 
+      </div>
       <div class="row">
         <div class="manage-button">
           <button type="submit" class="btn btn-success btn-green"
@@ -120,7 +207,8 @@
       </div>
     </form>
     <div *ngIf="uploading" class="row progress-div">
-      <progress class="progress progress-success progress-striped progress-animated" max="100" [(value)]="progress" ></progress>
+      <progress class="progress progress-success progress-striped progress-animated" max="100"
+                [(value)]="progress"></progress>
     </div>
   </div>
 </div>

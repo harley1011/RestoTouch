@@ -1,3 +1,4 @@
+
 import { join } from 'path';
 import * as slash from 'slash';
 import { argv } from 'yargs';
@@ -474,8 +475,7 @@ export class SeedConfig {
    * White list for CSS color guard
    * @type {[string, string][]}
    */
-  COLOR_GUARD_WHITE_LIST: [string, string][] = [
-  ];
+  COLOR_GUARD_WHITE_LIST: [string, string][] = [];
 
   /**
    * Configurations for NPM module configurations. Add to or override in project.config.ts.

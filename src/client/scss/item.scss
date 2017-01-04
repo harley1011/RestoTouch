@@ -5,9 +5,8 @@
 
   }
 
-
-
 }
+
 .td-size-table {
   td, th {
     border-top: transparent !important;
@@ -55,7 +54,39 @@
     border-top-right-radius: 10px;
   }
 }
+
 .progress-div {
   margin-top: 10px;
 }
 
+.add-ingredient-button {
+  margin-top: 10px;
+}
+
+.add-by-default-table {
+  width: 120px;
+  text-align: center;
+}
+
+.ingredient-group-div {
+  border: 2px solid #eceeef;
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.ingredient-group-button-div {
+  display: flex;
+}
+
+.ingredient-group-up-button {
+  margin-top: 10%;
+  height: 40%;
+}
+
+.ingredient-group-middle-button {
+  height: 15%;
+}
+
+.ingredient-group-down-button {
+  height: 40%;
+}

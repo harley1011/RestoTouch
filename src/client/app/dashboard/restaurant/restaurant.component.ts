@@ -7,6 +7,7 @@ import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 
 import {Menu} from '../../shared/models/menu';
+import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 
@@ -76,10 +77,17 @@ export class RestaurantComponent implements OnInit {
       new BusinessHour(6, 1, '9:00', '21:00', false)
     ];
 
+    let payments = [
+      new Payment('Cash', false),
+      new Payment('Debit', false),
+      new Payment('Credit', false)
+    ];
+
     this.restaurant = new Restaurant('',
       this.supportedLanguages,
       [translation],
       translation, [],
+      payments,
       businessHours
     );
 
@@ -167,8 +175,7 @@ export class RestaurantComponent implements OnInit {
     });
   }
 
-  selectLanguage(language: Language) {
-      console.log('came');
+  selectLanguage(language: string) {
       language = language.substr(3, 2);
       console.log(language);
   	this.editingLanguage = new Language(language, 'French', '', 0);

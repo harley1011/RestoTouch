@@ -1,5 +1,8 @@
 var models = require("../../database/models");
 var categoryModel;
+var categoryLanguageModel;
+var categoryTranslationModel;
+var _ = require('lodash');
 
 setDatabase(models);
 
@@ -15,11 +18,19 @@ module.exports = {
 function setDatabase (m) {
   models = m;
   categoryModel = models.getCategoryModel();
+  categoryLanguageModel = models.getCategoryLanguageModel();
+  categoryTranslationModel = models.getCategoryTranslationModel();
 }
 
 // GET /category
 function getAllCategories(req, res) {
-  return categoryModel.findAll({where: {userId: req.userId}}).then(function(categories) {
+  return categoryModel.findAll({
+    where: {userId: req.userId},
+    include: [{
+      model: categoryTranslationModel,
+      as: 'translations'
+    }]
+  }).then(function(categories) {
     return res.json({ categories: categories });
   });
 }
@@ -31,7 +42,14 @@ function getCategory(req, res) {
     where: {
       id: id,
       userId: req.userId
-    }
+    },
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
+    }]
   }).then(function(category) {
       if(category) {
         return res.json(category);
@@ -45,7 +63,15 @@ function getCategory(req, res) {
 function addCategory(req, res) {
   var newCat = req.body;
   newCat.userId = req.userId;
-  return categoryModel.create(newCat).then(function(result) {
+  return categoryModel.create(newCat, {
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
+    }]
+  }).then(function(result) {
     return res.json({success: 1, description: "New Category added"});
   });
 }
@@ -67,12 +93,58 @@ function deleteCategory(req, res) {
 function updateCategory(req, res) {
   var category = req.body;
   var id = req.swagger.params.id.value;
-  return categoryModel.update(category, {
+  return categoryModel.findOne({
     where: {
       id: id,
       userId: req.userId
+    },
+    include: [{
+      model: categoryLanguageModel,
+      as: 'supportedLanguages'
+    }, {
+      model: categoryTranslationModel,
+      as: 'translations'
+    }]
+  }).then(function (oldCategory) {
+
+    var languagesToRemove = _.differenceBy(oldCategory.supportedLanguages, category.supportedLanguages, 'languageCode');
+    var languagesToAdd = _.differenceBy(category.supportedLanguages, oldCategory.supportedLanguages, 'languageCode');
+
+    for(var prop in category) {
+      if(prop != 'translations')
+        oldCategory[prop] = category[prop];
     }
-  }).then(function(result) {
-    return res.json({success: 1, description: "Category updated"});
+
+    oldCategory.translations.forEach(function (translation) {
+      var newTranslation = _.find(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      for (var prop in newTranslation) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(category.translations, function (tr) {return tr.languageCode === translation.languageCode});
+    });
+
+    category.translations.forEach(function (translation) {
+      translation.categoryId = category.id;
+    });
+
+    categoryTranslationModel.bulkCreate(category.translations);
+
+    oldCategory.save().then(function (result) {
+      languagesToRemove.forEach(function (language) {
+        categoryLanguageModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
+        categoryTranslationModel.destroy({where: {'languageCode': language.languageCode, 'categoryId': category.id}});
+        _.remove(oldCategory.translations, function (translation) {return translation.languageCode == language.languageCode});
+      })
+
+      languagesToAdd.forEach(function (language) {
+        language.categoryId = category.id;
+      })
+
+      categoryLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
+        return res.json({success: 1, description: 'Category Updated'});
+      })
+
+    })
   });
 }

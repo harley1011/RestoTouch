@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from './category.service';
-import { Category } from '../../shared/models/category';
+import { Category, CategoryTranslations } from '../../shared/models/category';
+import { LanguageService } from '../../services/language.service';
+import { Language } from '../../shared/models/language';
 
 @Component({
 	moduleId: module.id,
@@ -15,14 +17,41 @@ export class CategoryComponent implements OnInit {
   category: Category;
   errorMessage: string;
 
+  //Multiple translation support
+  languages: Array<Language>;
+  addedLanguage: string;
+  supportedLanguages: Array<Language> = [];
+  selectedLanguage: Language = new Language('','','',0);
+
 	constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
-              private router: Router) {}
+              private router: Router,
+              private languageService: LanguageService) {
+    this.languages = languageService.languages();
+    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
+      this.selectedLanguage = selectedLanguage;
+      this.category.selectedTranslation = this.category.translations.find(translation =>
+        translation.languageCode === this.selectedLanguage.languageCode);
+
+      if(!this.category.selectedTranslation) {
+        this.category.selectedTranslation = new CategoryTranslations('',this.selectedLanguage.languageCode);
+        this.category.translations.push(this.category.selectedTranslation);
+      }
+    });
+    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
+    this.languageService.announceSupportedLanguages(this.supportedLanguages);
+  }
 
     getCategory(id: number): void {
 	  this.categoryService.getCategory(id).subscribe(
 	    category => {
 	      this.category = category;
+        this.supportedLanguages = category.supportedLanguages;
+        this.category.selectedTranslation = category.translations[0];
+        this.selectedLanguage = this.languages.find(language =>
+          language.languageCode === this.category.selectedTranslation.languageCode);
+        this.languageService.announceSupportedLanguages(this.supportedLanguages);
+        this.languageService.announceSelectedLanguage(this.selectedLanguage);
       },
       error => {
         this.errorMessage = <any>error;
@@ -36,9 +65,10 @@ export class CategoryComponent implements OnInit {
 			  this.getCategory(params['id']);
 				this.create = false;
 			} else {
-                 this.category = new Category('');
+        let translation = new CategoryTranslations('', this.supportedLanguages[0].languageCode);
+        this.category = new Category(this.supportedLanguages, [translation], translation);
 				this.create = true;
-            }
+      }
 		});
   }
 
@@ -48,7 +78,8 @@ export class CategoryComponent implements OnInit {
     var values = validateInputs();
     if (values === null) return;
 
-    this.category.categoryName = values['name'];
+    //this.category.categoryName = values['name'];
+    this.category.selectedTranslation.name = values['name'];
 
     if (this.create) {
       this.add();
@@ -56,7 +87,6 @@ export class CategoryComponent implements OnInit {
       this.update();
     }
   }
-
 
 
   add(): void {
@@ -99,6 +129,30 @@ export class CategoryComponent implements OnInit {
         this.errorMessage = <any>error;
       }
     );
+  }
+
+  addLanguage() {
+    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
+    if(language) {
+      console.log('Language is already supported.');
+      return;
+    }
+    language = this.languages.find(language => language.languageCode === this.addedLanguage);
+    this.supportedLanguages.push(language);
+    let newTranslation = new CategoryTranslations('', language.languageCode);
+    this.category.translations.push(newTranslation);
+  }
+
+  removeLanguage(language: Language) {
+    if(this.supportedLanguages.length < 1) {
+      console.log('At least one language is required.');
+    }
+    let i = this.supportedLanguages.indexOf(language);
+    this.supportedLanguages.splice(i, 1);
+    let removedTranslation = this.category.translations.find(translation =>
+      translation.languageCode === language.languageCode);
+    let j = this.category.translations.indexOf(removedTranslation);
+    this.category.translations.splice(j, 1);
   }
 
 }

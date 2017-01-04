@@ -2,7 +2,7 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { Category } from '../../shared/models/category';
+import { Category, CategoryTranslations } from '../../shared/models/category';
 import { CategoryService } from '../category/category.service';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
@@ -44,7 +44,8 @@ export function main() {
     });
 
     it('should add category', () => {
-      var mockCategory = new Category('Food');
+      var mockTranslation = new CategoryTranslations('', '');
+      var mockCategory = new Category([], [], mockTranslation, 1);
 
       initialResponse = categoryService.addCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -64,7 +65,8 @@ export function main() {
     });
 
     it('should update a category', () => {
-      var mockCategory = new Category('Food');
+      var mockTranslation = new CategoryTranslations('', '');
+      var mockCategory = new Category([], [], mockTranslation, 1);
 
       initialResponse = categoryService.updateCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -84,7 +86,8 @@ export function main() {
     });
 
     it('should delete a category', () => {
-      var mockCategory = new Category('Food');
+      var mockTranslation = new CategoryTranslations('', '');
+      var mockCategory = new Category([], [], mockTranslation, 1);
 
       initialResponse = categoryService.deleteCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
