@@ -28,7 +28,14 @@ function register(req, res) {
   var passwordData = passwordHasher.saltHashPassword(user.password);
   user.password = passwordData.passwordHash;
   user.salt = passwordData.salt;
-  return userModel.create(user).then(function (newUser) {
+  user.supportedLanguages = [{name: "English", languageCode: "en"}];
+  return userModel.create(user, {
+    include: [{
+      model: supportedLanguageModel,
+      as: 'supportedLanguages'
+    }]
+  }).then(function (newUser) {
+
     var info = userInfo(newUser.dataValues);
     return res.json({success: 1, description: "User registered", "user": info.user, "accessToken": info.token});
   });
