@@ -1,46 +1,55 @@
-import { Component, OnInit } from '@angular/core';
-import { Category } from '../../shared/models/category';
-import { CategoryService } from '../category/category.service';
-import { Router } from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Category} from '../../shared/models/category';
+import {Language} from '../../shared/models/language';
+import {CategoryService} from '../category/category.service';
+import {Router} from '@angular/router';
+import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
-    moduleId: module.id,
-    selector: 'category-list-cmp',
-    templateUrl: 'category-list.component.html',
-    providers: [CategoryService]
+  moduleId: module.id,
+  selector: 'category-list-cmp',
+  templateUrl: 'category-list.component.html',
+  providers: [CategoryService]
 })
 
 export class CategoryListComponent implements OnInit {
-    categories: Category[]; // Contains the returned list of category
+  categories: Array<Category>;
 
-    constructor(private categoryService: CategoryService,
-                private router: Router) { }
+  @ViewChild(TranslationSelectComponent)
+  private translationSelectComponent: TranslationSelectComponent;
+  constructor(private categoryService: CategoryService,
+              private router: Router) {
+  }
 
-    ngOnInit(): void {
-        this.getCategories();
-    }
+  ngOnInit(): void {
+    this.getCategories();
+  }
 
-    /**
-     * Gets user's categories
-    */
-    getCategories(): void {
-      // Subscribe to the getCategories observable
-      this.categoryService.getCategories().subscribe(
-        categories => {
-            this.categories = categories;
-            categories.forEach(function(category) {
-                category.selectedTranslation = category.translations[0];
-            });
-        },
-        error => {console.log(error);}
-      );
-    }
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.categories = categories;
+        categories.forEach(category => {
+          category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
-    add(): void {
-        this.router.navigate(['/dashboard/category']);
-    }
+  onSelectLanguage(language: Language) {
+    this.categories.forEach(category => {
+      category.selectedTranslation = category.translations.find(translation => translation.languageCode === language.languageCode);
+    });
+  }
 
-    modify(category: Category): void {
-        this.router.navigate(['/dashboard/category', category.id]);
-    }
+  add(): void {
+    this.router.navigate(['/dashboard/category']);
+  }
+
+  modify(category: Category): void {
+    this.router.navigate(['/dashboard/category', category.id]);
+  }
 }
