@@ -3,7 +3,7 @@ import {TranslateService} from 'ng2-translate';
 import {AccountSettingsService} from './account-settings.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
-import {AccountSettings} from '../../../../../restoWeb/src/client/app/shared/models/accountSettings';
+import {AccountSettings} from '../../shared/models/accountSettings';
 
 @Component({
   moduleId: module.id,
