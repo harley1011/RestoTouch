@@ -47,6 +47,6 @@ cache:
 
 script:
   - cd restoWeb
-  - npm run restoWeb/setup
+  - npm run setup
   # - npm run test
 
