@@ -33,6 +33,9 @@ function getAllCategories(req, res) {
     include: [{
       model: categoryTranslationModel,
       as: 'translations'
+    }, {
+      model: itemModel,
+      as: 'items'
     }]
   }).then(function (categories) {
     return res.json({categories: categories});
