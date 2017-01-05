@@ -1,5 +1,5 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
-import {Language} from '../../shared/models/language';
+import {Language} from '../models/language';
 import {LanguageService} from '../../services/language.service';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 @Component({

@@ -119,45 +119,47 @@ function updateCategory(req, res) {
 
     for (var prop in category) {
       if (prop != 'translations')
-    var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
-    var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
+        var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
+      var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
 
-    for(var prop in category) {
-      if(prop != 'translations')
-        oldCategory[prop] = category[prop];
-    }
-
-    var itemCategoryAssociations = [];
-    itemsToAdd.forEach(function (item) {
-      itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
-    });
-    itemCategoryModel.bulkCreate(itemCategoryAssociations);
-
-    itemsToRemove.forEach(function (item) {
-      itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
-    });
-
-    oldCategory.translations.forEach(function (translation) {
-      var newTranslation = _.find(category.translations, function (tr) {
-        return tr.languageCode === translation.languageCode
-      });
-      for (var prop in newTranslation) {
-        translation[prop] = newTranslation[prop];
+      for (var prop in category) {
+        if (prop != 'translations')
+          oldCategory[prop] = category[prop];
       }
-      translation.save();
-      _.remove(category.translations, function (tr) {
-        return tr.languageCode === translation.languageCode
+
+      var itemCategoryAssociations = [];
+      itemsToAdd.forEach(function (item) {
+        itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
       });
-    });
+      itemCategoryModel.bulkCreate(itemCategoryAssociations);
 
-    category.translations.forEach(function (translation) {
-      translation.categoryId = category.id;
-    });
+      itemsToRemove.forEach(function (item) {
+        itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
+      });
 
-    categoryTranslationModel.bulkCreate(category.translations);
+      oldCategory.translations.forEach(function (translation) {
+        var newTranslation = _.find(category.translations, function (tr) {
+          return tr.languageCode === translation.languageCode
+        });
+        for (var prop in newTranslation) {
+          translation[prop] = newTranslation[prop];
+        }
+        translation.save();
+        _.remove(category.translations, function (tr) {
+          return tr.languageCode === translation.languageCode
+        });
+      });
 
-    oldCategory.save().then(function (result) {
-      return res.json({success: 1, description: 'Category Updated'});
-    });
+      category.translations.forEach(function (translation) {
+        translation.categoryId = category.id;
+      });
+
+      categoryTranslationModel.bulkCreate(category.translations);
+
+      oldCategory.save().then(function (result) {
+        return res.json({success: 1, description: 'Category Updated'});
+      });
+    }}
+    )
 
 }
