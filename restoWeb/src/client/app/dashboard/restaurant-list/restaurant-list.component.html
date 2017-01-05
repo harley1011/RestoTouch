@@ -1,29 +1,31 @@
 <div id="restaurantList">
-    <div class="manage-header">
+  <div class="manage-header">
     <h2>{{ 'restaurant.titleManage' | translate}}</h2>
-    <h5 class="subtitle"><small>{{ 'restaurant.sousTitleManage' | translate}}</small></h5>
-       <div class="manage-button">
-        <button (click)="add()" class="btn btn-success btn-green">{{ 'restaurant.addRestoButton' | translate}}</button>
-        </div>
-        <hr>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="manage-button">
+      <button (click)="add()" class="btn btn-success btn-green">{{ 'restaurant.addRestoButton' | translate}}</button>
     </div>
-
-    <div class="manage-list-container">
-     <div class="row">
-    <div class="col-sm-3" *ngFor="let restaurant of restaurants; let i = index">
-      <div (click)="modify(restaurant)" class="card card-block">
-        <h4 class="card-title">{{ restaurant.selectedTranslation.name }}<h6 class="card-subtitle text-muted" style="margin-top:0">{{ restaurant.address }}</h6></h4>
-        
-       <p class="card-text">
-          {{ restaurant.selectedTranslation.description }}  </p>
-           <h6 style="margin:0">{{ 'restaurant.menuTitle' | translate }} <span class="label label-default"> {{ restaurant?.Menus.length }} </span></h6>
-            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.translations[0].name }}</span>
-           
-            
-      </div>
-    </div>
-
+    <hr>
   </div>
+
+  <div class="manage-list-container">
+    <div class="row">
+      <div class="col-sm-3" *ngFor="let restaurant of restaurants; let i = index">
+        <div (click)="modify(restaurant)" class="card card-block">
+          <h4 class="card-title">{{ restaurant.selectedTranslation ? restaurant.selectedTranslation.name : "No translation"}}
+            <h6 class="card-subtitle text-muted" style="margin-top:0">{{ restaurant.address}}</h6></h4>
+
+          <p class="card-text">
+            {{ restaurant.selectedTranslation ? restaurant.selectedTranslation.description : "No translation"}}
+          <h6 style="margin:0">{{ 'restaurant.menuTitle' | translate }} <span class="label label-default"> {{ restaurant?.Menus.length }} </span>
+          </h6>
+          <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.translations[0].name }}</span>
+
+
+        </div>
+      </div>
+
     </div>
- 
+  </div>
+
 </div>

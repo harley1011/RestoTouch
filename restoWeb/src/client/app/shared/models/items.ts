@@ -5,7 +5,6 @@ import {Category} from './category';
 
 export class Item {
     constructor(
-                public supportedLanguages: Array<Language>,
                 public translations: Array<ItemTranslations>,
                 public selectedTranslation: ItemTranslations,
                 public categories: Array<Category>,

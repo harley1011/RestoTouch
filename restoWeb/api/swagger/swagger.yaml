@@ -658,6 +658,65 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /supportedLanguages:
+    x-swagger-router-controller: account
+    get:
+      operationId: getSupportedLanguages
+      description: Get the users supported languages
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/SupportedLanguagesResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"         
+  /accountSettings:
+    x-swagger-router-controller: account
+    put:
+      operationId: saveAccountSettings
+      description: Get the users account settings
+      parameters:
+        - name: accountSettings
+          description: User properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/AccountSettings"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      operationId: getAccountSettings
+      description: Get the users account settings
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/AccountSettings"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -842,6 +901,14 @@ definitions:
     properties:
       code:
         type: string
+  SupportedLanguagesResponse:
+    required:
+      - supportedLanguages
+    properties:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
   RestaurantTranslations:
     type: object
     properties:
@@ -894,6 +961,13 @@ definitions:
     required:
       - name
       - used
+  AccountSettings:
+    type: object
+    properties:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
   Restaurant:
     type: object
     properties:

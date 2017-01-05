@@ -1,27 +1,22 @@
 <div class="manage-list">
-    <div class="manage-header">
+  <div class="manage-header">
     <h2>{{'category.titleManage' | translate}}</h2>
-    <h5 class="subtitle"><small>{{'category.sousTitleManage' | translate}}</small></h5>
-       <div class="manage-button">
-           <form class="form-inline">
-<!--    <input #newCatField type="text" class="form-control" (keyup.enter)="addNewCatClick(newCatField.value)"/>-->
-    <button type="button" class="btn btn-success btn-green" (click)="add()">{{'category.addcatButtonManage' | translate}}</button>
-</form>
-        </div>
-        <hr>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="manage-button">
+      <form class="form-inline">
+        <button type="button" class="btn btn-success btn-green" (click)="add()">{{'category.addcatButtonManage' |
+          translate}}
+        </button>
+      </form>
     </div>
-    <div class="manage-list-container">
-  <div class="col-sm-3" *ngFor="let category of categories; let i = index">
+    <hr>
+  </div>
+  <div class="manage-list-container">
+    <div class="col-sm-3" *ngFor="let category of categories; let i = index">
       <div (click)="modify(category)" class="card card-block">
-        <h4 class="card-title">{{ category?.selectedTranslation?.name }} </h4>
-
-           <h6 style="margin:0">{{'category.itemsCard' | translate}} <span class="label label-default"> {{ category?.items?.length }} </span></h6>
-<!--            <span *ngFor="let menu of restaurant?.Menus;" class="label label-info label-menu-name">{{ menu.name }}</span>-->
-
-
+        <h4 class="card-title">{{ category.selectedTranslation ? category.selectedTranslation.name : "No translation"}} </h4>
+        <h6 style="margin:0">{{'category.itemsCard' | translate}} <span class="label label-default"> {{ category?.items?.length }}</span></h6>
       </div>
     </div>
-
-</div>
-
+  </div>
 </div>

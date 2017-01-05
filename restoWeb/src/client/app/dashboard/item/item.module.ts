@@ -5,10 +5,11 @@ import { ItemComponent } from './item.component';
 import { CarouselModule, DropdownModule, AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {TranslateModule} from 'ng2-translate';
+import {TranslationSelectModule} from '../../shared/index';
 
 
 @NgModule({
-    imports: [CommonModule, CarouselModule, DropdownModule, AlertModule, FormsModule, TranslateModule],
+    imports: [CommonModule, CarouselModule, DropdownModule, AlertModule, FormsModule, TranslateModule, TranslationSelectModule],
     declarations: [ItemComponent, ImageCropperComponent],
     exports: [ItemComponent]
 })

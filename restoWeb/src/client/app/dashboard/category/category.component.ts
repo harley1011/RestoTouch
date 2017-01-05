@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { CategoryService } from './category.service';
-import { Category, CategoryTranslations } from '../../shared/models/category';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {CategoryService} from './category.service';
+import {Category, CategoryTranslations} from '../../shared/models/category';
+import {Language} from '../../shared/models/language';
 import { ItemService } from '../item/item.service';
 import { Item } from '../../shared/models/items';
-import { LanguageService } from '../../services/language.service';
-import { Language } from '../../shared/models/language';
+import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
 	moduleId: module.id,
@@ -15,52 +15,28 @@ import { Language } from '../../shared/models/language';
 })
 
 export class CategoryComponent implements OnInit {
-	create: boolean;
+  create: boolean;
   category: Category;
 	items: Array<Item>;
   errorMessage: string;
+  @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
-  //Multiple translation support
-  languages: Array<Language>;
-  addedLanguage: string;
-  supportedLanguages: Array<Language> = [];
-  selectedLanguage: Language = new Language('','','',0);
-
-	constructor(private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
-							private itemService: ItemService,
               private router: Router,
-              private languageService: LanguageService) {
-    this.languages = languageService.languages();
-    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-      this.selectedLanguage = selectedLanguage;
-      this.category.selectedTranslation = this.category.translations.find(translation =>
-        translation.languageCode === this.selectedLanguage.languageCode);
+              private itemService: ItemService) {
 
-      if(!this.category.selectedTranslation) {
-        this.category.selectedTranslation = new CategoryTranslations('',this.selectedLanguage.languageCode);
-        this.category.translations.push(this.category.selectedTranslation);
-      }
-    });
-    this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-    this.languageService.announceSupportedLanguages(this.supportedLanguages);
   }
 
   getCategory(id: number): void {
-	  this.categoryService.getCategory(id).subscribe(
-	    category => {
-	      this.category = category;
-        this.supportedLanguages = category.supportedLanguages;
-        this.category.selectedTranslation = category.translations[0];
-        this.selectedLanguage = this.languages.find(language =>
-          language.languageCode === this.category.selectedTranslation.languageCode);
-        this.languageService.announceSupportedLanguages(this.supportedLanguages);
-        this.languageService.announceSelectedLanguage(this.selectedLanguage);
-				this.category.items.forEach(item => {
-					item.selectedTranslation = item.translations[0];
-				});
-				this.category.items.sort(compareItem);
+    this.categoryService.getCategory(id).subscribe(
+      category => {
+        this.category = category;
         this.getItems();
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        this.category.items.forEach(item => {
+          item.selectedTranslation = item.translations[0];
+        });
       },
       error => {
         this.errorMessage = <any>error;
@@ -102,17 +78,17 @@ export class CategoryComponent implements OnInit {
 	}
 
   ngOnInit(): void {
-      this.route.params.forEach((params: Params) => {
-			if (params['id']) {
-			  this.getCategory(params['id']);
-				this.create = false;
-			} else {
+    this.route.params.forEach((params: Params) => {
+      if (params['id']) {
+        this.getCategory(params['id']);
+        this.create = false;
+      } else {
+        let translation = new CategoryTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
+        this.category = new Category([translation], translation, []);
         this.getItems();
-        let translation = new CategoryTranslations('', this.supportedLanguages[0].languageCode);
-        this.category = new Category(this.supportedLanguages, [translation], translation, []);
-				this.create = true;
+        this.create = true;
       }
-		});
+    });
   }
 
 	addItemToCategory(item: Item): void {
@@ -132,6 +108,16 @@ export class CategoryComponent implements OnInit {
   }
 
   // 'Create' button functionality
+  onSelectLanguage(language: Language) {
+    let restaurantTranslation = this.category.translations.find(translation =>
+    translation.languageCode === language.languageCode);
+    if (!restaurantTranslation) {
+      restaurantTranslation = new CategoryTranslations('', language.languageCode);
+      this.category.translations.push(restaurantTranslation);
+    }
+    this.category.selectedTranslation = restaurantTranslation;
+  }
+
   addAndUpdate(): void {
     if (this.create) {
       this.add();
@@ -141,7 +127,6 @@ export class CategoryComponent implements OnInit {
   }
 
   add(): void {
-
     // calling add categoryService
     this.categoryService.addCategory(this.category).subscribe(
       generalResponse => {
@@ -151,7 +136,6 @@ export class CategoryComponent implements OnInit {
         this.errorMessage = <any> error;
       }
     );
-
   }
 
   update(): void {
@@ -173,7 +157,7 @@ export class CategoryComponent implements OnInit {
   delete(): void {
     this.categoryService.deleteCategory(this.category).subscribe(
       generalResponse => {
-        console.log('response', generalResponse );
+        console.log('response', generalResponse);
         this.router.navigate(['/dashboard/categories']);
       },
       error => {
@@ -181,32 +165,8 @@ export class CategoryComponent implements OnInit {
       }
     );
   }
-
-  addLanguage() {
-    let language = this.supportedLanguages.find(language => language.languageCode === this.addedLanguage);
-    if(language) {
-      console.log('Language is already supported.');
-      return;
-    }
-    language = this.languages.find(language => language.languageCode === this.addedLanguage);
-    this.supportedLanguages.push(language);
-    let newTranslation = new CategoryTranslations('', language.languageCode);
-    this.category.translations.push(newTranslation);
-  }
-
-  removeLanguage(language: Language) {
-    if(this.supportedLanguages.length < 1) {
-      console.log('At least one language is required.');
-    }
-    let i = this.supportedLanguages.indexOf(language);
-    this.supportedLanguages.splice(i, 1);
-    let removedTranslation = this.category.translations.find(translation =>
-      translation.languageCode === language.languageCode);
-    let j = this.category.translations.indexOf(removedTranslation);
-    this.category.translations.splice(j, 1);
-  }
-
 }
+
 
 function compareItem(item1: Item, item2: Item) {
   if (item1.selectedTranslation.name < item2.selectedTranslation.name) {
@@ -216,4 +176,12 @@ function compareItem(item1: Item, item2: Item) {
 	} else {
 		return 0;
 	}
+}
+
+function hasError(element: HTMLInputElement) {
+  element.className += ' form-error';
+}
+
+function hasNoError(element: HTMLInputElement) {
+  element.className = element.className.replace(/\bform-error\b/, '');
 }

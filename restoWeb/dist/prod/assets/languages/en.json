@@ -63,7 +63,7 @@
     "geninfoTitle": "General Information",
     "paymethTitle": "Payment Methods",
     "openhourTitle": "Opening Hours",
-    "langTitle": "Languages",
+    "langTitle": "Restaurants service offered in the languages below:",
     "menuTitle": "Menu",
     "createButtonTopbar": "Create",
     "cancelButtonTopbar": "Cancel",
@@ -86,7 +86,7 @@
     "ohSaturday": "Saturday",
     "ohSunday": "Sunday",
     "ohTimeconflictAlert":"Time Conflict",
-    "langSelect":"Select a language:",
+    "langSelect":"Select a supported language to add:",
     "addLangButton": "Add",
     "nomenuButton":"No Menu",
     "addRemoveButton":"Add/Remove Menu",
@@ -157,5 +157,13 @@
     "foodItemChangeImgMsg":"Change Image",
     "foodItemSelectCroppedImgMsg":"Select Cropped Image",
     "foodItemRecroppedImgMsg":"Re-crop Image"
+  },
+
+  "setting": {
+    "titleManage": "Account Settings",
+    "sousTitleManage":"Make changes below and then select the save button to persist the changes",
+    "supportedLanguage": "Supported Languages",
+    "save": "Save"
+
   }
 }

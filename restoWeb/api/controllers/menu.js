@@ -1,10 +1,10 @@
 var models = require("../../database/models");
 var menuModel;
 var categoryModel;
-var menuLanguageModel;
-var  menuCategoryModel;
+var menuCategoryModel;
 var categoryLanguageModel;
 var categoryTranslationModel;
+var menuTranslationsModel;
 var _ = require('lodash');
 
 
@@ -19,14 +19,12 @@ module.exports = {
   setDatabase: setDatabase
 };
 
-function setDatabase (m) {
+function setDatabase(m) {
   models = m;
   menuModel = models.getMenuModel();
   categoryModel = models.getCategoryModel();
-  menuLanguageModel = models.getMenuLanguageModel();
   menuTranslationsModel = models.getMenuTranslationsModel();
   menuCategoryModel = models.getMenuCategoryModel();
-  categoryLanguageModel = models.getCategoryLanguageModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
 }
 
@@ -38,8 +36,8 @@ function getAllMenu(req, res) {
       model: menuTranslationsModel,
       as: 'translations'
     }]
-}).then(function(menus) {
-    return res.json({ menus: menus });
+  }).then(function (menus) {
+    return res.json({menus: menus});
   });
 }
 
@@ -50,13 +48,10 @@ function saveMenu(req, res) {
 
   return menuModel.create(menu, {
     include: [{
-      model: menuLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: menuTranslationsModel,
       as: 'translations'
     }]
-  }).then(function(result) {
+  }).then(function (result) {
     var menuCategoryAssociations = [];
     menu.categories.forEach(function (category) {
       menuCategoryAssociations.push({menuId: result.id, categoryId: category.id});
@@ -75,22 +70,17 @@ function getMenu(req, res) {
       userId: req.userId
     },
     include: [{
-      model: menuLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: menuTranslationsModel,
       as: 'translations'
     }, {
       model: categoryModel,
       as: 'categories',
       include: [{
-        model: categoryLanguageModel,
-        as: 'supportedLanguages'
-      }, {
         model: categoryTranslationModel,
         as: 'translations'
       }]
-  }]}).then(function(menu) {
+    }]
+  }).then(function (menu) {
     if (menu) {
       res.json(menu);
     } else {
@@ -109,19 +99,13 @@ function updateMenu(req, res) {
       userId: req.userId
     },
     include: [{
-      model: menuLanguageModel,
-      as: 'supportedLanguages'
-    }, {
       model: menuTranslationsModel,
       as: 'translations'
-    },  {
+    }, {
       model: categoryModel,
       as: 'categories'
     }]
   }).then(function (oldMenu) {
-
-    var languagesToRemove = _.differenceBy(oldMenu.supportedLanguages, menu.supportedLanguages, 'languageCode');
-    var languagesToAdd = _.differenceBy(menu.supportedLanguages, oldMenu.supportedLanguages, 'languageCode');
 
     var categoriesToAdd = _.differenceBy(menu.categories, oldMenu.categories, 'id');
     var categoriesToRemove = _.differenceBy(oldMenu.categories, menu.categories, 'id');
@@ -138,17 +122,21 @@ function updateMenu(req, res) {
     })
 
     for (var prop in menu) {
-      if(prop != 'translations')
-          oldMenu[prop] = menu[prop];
+      if (prop != 'translations')
+        oldMenu[prop] = menu[prop];
     }
 
-    oldMenu.translations.forEach(function(translation) {
-      var newTranslation = _.find(menu.translations, function (tr) {return tr.languageCode === translation.languageCode});
+    oldMenu.translations.forEach(function (translation) {
+      var newTranslation = _.find(menu.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
       for (var prop in newTranslation) {
-          translation[prop] = newTranslation[prop];
+        translation[prop] = newTranslation[prop];
       }
       translation.save();
-      _.remove(menu.translations, function (tr) {return tr.languageCode === translation.languageCode});
+      _.remove(menu.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
     });
 
     menu.translations.forEach(function (translation) {
@@ -158,20 +146,9 @@ function updateMenu(req, res) {
     menuTranslationsModel.bulkCreate(menu.translations);
 
     oldMenu.save().then(function (result) {
-      languagesToRemove.forEach(function (language) {
-        menuLanguageModel.destroy({where: {'languageCode': language.languageCode, 'menuId': menu.id}});
-        menuTranslationsModel.destroy({where: {'languageCode': language.languageCode, 'menuId': menu.id}});
-        _.remove(oldMenu.translations, function (translation) { return translation.languageCode == language.languageCode});
-      })
-
-      languagesToAdd.forEach(function (language) {
-        language.menuId = menu.id;
-      })
-
       menuLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
         return res.json({success: 1, description: 'Menu Updated'});
       })
-
     });
   });
 }
@@ -184,7 +161,7 @@ function delMenu(req, res) {
       id: id,
       userId: req.userId
     }
-  }).then(function(result) {
+  }).then(function (result) {
     return res.json({success: 1, description: "Menu Deleted"});
   });
 }
