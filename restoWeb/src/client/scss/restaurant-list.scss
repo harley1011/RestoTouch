@@ -3,7 +3,7 @@
     height: 100%;
     position: absolute;
     min-width: 90%;
-    overflow-x: hidden;   
+    overflow-x: hidden;
 }
 
 .restaurantListContainer {
@@ -11,9 +11,9 @@
 }
 
 .manage-header {
-//    background-color: #cae4e4; 
-    padding: 40px 30px 5px;
-    
+//    background-color: #cae4e4;
+    padding: 30px 30px 5px;
+
     .subtitle {
         color: #777;
         margin-top: -5px;
@@ -33,7 +33,7 @@
     border-right: 0;
     border-left: 0;
     border-radius: 0;
-    background: transparent;  
+    background: transparent;
 }
 
 .new-card-2 {
@@ -72,5 +72,5 @@
 }
 
 .label-menu-name {
-    margin-right: 5px;   
+    margin-right: 5px;
 }
