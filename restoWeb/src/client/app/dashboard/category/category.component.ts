@@ -32,6 +32,7 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategory(id).subscribe(
       category => {
         this.category = category;
+        this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.category.items.forEach(item => {
           item.selectedTranslation = item.translations[0];
@@ -78,13 +79,13 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
-      this.getItems();
       if (params['id']) {
         this.getCategory(params['id']);
         this.create = false;
       } else {
         let translation = new CategoryTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
         this.category = new Category([translation], translation, []);
+        this.getItems();
         this.create = true;
       }
     });

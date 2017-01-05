@@ -76,7 +76,7 @@ function addCategory(req, res) {
       model: categoryTranslationModel,
       as: 'translations'
     }]
-  }).then(function(result) {
+  }).then(function (result) {
     var itemCategoryAssociations = [];
     category.items.forEach(function (item) {
       itemCategoryAssociations.push({itemId: item.id, categoryId: result.id});
@@ -117,49 +117,46 @@ function updateCategory(req, res) {
     }]
   }).then(function (oldCategory) {
 
+    var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
+    var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
+
+    var itemCategoryAssociations = [];
+    itemsToAdd.forEach(function (item) {
+      itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
+    });
+    itemCategoryModel.bulkCreate(itemCategoryAssociations);
+
+    itemsToRemove.forEach(function (item) {
+      itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
+    });
+
     for (var prop in category) {
       if (prop != 'translations')
-        var itemsToRemove = _.differenceBy(oldCategory.items, category.items, 'id');
-      var itemsToAdd = _.differenceBy(category.items, oldCategory.items, 'id');
+        oldCategory[prop] = category[prop];
+    }
 
-      for (var prop in category) {
-        if (prop != 'translations')
-          oldCategory[prop] = category[prop];
+    oldCategory.translations.forEach(function (translation) {
+      var newTranslation = _.find(category.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
+      for (var prop in newTranslation) {
+        translation[prop] = newTranslation[prop];
       }
-
-      var itemCategoryAssociations = [];
-      itemsToAdd.forEach(function (item) {
-        itemCategoryAssociations.push({itemId: item.id, categoryId: oldCategory.id});
+      translation.save();
+      _.remove(category.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
       });
-      itemCategoryModel.bulkCreate(itemCategoryAssociations);
+    });
 
-      itemsToRemove.forEach(function (item) {
-        itemCategoryModel.destroy({where: {itemId: item.id, categoryId: oldCategory.id}});
-      });
+    category.translations.forEach(function (translation) {
+      translation.categoryId = category.id;
+    });
 
-      oldCategory.translations.forEach(function (translation) {
-        var newTranslation = _.find(category.translations, function (tr) {
-          return tr.languageCode === translation.languageCode
-        });
-        for (var prop in newTranslation) {
-          translation[prop] = newTranslation[prop];
-        }
-        translation.save();
-        _.remove(category.translations, function (tr) {
-          return tr.languageCode === translation.languageCode
-        });
-      });
+    categoryTranslationModel.bulkCreate(category.translations);
 
-      category.translations.forEach(function (translation) {
-        translation.categoryId = category.id;
-      });
+    oldCategory.save().then(function (result) {
+      return res.json({success: 1, description: 'Category Updated'});
+    });
 
-      categoryTranslationModel.bulkCreate(category.translations);
-
-      oldCategory.save().then(function (result) {
-        return res.json({success: 1, description: 'Category Updated'});
-      });
-    }}
-    )
-
+  });
 }
