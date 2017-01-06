@@ -35,7 +35,7 @@ function getS3UploadImageKey(req, res) {
     Bucket: S3_BUCKET,
     Key: uuidGen,
     Expires: 60,
-    ContentType: 'image/png',
+    ContentType: fileType,
     ACL: 'public-read'
   };
 
