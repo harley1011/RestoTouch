@@ -35,6 +35,13 @@ function getAllMenu(req, res) {
     include: [{
       model: menuTranslationsModel,
       as: 'translations'
+    }, {
+      model: categoryModel,
+      as: 'categories',
+      include: [{
+        model: categoryTranslationModel,
+        as: 'translations'
+      }]
     }]
   }).then(function (menus) {
     return res.json({menus: menus});
@@ -146,9 +153,7 @@ function updateMenu(req, res) {
     menuTranslationsModel.bulkCreate(menu.translations);
 
     oldMenu.save().then(function (result) {
-      menuLanguageModel.bulkCreate(languagesToAdd).then(function (result) {
-        return res.json({success: 1, description: 'Menu Updated'});
-      })
+      return res.json({success: 1, description: 'Menu Updated'});
     });
   });
 }

@@ -71,6 +71,7 @@ export class MenuComponent implements OnInit {
           }
         } );
         this.availableCategories = categories;
+        console.log(this.availableCategories);
       },
       error => {
         this.errorMessage = <any>error;

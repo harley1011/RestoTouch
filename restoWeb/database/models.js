@@ -231,4 +231,3 @@ exports.getIngredientGroupModel = function () {
 exports.getSupportedLanguageModel = function () {
   return supportedLanguageModel;
 }
-
