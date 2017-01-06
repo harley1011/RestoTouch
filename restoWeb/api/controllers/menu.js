@@ -7,6 +7,7 @@ var categoryTranslationModel;
 var menuTranslationsModel;
 var itemModel;
 var itemTranslationModel;
+var itemCategoryModel;
 var _ = require('lodash');
 
 
@@ -30,6 +31,7 @@ function setDatabase(m) {
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
   itemTranslationModel = models.getItemTranslationModel();
+  itemCategoryModel = models.getItemCategoryModel();
 }
 
 //GET /menu
@@ -97,6 +99,9 @@ function getMenu(req, res) {
           as: 'translations'
         }]
       }]
+    }, {
+      model: itemCategoryModel,
+      as: 'disabledCategoryItems'
     }]
   }).then(function (menu) {
     if (menu) {

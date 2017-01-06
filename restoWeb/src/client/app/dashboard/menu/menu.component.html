@@ -52,22 +52,6 @@
               </ul>
             </li>
           </ul>
-          <!--<div *ngFor="let category of menu.categories" class="added-categories">
-            <div class="added-category">
-              <div>
-                <i class="fa fa-chevron-up increase-decrease-order-icon" (click)="changeOrder(category, -1)"></i>
-                <i class="fa fa-chevron-down increase-decrease-order-icon" (click)="changeOrder(category, 1)"></i>
-              </div>
-              <div class="added-categories-name">
-                {{category.translations[0].name}}
-                <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
-                   (click)="removeCategoryFromMenu(category)"></i>
-              </div>
-            </div>
-            <div class="category-items">
-              <div *ngFor="let item of category.items" class="list-group-item"> {{item.translations[0].name}}</div>
-            </div>
-          </div>-->
           <div [hidden]="menu.categories.length != 0">
             <i class="fa fa-exclamation-circle"></i> Add some categories to this menu
           </div>
