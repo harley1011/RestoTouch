@@ -21,8 +21,6 @@ export class MenuComponent implements OnInit {
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Array<Category> = [];// This is the Available Category List
-  menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
-  categoriesInDb: Array<Category> = [];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -71,7 +69,6 @@ export class MenuComponent implements OnInit {
           }
         } );
         this.availableCategories = categories;
-        console.log(this.availableCategories);
       },
       error => {
         this.errorMessage = <any>error;
@@ -122,6 +119,7 @@ export class MenuComponent implements OnInit {
      this.menu.categories[currentIndex] = this.menu.categories[newIndex];
      this.menu.categories[newIndex] = category;
   }
+
   addCategoryToMenu(category: Category): void {
     this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
     this.menu.categories.push(category);

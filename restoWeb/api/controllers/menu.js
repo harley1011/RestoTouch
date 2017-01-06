@@ -5,6 +5,8 @@ var menuCategoryModel;
 var categoryLanguageModel;
 var categoryTranslationModel;
 var menuTranslationsModel;
+var itemModel;
+var itemTranslationModel;
 var _ = require('lodash');
 
 
@@ -26,6 +28,8 @@ function setDatabase(m) {
   menuTranslationsModel = models.getMenuTranslationsModel();
   menuCategoryModel = models.getMenuCategoryModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
+  itemModel = models.getItemModel();
+  itemTranslationModel = models.getItemTranslationModel();
 }
 
 //GET /menu
@@ -85,6 +89,13 @@ function getMenu(req, res) {
       include: [{
         model: categoryTranslationModel,
         as: 'translations'
+      }, {
+        model: itemModel,
+        as: 'items',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
       }]
     }]
   }).then(function (menu) {
