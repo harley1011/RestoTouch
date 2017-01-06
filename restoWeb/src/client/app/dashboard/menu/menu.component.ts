@@ -4,6 +4,7 @@ import {MenuService} from './menu.service';
 import {Category} from '../../shared/models/category';
 import {CategoryService} from '../category/category.service';
 import {Menu, MenuTranslations} from '../../shared/models/menu';
+import {Item} from '../../shared/models/items';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -155,6 +156,10 @@ export class MenuComponent implements OnInit {
   removeCategoryFromMenu(category: Category): void {
     this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
     this.availableCategories.push(category);
+  }
+
+  selectItem(item: Item, category: Category): void {
+    console.log('select item ' + item.id + ' and category ' + category.id);
   }
 }
 

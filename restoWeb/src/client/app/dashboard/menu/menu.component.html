@@ -47,7 +47,7 @@
               <div class="category-separator"></div>
               <ul class="category-items">
                 <li *ngFor="let item of category.items">
-                  <label><input type="checkbox"> {{item.translations[0].name}}</label>
+                  <label><input type="checkbox" (change)="selectItem(item, category)"> {{item.translations[0].name}}</label>
                 </li>
               </ul>
             </li>
