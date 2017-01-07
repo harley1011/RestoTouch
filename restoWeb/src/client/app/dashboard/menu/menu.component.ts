@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Array<Category> = []; // This is the Available Category List
-  itemCategories: Array<CategoryCheckboxList> = []; //list of all ItemCategory objects related to the categories in the menu
+  itemCategories: Array<CategoryCheckboxList> = [];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -87,7 +87,6 @@ export class MenuComponent implements OnInit {
     let catCheckList: CategoryCheckboxList;
     let itemCheck: ItemCheckbox;
     let itemCategory: ItemCategory;
-    console.log(this.menu);
     this.menu.categories.forEach(function (category) {
       catCheckList = new CategoryCheckboxList(category, []);
       category.items.forEach(function (item) {
@@ -201,6 +200,7 @@ export class MenuComponent implements OnInit {
   }
 
   selectItem(catCheckList: CategoryCheckboxList, itemCheck: ItemCheckbox): void {
+    var enabled = itemCheck.enabled;
     console.log('select item ' + itemCheck.item.id + ' and category ' + catCheckList.category.id);
   }
 }
