@@ -11,6 +11,7 @@ export class CategoryCheckboxList {
 export class ItemCheckbox {
   constructor (
     public item: Item,
+    public itemCategoryId: number,
     public enabled: boolean
   ) { }
 }

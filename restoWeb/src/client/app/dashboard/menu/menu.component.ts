@@ -91,7 +91,7 @@ export class MenuComponent implements OnInit {
     this.menu.categories.forEach(function (category) {
       catCheckList = new CategoryCheckboxList(category, []);
       category.items.forEach(function (item) {
-        itemCheck = new ItemCheckbox(item, true);
+        itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
 
         for (var i = 0; i < self.menu.disabledCategoryItems.length; i++) {
           itemCategory = self.menu.disabledCategoryItems[i]
@@ -160,7 +160,7 @@ export class MenuComponent implements OnInit {
     var catCheckList = new CategoryCheckboxList(category, []);
     let itemCheck: ItemCheckbox;
     category.items.forEach(function (item) {
-      itemCheck = new ItemCheckbox(item, true);
+      itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
       catCheckList.items.push(itemCheck);
     });
     this.itemCategories.push(catCheckList);
@@ -222,7 +222,7 @@ export class MenuComponent implements OnInit {
       }
     } else {
       this.menu.disabledCategoryItems.push(
-        new ItemCategory(itemCheck.item.id, catCheckList.category.id)
+        new ItemCategory(itemCheck.item.id, catCheckList.category.id, itemCheck.itemCategoryId)
       );
     }
   }

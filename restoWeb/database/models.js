@@ -146,13 +146,13 @@ userModel.sync({force: dropTable}).then(function () {
         as: 'menus',
         through: disabledMenuItemCategoryModel,
         onDelete: 'cascade',
-        foreignKey: "menuId"
+        foreignKey: "categoryItemId"
       });
       menuModel.belongsToMany(itemCategoryModel, {
         as: 'disabledCategoryItems',
         through: disabledMenuItemCategoryModel,
         onDelete: 'cascade',
-        foreignKey: "categoryItemId"
+        foreignKey: "menuId"
       });
       disabledMenuItemCategoryModel.sync({force: dropTable});
     });

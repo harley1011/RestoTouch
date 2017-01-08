@@ -72,6 +72,13 @@ function saveMenu(req, res) {
       menuCategoryAssociations.push({menuId: result.id, categoryId: category.id});
     })
     menuCategoryModel.bulkCreate(menuCategoryAssociations);
+
+    var menuItemCategoryAssociations = [];
+    menu.disabledCategoryItems.forEach(function (itemCategory) {
+      menuItemCategoryAssociations.push({menuId: result.id, categoryItemId: itemCategory.id});
+    });
+    disabledMenuItemCategoryModel.bulkCreate(menuItemCategoryAssociations);
+
     return res.json({success: 1, description: "Menu Added"});
   });
 }
@@ -150,11 +157,11 @@ function updateMenu(req, res) {
       menuCategoryModel.destroy({where: {menuId: oldMenu.id, categoryId: category.id}});
     })
 
-    /*var menuItemCategoryAssociations = [];
+    var menuItemCategoryAssociations = [];
     itemCategoriesToAdd.forEach(function (itemCategory) {
       menuItemCategoryAssociations.push({menuId: oldMenu.id, categoryItemId: itemCategory.id});
     });
-    disabledMenuItemCategoryModel.bulkCreate(menuItemCategoryAssociations);*/
+    disabledMenuItemCategoryModel.bulkCreate(menuItemCategoryAssociations);
 
     itemCategoriesToRemove.forEach(function (itemCategory) {
       disabledMenuItemCategoryModel.destroy({where: {menuId: oldMenu.id, categoryItemId: itemCategory.id}});
