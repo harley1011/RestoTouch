@@ -75,6 +75,7 @@ export class MenuComponent implements OnInit {
           }
         } );
         this.availableCategories = categories;
+        this.availableCategories.sort(compareCategory);
       },
       error => {
         this.errorMessage = <any>error;
@@ -103,6 +104,7 @@ export class MenuComponent implements OnInit {
         catCheckList.items.push(itemCheck);
       });
 
+      catCheckList.items.sort(compareItemCheckbox);
       self.itemCategories.push(catCheckList);
     });
   }
@@ -162,6 +164,7 @@ export class MenuComponent implements OnInit {
       itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
       catCheckList.items.push(itemCheck);
     });
+    catCheckList.items.sort(compareItemCheckbox);
     this.itemCategories.push(catCheckList);
   }
 
@@ -196,6 +199,7 @@ export class MenuComponent implements OnInit {
     var category = catCheckList.category;
     this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
     this.availableCategories.push(category);
+    this.availableCategories.sort(compareCategory);
     this.itemCategories.splice(this.itemCategories.indexOf(catCheckList), 1);
 
     let itemCategory: ItemCategory;
@@ -227,6 +231,25 @@ export class MenuComponent implements OnInit {
   }
 }
 
+function compareCategory (cat1: Category, cat2: Category) {
+  if (cat1.translations[0].name < cat2.translations[0].name) {
+    return -1;
+  } else if (cat1.translations[0].name > cat2.translations[0].name) {
+    return 1;
+	} else {
+		return 0;
+	}
+}
+
+function compareItemCheckbox (item1: ItemCheckbox, item2: ItemCheckbox) {
+  if (item1.item.translations[0].name < item2.item.translations[0].name) {
+    return -1;
+  } else if (item1.item.translations[0].name > item2.item.translations[0].name) {
+    return 1;
+	} else {
+		return 0;
+	}
+}
 
 function validateInputs() {
 
