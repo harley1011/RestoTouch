@@ -121,11 +121,6 @@ export class MenuComponent implements OnInit {
 
   // 'Create' button functionality
   addAndUpdate(): void {
-
-    var values = validateInputs();
-    if (values === null) return;
-    this.menu.selectedTranslation.name = values['name'];
-
     if (this.create) {
       this.add();
     } else {
@@ -249,39 +244,4 @@ function compareItemCheckbox (item1: ItemCheckbox, item2: ItemCheckbox) {
 	} else {
 		return 0;
 	}
-}
-
-function validateInputs() {
-
-  var validationError = false;
-
-  var nameValue = validateInput('name', null);
-  if (nameValue === null) validationError = true;
-
-  if (validationError) return null;
-
-  return {
-    name: nameValue,
-  };
-
-}
-
-function validateInput(id: string, callback: any) {
-  var input = (<HTMLInputElement>document.getElementById(id));
-  var value = input.value;
-  if (value === '' || (callback && !callback(input, value))) {
-    hasError(input);
-    return null;
-  }
-
-  hasNoError(input);
-  return value;
-}
-
-function hasError(element: HTMLInputElement) {
-  element.className += ' form-error';
-}
-
-function hasNoError(element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/, '');
 }
