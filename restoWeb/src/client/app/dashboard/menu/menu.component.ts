@@ -68,7 +68,6 @@ export class MenuComponent implements OnInit {
   getCategories(): void {
     this.categoryService.getCategories().subscribe(
       categories => {
-        console.log(categories);
         this.menu.categories.forEach(menuCategory => {
           let categoryToRemove = categories.find(category => menuCategory.id === category.id);
           if (categoryToRemove) {
