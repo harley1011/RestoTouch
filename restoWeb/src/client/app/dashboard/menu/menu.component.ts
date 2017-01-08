@@ -197,11 +197,33 @@ export class MenuComponent implements OnInit {
     this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
     this.availableCategories.push(category);
     this.itemCategories.splice(this.itemCategories.indexOf(catCheckList), 1);
+
+    let itemCategory: ItemCategory;
+    for (var i = 0; i < this.menu.disabledCategoryItems.length; i++) {
+      itemCategory = this.menu.disabledCategoryItems[i];
+      if (itemCategory.categoryId === catCheckList.category.id) {
+        this.menu.disabledCategoryItems.splice(i--, 1);
+      }
+    }
   }
 
   selectItem(catCheckList: CategoryCheckboxList, itemCheck: ItemCheckbox): void {
     var enabled = itemCheck.enabled;
-    console.log('select item ' + itemCheck.item.id + ' and category ' + catCheckList.category.id);
+    let itemCategory: ItemCategory;
+    if (enabled) {
+      for (var i = 0; i < this.menu.disabledCategoryItems.length; i++) {
+        itemCategory = this.menu.disabledCategoryItems[i];
+        if (itemCategory.itemId === itemCheck.item.id &&
+          itemCategory.categoryId === catCheckList.category.id) {
+          this.menu.disabledCategoryItems.splice(i, 1);
+          break;
+        }
+      }
+    } else {
+      this.menu.disabledCategoryItems.push(
+        new ItemCategory(itemCheck.item.id, catCheckList.category.id)
+      );
+    }
   }
 }
 
