@@ -5,6 +5,10 @@ var menuCategoryModel;
 var categoryLanguageModel;
 var categoryTranslationModel;
 var menuTranslationsModel;
+var itemModel;
+var itemTranslationModel;
+var itemCategoryModel;
+var disabledMenuItemCategoryModel;
 var _ = require('lodash');
 
 
@@ -26,6 +30,10 @@ function setDatabase(m) {
   menuTranslationsModel = models.getMenuTranslationsModel();
   menuCategoryModel = models.getMenuCategoryModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
+  itemModel = models.getItemModel();
+  itemTranslationModel = models.getItemTranslationModel();
+  itemCategoryModel = models.getItemCategoryModel();
+  disabledMenuItemCategoryModel = models.getDisabledMenuItemCategoryModel();
 }
 
 //GET /menu
@@ -64,6 +72,13 @@ function saveMenu(req, res) {
       menuCategoryAssociations.push({menuId: result.id, categoryId: category.id});
     })
     menuCategoryModel.bulkCreate(menuCategoryAssociations);
+
+    var menuItemCategoryAssociations = [];
+    menu.disabledCategoryItems.forEach(function (itemCategory) {
+      menuItemCategoryAssociations.push({menuId: result.id, categoryItemId: itemCategory.id});
+    });
+    disabledMenuItemCategoryModel.bulkCreate(menuItemCategoryAssociations);
+
     return res.json({success: 1, description: "Menu Added"});
   });
 }
@@ -85,7 +100,17 @@ function getMenu(req, res) {
       include: [{
         model: categoryTranslationModel,
         as: 'translations'
+      }, {
+        model: itemModel,
+        as: 'items',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
       }]
+    }, {
+      model: itemCategoryModel,
+      as: 'disabledCategoryItems'
     }]
   }).then(function (menu) {
     if (menu) {
@@ -111,22 +136,36 @@ function updateMenu(req, res) {
     }, {
       model: categoryModel,
       as: 'categories'
+    }, {
+      model: itemCategoryModel,
+      as: 'disabledCategoryItems'
     }]
   }).then(function (oldMenu) {
 
     var categoriesToAdd = _.differenceBy(menu.categories, oldMenu.categories, 'id');
     var categoriesToRemove = _.differenceBy(oldMenu.categories, menu.categories, 'id');
+    var itemCategoriesToAdd = _.differenceBy(menu.disabledCategoryItems, oldMenu.disabledCategoryItems, 'id');
+    var itemCategoriesToRemove = _.differenceBy(oldMenu.disabledCategoryItems, menu.disabledCategoryItems, 'id');
 
     var menuCategoryAssociations = [];
     categoriesToAdd.forEach(function (category) {
       menuCategoryAssociations.push({menuId: oldMenu.id, categoryId: category.id});
-    })
-
+    });
     menuCategoryModel.bulkCreate(menuCategoryAssociations);
 
     categoriesToRemove.forEach(function (category) {
       menuCategoryModel.destroy({where: {menuId: oldMenu.id, categoryId: category.id}});
     })
+
+    var menuItemCategoryAssociations = [];
+    itemCategoriesToAdd.forEach(function (itemCategory) {
+      menuItemCategoryAssociations.push({menuId: oldMenu.id, categoryItemId: itemCategory.id});
+    });
+    disabledMenuItemCategoryModel.bulkCreate(menuItemCategoryAssociations);
+
+    itemCategoriesToRemove.forEach(function (itemCategory) {
+      disabledMenuItemCategoryModel.destroy({where: {menuId: oldMenu.id, categoryItemId: itemCategory.id}});
+    });
 
     for (var prop in menu) {
       if (prop != 'translations')

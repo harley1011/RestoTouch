@@ -31,19 +31,27 @@
         </div>
         <div class="col-md-6">
           <label>Added Categories</label>
-          <div *ngFor="let category of menu.categories">
-            <div class="added-categories">
-              <div>
-                <i class="fa fa-chevron-up increase-decrease-order-icon" (click)="changeOrder(category, -1)"></i>
-                <i class="fa fa-chevron-down increase-decrease-order-icon" (click)="changeOrder(category, 1)"></i>
+          <ul class="added-categories">
+            <li *ngFor="let categoryCheckboxList of itemCategories; let i = index">
+              <div class="added-category">
+                <div>
+                  <i class="fa fa-chevron-up increase-decrease-order-icon" (click)="changeOrder(categoryCheckboxList, -1)"></i>
+                  <i class="fa fa-chevron-down increase-decrease-order-icon" (click)="changeOrder(categoryCheckboxList, 1)"></i>
+                </div>
+                <div class="added-category-name">
+                  {{categoryCheckboxList.category.translations[0].name}}
+                  <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                     (click)="removeCategoryFromMenu(categoryCheckboxList)"></i>
+                </div>
               </div>
-              <div class="added-categories-name">
-                {{category.translations[0].name}}
-                <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
-                   (click)="removeCategoryFromMenu(category)"></i>
-              </div>
-            </div>
-          </div>
+              <div class="category-separator"></div>
+              <ul class="category-items">
+                <li *ngFor="let itemCheckbox of categoryCheckboxList.items; let j = index">
+                  <label><input type="checkbox" name="itemCheck{{i}}{{j}}" [(ngModel)]="itemCheckbox.enabled" (change)="selectItem(categoryCheckboxList, itemCheckbox)"> {{itemCheckbox.item.translations[0].name}}</label>
+                </li>
+              </ul>
+            </li>
+          </ul>
           <div [hidden]="menu.categories.length != 0">
             <i class="fa fa-exclamation-circle"></i> Add some categories to this menu
           </div>

@@ -1,12 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
+import {CategoryCheckboxList, ItemCheckbox} from './category-checkbox-list';
 import {Category} from '../../shared/models/category';
 import {CategoryService} from '../category/category.service';
 import {Menu, MenuTranslations} from '../../shared/models/menu';
+import {Item} from '../../shared/models/items';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
+import {ItemCategory} from '../../shared/models/item-category';
 
 // This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({
@@ -20,12 +23,12 @@ export class MenuComponent implements OnInit {
   create: boolean;
   errorMessage: string;
   menu: Menu; // Menu has an array of selected categories that represent Category List
-  availableCategories: Array<Category> = [];// This is the Available Category List
-  menuCatUndefinedYet = true; // Because the html is accessing before i am able to push to this.menu.categories
-  categoriesInDb: Array<Category> = [];
+  availableCategories: Array<Category> = []; // This is the Available Category List
+  itemCategories: Array<CategoryCheckboxList> = [];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
+
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
               private menuService: MenuService,
@@ -42,7 +45,7 @@ export class MenuComponent implements OnInit {
       } else {
         this.getCategories();
         let translation = new MenuTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
-        this.menu = new Menu([translation], translation, []);
+        this.menu = new Menu([translation], translation, [], []);
         this.create = true;
       }
     });
@@ -54,6 +57,7 @@ export class MenuComponent implements OnInit {
         this.menu = menu;
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.getCategories();
+        this.initializeItemCategories();
       },
       error => {
         this.errorMessage = <any>error;
@@ -71,12 +75,38 @@ export class MenuComponent implements OnInit {
           }
         } );
         this.availableCategories = categories;
-        console.log(this.availableCategories);
+        this.availableCategories.sort(compareCategory);
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
+  }
+
+  initializeItemCategories(): void {
+    let self = this;
+    let catCheckList: CategoryCheckboxList;
+    let itemCheck: ItemCheckbox;
+    let itemCategory: ItemCategory;
+    this.menu.categories.forEach(function (category) {
+      catCheckList = new CategoryCheckboxList(category, []);
+      category.items.forEach(function (item) {
+        itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
+
+        for (var i = 0; i < self.menu.disabledCategoryItems.length; i++) {
+          itemCategory = self.menu.disabledCategoryItems[i]
+          if (itemCategory.categoryId === category.id && itemCategory.itemId === item.id) {
+            itemCheck.enabled = false;
+            break;
+          }
+        }
+
+        catCheckList.items.push(itemCheck);
+      });
+
+      catCheckList.items.sort(compareItemCheckbox);
+      self.itemCategories.push(catCheckList);
+    });
   }
 
   onSelectLanguage(language: Language) {
@@ -91,11 +121,6 @@ export class MenuComponent implements OnInit {
 
   // 'Create' button functionality
   addAndUpdate(): void {
-
-    var values = validateInputs();
-    if (values === null) return;
-    this.menu.selectedTranslation.name = values['name'];
-
     if (this.create) {
       this.add();
     } else {
@@ -114,17 +139,28 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  changeOrder(category: Category, changeIndex: number) {
-     let newIndex = ((this.menu.categories.indexOf(category) - 1 + changeIndex)
+  changeOrder(catCheckList: CategoryCheckboxList, changeIndex: number) {
+    var category = catCheckList.category;
+    let newIndex = ((this.menu.categories.indexOf(category) - 1 + changeIndex)
        % this.menu.categories.length + this.menu.categories.length) % this.menu.categories.length;
-     let currentIndex = this.menu.categories.indexOf(category);
+    let currentIndex = this.menu.categories.indexOf(category);
 
-     this.menu.categories[currentIndex] = this.menu.categories[newIndex];
-     this.menu.categories[newIndex] = category;
+    this.menu.categories[currentIndex] = this.menu.categories[newIndex];
+    this.menu.categories[newIndex] = category;
   }
+
   addCategoryToMenu(category: Category): void {
     this.availableCategories.splice(this.availableCategories.indexOf(category), 1);
     this.menu.categories.push(category);
+
+    var catCheckList = new CategoryCheckboxList(category, []);
+    let itemCheck: ItemCheckbox;
+    category.items.forEach(function (item) {
+      itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
+      catCheckList.items.push(itemCheck);
+    });
+    catCheckList.items.sort(compareItemCheckbox);
+    this.itemCategories.push(catCheckList);
   }
 
   update(): void {
@@ -154,44 +190,58 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  removeCategoryFromMenu(category: Category): void {
+  removeCategoryFromMenu(catCheckList: CategoryCheckboxList): void {
+    var category = catCheckList.category;
     this.menu.categories.splice(this.menu.categories.indexOf(category), 1);
     this.availableCategories.push(category);
+    this.availableCategories.sort(compareCategory);
+    this.itemCategories.splice(this.itemCategories.indexOf(catCheckList), 1);
+
+    let itemCategory: ItemCategory;
+    for (var i = 0; i < this.menu.disabledCategoryItems.length; i++) {
+      itemCategory = this.menu.disabledCategoryItems[i];
+      if (itemCategory.categoryId === catCheckList.category.id) {
+        this.menu.disabledCategoryItems.splice(i--, 1);
+      }
+    }
+  }
+
+  selectItem(catCheckList: CategoryCheckboxList, itemCheck: ItemCheckbox): void {
+    var enabled = itemCheck.enabled;
+    let itemCategory: ItemCategory;
+    if (enabled) {
+      for (var i = 0; i < this.menu.disabledCategoryItems.length; i++) {
+        itemCategory = this.menu.disabledCategoryItems[i];
+        if (itemCategory.itemId === itemCheck.item.id &&
+          itemCategory.categoryId === catCheckList.category.id) {
+          this.menu.disabledCategoryItems.splice(i, 1);
+          break;
+        }
+      }
+    } else {
+      this.menu.disabledCategoryItems.push(
+        new ItemCategory(itemCheck.item.id, catCheckList.category.id, itemCheck.itemCategoryId)
+      );
+    }
   }
 }
 
-
-function validateInputs() {
-
-  var validationError = false;
-
-  var nameValue = validateInput('name', null);
-  if (nameValue === null) validationError = true;
-
-  if (validationError) return null;
-
-  return {
-    name: nameValue,
-  };
-
+function compareCategory (cat1: Category, cat2: Category) {
+  if (cat1.translations[0].name < cat2.translations[0].name) {
+    return -1;
+  } else if (cat1.translations[0].name > cat2.translations[0].name) {
+    return 1;
+	} else {
+		return 0;
+	}
 }
 
-function validateInput(id: string, callback: any) {
-  var input = (<HTMLInputElement>document.getElementById(id));
-  var value = input.value;
-  if (value === '' || (callback && !callback(input, value))) {
-    hasError(input);
-    return null;
-  }
-
-  hasNoError(input);
-  return value;
-}
-
-function hasError(element: HTMLInputElement) {
-  element.className += ' form-error';
-}
-
-function hasNoError(element: HTMLInputElement) {
-  element.className = element.className.replace(/\bform-error\b/, '');
+function compareItemCheckbox (item1: ItemCheckbox, item2: ItemCheckbox) {
+  if (item1.item.translations[0].name < item2.item.translations[0].name) {
+    return -1;
+  } else if (item1.item.translations[0].name > item2.item.translations[0].name) {
+    return 1;
+	} else {
+		return 0;
+	}
 }

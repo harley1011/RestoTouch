@@ -1,5 +1,6 @@
 import { Language } from './language';
 import {Category} from './category';
+import {ItemCategory} from './item-category';
 
 export class Menu {
   //id: number;
@@ -7,6 +8,7 @@ export class Menu {
     public translations: Array<MenuTranslations>,
     public selectedTranslation: MenuTranslations,
     public categories: Array<Category>, // This menu will contain the list of selected categories.
+    public disabledCategoryItems: Array<ItemCategory>,
     public id?: number
 	) { }
 }
