@@ -195,7 +195,7 @@
       <div class="row">
         <div class="manage-button">
           <button type="submit" class="btn btn-success btn-green"
-                  [disabled]="!itemForm.form.valid || item.sizes.length == 0">{{ create? ('foodItem.createButtonTopbar'
+                  [disabled]="!itemForm.form.valid">{{ create? ('foodItem.createButtonTopbar'
             | translate) : ('foodItem.saveButton' | translate)}}
           </button>
           <button *ngIf="!create" type="button" (click)="deleteItem()" class="btn btn-danger btn-red">{{

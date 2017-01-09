@@ -133,6 +133,10 @@ export class ItemComponent implements OnInit {
 
   onSubmit() {
     this.uploading = true;
+    if (this.item.sizes.length == 0) {
+      alert('Please add at least one size to this item');
+      return;
+    }
     if (this.create) {
       var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
 
