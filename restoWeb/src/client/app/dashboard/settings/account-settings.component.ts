@@ -16,6 +16,7 @@ export class AccountSettingsComponent implements OnInit {
   accountSettings: AccountSettings;
   languages: Array<Language>;
   selectedLanguage: string;
+  hideSuccessMessage: boolean = true;
 
   constructor(private languageService: LanguageService,
               private translate: TranslateService,
@@ -33,6 +34,7 @@ export class AccountSettingsComponent implements OnInit {
   save(): void {
     this.accountSettingsService.updateAccountSettings(this.accountSettings).subscribe(generalResponse => {
       this.languageService.setSupportedLanguages(this.accountSettings.supportedLanguages);
+      this.hideSuccessMessage = false;
     });
   }
 
