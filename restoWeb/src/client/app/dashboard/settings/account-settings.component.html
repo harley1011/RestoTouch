@@ -9,12 +9,11 @@
     </div>
     <hr>
   </div>
-
   <div *ngIf="accountSettings" class="manage-list-container">
     <form id="restaurantForm" role="form" (ngSubmit)="save()">
-      <div id="resto-lang" class="edit-section"><br/>
+      <div id="resto-lang" class="edit-section">
         <div class="row">
-          <alert [hidden]="hideSuccessMessage" type="success">
+          <alert *ngIf="!hideSuccessMessage" type="success">
             {{ 'setting.saveSuccessMessage' | translate}}
           </alert>
           <div class="col col-md-6">
