@@ -28,7 +28,6 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('h');
   }
 
   save(): void {
