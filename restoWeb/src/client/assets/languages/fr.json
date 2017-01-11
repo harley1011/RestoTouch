@@ -157,5 +157,13 @@
     "foodItemChangeImgMsg":"Changer l'image",
     "foodItemSelectCroppedImgMsg":"Sauvegarder l'image cadrée",
     "foodItemRecroppedImgMsg":"Recadrer l'image"
+  },
+
+  "setting": {
+    "titleManage": "Paramètres du compte",
+    "sousTitleManage":"Effectuez les modifications ci-dessous, puis sélectionnez le bouton Enregistrer pour conserver les modifications",
+    "supportedLanguage": "Supported Languages",
+    "save": "Sauvegarder"
+
   }
 }
