@@ -3,17 +3,18 @@ import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
 import {Router, CanActivate, CanActivateChild} from '../restoWeb/@angular/router';
-import { NavController, NavParams, ionViewCanEnter, ionViewCanLeave } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
-import {User} from '../shared/models/user';
+import {User} from '../../../../restoCommon/shared/models/user';
 import {Observable}     from 'rxjs/Observable';
-import {GeneralResponse}  from '../shared/general.response';
+import {GeneralResponse}  from '../../../../restoCommon/shared/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';
+
 
 import 'rxjs/Rx';
 
 @Injectable()
-export class AuthService implements ionViewCanEnter, ionViewCanLeave {
+export class AuthService {
 
   public loggedInUser: User;
 
@@ -24,7 +25,7 @@ export class AuthService implements ionViewCanEnter, ionViewCanLeave {
     }
   }
 
-  canActivate() {
+  ionViewCanEnter() {
     if (!this.loggedInUser) {
       var data = localStorage.getItem('user');
       if (data !== null) {
@@ -35,7 +36,7 @@ export class AuthService implements ionViewCanEnter, ionViewCanLeave {
       return true;
     }
 
-    this.router.navigate(['/']);
+    this.router.push(['/']);
     return false;
 
   }
