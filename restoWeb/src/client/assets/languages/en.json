@@ -163,7 +163,8 @@
     "titleManage": "Account Settings",
     "sousTitleManage":"Make changes below and then select the save button to persist the changes",
     "supportedLanguage": "Supported Languages",
-    "save": "Save"
+    "save": "Save",
+    "saveSuccessMessage": "The changes below have been saved"
 
   }
 }

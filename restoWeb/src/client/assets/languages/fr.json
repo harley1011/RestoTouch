@@ -163,7 +163,7 @@
     "titleManage": "Paramètres du compte",
     "sousTitleManage":"Effectuez les modifications ci-dessous, puis sélectionnez le bouton Enregistrer pour conserver les modifications",
     "supportedLanguage": "Supported Languages",
-    "save": "Sauvegarder"
-
+    "save": "Sauvegarder",
+    "saveSuccessMessage": "Les changements ci-dessous ont été enregistrés"
   }
 }
