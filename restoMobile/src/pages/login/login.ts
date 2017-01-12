@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../services/auth.service';
 import { User } from '../shared/models/user';
+import {Validators, FormBuilder } from '@angular/forms';
 //import {ApiEndpointService} from '../services/api-endpoint.service';
 import { Page2 } from '../page2/page2';
 
@@ -22,8 +23,13 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public authService: AuthService) {
+              public authService: AuthService,
+             private formBuilder: FormBuilder) {
     //this.user = new User('', '', '', '', '');
+      this.user = this.formBuilder.group({
+        email: [''],
+          password: ['']
+      });
     //this.errorMessage = '';
   }
 
@@ -37,6 +43,7 @@ export class LoginPage {
 
   onSubmit() {
       console.log('LoginPage submitting');
+      console.log(this.user);
 //      this.navCtrl.push(Page2);
 
      this.authService.authenticateUser(this.user)

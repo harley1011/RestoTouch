@@ -7,11 +7,6 @@ export class ApiEndpointService {
 
   constructor() {
     console.log(this.env);
-    if (this.env === 'dev') {
-      this.apiEndpoint = 'http://localhost:10010';
-    } else {
-      this.apiEndpoint = '';
-    }
   }
 
   getEndpoint() {
