@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { User } from '../shared/models/user';
 //import {ApiEndpointService} from '../services/api-endpoint.service';
 import { Page2 } from '../page2/page2';
+import { RestaurantListPage } from '../restaurant-list/restaurant-list';
 
 /*
   Generated class for the Login page.
@@ -29,20 +30,13 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-//      this.authService.authenticateUser(this.user)
-//      .subscribe(generalResponse =>
-//          this.navCtrl.push(Page1)
-//        , error => this.errorMessage = error);
+
   }
 
   onSubmit() {
-      console.log('LoginPage submitting');
-      console.log(this.user);
-//      this.navCtrl.push(Page2);
-
      this.authService.authenticateUser(this.user)
        .subscribe(generalResponse =>
-           this.navCtrl.push(Page2)
+           this.navCtrl.push(RestaurantListPage)
          , error => this.errorMessage = error);
   }
 }
