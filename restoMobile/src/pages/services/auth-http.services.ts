@@ -1,6 +1,5 @@
 import {Http, RequestOptions, Headers, RequestOptionsArgs} from '@angular/http';
 import {Injectable}     from '@angular/core';
-import {Router} from '../restoWeb/@angular/router';
 import { NavController, NavParams } from 'ionic-angular';
 
 

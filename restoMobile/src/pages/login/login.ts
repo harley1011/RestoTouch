@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {User} from '../../../../restoCommon/shared/models/user';
-import {AuthService}       from '../services/auth.service';
+import {AuthService} from '../services/auth.service';
+import {ApiEndpointService} from '../services/api-endpoint.service';
 import { Page1 } from '../page1/page1';
 
 /*
@@ -12,7 +13,7 @@ import { Page1 } from '../page1/page1';
 */
 @Component({
   selector: 'page-login',
-    providers: [User, AuthService],
+    providers: [AuthService, User],
   templateUrl: 'login.html'
 })
 export class LoginPage {
@@ -25,6 +26,10 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+      this.authService.authenticateUser(this.user)
+      .subscribe(generalResponse =>
+          this.navCtrl.push(Page1)
+        , error => this.errorMessage = error);
   }
 
   onSubmit() {

@@ -2,7 +2,6 @@
 import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
-import {Router, CanActivate, CanActivateChild} from '../restoWeb/@angular/router';
 import { NavController, NavParams } from 'ionic-angular';
 
 import {User} from '../../../../restoCommon/shared/models/user';

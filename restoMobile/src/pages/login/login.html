@@ -9,16 +9,16 @@
 
 <ion-content padding>
     <h1>Hello</h1>
-    <form>
+    <form (ngSubmit)="onSubmit()">
     <ion-list>
       <ion-item>
-        <ion-label stacked>Username</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-label stacked>E-mail</ion-label>
+        <ion-input type="email" [(ngModel)]="user.email" name="email" #email="ngModel"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="user.password" name="password" #password="ngModel"></ion-input>
       </ion-item>
     </ion-list>
    <div padding>
