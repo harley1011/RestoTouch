@@ -16,8 +16,8 @@
 <ion-content padding>
 <ion-list>
     <button ion-item *ngFor="let restaurant of restaurants" (click)="itemTapped($event, item)">
-      {{restaurant.name}}
-      
+      {{restaurant.selectedTranslation ? restaurant.selectedTranslation.name : "No translation"}}}}
+      {{restaurant.address}}
     </button>
   </ion-list>
 </ion-content>

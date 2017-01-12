@@ -24,24 +24,24 @@ export class RestaurantListPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RestaurantListPage');
     this.getRestaurants();
-    console.log(this.restaurants);
-    console.log('num: ' + this.restaurants.length);
+//    console.log(this.restaurants);
+//    console.log('num: ' + this.restaurants.length);
     
   }
 
-getRestaurants(): void {
-    this.restaurantListService.getRestaurants().subscribe(
-      restaurants => {
-//        restaurants.forEach(restaurant => {
-//          restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-//        });
-        this.restaurants = restaurants;
-        this.numOfRestaurants = this.restaurants.length;
-      },
-      error => {
-        console.log(error);
+    getRestaurants(): void {
+        this.restaurantListService.getRestaurants().subscribe(
+          restaurants => {
+    //        restaurants.forEach(restaurant => {
+    //          restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+    //        });
+            this.restaurants = restaurants;
+            this.numOfRestaurants = this.restaurants.length;
+          },
+          error => {
+            console.log(error);
+          }
+        );
       }
-    );
-  }
 
 }
