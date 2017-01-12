@@ -1,16 +1,19 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { NavController, Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { LoginPage } from '../pages/login/login';
 import { Auth, User } from '@ionic/cloud-angular';
+import {ApiEndpointService} from '../pages/services/api-endpoint.service';
 
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+    providers: [AuthService, NavController, ApiEndpointService]
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
