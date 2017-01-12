@@ -4,18 +4,6 @@
           (change)="selectLanguage()">
     <option *ngFor="let language of supportedLanguages" [ngValue]="language">{{language.name}}
     </option>
+    <option [ngValue]="addNewLanguage">{{addNewLanguage.name}}</option>
   </select>
 </div>
-
-
-
-<!--<div class="dropdown" dropdown>-->
-  <!--<a href="javascript:;" id="lang-button" class="nav-link dropdown-toggle" dropdownToggle >-->
-    <!--<label>Selected Language: </label> {{selectedLanguage?.name}} <b class="caret"></b>-->
-  <!--</a>-->
-  <!--<ul class="dropdown-menu" aria-labelledby="lang-button">-->
-    <!--<li *ngFor="let language of supportedLanguages" class="dropdown-item" (click)="selectLanguage(language)">-->
-      <!--{{language.name}}-->
-    <!--</li>-->
-  <!--</ul>-->
-<!--</div>-->

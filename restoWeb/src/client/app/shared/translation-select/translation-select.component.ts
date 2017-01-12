@@ -12,6 +12,7 @@ export class TranslationSelectComponent implements OnInit {
   @Output() onSelectLanguage = new EventEmitter<Language>();
   selectedLanguage: Language;
   supportedLanguages: Array<Language> = [];
+  addNewLanguage = new Language('add', 'Add New Language', 'Add New Language', 1);
   constructor(private languageService: LanguageService) {
      this.languageService.getSupportedLanguages().subscribe(languages => {
        this.supportedLanguages = languages;
@@ -31,8 +32,12 @@ export class TranslationSelectComponent implements OnInit {
   }
 
   selectLanguage() {
-    this.languageService.setSelectedLanguage(this.selectedLanguage);
-    this.onSelectLanguage.emit(this.selectedLanguage);
+    if (this.selectedLanguage == this.addNewLanguage) {
+      console.log("Adding new language")
+    } else {
+      this.languageService.setSelectedLanguage(this.selectedLanguage);
+      this.onSelectLanguage.emit(this.selectedLanguage);
+    }
   }
 
 }
