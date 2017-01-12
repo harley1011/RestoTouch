@@ -1,9 +1,11 @@
 <div *ngIf="selectedLanguage">
   <label>{{ 'restaurant.langType2' | translate}}</label>
-  <select style="width: 200px; display: inline-block;" name="language" class="form-control" [(ngModel)]="selectedLanguage"
+  <select style="width: 200px; display: inline-block;" name="language" class="form-control"
+          [(ngModel)]="selectedLanguage"
           (change)="selectLanguage()">
     <option *ngFor="let language of supportedLanguages" [ngValue]="language">{{language.name}}
     </option>
     <option [ngValue]="addNewLanguage">{{addNewLanguage.name}}</option>
   </select>
+
 </div>

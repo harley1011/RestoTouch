@@ -2,6 +2,7 @@ import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Language} from '../models/language';
 import {LanguageService} from '../../services/language.service';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
+
 @Component({
   moduleId: module.id,
   selector: 'translation-select-cmp',
@@ -33,11 +34,13 @@ export class TranslationSelectComponent implements OnInit {
 
   selectLanguage() {
     if (this.selectedLanguage == this.addNewLanguage) {
-      console.log("Adding new language")
+      this.languageService.openModalPicker();
+      //this.dashboardComponent.childModal.show();
     } else {
       this.languageService.setSelectedLanguage(this.selectedLanguage);
       this.onSelectLanguage.emit(this.selectedLanguage);
     }
   }
+
 
 }

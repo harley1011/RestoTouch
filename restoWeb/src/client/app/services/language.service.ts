@@ -6,7 +6,6 @@ import {ReplaySubject} from 'rxjs/ReplaySubject';
 import  {ApiEndpointService} from './api-endpoint.service';
 import {AuthHttpService} from './auth-http.services';
 import {Response} from '@angular/http';
-
 @Injectable()
 export class LanguageService {
 
@@ -202,6 +201,7 @@ export class LanguageService {
     new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
   private replaySubjectLanguages = new ReplaySubject<Array<Language>>();
   private replaySubjectSelectedLanguage = new ReplaySubject<Language>();
+  private modalShow :any;
 
   constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
@@ -215,12 +215,20 @@ export class LanguageService {
       }
     );
   }
+
   getSelectedLanguage(): ReplaySubject<Language> {
     return this.replaySubjectSelectedLanguage;
   }
 
   languages(): Array<Language> {
     return this.isoLanguages;
+  }
+
+  openModalPicker() {
+    this.modalShow();
+  }
+  supplyLanguageModalPicker(modalShow: () => void) {
+    this.modalShow = modalShow;
   }
 
   announceSelectedLanguage(language: Language) {

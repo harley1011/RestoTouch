@@ -15,11 +15,12 @@ import {TranslateModule} from 'ng2-translate';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard.component';
 import {TopNavComponent, SidebarComponent} from '../shared/index';
-
+import { ModalModule } from 'ng2-bootstrap/modal';
 @NgModule({
   imports: [
     CommonModule,
     DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     RestaurantListModule,
     RestaurantModule,
     CategoryListModule,

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ItemListComponent } from './item-list.component';
 import {TranslateModule} from 'ng2-translate';
 import {TranslationSelectModule} from '../../shared/translation-select/translation-select.module';
+import {LanguageService} from '../../services/language.service';
 
 @NgModule({
     imports: [CommonModule, TranslateModule, FormsModule, TranslationSelectModule],
@@ -11,4 +12,9 @@ import {TranslationSelectModule} from '../../shared/translation-select/translati
     exports: [ItemListComponent]
 })
 
-export class ItemListModule { }
+export class ItemListModule {
+
+  constructor(private languageService: LanguageService) {
+
+  }
+}
