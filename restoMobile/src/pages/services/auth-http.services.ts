@@ -1,13 +1,11 @@
 import {Http, RequestOptions, Headers, RequestOptionsArgs} from '@angular/http';
 import {Injectable}     from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
 
 @Injectable()
 export class AuthHttpService {
   private accessToken: string;
 
-  constructor(private http: Http, private router: NavController) {
+  constructor(private http: Http) {
     this.accessToken = localStorage.getItem('authToken');
   }
 

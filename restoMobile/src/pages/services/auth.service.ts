@@ -2,8 +2,6 @@
 import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
-import { NavController, NavParams } from 'ionic-angular';
-
 import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
@@ -17,7 +15,7 @@ export class AuthService {
 
   public loggedInUser: User;
 
-  constructor(private http: Http, private router: NavController, private api: ApiEndpointService) {
+  constructor(private http: Http, private api: ApiEndpointService) {
     var data = localStorage.getItem('user');
     if (data !== null) {
       this.loggedInUser = JSON.parse(data);
@@ -35,7 +33,6 @@ export class AuthService {
       return true;
     }
 
-    this.router.push(['/']);
     return false;
 
   }
