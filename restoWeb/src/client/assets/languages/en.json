@@ -50,7 +50,8 @@
     "currentSales": "Current Sales: $",
     "profileTopnav": "Profile",
     "settingTopnav": "Settings",
-    "logoutTopnav": "Log Out"
+    "logoutTopnav": "Log Out",
+    "modalLanguageTitle": "Add Supported Language"
   },
 
   "restaurant":{
@@ -167,4 +168,5 @@
     "saveSuccessMessage": "The changes below have been saved"
 
   }
+
 }

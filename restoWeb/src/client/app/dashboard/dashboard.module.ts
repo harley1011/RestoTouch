@@ -16,11 +16,13 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from './dashboard.component';
 import {TopNavComponent, SidebarComponent} from '../shared/index';
 import { ModalModule } from 'ng2-bootstrap/modal';
+import {FormsModule} from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
     DropdownModule.forRoot(),
     ModalModule.forRoot(),
+    FormsModule,
     RestaurantListModule,
     RestaurantModule,
     CategoryListModule,

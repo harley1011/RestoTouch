@@ -1,20 +1,29 @@
 <top-nav></top-nav>
 <sidebar-cmp></sidebar-cmp>
 <section class="main-container" [ngClass]="{sidebarPushRight: isActive}">
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </section>
 <div bsModal #childModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Child modal</h4>
+        <h4 class="modal-title pull-left">{{'dashboard.modalLanguageTitle' | translate}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        I am a child modal, opened from parent component!
+        <div class="row">
+          <div class="col-xs-10"><select name="language" class="form-control" [(ngModel)]="selectedLanguage">
+            <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
+          </select></div>
+          <div class="col-xs-1">
+            <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">{{
+              'restaurant.addLangButton' | translate }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
