@@ -20,7 +20,8 @@ export class LoginPage {
     user: User;
     errorMessage: string;
 
-  constructor(
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               public authService: AuthService) {
     //this.user = new User('', '', '', '', '');
     //this.errorMessage = '';
@@ -38,9 +39,9 @@ export class LoginPage {
       console.log('LoginPage submitting');
 //      this.navCtrl.push(Page2);
 
-    // this.authService.authenticateUser(this.user)
-    //   .subscribe(generalResponse =>
-    //       //this.navCtrl.push(Page2)
-    //     , error => this.errorMessage = error);
+     this.authService.authenticateUser(this.user)
+       .subscribe(generalResponse =>
+           this.navCtrl.push(Page2)
+         , error => this.errorMessage = error);
   }
 }
