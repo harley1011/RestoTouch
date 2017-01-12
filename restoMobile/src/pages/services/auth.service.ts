@@ -4,9 +4,9 @@ import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {User} from '../../../../restoCommon/shared/models/user';
+import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
-import {GeneralResponse}  from '../../../../restoCommon/shared/general.response';
+import {GeneralResponse}  from '../shared/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';
 
 

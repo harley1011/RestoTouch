@@ -1,9 +1,10 @@
 import { Component, Injectable } from '@angular/core';
+import {Http, Response} from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
-import {User} from '../../../../restoCommon/shared/models/user';
-import {AuthService} from '../services/auth.service';
-import {ApiEndpointService} from '../services/api-endpoint.service';
-import { Page1 } from '../page1/page1';
+import { AuthService } from '../services/auth.service';
+import { User } from '../shared/models/user';
+//import {ApiEndpointService} from '../services/api-endpoint.service';
+import { Page2 } from '../page2/page2';
 
 /*
   Generated class for the Login page.
@@ -13,29 +14,34 @@ import { Page1 } from '../page1/page1';
 */
 @Component({
   selector: 'page-login',
-    providers: [AuthService, User],
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  user = new User('', '', '', '', '');
-  errorMessage = '';
+    user: User;
+    errorMessage: string;
 
   constructor(public navCtrl: NavController,
-               public navParams: NavParams,
-              private authService: AuthService) {}
+              public navParams: NavParams,
+              public authService: AuthService) {
+    //this.user = new User('', '', '', '', '');
+    //this.errorMessage = '';
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-      this.authService.authenticateUser(this.user)
-      .subscribe(generalResponse =>
-          this.navCtrl.push(Page1)
-        , error => this.errorMessage = error);
+//      this.authService.authenticateUser(this.user)
+//      .subscribe(generalResponse =>
+//          this.navCtrl.push(Page1)
+//        , error => this.errorMessage = error);
   }
 
   onSubmit() {
+      console.log('LoginPage submitting');
+//      this.navCtrl.push(Page2);
+      
     this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
-          this.navCtrl.push(Page1)
+          this.navCtrl.push(Page2)
         , error => this.errorMessage = error);
   }
 }
