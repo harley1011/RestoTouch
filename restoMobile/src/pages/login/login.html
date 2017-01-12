@@ -24,16 +24,16 @@
 </ion-header>
 <ion-content padding>
     <h1>Hello</h1>
-    <form [formGroup]="user" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()">
     <ion-list>
       <ion-item>
         <ion-label stacked>E-mail</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>Password</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
       </ion-item>
     </ion-list>
    <div padding>
