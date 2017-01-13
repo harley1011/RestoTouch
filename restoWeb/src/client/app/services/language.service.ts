@@ -210,6 +210,7 @@ export class LanguageService {
 
     this.http.get(this.api.getEndpoint() + this.supportedLanguagesUrl).map(this.extractData).subscribe(languages => {
         this.supportedLanguages = languages;
+        this.removeSupportedLanguagesFromLanguageList();
         this.replaySubjectLanguages.next(this.supportedLanguages);
         if (!this.selectedLanguage) {
           this.setSelectedLanguage(languages[0]);
@@ -250,10 +251,13 @@ export class LanguageService {
 
   addSupportedLanguage(language: Language): void {
     this.supportedLanguages.push(language);
-    this.supportedLanguages.sort((a: Language, b: Language) => { return a.name <= b.name ? -1: 1;});
+    this.supportedLanguages.sort((a: Language, b: Language) => {
+      return a.name <= b.name ? -1 : 1;
+    });
+    this.removeSupportedLanguagesFromLanguageList();
     let body = JSON.stringify(language);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
     this.http.put(this.api.getEndpoint() + this.supportedLanguageUrl, body, options).subscribe();
   }
 
@@ -269,6 +273,15 @@ export class LanguageService {
   private extractData(res: Response) {
     let body = res.json();
     return body || {};
+  }
+
+  private removeSupportedLanguagesFromLanguageList() {
+    this.supportedLanguages.forEach((language: Language) => {
+      let foundLanguageIndex = this.isoLanguages.findIndex(isoLanguage => isoLanguage.name == language.name);
+      if (foundLanguageIndex >= 0) {
+        this.isoLanguages.splice(foundLanguageIndex, 1);
+      }
+    })
   }
 
   private handleError(error: any) {
