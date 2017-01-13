@@ -207,7 +207,9 @@ export class LanguageService {
   constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
+  }
 
+  fetchSupportedLanguages() {
     this.http.get(this.api.getEndpoint() + this.supportedLanguagesUrl).map(this.extractData).subscribe(languages => {
         this.supportedLanguages = languages;
         this.removeSupportedLanguagesFromLanguageList();

@@ -17,7 +17,7 @@ import {DashboardComponent} from './dashboard.component';
 import {TopNavComponent, SidebarComponent} from '../shared/index';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import {FormsModule} from '@angular/forms';
-import { LanguageService } from '../services/language.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -38,8 +38,7 @@ import { LanguageService } from '../services/language.service';
     TranslateModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
-  exports: [DashboardComponent, TopNavComponent, SidebarComponent],
-  providers: [LanguageService]
+  exports: [DashboardComponent, TopNavComponent, SidebarComponent]
 })
 
 export class DashboardModule {
