@@ -14,7 +14,8 @@ module.exports = {
   setDatabase: setDatabase,
   getAccountSettings: getAccountSettings,
   saveAccountSettings: saveAccountSettings,
-  getSupportedLanguages: getSupportedLanguages
+  getSupportedLanguages: getSupportedLanguages,
+  saveNewSupportedLanguage: saveNewSupportedLanguage
 };
 
 function setDatabase(m) {
@@ -59,6 +60,11 @@ function getAccountSettings(req, res) {
   return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
     return res.json({success: 1, 'supportedLanguages': supportedLanguages});
   })
+}
+
+function saveNewSupportedLanguage(req, res) {
+  var supportedLanguage = req.supportedLanguage;
+
 }
 
 function getSupportedLanguages(req, res) {
