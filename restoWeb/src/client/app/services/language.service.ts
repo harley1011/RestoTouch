@@ -250,6 +250,7 @@ export class LanguageService {
 
   addSupportedLanguage(language: Language): void {
     this.supportedLanguages.push(language);
+    this.supportedLanguages.sort((a: Language, b: Language) => { return a.name <= b.name ? -1: 1;});
     let body = JSON.stringify(language);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
