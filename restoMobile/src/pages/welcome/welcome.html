@@ -13,12 +13,29 @@
 	<br><h5> </h5>
 	<ion-item>
 		<ion-label>Please select a menu language:</ion-label>
-		<ion-select [(ngModel)] = "language">
-			<ion-option value="en">English</ion-option>
+		<ion-select [(ngModel)] = "selectedLanguage">
+			<ion-option *ngFor="let language of languages">{{language}}</ion-option>
+		</ion-select>
+	</ion-item>
+	<div padding>
+	<button ion-button outline (click)="continueTapped($event)">Continue</button>
+	</div>
+</ion-content>
+
+<!-- Restaurant's languages
+<ion-content padding>
+	<h1 text-center>Welcome to {{selectedRestaurant.translations[0].name}}'s RestoTouch Virtual Menu</h1>
+	<br><h5> </h5>
+	<ion-item>
+		<ion-label>Please select a menu language:</ion-label>
+		<ion-select [(ngModel)] = "selectedLanguage">
+			<ion-option *ngFor="let language of selectedRestaurant.translations">{{language}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<div padding>
 	<button ion-button outline>Continue</button>
 	</div>
 </ion-content>
+
+-->
 
