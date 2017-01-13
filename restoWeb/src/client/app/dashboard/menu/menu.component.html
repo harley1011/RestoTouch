@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-md-6">
           <label>Available Categories</label>
-          <ul class="list-group">
+          <ul class="list-group scrollable-list">
             <li *ngFor="let category of availableCategories" class="list-group-item"> {{category.translations[0].name}}
               <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                  (click)="addCategoryToMenu(category)"></i>
@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-6">
           <label>Added Categories</label>
-          <ul class="added-categories">
+          <ul class="added-categories scrollable-list">
             <li *ngFor="let categoryCheckboxList of itemCategories; let i = index">
               <div class="added-category">
                 <div>

@@ -67,9 +67,10 @@ function saveMenu(req, res) {
       as: 'translations'
     }]
   }).then(function (result) {
+    var order = 0;
     var menuCategoryAssociations = [];
     menu.categories.forEach(function (category) {
-      menuCategoryAssociations.push({menuId: result.id, categoryId: category.id});
+      menuCategoryAssociations.push({menuId: result.id, categoryId: category.id, order: order++});
     })
     menuCategoryModel.bulkCreate(menuCategoryAssociations);
 
@@ -143,14 +144,23 @@ function updateMenu(req, res) {
   }).then(function (oldMenu) {
 
     var categoriesToAdd = _.differenceBy(menu.categories, oldMenu.categories, 'id');
+    var categoriesToUpdate = _.intersectionBy(menu.categories, oldMenu.categories, 'id');
     var categoriesToRemove = _.differenceBy(oldMenu.categories, menu.categories, 'id');
     var itemCategoriesToAdd = _.differenceBy(menu.disabledCategoryItems, oldMenu.disabledCategoryItems, 'id');
     var itemCategoriesToRemove = _.differenceBy(oldMenu.disabledCategoryItems, menu.disabledCategoryItems, 'id');
 
+    var order = 0;
+    var category = null;
     var menuCategoryAssociations = [];
-    categoriesToAdd.forEach(function (category) {
-      menuCategoryAssociations.push({menuId: oldMenu.id, categoryId: category.id});
-    });
+    for (var i = 0; i < menu.categories.length; i++) {
+      category = menu.categories[i];
+
+      if (categoriesToAdd.indexOf(category) !== -1) {
+        menuCategoryAssociations.push({menuId: oldMenu.id, categoryId: category.id, order: order++});
+      } else if (categoriesToUpdate.indexOf(category) !== -1) {
+        menuCategoryModel.update({order: order++}, {where: {menuId: oldMenu.id, categoryId: category.id}});
+      }
+    }
     menuCategoryModel.bulkCreate(menuCategoryAssociations);
 
     categoriesToRemove.forEach(function (category) {
