@@ -57,7 +57,10 @@ function userInfo(user) {
 
 function getAccountSettings(req, res) {
   //will eventually have more than just supported language model to return
-  return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
+  return supportedLanguageModel.findAll({
+    where: {userId: req.userId},
+    order: "name"
+  }).then(function (supportedLanguages) {
     return res.json({success: 1, 'supportedLanguages': supportedLanguages});
   })
 }
@@ -72,7 +75,10 @@ function saveNewSupportedLanguage(req, res) {
 }
 
 function getSupportedLanguages(req, res) {
-  return supportedLanguageModel.findAll({where: {userId: req.userId}, order: "name"}).then(function (supportedLanguages) {
+  return supportedLanguageModel.findAll({
+    where: {userId: req.userId},
+    order: "name"
+  }).then(function (supportedLanguages) {
     return res.json(supportedLanguages);
   })
 }

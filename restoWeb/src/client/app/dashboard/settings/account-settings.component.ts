@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import {AccountSettingsService} from './account-settings.service';
 import {LanguageService} from '../../services/language.service';
@@ -12,7 +12,7 @@ import {AccountSettings} from '../../shared/models/accountSettings';
   providers: [AccountSettingsService]
 })
 
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsComponent {
   accountSettings: AccountSettings;
   languages: Array<Language>;
   selectedLanguage: string;
@@ -24,11 +24,9 @@ export class AccountSettingsComponent implements OnInit {
     translate.setDefaultLang('en');
     this.accountSettingsService.getAccountSettings().subscribe(accountSettings => {
       this.accountSettings = accountSettings;
+      this.languageService.getSupportedLanguages().subscribe(languages => this.accountSettings.supportedLanguages = languages);
     });
     this.languages = languageService.languages();
-  }
-
-  ngOnInit(): void {
   }
 
   save(): void {
@@ -39,13 +37,7 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   addLanguage() {
-    let language = this.accountSettings.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
-    if (language) {
-      //todo: remove this once the supported languages are removed from the languages
-      console.log('Language is already supported');
-      return;
-    }
-    this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === this.selectedLanguage));
+    this.languageService.addSupportedLanguage(this.languages.find(language => language.languageCode === this.selectedLanguage), false);
   }
 
   removeLanguage(language: Language) {

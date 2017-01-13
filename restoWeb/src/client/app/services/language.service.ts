@@ -217,7 +217,8 @@ export class LanguageService {
           if (languageCode === null) {
             this.setSelectedLanguage(languages[0]);
           } else {
-            this.setSelectedLanguage(this.supportedLanguages.find(language => language.languageCode === languageCode));
+            let lastSelectedLanguage = this.supportedLanguages.find(language => language.languageCode === languageCode);
+            lastSelectedLanguage ? this.setSelectedLanguage(this.supportedLanguages.find(language => language.languageCode === languageCode)) : this.setSelectedLanguage(languages[0]);
           }
         }
       }
@@ -254,16 +255,18 @@ export class LanguageService {
     this.replaySubjectLanguages.next(languages);
   }
 
-  addSupportedLanguage(language: Language): void {
+  addSupportedLanguage(language: Language, autoSave: boolean = true): void {
     this.supportedLanguages.push(language);
     this.supportedLanguages.sort((a: Language, b: Language) => {
       return a.name <= b.name ? -1 : 1;
     });
     this.removeSupportedLanguagesFromLanguageList();
-    let body = JSON.stringify(language);
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    this.http.put(this.api.getEndpoint() + this.supportedLanguageUrl, body, options).subscribe();
+    if (autoSave) {
+      let body = JSON.stringify(language);
+      let headers = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: headers});
+      this.http.put(this.api.getEndpoint() + this.supportedLanguageUrl, body, options).subscribe();
+    }
   }
 
   setSelectedLanguage(language: Language): void {
