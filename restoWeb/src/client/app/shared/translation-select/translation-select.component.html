@@ -1,14 +1,14 @@
 <div *ngIf="selectedLanguage">
   <label>{{ 'restaurant.langType2' | translate}}</label>
-  <div class="btn-group" dropdown>
-    <button id="single-button" type="button" class="btn btn-primary-outline" dropdownToggle>
-      {{this.selectedLanguage.name}} <span class="caret"></span>
-    </button>
+  <span class="dropdown nav-item" dropdown>
+    <a id="single-button" class="nav-link dropdown-toggle text-primary" href="javascript:;" dropdownToggle>
+      {{selectedLanguage.name}} <span class="caret"></span>
+    </a>
     <ul dropdownMenu role="menu" aria-labelledby="single-button">
-      <li *ngFor="let language of supportedLanguages" role="menuitem"><a class="dropdown-item" (click)="selectLanguage(language)">{{language.name}}</a></li>
+      <li *ngFor="let language of supportedLanguages" role="menuitem"><a class="dropdown-item" href="javascript:;"(click)="selectLanguage(language)">{{language.name}}</a></li>
       <li class="divider dropdown-divider"></li>
-      <li role="menuitem"><a class="dropdown-item" (click)="selectLanguage(addNewLanguage)">{{addNewLanguage.name}}</a></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="selectLanguage(addNewLanguage)" href="javascript:;">{{addNewLanguage.name}}</a></li>
     </ul>
-  </div>
+  </span>
 </div>
 
