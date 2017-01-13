@@ -269,6 +269,13 @@ export class LanguageService {
     }
   }
 
+  removeSupportedLanguage(language: Language): void {
+    let languageToRemoveIndex = this.supportedLanguages.findIndex(searchLanguage => searchLanguage.languageCode === language.languageCode);
+    if (languageToRemoveIndex >= 0) {
+      this.supportedLanguages.splice(languageToRemoveIndex, 1);
+    }
+  }
+
   setSelectedLanguage(language: Language): void {
     this.selectedLanguage = language;
     localStorage.setItem('lastSelectedLanguageCode', language.languageCode);

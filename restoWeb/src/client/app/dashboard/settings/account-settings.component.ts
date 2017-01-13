@@ -16,6 +16,8 @@ export class AccountSettingsComponent {
   accountSettings: AccountSettings;
   languages: Array<Language>;
   selectedLanguage: string;
+  addedSupportedLanguages: Array<Language> = [];
+  removedSupportedLanguages: Array<Language> = [];
   hideSuccessMessage: boolean = true;
 
   constructor(private languageService: LanguageService,
@@ -24,20 +26,23 @@ export class AccountSettingsComponent {
     translate.setDefaultLang('en');
     this.accountSettingsService.getAccountSettings().subscribe(accountSettings => {
       this.accountSettings = accountSettings;
-      this.languageService.getSupportedLanguages().subscribe(languages => this.accountSettings.supportedLanguages = languages);
     });
     this.languages = languageService.languages();
   }
 
   save(): void {
     this.accountSettingsService.updateAccountSettings(this.accountSettings).subscribe(generalResponse => {
-      this.languageService.setSupportedLanguages(this.accountSettings.supportedLanguages);
       this.hideSuccessMessage = false;
+      this.addedSupportedLanguages.forEach(addedLanguage => this.languageService.addSupportedLanguage(addedLanguage, false));
+      this.removedSupportedLanguages.forEach(removeLanguage => this.languageService.removeSupportedLanguage(removeLanguage));
     });
   }
 
   addLanguage() {
-    this.languageService.addSupportedLanguage(this.languages.find(language => language.languageCode === this.selectedLanguage), false);
+    let languageToAdd = this.languages.find(language => language.languageCode === this.selectedLanguage);
+    this.accountSettings.supportedLanguages.push(languageToAdd);
+    this.addedSupportedLanguages.push(languageToAdd);
+    this.accountSettings.supportedLanguages.sort((a: Language, b: Language) => { return a.name <= b.name ? -1 : 1;});
   }
 
   removeLanguage(language: Language) {
@@ -46,6 +51,7 @@ export class AccountSettingsComponent {
       console.log('At least one supported language is required');
     }
     this.accountSettings.supportedLanguages.splice(this.accountSettings.supportedLanguages.indexOf(language), 1);
+    this.removedSupportedLanguages.push(language);
   }
 
 
