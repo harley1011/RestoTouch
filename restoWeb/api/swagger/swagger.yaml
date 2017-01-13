@@ -675,7 +675,33 @@ paths:
         default:
           description: Error
           schema:
+            $ref: "#/definitions/ErrorResponse"  
+  /supportedLanguage:
+    x-swagger-router-controller: account
+    put:
+      operationId: saveNewSupportedLanguage
+      description: Save the supported language to the users account
+      parameters:
+        - name: supportedLanguage
+          description: Language to save to the users account
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Language"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
             $ref: "#/definitions/ErrorResponse"         
+         
   /accountSettings:
     x-swagger-router-controller: account
     put:

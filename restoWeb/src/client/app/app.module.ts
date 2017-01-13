@@ -4,7 +4,6 @@ import { APP_BASE_HREF } from '@angular/common';
 import { HttpModule, Http } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
 import { LoginModule } from './login/login.module';
 import { LogoutModule } from './logout/logout.module';
 import { SignupModule } from './signup/signup.module';
@@ -13,7 +12,6 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
-import { LanguageService } from './services/language.service';
 import { ImageUploadService } from './services/image-upload.service';
 import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 
@@ -37,7 +35,7 @@ import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-transl
 		TranslateModule
 	],
 	declarations: [AppComponent],
-	providers: [AuthService, ApiEndpointService, AuthHttpService, LanguageService, ImageUploadService, {
+	providers: [AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],

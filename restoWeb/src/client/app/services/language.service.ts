@@ -5,8 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import  {ApiEndpointService} from './api-endpoint.service';
 import {AuthHttpService} from './auth-http.services';
-import {Response} from '@angular/http';
-
+import {Headers, Response, RequestOptions} from '@angular/http';
 @Injectable()
 export class LanguageService {
 
@@ -17,7 +16,8 @@ export class LanguageService {
   private supportedLanguagesAnnounced = new Subject<Array<Language>>();
   private supportedLanguages: Array<Language> = [];
   private selectedLanguage: Language;
-  private url = '/supportedLanguages';
+  private supportedLanguagesUrl = '/supportedLanguages';
+  private supportedLanguageUrl = '/supportedLanguage';
   private isoLanguages = [new Language('ab', 'Abkhaz', 'аҧсуа', 2),
     new Language('aa', 'Afar', 'Afaraf', 2),
     new Language('af', 'Afrikaans', 'Afrikaans', 2),
@@ -202,19 +202,29 @@ export class LanguageService {
     new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
   private replaySubjectLanguages = new ReplaySubject<Array<Language>>();
   private replaySubjectSelectedLanguage = new ReplaySubject<Language>();
+  private modalShow: any;
 
   constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
 
-    this.http.get(this.api.getEndpoint() + this.url).map(this.extractData).subscribe(languages => {
-        this.replaySubjectLanguages.next(languages);
+    this.http.get(this.api.getEndpoint() + this.supportedLanguagesUrl).map(this.extractData).subscribe(languages => {
+        this.supportedLanguages = languages;
+        this.removeSupportedLanguagesFromLanguageList();
+        this.replaySubjectLanguages.next(this.supportedLanguages);
         if (!this.selectedLanguage) {
-          this.setSelectedLanguage(languages[0]);
+          let languageCode = localStorage.getItem('lastSelectedLanguageCode');
+          if (languageCode === null) {
+            this.setSelectedLanguage(languages[0]);
+          } else {
+            let lastSelectedLanguage = this.supportedLanguages.find(language => language.languageCode === languageCode);
+            lastSelectedLanguage ? this.setSelectedLanguage(this.supportedLanguages.find(language => language.languageCode === languageCode)) : this.setSelectedLanguage(languages[0]);
+          }
         }
       }
     );
   }
+
   getSelectedLanguage(): ReplaySubject<Language> {
     return this.replaySubjectSelectedLanguage;
   }
@@ -223,7 +233,16 @@ export class LanguageService {
     return this.isoLanguages;
   }
 
+  openModalPicker() {
+    this.modalShow();
+  }
+
+  supplyLanguageModalPicker(modalShow: () => void) {
+    this.modalShow = modalShow;
+  }
+
   announceSelectedLanguage(language: Language) {
+    this.selectedLanguage = language;
     this.selectedLanguageAnnounced.next(language);
   }
 
@@ -236,12 +255,30 @@ export class LanguageService {
     this.replaySubjectLanguages.next(languages);
   }
 
-  addSupportedLanguage(language: Language): void {
+  addSupportedLanguage(language: Language, autoSave: boolean = true): void {
     this.supportedLanguages.push(language);
+    this.supportedLanguages.sort((a: Language, b: Language) => {
+      return a.name <= b.name ? -1 : 1;
+    });
+    this.removeSupportedLanguagesFromLanguageList();
+    if (autoSave) {
+      let body = JSON.stringify(language);
+      let headers = new Headers({'Content-Type': 'application/json'});
+      let options = new RequestOptions({headers: headers});
+      this.http.put(this.api.getEndpoint() + this.supportedLanguageUrl, body, options).subscribe();
+    }
+  }
+
+  removeSupportedLanguage(language: Language): void {
+    let languageToRemoveIndex = this.supportedLanguages.findIndex(searchLanguage => searchLanguage.languageCode === language.languageCode);
+    if (languageToRemoveIndex >= 0) {
+      this.supportedLanguages.splice(languageToRemoveIndex, 1);
+    }
   }
 
   setSelectedLanguage(language: Language): void {
     this.selectedLanguage = language;
+    localStorage.setItem('lastSelectedLanguageCode', language.languageCode);
     this.replaySubjectSelectedLanguage.next(language);
   }
 
@@ -252,6 +289,15 @@ export class LanguageService {
   private extractData(res: Response) {
     let body = res.json();
     return body || {};
+  }
+
+  private removeSupportedLanguagesFromLanguageList() {
+    this.supportedLanguages.forEach((language: Language) => {
+      let foundLanguageIndex = this.isoLanguages.findIndex(isoLanguage => isoLanguage.name == language.name);
+      if (foundLanguageIndex >= 0) {
+        this.isoLanguages.splice(foundLanguageIndex, 1);
+      }
+    })
   }
 
   private handleError(error: any) {

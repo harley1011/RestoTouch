@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import {AccountSettingsService} from './account-settings.service';
 import {LanguageService} from '../../services/language.service';
@@ -12,10 +12,13 @@ import {AccountSettings} from '../../shared/models/accountSettings';
   providers: [AccountSettingsService]
 })
 
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsComponent {
   accountSettings: AccountSettings;
   languages: Array<Language>;
   selectedLanguage: string;
+  addedSupportedLanguages: Array<Language> = [];
+  removedSupportedLanguages: Array<Language> = [];
+  hideSuccessMessage: boolean = true;
 
   constructor(private languageService: LanguageService,
               private translate: TranslateService,
@@ -27,24 +30,19 @@ export class AccountSettingsComponent implements OnInit {
     this.languages = languageService.languages();
   }
 
-  ngOnInit(): void {
-    console.log('h');
-  }
-
   save(): void {
     this.accountSettingsService.updateAccountSettings(this.accountSettings).subscribe(generalResponse => {
-      this.languageService.setSupportedLanguages(this.accountSettings.supportedLanguages);
+      this.hideSuccessMessage = false;
+      this.addedSupportedLanguages.forEach(addedLanguage => this.languageService.addSupportedLanguage(addedLanguage, false));
+      this.removedSupportedLanguages.forEach(removeLanguage => this.languageService.removeSupportedLanguage(removeLanguage));
     });
   }
 
   addLanguage() {
-    let language = this.accountSettings.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
-    if (language) {
-      //todo: remove this once the supported languages are removed from the languages
-      console.log('Language is already supported');
-      return;
-    }
-    this.accountSettings.supportedLanguages.push(this.languages.find(language => language.languageCode === this.selectedLanguage));
+    let languageToAdd = this.languages.find(language => language.languageCode === this.selectedLanguage);
+    this.accountSettings.supportedLanguages.push(languageToAdd);
+    this.addedSupportedLanguages.push(languageToAdd);
+    this.accountSettings.supportedLanguages.sort((a: Language, b: Language) => { return a.name <= b.name ? -1 : 1;});
   }
 
   removeLanguage(language: Language) {
@@ -53,6 +51,7 @@ export class AccountSettingsComponent implements OnInit {
       console.log('At least one supported language is required');
     }
     this.accountSettings.supportedLanguages.splice(this.accountSettings.supportedLanguages.indexOf(language), 1);
+    this.removedSupportedLanguages.push(language);
   }
 
 
