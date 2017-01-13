@@ -63,12 +63,16 @@ function getAccountSettings(req, res) {
 }
 
 function saveNewSupportedLanguage(req, res) {
-  var supportedLanguage = req.supportedLanguage;
+  var supportedLanguage = req.body;
+  supportedLanguage.userId = req.userId;
+  return supportedLanguageModel.create(supportedLanguage).then(function () {
+    return res.json({success: 1, description: "Language added"});
 
+  })
 }
 
 function getSupportedLanguages(req, res) {
-  return supportedLanguageModel.findAll({where: {userId: req.userId}}).then(function (supportedLanguages) {
+  return supportedLanguageModel.findAll({where: {userId: req.userId}, order: "name"}).then(function (supportedLanguages) {
     return res.json(supportedLanguages);
   })
 }

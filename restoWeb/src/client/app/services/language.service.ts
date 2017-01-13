@@ -5,7 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
 import  {ApiEndpointService} from './api-endpoint.service';
 import {AuthHttpService} from './auth-http.services';
-import {Response} from '@angular/http';
+import {Headers, Response, RequestOptions} from '@angular/http';
 @Injectable()
 export class LanguageService {
 
@@ -16,7 +16,8 @@ export class LanguageService {
   private supportedLanguagesAnnounced = new Subject<Array<Language>>();
   private supportedLanguages: Array<Language> = [];
   private selectedLanguage: Language;
-  private url = '/supportedLanguages';
+  private supportedLanguagesUrl = '/supportedLanguages';
+  private supportedLanguageUrl = '/supportedLanguage';
   private isoLanguages = [new Language('ab', 'Abkhaz', 'аҧсуа', 2),
     new Language('aa', 'Afar', 'Afaraf', 2),
     new Language('af', 'Afrikaans', 'Afrikaans', 2),
@@ -207,7 +208,7 @@ export class LanguageService {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
 
-    this.http.get(this.api.getEndpoint() + this.url).map(this.extractData).subscribe(languages => {
+    this.http.get(this.api.getEndpoint() + this.supportedLanguagesUrl).map(this.extractData).subscribe(languages => {
         this.supportedLanguages = languages;
         this.replaySubjectLanguages.next(this.supportedLanguages);
         if (!this.selectedLanguage) {
@@ -249,7 +250,10 @@ export class LanguageService {
 
   addSupportedLanguage(language: Language): void {
     this.supportedLanguages.push(language);
-    this.selectedLanguageAnnounced.next(this.selectedLanguage);
+    let body = JSON.stringify(language);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    this.http.put(this.api.getEndpoint() + this.supportedLanguageUrl, body, options).subscribe();
   }
 
   setSelectedLanguage(language: Language): void {
