@@ -213,7 +213,12 @@ export class LanguageService {
         this.removeSupportedLanguagesFromLanguageList();
         this.replaySubjectLanguages.next(this.supportedLanguages);
         if (!this.selectedLanguage) {
-          this.setSelectedLanguage(languages[0]);
+          let languageCode = localStorage.getItem('lastSelectedLanguageCode');
+          if (languageCode === null) {
+            this.setSelectedLanguage(languages[0]);
+          } else {
+            this.setSelectedLanguage(this.supportedLanguages.find(language => language.languageCode === languageCode));
+          }
         }
       }
     );
@@ -263,6 +268,7 @@ export class LanguageService {
 
   setSelectedLanguage(language: Language): void {
     this.selectedLanguage = language;
+    localStorage.setItem('lastSelectedLanguageCode', language.languageCode);
     this.replaySubjectSelectedLanguage.next(language);
   }
 
