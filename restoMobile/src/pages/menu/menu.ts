@@ -6,8 +6,14 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'menu.html'
 })
 export class MenuPage {
+  selectedMenu: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+    this.selectedMenu = navParams.get('menu');
+
+
+  }
 
 
 }
