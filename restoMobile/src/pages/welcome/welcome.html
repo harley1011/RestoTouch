@@ -1,5 +1,6 @@
 <ion-header>
   <ion-navbar>
+  <!-- Menu toggle button will be removed -->
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,6 +9,16 @@
 </ion-header>
 
 <ion-content padding>
-	<h3>Welcome Screen</h3>
-	<p>List of languages</p>
+	<h1 text-center>Welcome to (Restaurant Name) RestoTouch Virtual Menu</h1>
+	<br><h5> </h5>
+	<ion-item>
+		<ion-label>Please select a menu language:</ion-label>
+		<ion-select [(ngModel)] = "language">
+			<ion-option value="en">English</ion-option>
+		</ion-select>
+	</ion-item>
+	<div padding>
+	<button ion-button outline>Continue</button>
+	</div>
 </ion-content>
+
