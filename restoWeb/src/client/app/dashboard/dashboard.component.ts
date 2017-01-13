@@ -16,6 +16,7 @@ import {Language} from '../shared/models/language';
 export class DashboardComponent {
   @ViewChild('childModal') public childModal: ModalDirective;
   languages: Array<Language>;
+  selectedLanguage: Language;
 
   constructor(private languageService: LanguageService) {
     languageService.supplyLanguageModalPicker(() => {
@@ -23,5 +24,10 @@ export class DashboardComponent {
     });
 
     this.languages = languageService.languages();
+  }
+
+  addLanguage(){
+    this.languageService.addSupportedLanguage(this.selectedLanguage);
+    this.childModal.hide();
   }
 }

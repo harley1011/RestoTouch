@@ -32,15 +32,16 @@ export class TranslationSelectComponent implements OnInit {
     return this.languageService.getSelectedLanguage();
   }
 
-  selectLanguage() {
-    if (this.selectedLanguage == this.addNewLanguage) {
+  selectLanguage(language: Language) {
+    if (language == this.addNewLanguage) {
       this.languageService.openModalPicker();
-      //this.dashboardComponent.childModal.show();
     } else {
+      this.selectedLanguage = language;
       this.languageService.setSelectedLanguage(this.selectedLanguage);
       this.onSelectLanguage.emit(this.selectedLanguage);
     }
   }
+
 
 
 }

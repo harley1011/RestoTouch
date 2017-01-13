@@ -201,14 +201,15 @@ export class LanguageService {
     new Language('za', 'Zhuang, Chuang', 'Saɯ cueŋƅ, Saw cuengh', 2)];
   private replaySubjectLanguages = new ReplaySubject<Array<Language>>();
   private replaySubjectSelectedLanguage = new ReplaySubject<Language>();
-  private modalShow :any;
+  private modalShow: any;
 
   constructor(private http: AuthHttpService, private api: ApiEndpointService) {
     this.selectedLanguageAnnounced$ = this.selectedLanguageAnnounced.asObservable();
     this.supportedLanguagesAnnounced$ = this.supportedLanguagesAnnounced.asObservable();
 
     this.http.get(this.api.getEndpoint() + this.url).map(this.extractData).subscribe(languages => {
-        this.replaySubjectLanguages.next(languages);
+        this.supportedLanguages = languages;
+        this.replaySubjectLanguages.next(this.supportedLanguages);
         if (!this.selectedLanguage) {
           this.setSelectedLanguage(languages[0]);
         }
@@ -227,11 +228,13 @@ export class LanguageService {
   openModalPicker() {
     this.modalShow();
   }
+
   supplyLanguageModalPicker(modalShow: () => void) {
     this.modalShow = modalShow;
   }
 
   announceSelectedLanguage(language: Language) {
+    this.selectedLanguage = language;
     this.selectedLanguageAnnounced.next(language);
   }
 
@@ -246,6 +249,7 @@ export class LanguageService {
 
   addSupportedLanguage(language: Language): void {
     this.supportedLanguages.push(language);
+    this.selectedLanguageAnnounced.next(this.selectedLanguage);
   }
 
   setSelectedLanguage(language: Language): void {
