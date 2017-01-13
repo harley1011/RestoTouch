@@ -1,0 +1,90 @@
+.cat-container {
+    margin-top: 50px;
+}
+
+.category {
+    height: 150px;
+    border-radius: 11px;
+    background-color: #1abc9c;
+    padding: 10px 12px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.cat-label {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* border: 1px solid black; */
+    text-align: center;
+    display: inline-block;
+    left: 0;
+    margin-bottom: 35px;
+}
+
+.cat-label-input {
+    position: absolute;
+    bottom: 35px;
+    margin: 0 36px;
+}
+
+.cat-label-input input[type="text"] {
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 2%;
+    color: white;
+    margin: 0 auto;
+}
+
+.cat-icon {
+    font-size: 60px;
+    margin-top: 15px;
+}
+
+.cat-delete {
+    position: absolute;
+    right: 20px;
+}
+
+.form-error {
+  border-color: red;
+}
+
+.added-items {
+  position: relative;
+  padding: .0rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  display: flex;
+}
+
+.added-items:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+
+.added-items:first-child {
+  margin-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.added-items-name {
+  width: 100%;
+  margin: auto;
+}
+
+.scrollable-list {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}

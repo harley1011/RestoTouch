@@ -1,0 +1,34 @@
+<div class="manage-list">
+  <div class="manage-header">
+    <h2 *ngIf="restaurant">{{ restaurant?.translations[0]?.name }} Menu</h2>
+    <h2 *ngIf="!restaurant">{{ 'menu.titleManage' | translate }}</h2>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="manage-button">
+      <button *ngIf="!restaurant" (click)="add()" class="btn btn-success btn-green">{{ 'menu.addmenuButtonManage' |
+        translate }}
+      </button>
+      <button *ngIf="restaurant" (click)="updateRestaurantMenu()" class="btn btn-success btn-green">{{
+        'menu.confirmButtonManage' | translate }}
+      </button>
+      <button *ngIf="restaurant" (click)="cancel()" class="btn btn-default btn-normal">{{ 'menu.cancelButtonTopbar' |
+        translate }}
+      </button>
+    </div>
+    <hr>
+  </div>
+  <div class="manage-list-container">
+    <div class="row">
+      <div class="col-sm-3" *ngFor="let menu of menus; let i = index">
+        <div (click)="modify(i, menu)" class="card card-block" [ngClass]="{'selected-menu': menusInRestaurant[i]}">
+          <h4 class="card-title">{{ menu.selectedTranslation ? menu.selectedTranslation.name : "No translation" }} <i
+            *ngIf="menusInRestaurant[i]"
+            class="fa fa-check icon-corner"
+            aria-hidden="true"></i></h4>
+          <h6 style="margin:0">{{ 'menu.categoryCard' | translate }} <span class="label label-default"> {{ menu.categories.length }} </span></h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
