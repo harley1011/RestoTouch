@@ -14,7 +14,7 @@
 	<ion-item>
 		<ion-label>Please select a menu language:</ion-label>
 		<ion-select [(ngModel)] = "selectedLanguage">
-			<ion-option *ngFor="let language of languages">{{language}}</ion-option>
+			<ion-option *ngFor="let language of languages">{{language.languageCode}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<div padding>
