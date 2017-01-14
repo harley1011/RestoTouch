@@ -3,8 +3,6 @@ import {Http, Response} from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../services/auth.service';
 import { User } from '../shared/models/user';
-//import {ApiEndpointService} from '../services/api-endpoint.service';
-import { Page2 } from '../page2/page2';
 import { RestaurantListPage } from '../restaurant-list/restaurant-list';
 
 /*
@@ -23,10 +21,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public authService: AuthService) {
-    //this.user = new User('', '', '', '', '');
-    //this.errorMessage = '';
-  }
+              public authService: AuthService) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
