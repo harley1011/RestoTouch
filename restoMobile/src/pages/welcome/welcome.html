@@ -13,8 +13,8 @@
 	<br><h5> </h5>
 	<ion-item>
 		<ion-label>Please select a menu language:</ion-label>
-		<ion-select [(ngModel)] = "selectedLanguage">
-			<ion-option *ngFor="let language of languages">{{language.languageCode}}</ion-option>
+		<ion-select [(ngModel)] = "this.selectedLanguage" (ionChange)="selectLanguage()" placeholder="Language">
+			<ion-option *ngFor="let language of languages" [value]="language">{{language.name}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<div padding>
@@ -28,8 +28,8 @@
 	<br><h5> </h5>
 	<ion-item>
 		<ion-label>Please select a menu language:</ion-label>
-		<ion-select [(ngModel)] = "selectedLanguage">
-			<ion-option *ngFor="let language of selectedRestaurant.supportedLanguages">{{language}}</ion-option>
+		<ion-select [(ngModel)] = "selectedLanguage" (ionChange)="selectLanguage" placeholder="Language">
+			<ion-option *ngFor="let language of selectedRestaurant.supportedLanguages" [value]="language">{{language.name}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<div padding>
