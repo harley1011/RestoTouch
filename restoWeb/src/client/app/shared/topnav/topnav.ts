@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../models/user';
-import {LanguageService} from '../../services/language.service';
 import {Language} from '../models/language';
-import { Router } from '@angular/router';
 import {TranslateService} from 'ng2-translate';
 
 @Component({
@@ -20,17 +18,9 @@ export class TopNavComponent implements OnInit {
   errorMessage = '';
 
   constructor(private authService: AuthService,
-              private languageService: LanguageService, private router: Router,
               private translate: TranslateService) {
       // this language of website will be used as a fallback when a translation isn't found in the current language
       translate.setDefaultLang('en');
-//    languageService.supportedLanguagesAnnounced$.subscribe(supportedLanguages => {
-//      this.hideLanguageSelect = supportedLanguages.length === 0;
-//      this.languages = supportedLanguages;
-//    });
-//    languageService.selectedLanguageAnnounced$.subscribe(selectedLanguage => {
-//      this.selectedLanguage = selectedLanguage;
-//    });
   }
 
   ngOnInit() {

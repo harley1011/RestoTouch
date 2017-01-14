@@ -50,7 +50,8 @@
     "currentSales": "Current Sales: $",
     "profileTopnav": "Profile",
     "settingTopnav": "Settings",
-    "logoutTopnav": "Log Out"
+    "logoutTopnav": "Log Out",
+    "modalLanguageTitle": "Add Supported Language"
   },
 
   "restaurant":{
@@ -157,5 +158,15 @@
     "foodItemChangeImgMsg":"Change Image",
     "foodItemSelectCroppedImgMsg":"Select Cropped Image",
     "foodItemRecroppedImgMsg":"Re-crop Image"
+  },
+
+  "setting": {
+    "titleManage": "Account Settings",
+    "sousTitleManage":"Make changes below and then select the save button to persist the changes",
+    "supportedLanguage": "Supported Languages",
+    "save": "Save",
+    "saveSuccessMessage": "The changes below have been saved"
+
   }
+
 }

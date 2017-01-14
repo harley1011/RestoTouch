@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DropdownModule} from 'ng2-bootstrap/ng2-bootstrap';
-
+import {DropdownModule} from 'ng2-bootstrap/dropdown';
 import {RestaurantListModule} from './restaurant-list/restaurant-list.module';
 import {RestaurantModule} from './restaurant/restaurant.module';
 import {CategoryListModule} from './category-list/category-list.module';
@@ -13,18 +12,18 @@ import {ItemModule} from './item/item.module';
 import {HomeModule} from './home/home.module';
 import {SettingsModule} from './settings/account-settings.module';
 import {TranslateModule} from 'ng2-translate';
-
 import {DashboardRoutingModule} from './dashboard-routing.module';
-
 import {DashboardComponent} from './dashboard.component';
-
 import {TopNavComponent, SidebarComponent} from '../shared/index';
-
+import { ModalModule } from 'ng2-bootstrap/modal';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    DropdownModule,
+    DropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    FormsModule,
     RestaurantListModule,
     RestaurantModule,
     CategoryListModule,

@@ -93,3 +93,9 @@
 .form-error {
   border-color: red;
 }
+
+.scrollable-list {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}

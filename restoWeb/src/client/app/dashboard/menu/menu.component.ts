@@ -107,6 +107,7 @@ export class MenuComponent implements OnInit {
       catCheckList.items.sort(compareItemCheckbox);
       self.itemCategories.push(catCheckList);
     });
+    self.itemCategories.sort(compareCategoryCheckList);
   }
 
   onSelectLanguage(language: Language) {
@@ -140,13 +141,15 @@ export class MenuComponent implements OnInit {
   }
 
   changeOrder(catCheckList: CategoryCheckboxList, changeIndex: number) {
-    var category = catCheckList.category;
-    let newIndex = ((this.menu.categories.indexOf(category) - 1 + changeIndex)
-       % this.menu.categories.length + this.menu.categories.length) % this.menu.categories.length;
-    let currentIndex = this.menu.categories.indexOf(category);
+    var currentIndex = this.itemCategories.indexOf(catCheckList);
+    var newIndex = (currentIndex + changeIndex) % this.itemCategories.length;
+    newIndex = (newIndex < 0) ? this.itemCategories.length-1 : newIndex;
+
+    this.itemCategories[currentIndex] = this.itemCategories[newIndex];
+    this.itemCategories[newIndex] = catCheckList;
 
     this.menu.categories[currentIndex] = this.menu.categories[newIndex];
-    this.menu.categories[newIndex] = category;
+    this.menu.categories[newIndex] = catCheckList.category;
   }
 
   addCategoryToMenu(category: Category): void {
@@ -230,6 +233,19 @@ function compareCategory (cat1: Category, cat2: Category) {
   if (cat1.translations[0].name < cat2.translations[0].name) {
     return -1;
   } else if (cat1.translations[0].name > cat2.translations[0].name) {
+    return 1;
+	} else {
+		return 0;
+	}
+}
+
+function compareCategoryCheckList (catCheck1: CategoryCheckboxList, catCheck2: CategoryCheckboxList) {
+  var cat1 = catCheck1.category;
+  var cat2 = catCheck2.category;
+
+  if (cat1.MenuCategory.order < cat2.MenuCategory.order) {
+    return -1;
+  } else if (cat1.MenuCategory.order > cat2.MenuCategory.order) {
     return 1;
 	} else {
 		return 0;

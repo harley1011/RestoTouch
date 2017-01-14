@@ -24,8 +24,6 @@ export class AccountSettingsService {
     let body = JSON.stringify(accountSettings);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    console.log(body);
-
     return this.http.put(this.api.getEndpoint() + this.url, body, options)
       .map(this.extractData)
       .catch(this.handleError);
