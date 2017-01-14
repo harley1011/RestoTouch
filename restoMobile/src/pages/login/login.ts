@@ -6,6 +6,7 @@ import { User } from '../shared/models/user';
 //import {ApiEndpointService} from '../services/api-endpoint.service';
 import { Page2 } from '../page2/page2';
 import { RestaurantListPage } from '../restaurant-list/restaurant-list';
+import { MenuListPage } from '../menu-list/menu-list'
 
 /*
   Generated class for the Login page.
@@ -36,7 +37,7 @@ export class LoginPage {
   onSubmit() {
      this.authService.authenticateUser(this.user)
        .subscribe(generalResponse =>
-           this.navCtrl.push(RestaurantListPage)
+           this.navCtrl.push(MenuListPage)//TODO Change the page back to RestaurantListPage
          , error => this.errorMessage = error);
   }
 }
