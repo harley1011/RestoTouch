@@ -1,21 +1,14 @@
 <div *ngIf="selectedLanguage">
-  <label>{{ 'restaurant.langType2' | translate}}</label>
-  <select style="width: 200px; display: inline-block;" name="language" class="form-control" [(ngModel)]="selectedLanguage"
-          (change)="selectLanguage()">
-    <option *ngFor="let language of supportedLanguages" [ngValue]="language">{{language.name}}
-    </option>
-  </select>
+  <label>{{ 'restaurant.langType2' | translate}} </label>
+  <span class="dropdown nav-item" dropdown>
+    <a id="single-button" class="nav-link dropdown-toggle text-primary" href="javascript:;" dropdownToggle>
+      {{selectedLanguage.name}} <span class="caret"></span>
+    </a>
+    <ul dropdownMenu role="menu" aria-labelledby="single-button">
+      <li *ngFor="let language of supportedLanguages" role="menuitem"><a class="dropdown-item" href="javascript:;"(click)="selectLanguage(language)">{{language.name}}</a></li>
+      <li class="divider dropdown-divider"></li>
+      <li role="menuitem"><a class="dropdown-item" (click)="selectLanguage(addNewLanguage)" href="javascript:;">{{addNewLanguage.name}}</a></li>
+    </ul>
+  </span>
 </div>
 
-
-
-<!--<div class="dropdown" dropdown>-->
-  <!--<a href="javascript:;" id="lang-button" class="nav-link dropdown-toggle" dropdownToggle >-->
-    <!--<label>Selected Language: </label> {{selectedLanguage?.name}} <b class="caret"></b>-->
-  <!--</a>-->
-  <!--<ul class="dropdown-menu" aria-labelledby="lang-button">-->
-    <!--<li *ngFor="let language of supportedLanguages" class="dropdown-item" (click)="selectLanguage(language)">-->
-      <!--{{language.name}}-->
-    <!--</li>-->
-  <!--</ul>-->
-<!--</div>-->

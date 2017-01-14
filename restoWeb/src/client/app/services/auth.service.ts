@@ -8,7 +8,7 @@ import {User} from '../shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';
-
+import  {LanguageService} from './language.service';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -16,10 +16,11 @@ export class AuthService implements CanActivate, CanActivateChild {
 
   public loggedInUser: User;
 
-  constructor(private http: Http, private router: Router, private api: ApiEndpointService) {
+  constructor(private http: Http, private router: Router, private api: ApiEndpointService, private languageService: LanguageService) {
     var data = localStorage.getItem('user');
     if (data !== null) {
       this.loggedInUser = JSON.parse(data);
+      this.languageService.fetchSupportedLanguages();
     }
   }
 
@@ -57,6 +58,7 @@ export class AuthService implements CanActivate, CanActivateChild {
 
     return this.http.post(this.api.getEndpoint() + '/login', body, options)
       .map(this.extractData)
+      .do(() => this.languageService.fetchSupportedLanguages())
       .catch(this.handleError);
   }
 
@@ -76,7 +78,7 @@ export class AuthService implements CanActivate, CanActivateChild {
       .catch(this.handleError);
   }
 
-  extractData(res: Response) : User {
+  extractData(res: Response): User {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));

@@ -9,12 +9,14 @@
     </div>
     <hr>
   </div>
-
   <div *ngIf="accountSettings" class="manage-list-container">
     <form id="restaurantForm" role="form" (ngSubmit)="save()">
-      <div id="resto-lang" class="edit-section"><br/>
+      <div id="resto-lang" class="edit-section">
         <div class="row">
-          <div class="col col-md-5">
+          <alert *ngIf="!hideSuccessMessage" type="success">
+            {{ 'setting.saveSuccessMessage' | translate}}
+          </alert>
+          <div class="col col-md-6">
             <label>{{ 'setting.supportedLanguage' | translate}}</label>
             <ul class="list-group">
               <li *ngFor="let language of accountSettings.supportedLanguages" class="list-group-item"> {{language.name}}<i
@@ -24,13 +26,13 @@
           </div>
           <div class="col col-md-4 col-md-offset-1">
             <div class="form-group input-group">
-              <label for="language">{{ 'restaurant.langSelect' | translate}}</label>
+              <label>{{ 'restaurant.langSelect' | translate}}</label>
               <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
                 <option *ngFor="let language of languages" [ngValue]="language.languageCode">{{language.name}}</option>
               </select>
             </div>
           </div>
-          <div class="col col-md-2" style="padding-top:10px"><br>
+          <div class="col col-md-1" style="padding-top:10px"><br>
             <button class="btn btn-success btn-green" (click)="addLanguage()" type="button">{{
               'restaurant.addLangButton' | translate }}
             </button>
