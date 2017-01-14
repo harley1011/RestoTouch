@@ -57,7 +57,8 @@ export class AuthService implements CanActivate, CanActivateChild {
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(this.api.getEndpoint() + '/login', body, options)
-      .map(() => {this.extractData; this.languageService.fetchSupportedLanguages();})
+      .map(this.extractData)
+      .do(() => this.languageService.fetchSupportedLanguages())
       .catch(this.handleError);
   }
 
