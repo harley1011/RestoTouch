@@ -4,11 +4,14 @@ import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
-import {MenuPage} from "../pages/menu/menu";
+import { MenuPage } from "../pages/menu/menu";
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { AuthService } from '../pages/services/auth.service';
 import { RestaurantService } from '../pages/services/restaurant.service';
+import { ItemService } from '../pages/services/item.service';
+import { MenuService } from '../pages/services/menu.service';
+import { CategoryService } from '../pages/services/category.service';
 import { ApiEndpointService } from '../pages/services/api-endpoint.service';
 import { AuthHttpService } from '../pages/services/auth-http.services';
 
@@ -35,6 +38,6 @@ import { AuthHttpService } from '../pages/services/auth-http.services';
     LoginPage,
     RestaurantListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, AuthService, ApiEndpointService, RestaurantService, AuthHttpService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService]
 })
 export class AppModule {}
