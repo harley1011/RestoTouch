@@ -1,5 +1,6 @@
 {
   "login": {
+    "languageSelector" :"Switch to English",
     "titleHeader": "Allo",
     "emailHolderFieldForm": "Courrier électronique",
     "passwordHolderFieldForm": "Mot de passe",
