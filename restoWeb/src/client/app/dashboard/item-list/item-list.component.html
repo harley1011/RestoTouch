@@ -1,0 +1,27 @@
+<div class="manage-list">
+  <div class="manage-header">
+    <h2>{{ 'foodItem.titleManage' | translate }}</h2>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="manage-button">
+      <button (click)="add()" class="btn btn-success btn-green">{{ 'foodItem.addFoodItemButtonManage' | translate }}
+      </button>
+    </div>
+    <hr>
+  </div>
+  <div class="manage-list-container">
+    <div class="row">
+      <div class="col-sm-3" *ngFor="let item of items">
+        <div (click)="modify(item)" style="max-width:300px;" class="card">
+          <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl"/>
+          <div class="card-block">
+            <h4 class="card-title">{{ item.selectedTranslation ? item.selectedTranslation.name : "No translation" }} </h4>
+            <p class="card-text"> {{ item.selectedTranslation ? item.selectedTranslation.description : "No translation" }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+

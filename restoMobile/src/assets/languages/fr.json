@@ -1,0 +1,13 @@
+{
+  "login": {
+    "languageSelector" :"Switch to English",
+    "titleHeader": "Allo",
+    "emailHolderFieldForm": "Courrier électronique",
+    "passwordHolderFieldForm": "Mot de passe",
+    "logButton": "Se connecter"
+  },
+
+  "selectResto": {
+    "title": "Liste de vos Restaurants"
+  }
+}

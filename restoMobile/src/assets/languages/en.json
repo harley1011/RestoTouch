@@ -1,0 +1,13 @@
+{
+  "login": {
+    "languageSelector" :"Changer pour Français",
+    "titleHeader": "Hello",
+    "emailHolderFieldForm": "E-mail",
+    "passwordHolderFieldForm": "Password",
+    "logButton": "Log in"
+  },
+
+  "selectResto": {
+    "title": "List of your Restaurants"
+  }
+}

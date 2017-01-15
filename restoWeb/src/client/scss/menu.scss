@@ -1,0 +1,101 @@
+#menu {
+    background-color: #f3f3f3;
+    height: 100%;
+//    position: absolute;
+//    min-width: 90%;
+    overflow-x: hidden;
+
+    .formContainer {
+        height: 100%;
+    }
+}
+
+.menuSection {
+  border: 1px solid #687077;
+  text-align: center;
+}
+.addButtonhover:hover {
+  border-color: #00b3ee;
+}
+
+.removeButtonhover:hover {
+  border-color: #bd4147;
+}
+
+.selected-menu {
+    background-color: #1abc9c;
+    color: #fff;
+}
+
+.added-categories {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.added-categories > li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding-bottom: 0.75rem;
+}
+
+.added-category {
+  position: relative;
+  padding: .0rem 1.25rem;
+  margin-bottom: -1px;
+  display: flex;
+}
+
+.added-category-name {
+  width: 100%;
+  margin: auto;
+}
+
+.added-category:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.added-category:first-child {
+  margin-bottom: 0;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.category-separator {
+  width: 100%;
+  height: 1px;
+  margin-bottom: 0.75rem;
+  background-color: #ddd;
+}
+
+.category-items li {
+  list-style-type: none;
+}
+
+.increase-decrease-order-icon {
+  font-weight: normal;
+  border-radius: 0;
+  border-color: transparent;
+  background: transparent;
+
+  &:hover {
+    cursor: pointer;
+    color: #242628
+  }
+
+  &:active {
+    cursor: pointer;
+    color: #242628
+  }
+}
+
+.form-error {
+  border-color: red;
+}
+
+.scrollable-list {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
