@@ -50,7 +50,8 @@
     "currentSales": "Current Sales: $",
     "profileTopnav": "Profile",
     "settingTopnav": "Settings",
-    "logoutTopnav": "Log Out"
+    "logoutTopnav": "Log Out",
+    "modalLanguageTitle": "Add Supported Language"
   },
 
   "restaurant":{
@@ -63,7 +64,7 @@
     "geninfoTitle": "General Information",
     "paymethTitle": "Payment Methods",
     "openhourTitle": "Opening Hours",
-    "langTitle": "Restaurants service offered in the languages below:",
+    "langTitle": "Languages",
     "menuTitle": "Menu",
     "createButtonTopbar": "Create",
     "cancelButtonTopbar": "Cancel",
@@ -86,7 +87,7 @@
     "ohSaturday": "Saturday",
     "ohSunday": "Sunday",
     "ohTimeconflictAlert":"Time Conflict",
-    "langSelect":"Select a supported language to add:",
+    "langSelect":"Select a language:",
     "addLangButton": "Add",
     "nomenuButton":"No Menu",
     "addRemoveButton":"Add/Remove Menu",
@@ -163,7 +164,9 @@
     "titleManage": "Account Settings",
     "sousTitleManage":"Make changes below and then select the save button to persist the changes",
     "supportedLanguage": "Supported Languages",
-    "save": "Save"
+    "save": "Save",
+    "saveSuccessMessage": "The changes below have been saved"
 
   }
+
 }
