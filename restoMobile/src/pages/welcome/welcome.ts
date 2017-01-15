@@ -14,7 +14,7 @@ import {TranslateService} from 'ng2-translate';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
-  
+
 	languages: Array<Language> = [];
   supportedLanguages: Array<Language> = [];
 	selectedLanguage: Language = new Language('','selectedLanguage','',0);
@@ -35,11 +35,10 @@ export class WelcomePage {
     }
   }
 
-
   continueTapped(event) {
     // Will push to virtual menu page
-    /* need to pass selectedLanguage as parameter to menu */
     this.navCtrl.push(Page2, {
+      language: this.selectedLanguage
     });
   }
 
