@@ -14,13 +14,10 @@ import {TranslateService} from 'ng2-translate';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
-	@Output() onSelectLanguage = new EventEmitter<Language>();
-  /*Placeholder code*/
+  
 	languages: Array<Language> = [];
   supportedLanguages: Array<Language> = [];
 	selectedLanguage: Language = new Language('','selectedLanguage','',0);
-  lang: Language = new Language('','init','',0);
-
 	selectedRestaurant: any;
 
   constructor(public navCtrl: NavController,
@@ -36,29 +33,21 @@ export class WelcomePage {
       let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
       this.supportedLanguages.push(lang);
     }
-
-    /*this.languageService.getSelectedLanguage().subscribe(
-      language => {
-        this.lang = language;
-        let trans = this.selectedRestaurant.translations.find(translations => translations.languageCode === language.languageCode);
-        this.selectedRestaurant.selectedTranslation = trans;
-      }
-    );*/
-
   }
 
 
   continueTapped(event) {
     // Will push to virtual menu page
+    /* need to pass selectedLanguage as parameter to menu */
     this.navCtrl.push(Page2, {
     });
   }
 
   selectLanguage() {
-    this.languageService.setSelectedLanguage(this.selectedLanguage);
-    this.onSelectLanguage.emit(this.selectedLanguage);
+    let trans = this.selectedRestaurant.translations.find(translation => 
+      translation.languageCode === this.selectedLanguage.languageCode);
+    this.selectedRestaurant.selectedTranslation = trans;
     //to set the current language
     this.translate.use(this.selectedLanguage.languageCode);
   }
-
 }

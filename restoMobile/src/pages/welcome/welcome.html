@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content padding> 
-	<h1 text-center>Welcome to {{selectedRestaurant.selectedTranslation?.name}} RestoTouch Virtual Menu</h1>
+	<h1 text-center>Welcome to {{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}} RestoTouch Virtual Menu</h1>
 	<br><h5> </h5>
 	<ion-item *ngIf="selectedRestaurant">
 		<ion-label>Please select a menu language:</ion-label>
