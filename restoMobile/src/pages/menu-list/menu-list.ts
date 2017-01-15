@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MenuPage } from '../menu/menu';
+import { MenuService } from '../services/menu.service';
+import { Menu } from '../../pages/shared/models/menu';
 
 @Component({
     selector: 'page-menu-list',
@@ -9,19 +11,27 @@ import { MenuPage } from '../menu/menu';
 
 export class MenuListPage {
     selectedMenu: any;
-    menus: Array<{title: string}>;
+    menus: Array<Menu>;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService) {
 
         this.selectedMenu = navParams.get('menu');
-        //TODO to refactor
-        this.menus = [];
-        for(let i = 0; i < 5; i++) {
-            this.menus.push({
-                title: 'Menutest ' + i
-            });
-        }
+        this.getMenus();
     }
+
+    getMenus(): void {
+        this.menuService.getMenus().subscribe(
+            menus => {
+                this.menus = menus;
+                menus.forEach(menu => {
+                    menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == 'en');
+                });
+            },
+            error => {
+                console.log(error);
+            }
+        );
+    };
 
     menuTapped(menu){
         this.navCtrl.push(MenuPage, {

@@ -37,7 +37,7 @@ export class LoginPage {
   onSubmit() {
      this.authService.authenticateUser(this.user)
        .subscribe(generalResponse =>
-           this.navCtrl.push(MenuListPage)//TODO Change the page back to RestaurantListPage
+         this.navCtrl.push(MenuListPage)//TODO Refactor after merge
          , error => this.errorMessage = error);
   }
 }

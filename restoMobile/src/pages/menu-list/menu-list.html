@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list> <!--TODO to refactor-->
-        <button ion-item *ngFor="let menu of menus" (click)="menuTapped(menu)"> {{menu.title}} </button>
+    <ion-list>
+        <button ion-item *ngFor="let menu of menus" (click)="menuTapped(menu)"> {{menu.selectedTranslation ? menu.selectedTranslation.name : "No translation"}} </button>
     </ion-list>
 </ion-content>

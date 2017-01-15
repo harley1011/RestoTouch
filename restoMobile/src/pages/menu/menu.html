@@ -3,19 +3,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Menu Item</ion-title>
+    <ion-title *ngIf="selectedMenu">{{selectedMenu.selectedTranslation ? selectedMenu.selectedTranslation.name : "No translation"}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content *ngIf="selectedMenu">
-  <h3>{{selectedMenu.title}}</h3>
 <!--TODO to refactor
   <ion-title>{{selectedMenu.Menutitle}}</ion-title>
   <ion-list *ngFor="let category of categories">
     <h3> {{category.categoryName}} </h3>
     <h4> {{foodItem.itemName}} </h4>
     <p> {{foodItem.description}}</p> <img src="images/." widht="50" height="50">
-    <h3>{{category.sizeName}} {{category.price}} <button ion-button small [color]="secondary">Order</button></h3>
+    <h3>{{category.sizeName}} {{category.price}} <button ion-button small color="secondary">Order</button></h3>
   </ion-list>
 -->
 </ion-content>
