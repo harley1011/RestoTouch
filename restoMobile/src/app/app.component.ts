@@ -31,7 +31,7 @@ export class MyApp {
       { title: 'Page One', component: Page1 },
       { title: 'Page Two', component: Page2 },
       { title: 'Welcome Page', component: WelcomePage},
-      { title: 'Settings', component: SettingsPage}
+      { title: 'Settings', component: SettingsPage},
       { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
     ];

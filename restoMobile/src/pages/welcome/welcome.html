@@ -11,10 +11,10 @@
 <ion-content padding>
 	<h1 text-center>Welcome to (Restaurant Name) RestoTouch Virtual Menu</h1>
 	<br><h5> </h5>
-	<ion-item>
+	<ion-item *ngIf="selectedRestaurant">
 		<ion-label>Please select a menu language:</ion-label>
 		<ion-select [(ngModel)] = "this.selectedLanguage" (ionChange)="selectLanguage()" placeholder="Language">
-			<ion-option *ngFor="let language of languages" [value]="language">{{language.name}}</ion-option>
+			<ion-option *ngFor="let language of supportedLanguages" [value]="language">{{language.name}}</ion-option>
 		</ion-select>
 	</ion-item>
 	<div padding>
