@@ -3,10 +3,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Page2 } from '../page2/page2'
- 
+
 import { Language } from '../shared/models/language';
 import { LanguageService } from '../services/language.service';
 import { Restaurant } from '../shared/models/restaurant';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   selector: 'page-welcome',
@@ -24,24 +25,28 @@ export class WelcomePage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-  			      private languageService: LanguageService) {
-    this.selectedRestaurant = navParams.get('item');
-    console.log(this.selectedRestaurant);
+  			      private languageService: LanguageService,
+              private translate: TranslateService) {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('en');
 
-    /* Could be improved */
+    this.selectedRestaurant = navParams.get('item');
     this.languages = languageService.languages();
-    for(let translation of this.selectedRestaurant.translations) {
-      let lang = this.languages.find(language => language.languageCode === translation.languageCode);
+    for (let availLang of this.selectedRestaurant.translations){
+      let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
       this.supportedLanguages.push(lang);
     }
 
-    this.languageService.getSelectedLanguage().subscribe(
+    /*this.languageService.getSelectedLanguage().subscribe(
       language => {
         this.lang = language;
-        let trans = this.selectedRestaurant.translations.find(translation => translation.languageCode === language.languageCode);
+        let trans = this.selectedRestaurant.translations.find(translations => translations.languageCode === language.languageCode);
         this.selectedRestaurant.selectedTranslation = trans;
-    });
+      }
+    );*/
+
   }
+
 
   continueTapped(event) {
     // Will push to virtual menu page
@@ -52,6 +57,8 @@ export class WelcomePage {
   selectLanguage() {
     this.languageService.setSelectedLanguage(this.selectedLanguage);
     this.onSelectLanguage.emit(this.selectedLanguage);
+    //to set the current language
+    this.translate.use(this.selectedLanguage.languageCode);
   }
 
 }
