@@ -6,21 +6,22 @@
 -->
 
 <ion-content>
-    <h1 text-center>Hello</h1>
+  <button ion-button clear (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
+    <h1 text-center>{{ 'login.titleHeader' | translate }}</h1>
     <form (ngSubmit)="onSubmit()">
     <ion-list>
       <ion-item>
-        <ion-label stacked>E-mail</ion-label>
+        <ion-label stacked>{{ 'login.emailHolderFieldForm' | translate }}</ion-label>
         <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label stacked>Password</ion-label>
+        <ion-label stacked>{{ 'login.passwordHolderFieldForm' | translate }}</ion-label>
         <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
       </ion-item>
     </ion-list>
    <div padding>
-    <button ion-button round block type="submit">Sign In</button>
+    <button ion-button round block type="submit">{{ 'login.logButton' | translate }}</button>
     <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     </div>
     </form>

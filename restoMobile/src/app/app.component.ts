@@ -4,6 +4,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { Auth, User } from '@ionic/cloud-angular';
@@ -28,6 +30,8 @@ export class MyApp {
     this.pages = [
       { title: 'Page One', component: Page1 },
       { title: 'Page Two', component: Page2 },
+      { title: 'Welcome Page', component: WelcomePage},
+      { title: 'Settings', component: SettingsPage},
       { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
     ];

@@ -4,6 +4,7 @@ import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
+import { WelcomePage } from '../welcome/welcome';
 
 
 /*
@@ -53,5 +54,11 @@ export class RestaurantListPage {
           }
         );
       }
+
+    itemTapped(event, item) {
+      this.navCtrl.push(WelcomePage, {
+      item: item
+    });
+  }
 
 }
