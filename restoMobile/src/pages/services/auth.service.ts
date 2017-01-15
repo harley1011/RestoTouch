@@ -1,10 +1,9 @@
-// Observable Version
 import {Injectable}     from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
-import {User} from '../shared/models/user';
+import {User} from '../../../../restoCommon/shared/models/user';
 import {Observable}     from 'rxjs/Observable';
-import {GeneralResponse}  from '../shared/general.response';
+import {GeneralResponse}  from '../../../../restoCommon/shared/models/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';
 
 

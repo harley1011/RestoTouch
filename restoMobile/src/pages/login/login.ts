@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {AuthService} from '../services/auth.service';
-import {User} from '../shared/models/user';
+import {User} from '../../../../restoCommon/shared/models/user';
 import {RestaurantListPage} from '../restaurant-list/restaurant-list';
 
 @Component({
@@ -9,7 +9,7 @@ import {RestaurantListPage} from '../restaurant-list/restaurant-list';
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  user = new User('', '');
+  user = new User('', '', '', '', '');
   errorMessage: string;
 
   constructor(public navCtrl: NavController,

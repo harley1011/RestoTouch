@@ -1,5 +1,5 @@
 import {Injectable}     from '@angular/core';
-import {Language} from '../shared/models/language';
+import {Language} from '../../../../restoCommon/shared/models/language';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
@@ -215,6 +215,7 @@ export class LanguageService {
       }
     );
   }
+
   getSelectedLanguage(): ReplaySubject<Language> {
     return this.replaySubjectSelectedLanguage;
   }
