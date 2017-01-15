@@ -28,4 +28,13 @@ export class LoginPage {
           this.navCtrl.push(RestaurantListPage)
         , error => this.errorMessage = error);
   }
+
+  // toggle btwn french and english for app language
+  switchLanguage(){
+    if(this.translate.currentLang === 'en'){
+      this.translate.use('fr');
+    }
+    else
+      this.translate.use('en');
+  }
 }
