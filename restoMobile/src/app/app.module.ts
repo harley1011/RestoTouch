@@ -9,7 +9,7 @@ import { AuthService } from '../pages/services/auth.service';
 import { ApiEndpointService } from '../pages/services/api-endpoint.service';
 import { AuthHttpService } from '../pages/services/auth-http.services';
 import {TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
-import { HttpModule, Http } from '@angular/http';
+import { Http } from '@angular/http';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LanguageService } from '../pages/services/language.service';
