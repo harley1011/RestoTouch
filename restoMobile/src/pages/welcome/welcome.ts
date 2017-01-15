@@ -38,6 +38,8 @@ export class WelcomePage {
     this.languageService.getSelectedLanguage().subscribe(
       language => {
         this.lang = language;
+        let trans = this.selectedRestaurant.translations.find(translation => translation.languageCode === language.languageCode);
+        this.selectedRestaurant.selectedTranslation = trans;
     });
   }
 

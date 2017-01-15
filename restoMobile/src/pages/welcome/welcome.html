@@ -8,8 +8,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-	<h1 text-center>Welcome to (Restaurant Name) RestoTouch Virtual Menu</h1>
+<ion-content padding> 
+	<h1 text-center>Welcome to {{selectedRestaurant.selectedTranslation?.name}} RestoTouch Virtual Menu</h1>
 	<br><h5> </h5>
 	<ion-item *ngIf="selectedRestaurant">
 		<ion-label>Please select a menu language:</ion-label>
@@ -22,20 +22,4 @@
 	</div>
 </ion-content>
 
-<!-- Restaurant's languages
-<ion-content padding>
-	<h1 text-center>Welcome to {{selectedRestaurant.translations[0].name}}'s RestoTouch Virtual Menu</h1>
-	<br><h5> </h5>
-	<ion-item>
-		<ion-label>Please select a menu language:</ion-label>
-		<ion-select [(ngModel)] = "selectedLanguage" (ionChange)="selectLanguage" placeholder="Language">
-			<ion-option *ngFor="let language of selectedRestaurant.supportedLanguages" [value]="language">{{language.name}}</ion-option>
-		</ion-select>
-	</ion-item>
-	<div padding>
-	<button ion-button outline>Continue</button>
-	</div>
-</ion-content>
-
--->
 
