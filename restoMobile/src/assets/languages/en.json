@@ -4,5 +4,9 @@
     "emailHolderFieldForm": "E-mail",
     "passwordHolderFieldForm": "Password",
     "logButton": "Log in"
+  },
+
+  "selectResto": {
+    "title": "List of your Restaurants"
   }
 }
