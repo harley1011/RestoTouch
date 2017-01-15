@@ -3,6 +3,7 @@
     "clean.once",
     "build.assets.dev",
     "build.html_css",
+    "build.models.js.dev",
     "build.js.dev",
     "build.index.dev"
   ],
