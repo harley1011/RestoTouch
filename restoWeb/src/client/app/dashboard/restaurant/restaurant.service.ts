@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Restaurant } from '../../shared/models/restaurant';
+import { Restaurant } from '../../../../../../restoCommon/shared/models/restaurant';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';

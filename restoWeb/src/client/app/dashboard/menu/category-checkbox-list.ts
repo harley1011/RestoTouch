@@ -1,5 +1,5 @@
-import {Item} from '../../shared/models/items';
-import {Category} from '../../shared/models/category';
+import {Item} from '../../../../../../restoCommon/shared/models/items';
+import {Category} from '../../../../../../restoCommon/shared/models/category';
 
 export class CategoryCheckboxList {
   constructor (

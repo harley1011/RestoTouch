@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
+import {Restaurant, RestaurantTranslations} from '../../../../../../restoCommon/shared/models/restaurant';
 import {RestaurantService} from './restaurant.service';
 import {LanguageService} from '../../services/language.service';
-import {Language} from '../../shared/models/language';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
-import {Menu} from '../../shared/models/menu';
-import {Payment} from '../../shared/models/payment';
-import {BusinessHour} from '../../shared/models/business-hour';
+import {Menu} from '../../../../../../restoCommon/shared/models/menu';
+import {Payment} from '../../../../../../restoCommon/shared/models/payment';
+import {BusinessHour} from '../../../../../../restoCommon/shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 
 @Component({

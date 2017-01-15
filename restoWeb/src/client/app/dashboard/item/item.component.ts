@@ -1,16 +1,16 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
-import {Item, ItemTranslations} from '../../shared/models/items';
-import {IngredientGroup} from '../../shared/models/ingredient-group';
+import {Item, ItemTranslations} from '../../../../../../restoCommon/shared/models/items';
+import {IngredientGroup} from '../../../../../../restoCommon/shared/models/ingredient-group';
 
-import {Size} from '../../shared/models/size';
+import {Size} from '../../../../../../restoCommon/shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {LanguageService} from '../../services/language.service';
-import {Language} from '../../shared/models/language';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
-import {Ingredient} from '../../shared/models/ingredient';
+import {Ingredient} from '../../../../../../restoCommon/shared/models/ingredient';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({

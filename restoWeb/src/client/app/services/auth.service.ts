@@ -4,7 +4,7 @@ import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
 import {Router, CanActivate, CanActivateChild} from '@angular/router';
 
-import {User} from '../shared/models/user';
+import {User} from '../../../../../restoCommon/shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../shared/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';

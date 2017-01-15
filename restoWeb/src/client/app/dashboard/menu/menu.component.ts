@@ -2,14 +2,14 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {MenuService} from './menu.service';
 import {CategoryCheckboxList, ItemCheckbox} from './category-checkbox-list';
-import {Category} from '../../shared/models/category';
+import {Category} from '../../../../../../restoCommon/shared/models/category';
 import {CategoryService} from '../category/category.service';
-import {Menu, MenuTranslations} from '../../shared/models/menu';
-import {Item} from '../../shared/models/items';
+import {Menu, MenuTranslations} from '../../../../../../restoCommon/shared/models/menu';
+import {Item} from '../../../../../../restoCommon/shared/models/items';
 import {LanguageService} from '../../services/language.service';
-import {Language} from '../../shared/models/language';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
-import {ItemCategory} from '../../shared/models/item-category';
+import {ItemCategory} from '../../../../../../restoCommon/shared/models/item-category';
 
 // This tells angular that MenuComponent class is actually an component which we put metadata on it.
 @Component({

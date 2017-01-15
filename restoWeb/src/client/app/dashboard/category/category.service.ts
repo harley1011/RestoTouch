@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Category } from '../../shared/models/category';
+import { Category } from '../../../../../../restoCommon/shared/models/category';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';

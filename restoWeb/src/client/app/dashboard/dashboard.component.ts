@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ng2-bootstrap';
 import {LanguageService} from '../services/language.service';
-import {Language} from '../shared/models/language';
+import {Language} from '../../../../../restoCommon/shared/models/language';
 
 /**
  *  This class represents the lazy loaded DashboardComponent.

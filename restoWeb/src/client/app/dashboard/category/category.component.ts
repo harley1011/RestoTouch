@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {CategoryService} from './category.service';
-import {Category, CategoryTranslations} from '../../shared/models/category';
-import {Language} from '../../shared/models/language';
+import {Category, CategoryTranslations} from '../../../../../../restoCommon/shared/models/category';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import { ItemService } from '../item/item.service';
-import { Item } from '../../shared/models/items';
+import { Item } from '../../../../../../restoCommon/shared/models/items';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({

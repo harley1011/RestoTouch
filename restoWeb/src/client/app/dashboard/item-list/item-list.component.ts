@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Item} from './../../shared/models/items';
-import {Language} from './../../shared/models/language';
+import {Item} from '../../../../../../restoCommon/shared/models/items';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {ItemService} from '../item/item.service';
 import {Router} from '@angular/router';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';

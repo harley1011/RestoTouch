@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Menu } from '../../shared/models/menu';
+import { Menu } from '../../../../../../restoCommon/shared/models/menu';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';

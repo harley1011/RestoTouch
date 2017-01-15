@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {User} from '../models/user';
-import {Language} from '../models/language';
+import {User} from '../../../../../../restoCommon/shared/models/user';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {TranslateService} from 'ng2-translate';
 
 @Component({

@@ -3,7 +3,7 @@ import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions 
 import { MockBackend } from '@angular/http/testing';
 
 import { RestaurantService } from './restaurant.service';
-import { Restaurant, RestaurantTranslations } from '../../shared/models/restaurant';
+import { Restaurant, RestaurantTranslations } from '../../../../../../restoCommon/shared/models/restaurant';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';

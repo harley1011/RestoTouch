@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from './home.service';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../shared/models/user';
+import { User } from '../../../../../../restoCommon/shared/models/user';
 import {TranslateService} from 'ng2-translate';
 
 //import { ActivatedRoute } from '@angular/router';

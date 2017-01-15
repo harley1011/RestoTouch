@@ -2,8 +2,8 @@ import {Component} from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import {AccountSettingsService} from './account-settings.service';
 import {LanguageService} from '../../services/language.service';
-import {Language} from '../../shared/models/language';
-import {AccountSettings} from '../../shared/models/accountSettings';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
+import {AccountSettings} from '../../../../../../restoCommon/shared/models/accountSettings';
 
 @Component({
   moduleId: module.id,

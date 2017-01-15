@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Menu} from '../../shared/models/menu';
-import {Language} from '../../shared/models/language';
+import {Menu} from '../../../../../../restoCommon/shared/models/menu';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {MenuService} from '../menu/menu.service';
 
-import {Restaurant} from '../../shared/models/restaurant';
+import {Restaurant} from '../../../../../../restoCommon/shared/models/restaurant';
 import {RestaurantService} from '../restaurant/restaurant.service';
 import {MenuListService} from './menu-list.service';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';

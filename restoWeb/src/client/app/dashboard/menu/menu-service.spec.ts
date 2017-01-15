@@ -5,7 +5,7 @@ import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 import { MenuService } from './menu.service';
-import { Menu, MenuTranslations } from '../../shared/models/menu';
+import { Menu, MenuTranslations } from '../../../../../../restoCommon/shared/models/menu';
 
 
 export function main() {

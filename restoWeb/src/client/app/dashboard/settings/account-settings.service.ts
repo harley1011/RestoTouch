@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { AccountSettings } from '../../shared/models/accountSettings';
+import { AccountSettings } from '../../../../../../restoCommon/shared/models/accountSettings';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';

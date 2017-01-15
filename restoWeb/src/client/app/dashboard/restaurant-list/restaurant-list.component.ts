@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Restaurant} from '../../shared/models/restaurant';
-import {Language} from '../../shared/models/language';
+import {Restaurant} from '../../../../../../restoCommon/shared/models/restaurant';
+import {Language} from '../../../../../../restoCommon/shared/models/language';
 import {RestaurantService} from '../restaurant/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
