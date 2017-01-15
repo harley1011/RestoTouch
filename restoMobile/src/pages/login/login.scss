@@ -1,7 +1,22 @@
 page-login {
-    background-color: red;
+    
+    ion-content {
+        background-image: url('../../assets/img/glass-bg.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+    }
     
     .scroll-content {
-//        background-image: url('../../assets/img/gradient-bg.png');
+        background-color: rgba(0, 0, 0, 0.4);   
     }
+    
+    form ion-item {
+        background: transparent !important;  
+        width: 50% !important;
+        color: #fff;
+    }
+    
 }
