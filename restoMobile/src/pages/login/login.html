@@ -6,6 +6,7 @@
 -->
 
 <ion-content>
+  <button ion-button clear (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
     <h1 text-center>{{ 'login.titleHeader' | translate }}</h1>
     <form (ngSubmit)="onSubmit()">
     <ion-list>
