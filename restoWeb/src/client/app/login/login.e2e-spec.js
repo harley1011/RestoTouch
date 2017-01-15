@@ -17,9 +17,10 @@ describe("TEST CASES FOR LOGIN PAGE", function () {
   it("Diplay correct webpage after log in", function () {
     element(by.id("email")).sendKeys("test@gmail.com");
     element(by.id("password")).sendKeys("test");
-    var loginBtn = element(by.id('loginBtn'));
+    var loginBtn = element(by.className('loginBtn'));
     loginBtn.click();
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/home');
+
   });
 
 });

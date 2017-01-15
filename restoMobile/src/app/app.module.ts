@@ -14,6 +14,8 @@ import { MenuService } from '../pages/services/menu.service';
 import { CategoryService } from '../pages/services/category.service';
 import { ApiEndpointService } from '../pages/services/api-endpoint.service';
 import { AuthHttpService } from '../pages/services/auth-http.services';
+import {TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
+import { HttpModule, Http } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,12 @@ import { AuthHttpService } from '../pages/services/auth-http.services';
     RestaurantListPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+      TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/languages', '.json'),
+            deps: [Http]
+        })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,6 +45,6 @@ import { AuthHttpService } from '../pages/services/auth-http.services';
     LoginPage,
     RestaurantListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
 })
 export class AppModule {}
