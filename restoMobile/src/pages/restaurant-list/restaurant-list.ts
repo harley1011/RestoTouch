@@ -1,17 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Restaurant } from '../../../../restoCommon/shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 
-
-/*
-  Generated class for the RestaurantList page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-restaurant-list',
   templateUrl: 'restaurant-list.html'
@@ -19,8 +12,6 @@ import {TranslationSelectComponent} from '../shared/translation-select/translati
 export class RestaurantListPage {
     numOfRestaurants: number;
     restaurants: Restaurant[];
-
-@ViewChild(TranslationSelectComponent)
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
