@@ -5,8 +5,6 @@ import {User} from '../../../../restoCommon/shared/models/user';
 import {Observable}     from 'rxjs/Observable';
 import {GeneralResponse}  from '../../../../restoCommon/shared/models/general.response';
 import  {ApiEndpointService} from './api-endpoint.service';
-
-
 import 'rxjs/Rx';
 
 @Injectable()
@@ -31,14 +29,9 @@ export class AuthService {
     if (this.loggedInUser) {
       return true;
     }
-
     return false;
-
   }
 
-//  canActivateChild() {
-//    return this.canActivate();
-//  }
 
   isLoggedIn(): boolean {
     if (this.loggedInUser) {
@@ -73,7 +66,7 @@ export class AuthService {
       .catch(this.handleError);
   }
 
-  extractData(res: Response) : User {
+  extractData(res: Response): User {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));
