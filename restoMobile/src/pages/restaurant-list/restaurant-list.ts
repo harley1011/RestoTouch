@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Restaurant } from '../shared/models/restaurant';
+import { Restaurant } from '../../../../restoCommon/shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
@@ -21,9 +21,8 @@ export class RestaurantListPage {
     restaurants: Restaurant[];
 
 @ViewChild(TranslationSelectComponent)
-  private translationSelectComponent: TranslationSelectComponent;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private restaurantListService: RestaurantService,
               private translate: TranslateService) {
@@ -33,16 +32,12 @@ export class RestaurantListPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RestaurantListPage');
     this.getRestaurants();
-//    console.log(this.restaurants);
-//    console.log('num: ' + this.restaurants.length);
-    
   }
 
     getRestaurants(): void {
         this.restaurantListService.getRestaurants().subscribe(
           restaurants => {
             restaurants.forEach(restaurant => {
-//              restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
                 restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === 'en');
             });
             this.restaurants = restaurants;
