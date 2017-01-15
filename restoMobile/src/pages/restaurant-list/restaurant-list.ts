@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
-import {TranslateService} from 'ng2-translate';
-import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
-
+import { TranslateService } from 'ng2-translate';
+import { TranslationSelectComponent } from '../shared/translation-select/translation-select.component';
+import { MenuListPage } from '../menu-list/menu-list'
 
 /*
   Generated class for the RestaurantList page.
@@ -19,6 +19,7 @@ import {TranslationSelectComponent} from '../shared/translation-select/translati
 export class RestaurantListPage {
     numOfRestaurants: number;
     restaurants: Restaurant[];
+    selectedRestaurant: any;
 
 @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -28,6 +29,7 @@ export class RestaurantListPage {
               private restaurantListService: RestaurantService,
               private translate: TranslateService) {
   translate.setDefaultLang('en');
+  this.selectedRestaurant = navParams.get('restaurant');
   }
 
   ionViewDidLoad() {
@@ -53,5 +55,11 @@ export class RestaurantListPage {
           }
         );
       }
+
+    restaurantTapped(restaurant){
+        this.navCtrl.push(MenuListPage, {
+            restaurant: restaurant
+        });
+    }
 
 }

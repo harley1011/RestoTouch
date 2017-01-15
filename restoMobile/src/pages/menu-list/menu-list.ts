@@ -12,11 +12,14 @@ import { Menu } from '../../pages/shared/models/menu';
 export class MenuListPage {
     selectedMenu: any;
     menus: Array<Menu>;
+    selectedRestaurant: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuService: MenuService) {
 
+        this.selectedRestaurant = navParams.get('restaurant');
         this.selectedMenu = navParams.get('menu');
         this.getMenus();
+
     }
 
     getMenus(): void {
