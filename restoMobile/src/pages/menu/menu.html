@@ -4,14 +4,23 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="selectedMenu">
-<!--TODO to refactor
-  <ion-title>{{selectedMenu.Menutitle}}</ion-title>
-  <ion-list *ngFor="let category of categories">
-    <h3> {{category.categoryName}} </h3>
-    <h4> {{foodItem.itemName}} </h4>
-    <p> {{foodItem.description}}</p> <img src="images/." widht="50" height="50">
-    <h3>{{category.sizeName}} {{category.price}} <button ion-button small color="secondary">Order</button></h3>
-  </ion-list>
--->
+<ion-content *ngIf="selectedMenu && menu && menu.categories">
+<!-- To make sure the menu is set before start executing -->
+
+    <ion-list *ngFor="let category of menu.categories">
+
+        <ion-item> {{category.selectedTranslation ? category.selectedTranslation.name : "No translation"}} </ion-item>
+        <ion-item-divider>
+                <!--<h4 *ngfor="let item of category.items"> {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}} </h4>-->
+        </ion-item-divider>
+        <!--
+        <ion-card-content>
+            <h4 *ngfor="let item of category.items"> {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}} </h4>
+            <p> {{item.selectedTranslation.description ? item.selectedTranslation.name : "No Description"}}</p>
+            <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl"/>&lt;!&ndash;<img src="images/." widht="50" height="50">&ndash;&gt;
+            <h3>{{item.sizes}} {{category.price}} <button ion-button small color="secondary">Order</button></h3>
+        </ion-card-content>
+ -->
+    </ion-list>
+
 </ion-content>
