@@ -12,10 +12,9 @@ import { MenuService } from '../services/menu.service';
   templateUrl: 'menu.html'
 })
 export class MenuPage {
-  selectedMenu: any;
-
+ selectedMenu: any;
  menu: Menu;
- /*items: Array<Item>;*/
+ selectedMenuCategories: Array <Category> = [];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -24,51 +23,38 @@ export class MenuPage {
               private menuService: MenuService) {
 
     this.selectedMenu = navParams.get('menu');
-
-      //this.getMenu(this.selectedMenu.menuId).then((menuData) => console.log(menuData));
-      this.getMenu(this.selectedMenu.id);
-
-    /*this.getItems();*/
-
-    /* FOR ITEMS
-
-    this.selectedMenu.categories.forEach( category => {
-      category.items.forEach( item => {
-        item.selectedTranslation = item.translations.find(translation => translation.languageCode == 'en');
-      });
-    })
-    */
-
+    this.getMenu(this.selectedMenu.id);
   }
 
-    getMenu(id: number): void {
+  isItemDisabled(targetItem, category): boolean {
+    for(let item of this.menu.disabledCategoryItems) {
+      if(item.itemId === targetItem.id  && item.categoryId === category.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  getMenu(id: number): void {
         this.menuService.getMenu(id).subscribe(
             menu => {
                 this.menu = menu;
 
                 this.menu.categories.forEach( category => {
                     category.selectedTranslation = category.translations.find(translation => translation.languageCode == 'en');
-                });
+                  this.selectedMenuCategories.push(category);
 
+                    category.items.forEach( item => {
+                    item.selectedTranslation = item.translations.find(translation => translation.languageCode == 'en');
+
+                  });
+                });
             },
             error => {
                 console.log(error);
             }
         );
     }
-
- /*
-  getItems(): void {
-    this.itemService.getItems().subscribe(items => {
-          items.forEach(item => {
-            item.selectedTranslation = item.translations.find(translation => translation.languageCode === 'en');
-          });
-          this.items = items;
-        },
-        error => {
-          console.log(error);
-        }
-    );
-  }*/
 
 }
