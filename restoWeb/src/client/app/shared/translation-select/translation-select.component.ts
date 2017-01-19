@@ -38,7 +38,4 @@ export class TranslationSelectComponent {
       this.onSelectLanguage.emit(this.selectedLanguage);
     }
   }
-
-
-
 }
