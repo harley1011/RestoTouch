@@ -88,10 +88,15 @@ export class ItemComponent implements OnInit {
           console.log(error);
         });
       } else {
-        let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
-        this.item = new Item([translation], translation, [], [], '', []);
-        this.create = true;
-        this.pictureMode = PictureMode.Select;
+        let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
+          let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+          this.item = new Item([translation], translation, [], [], '', []);
+          this.create = true;
+          this.pictureMode = PictureMode.Select;
+          if (sub)
+            sub.unsubscribe();
+        });
+
       }
     });
   }

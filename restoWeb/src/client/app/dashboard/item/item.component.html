@@ -32,9 +32,19 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let size of item.sizes">
-                <td>{{size.name}}</td>
-                <td>{{size.price | currency:'USD':true:'1.2-2'}}</td>
+              <tr class="td-size-input" *ngFor="let size of item.sizes; let i = index">
+                <!--<td>{{size.name}}</td>-->
+                <!--<td>{{size.price | currency:'USD':true:'1.2-2'}}</td>-->
+                <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName{{i}}"
+                           placeholder="Size Name">
+                </td>
+                <td>
+                  <div class="input-group"><span class="input-group-addon">$</span>
+                    <input class="form-control" #price="ngModel" [(ngModel)]="size.price" name="price{{i}}"
+                           type="number">
+                  </div>
+                </td>
+
                 <td>
                   <button class="fa fa-times-circle icon-remove icon-align" (click)="removeSize(size)"></button>
                 </td>
