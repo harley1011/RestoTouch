@@ -2,10 +2,9 @@ import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from '../../shared/models/items';
 import {IngredientGroup} from '../../shared/models/ingredient-group';
 
-import {Size} from '../../shared/models/size';
+import {Size, SizeTranslations} from '../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
@@ -23,7 +22,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 export class ItemComponent implements OnInit {
   create: boolean;
   item: Item;
-  size = new Size('', 0);
+  size: Size;
   errorMessage: any;
   cropperSettings: CropperSettings;
   name: string;
@@ -41,7 +40,6 @@ export class ItemComponent implements OnInit {
   constructor(private itemService: ItemService,
               private router: Router,
               private route: ActivatedRoute,
-              private languageService: LanguageService,
               private element: ElementRef,
               private imageUploadService: ImageUploadService,
               private zone: NgZone) {
@@ -80,6 +78,7 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
+          this.newSizeTranslation();
           this.item = item;
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
           this.create = false;
@@ -90,6 +89,7 @@ export class ItemComponent implements OnInit {
       } else {
         let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
           let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+          this.newSizeTranslation();
           this.item = new Item([translation], translation, [], [], '', []);
           this.create = true;
           this.pictureMode = PictureMode.Select;
@@ -102,13 +102,26 @@ export class ItemComponent implements OnInit {
   }
 
   onSelectLanguage(language: Language) {
-    let restaurantTranslation = this.item.translations.find(translation =>
+    let itemTranslation = this.item.translations.find(translation =>
     translation.languageCode === language.languageCode);
-    if (!restaurantTranslation) {
-      restaurantTranslation = new ItemTranslations('', '', language.languageCode);
-      this.item.translations.push(restaurantTranslation);
+    if (!itemTranslation) {
+      itemTranslation = new ItemTranslations('', '', language.languageCode);
+      this.item.sizes.forEach((size) => {
+        let itemSizeTranslation = new SizeTranslations('NO TRANSLATION', language.languageCode);
+        size.translations.push(itemSizeTranslation);
+        size.selectedTranslation = itemSizeTranslation;
+      });
+      let itemSizeTranslation = new SizeTranslations('', language.languageCode);
+      this.size.translations.push(itemSizeTranslation);
+      this.size.selectedTranslation = itemSizeTranslation;
+      this.item.translations.push(itemTranslation);
+    } else {
+      this.item.sizes.forEach(size => {
+        size.selectedTranslation = size.translations.find(translation => translation.languageCode === language.languageCode);
+      })
+      this.size.selectedTranslation = this.size.translations.find(translation => translation.languageCode === language.languageCode);
     }
-    this.item.selectedTranslation = restaurantTranslation;
+    this.item.selectedTranslation = itemTranslation;
   }
 
   selectFile() {
@@ -118,12 +131,11 @@ export class ItemComponent implements OnInit {
       this.croppedImage = this.croppedImageContainer.image;
       this.pictureMode = PictureMode.CropSelected;
     } else {
-      var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
+      let imageSelector = this.element.nativeElement.querySelector('.item-image-select');
       imageSelector.click();
 
     }
   }
-
 
   onChange(fileInput: File) {
     this.cropper.fileChangeListener(fileInput);
@@ -248,12 +260,12 @@ export class ItemComponent implements OnInit {
 
   addSize() {
     this.item.sizes.push(this.size);
-    this.size = new Size('', 0);
+    this.newSizeTranslation();
   }
 
   removeSize(size: Size) {
-    let sizeToRemove = this.item.sizes.find(currentSize => currentSize.name === size.name);
-    this.item.sizes.splice(this.item.sizes.indexOf(sizeToRemove), 1);
+    let sizeToRemoveIndex = this.item.sizes.indexOf(size);
+    this.item.sizes.splice(sizeToRemoveIndex, 1);
   }
 
   deleteItem() {
@@ -264,6 +276,12 @@ export class ItemComponent implements OnInit {
 
   cancelItem() {
     this.router.navigate(['/dashboard/items']);
+  }
+
+
+  private newSizeTranslation() {
+    let sizeTranslation = new SizeTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
+    this.size = new Size([sizeTranslation], sizeTranslation, 0);
   }
 }
 

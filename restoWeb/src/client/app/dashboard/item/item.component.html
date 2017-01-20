@@ -35,7 +35,7 @@
               <tr class="td-size-input" *ngFor="let size of item.sizes; let i = index">
                 <!--<td>{{size.name}}</td>-->
                 <!--<td>{{size.price | currency:'USD':true:'1.2-2'}}</td>-->
-                <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName{{i}}"
+                <td><input class="form-control" type="text" [(ngModel)]="size.selectedTranslation.name" name="sizeName{{i}}"
                            placeholder="Size Name">
                 </td>
                 <td>
@@ -50,7 +50,7 @@
                 </td>
               </tr>
               <tr class="td-size-input">
-                <td><input class="form-control" type="text" [(ngModel)]="size.name" name="sizeName"
+                <td><input class="form-control" type="text" [(ngModel)]="size.selectedTranslation.name" name="sizeName"
                            placeholder="Size Name">
                 </td>
                 <td>
@@ -60,7 +60,7 @@
                   </div>
                 </td>
                 <td>
-                  <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!size.name"
+                  <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!size.selectedTranslation.name"
                           (click)="addSize()"></button>
                 </td>
               </tr>
