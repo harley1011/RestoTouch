@@ -78,8 +78,8 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
-          this.newSizeTranslation();
           this.item = item;
+          this.newSizeTranslation();
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
           this.create = false;
           this.pictureMode = PictureMode.Edit;
@@ -89,8 +89,8 @@ export class ItemComponent implements OnInit {
       } else {
         let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
           let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
-          this.newSizeTranslation();
           this.item = new Item([translation], translation, [], [], '', []);
+          this.newSizeTranslation();
           this.create = true;
           this.pictureMode = PictureMode.Select;
           if (sub)
@@ -155,12 +155,10 @@ export class ItemComponent implements OnInit {
       return;
     }
     if (this.create) {
-      var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
-
+      let imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
       if (imageSelector) {
         this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
           this.item.imageUrl = response.url;
-
           this.uploadImage(response.url, response.signedRequest);
 
           this.itemService.addItem(this.item).subscribe(result => {
@@ -282,6 +280,11 @@ export class ItemComponent implements OnInit {
   private newSizeTranslation() {
     let sizeTranslation = new SizeTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
     this.size = new Size([sizeTranslation], sizeTranslation, 0);
+    this.item.translations.forEach(translation => {
+      if (translation.languageCode != this.translationSelectComponent.selectedLanguage.languageCode) {
+        this.size.translations.push(new SizeTranslations('', translation.languageCode));
+      }
+    });
   }
 }
 

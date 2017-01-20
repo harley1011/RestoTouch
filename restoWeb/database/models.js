@@ -130,7 +130,7 @@ userModel.sync({force: dropTable}).then(function () {
     itemSizesModel.hasMany(itemSizesTranslationsModel, {
       as: 'translations',
       onDelete: 'cascade',
-      foreignKey: 'menuId'
+      foreignKey: 'itemSizesId'
     });
     itemSizesTranslationsModel.sync({force:dropTable});
     itemModel.hasMany(itemTranslationModel, {as: 'translations', onDelete: 'cascade', foreignKey: 'itemId'});

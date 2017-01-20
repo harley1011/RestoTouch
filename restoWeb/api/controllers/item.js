@@ -1,14 +1,14 @@
 var models = require("../../database/models");
 var s3File = require("./s3File");
+var _ = require('lodash');
+
 var itemModel;
 var itemSizeModel;
 var itemTranslationModel;
 var ingredientGroupModel;
 var ingredientModel;
 var categoryModel;
-
-var _ = require('lodash');
-
+var itemSizeTranslationModel;
 
 setDatabase(models);
 
@@ -29,6 +29,7 @@ function setDatabase(m) {
   ingredientGroupModel = models.getIngredientGroupModel();
   ingredientModel = models.getIngredientModel();
   categoryModel = models.getCategoryModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
 }
 
 
@@ -37,7 +38,11 @@ function getAll(req, res) {
     where: {userId: req.userId},
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
@@ -63,7 +68,11 @@ function save(req, res) {
   itemModel.create(item, {
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
@@ -90,7 +99,11 @@ function get(req, res) {
     },
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
