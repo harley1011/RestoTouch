@@ -173,6 +173,7 @@ userModel.sync({force: dropTable}).then(function () {
       onDelete: 'cascade',
       foreignKey: 'ingredientGroupId'
     });
+    ingredientGroupTranslationModel.sync({force: dropTable});
     ingredientGroupModel.hasMany(ingredientModel, {
       as: 'ingredients',
       onDelete: 'cascade',
@@ -184,6 +185,7 @@ userModel.sync({force: dropTable}).then(function () {
       onDelete: 'cascade',
       foreignKey: 'ingredientId'
     });
+    ingredientTranslationModel.sync({force: dropTable});
 
   });
 

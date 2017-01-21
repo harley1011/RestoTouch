@@ -55,7 +55,6 @@ export class ItemComponent implements OnInit {
 
     this.cropperSettings.minWidth = 100;
     this.cropperSettings.minHeight = 100;
-
     this.cropperSettings.rounded = false;
 
     this.cropperSettings.noFileInput = true;
@@ -71,14 +70,14 @@ export class ItemComponent implements OnInit {
           if (item.imageUrl.length !== 0) {
             this.croppedImage = item.imageUrl;
           }
-          item.ingredientGroups.forEach(ingredientGroup => {
-            ingredientGroup.newIngredient = this.newIngredient();
-          });
 
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
           this.item = item;
+          item.ingredientGroups.forEach(ingredientGroup => {
+            ingredientGroup.newIngredient = this.newIngredient();
+          });
           this.newSizeTranslation();
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
           this.create = false;
@@ -258,14 +257,13 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    let newIngredient = new Ingredient(ingredient.translations, ingredient.selectedTranslation, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity);
-    ingredientGroup.ingredients.push(newIngredient);
-    ingredient = this.newIngredient();
-    return ingredient;
+    ingredientGroup.ingredients.push(ingredient);
+    ingredientGroup.newIngredient = this.newIngredient();
   }
 
   removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
     ingredientGroup.ingredients.splice(ingredientGroup.ingredients.indexOf(ingredient), 1);
+
   }
 
   removeIngredientGroup(ingredientGroup: IngredientGroup) {
