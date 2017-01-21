@@ -22,6 +22,8 @@ var ingredientGroupModel = sequelize.import('./models/ingredientGroup.js');
 var supportedLanguageModel = sequelize.import('./models/supportedLanguages.js');
 var disabledMenuItemCategoryModel = sequelize.import('./models/disabledMenuItemCategory.js');
 var itemSizesTranslationsModel = sequelize.import('./models/itemSizeTranslations.js');
+var ingredientGroupTranslationModel = sequelize.import('./models/ingredientGroupTranslation.js');
+var ingredientTranslationModel = sequelize.import('./models/ingredientTranslation.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -166,12 +168,23 @@ userModel.sync({force: dropTable}).then(function () {
 
     itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
     ingredientGroupModel.sync({force: dropTable});
+    ingredientGroupModel.hasMany(ingredientGroupTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'ingredientGroupId'
+    });
     ingredientGroupModel.hasMany(ingredientModel, {
       as: 'ingredients',
       onDelete: 'cascade',
       foreignKey: 'ingredientGroupId'
     });
     ingredientModel.sync({force: dropTable});
+    ingredientModel.hasMany(ingredientTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'ingredientId'
+    });
+
   });
 
 });
@@ -263,4 +276,12 @@ exports.getSupportedLanguageModel = function () {
 
 exports.getDisabledMenuItemCategoryModel = function () {
   return disabledMenuItemCategoryModel;
+}
+
+exports.getIngredientTranslationModel = function () {
+  return ingredientTranslationModel;
+}
+
+exports.getIngredientGroupTranslationModel = function () {
+  return ingredientGroupTranslationModel;
 }
