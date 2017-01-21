@@ -125,7 +125,7 @@
                 <label for="name">Ingredient Group Name</label>
                 <input type="text" class="form-control"
                        required
-                       [(ngModel)]="newIngredientGroup.name" [ngModelOptions]="{standalone: true}">
+                       [(ngModel)]="newIngredientGroup.selectedTranslation.name" [ngModelOptions]="{standalone: true}">
               </div>
               <div class="form-group">
                 <label>Max num of ingredients</label>
@@ -156,11 +156,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let ingredient of newIngredientGroup.ingredients; let k = index">
+                <tr class="td-size-input" *ngFor="let ingredient of newIngredientGroup.ingredients; let k = index">
                   <td class="add-by-default-table">{{ingredient.addByDefault? 'Yes': 'No'}}</td>
-                  <td>{{ingredient.allowQuantity}}</td>
-                  <td>{{ingredient.name}}</td>
-                  <td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>
+                  <!--<td>{{ingredient.allowQuantity}}</td>-->
+                  <!--<td>{{ingredient.name}}</td>-->
+                  <!--<td>{{ingredient.price | currency:'USD':true:'1.2-2'}}</td>-->
+
+                  <td><input class="form-control" type="checkbox"
+                             [(ngModel)]="ingredient.addByDefault"
+                             name="ingredientAddByDefault{{i}}">
+                  </td>
+                  <td><input class="form-control" #allowQuantity="ngModel"
+                             [(ngModel)]="ingredient.allowQuantity" min="1"
+                             name="addedAllowQuantity{{i}}" type="number"></td>
+                  <td><input class="form-control" type="text" [(ngModel)]="ingredient.selectedTranslation.name"
+                             name="ingredientName{{i}}"
+                             placeholder="Ingredient Name">
+                  </td>
+                  <td>
+                    <div class="input-group"><span class="input-group-addon">$</span>
+                      <input class="form-control" #price="ngModel"
+                             [(ngModel)]="ingredient.price" name="addedIngredientPrice{{i}}"
+                             type="number">
+                    </div>
+                  </td>
+
                   <td>
                     <button class="fa fa-times-circle icon-remove icon-align" type="button"
                             (click)="removeIngredient(newIngredientGroup, ingredient)"></button>
@@ -174,7 +194,7 @@
                   <td><input class="form-control" #allowQuantity="ngModel" id="allowQuantity"
                              [(ngModel)]="newIngredientGroup.newIngredient.allowQuantity" min="1"
                              name="allowQuantity{{i}}" type="number"></td>
-                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.name"
+                  <td><input class="form-control" type="text" [(ngModel)]="newIngredientGroup.newIngredient.selectedTranslation.name"
                              name="ingredientName{{i}}"
                              placeholder="Ingredient Name">
                   </td>

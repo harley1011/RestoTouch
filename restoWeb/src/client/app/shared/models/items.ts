@@ -1,5 +1,4 @@
 import {Size} from './size';
-import {Language} from './language';
 import {IngredientGroup} from './ingredient-group';
 import {Category} from './category';
 import {ItemCategory} from './item-category';

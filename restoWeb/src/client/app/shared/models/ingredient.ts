@@ -1,6 +1,8 @@
 
 export class Ingredient {
-  constructor(public name: string,
+  constructor(
+              public translations: Array<IngredientTranslations>,
+              public selectedTranslation: IngredientTranslations,
               public addByDefault: boolean,
               public price: number,
               public allowQuantity: number,
@@ -9,3 +11,8 @@ export class Ingredient {
   }
 }
 
+export class IngredientTranslations {
+  constructor(
+    public name: string,
+    public languageCode: string) { }
+}

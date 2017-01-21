@@ -1,6 +1,6 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from '../../shared/models/items';
-import {IngredientGroup} from '../../shared/models/ingredient-group';
+import {IngredientGroup, IngredientGroupTranslations} from '../../shared/models/ingredient-group';
 
 import {Size, SizeTranslations} from '../../shared/models/size';
 import {ItemService} from './item.service';
@@ -9,7 +9,7 @@ import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
-import {Ingredient} from '../../shared/models/ingredient';
+import {Ingredient, IngredientTranslations} from '../../shared/models/ingredient';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
@@ -72,7 +72,7 @@ export class ItemComponent implements OnInit {
             this.croppedImage = item.imageUrl;
           }
           item.ingredientGroups.forEach(ingredientGroup => {
-            ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
+            ingredientGroup.newIngredient = this.newIngredient();
           });
 
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
@@ -115,10 +115,27 @@ export class ItemComponent implements OnInit {
       this.size.translations.push(itemSizeTranslation);
       this.size.selectedTranslation = itemSizeTranslation;
       this.item.translations.push(itemTranslation);
+
+      this.item.ingredientGroups.forEach(ingredientGroup => {
+        let ingredientGroupTranslation = new IngredientGroupTranslations('NO TRANSLATION', language.languageCode);
+        ingredientGroup.translations.push(ingredientGroupTranslation);
+        ingredientGroup.selectedTranslation = ingredientGroupTranslation;
+        ingredientGroup.ingredients.forEach(ingredient => {
+          let ingredientTranslations = new IngredientTranslations('NO TRANSLATION', language.languageCode);
+          ingredient.translations.push(ingredientTranslations);
+          ingredient.selectedTranslation = ingredientTranslations;
+        });
+      });
     } else {
       this.item.sizes.forEach(size => {
         size.selectedTranslation = size.translations.find(translation => translation.languageCode === language.languageCode);
-      })
+      });
+      this.item.ingredientGroups.forEach(ingredientGroup => {
+        ingredientGroup.selectedTranslation = ingredientGroup.translations.find(translation => translation.languageCode === language.languageCode);
+        ingredientGroup.ingredients.forEach(ingredient => {
+          ingredient.selectedTranslation = ingredient.translations.find(translation => translation.languageCode === language.languageCode);
+        });
+      });
       this.size.selectedTranslation = this.size.translations.find(translation => translation.languageCode === language.languageCode);
     }
     this.item.selectedTranslation = itemTranslation;
@@ -235,13 +252,16 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroups.push(
-      new IngredientGroup('', [], 1, 1, this.item.ingredientGroups.length + 1, new Ingredient('', false, 0, 1)));
+    let newIngredientGroup = new IngredientGroup([], null, '', [], 1, 1, this.item.ingredientGroups.length + 1, this.newIngredient());
+    this.addTranslationsToIngredientGroup(newIngredientGroup, this.translationSelectComponent.selectedLanguage);
+    this.item.ingredientGroups.push(newIngredientGroup);
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity));
-    ingredient.name = '';
+    let newIngredient = new Ingredient(ingredient.translations, ingredient.selectedTranslation, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity);
+    ingredientGroup.ingredients.push(newIngredient);
+    ingredient = this.newIngredient();
+    return ingredient;
   }
 
   removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
@@ -285,6 +305,28 @@ export class ItemComponent implements OnInit {
         this.size.translations.push(new SizeTranslations('', translation.languageCode));
       }
     });
+  }
+
+  private addTranslationsToIngredientGroup(ingredientGroup: IngredientGroup, language: Language) {
+    this.item.translations.forEach(translation => {
+      let newTranslation = new IngredientGroupTranslations('', translation.languageCode);
+      if (newTranslation.languageCode === language.languageCode) {
+        ingredientGroup.selectedTranslation = newTranslation;
+      }
+      ingredientGroup.translations.push(translation);
+    });
+    return ingredientGroup;
+  }
+
+  private newIngredient(): Ingredient {
+    let ingredient = new Ingredient([], null, false, 0, 1);
+    this.item.translations.forEach(translation => {
+      let newTranslation = new IngredientTranslations('', translation.languageCode);
+      if (translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode)
+        ingredient.selectedTranslation = newTranslation;
+      ingredient.translations.push(newTranslation);
+    });
+    return ingredient;
   }
 }
 
