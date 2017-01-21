@@ -10,6 +10,8 @@ var ingredientGroupModel;
 var ingredientModel;
 var categoryModel;
 var itemSizeTranslationModel;
+var ingredientGroupTranslationModel;
+var ingredientTranslationModel;
 
 setDatabase(models);
 
@@ -31,6 +33,8 @@ function setDatabase(m) {
   ingredientModel = models.getIngredientModel();
   categoryModel = models.getCategoryModel();
   itemSizeTranslationModel = models.getItemSizeTranslationsModel();
+  ingredientGroupTranslationModel = models.getIngredientGroupTranslationModel();
+  ingredientTranslationModel = models.getIngredientTranslationModel();
 }
 
 
@@ -181,6 +185,19 @@ function update(req, res) {
           model: ingredientModel,
           as: 'ingredients',
           updateColumn: 'id',
+          addIdColumn: 'ingredientGroupId',
+          idToAdd: 'id',
+          include: [{
+            model: ingredientTranslationModel,
+            as: 'translations',
+            updateColumn: 'languageCode',
+            addIdColumn: 'ingredientId',
+            idToAdd: 'id'
+          }]
+        }, {
+          model: ingredientGroupTranslationModel,
+          as: 'translations',
+          updateColumn: 'languageCode',
           addIdColumn: 'ingredientGroupId',
           idToAdd: 'id'
         }]
