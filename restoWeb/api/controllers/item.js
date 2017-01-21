@@ -86,7 +86,14 @@ function save(req, res) {
       as: 'ingredientGroups',
       include: [{
         model: ingredientModel,
-        as: 'ingredients'
+        as: 'ingredients',
+        include: [{
+          model: ingredientTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: ingredientGroupTranslationModel,
+        as: 'translations'
       }]
     }]
   }).then(function (result) {
@@ -117,7 +124,14 @@ function get(req, res) {
       as: 'ingredientGroups',
       include: [{
         model: ingredientModel,
-        as: 'ingredients'
+        as: 'ingredients',
+        include: [{
+          model: ingredientTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: ingredientGroupTranslationModel,
+        as: 'translations'
       }]
     }, {
       model: categoryModel,
