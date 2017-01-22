@@ -11,7 +11,7 @@
 
 	<!-- new implementation in button format-->
 	<ion-list>
-  	<button class="buttonList" ion-button *ngFor="let language of supportedLanguages" (click)="continueTapped($event)">
+  	<button class="buttonList" ion-button round large *ngFor="let language of supportedLanguages" (click)="continueTapped($event)">
     	{{ language.name }}
   	</button>
 	</ion-list>
