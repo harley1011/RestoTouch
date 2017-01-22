@@ -22,7 +22,6 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 export class ItemComponent implements OnInit {
   create: boolean;
   item: Item;
-  size: Size;
   errorMessage: any;
   cropperSettings: CropperSettings;
   name: string;
@@ -76,9 +75,8 @@ export class ItemComponent implements OnInit {
           });
           this.item = item;
           item.ingredientGroups.forEach(ingredientGroup => {
-            ingredientGroup.newIngredient = this.newIngredient();
+            ingredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
           });
-          this.newSizeTranslation();
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
           this.create = false;
           this.pictureMode = PictureMode.Edit;
@@ -89,7 +87,7 @@ export class ItemComponent implements OnInit {
         let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
           let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
           this.item = new Item([translation], translation, [], [], '', []);
-          this.newSizeTranslation();
+          this.item.addNewSize(this.translationSelectComponent.selectedLanguage.languageCode);
           this.create = true;
           this.pictureMode = PictureMode.Select;
           if (sub)
@@ -101,43 +99,7 @@ export class ItemComponent implements OnInit {
   }
 
   onSelectLanguage(language: Language) {
-    let itemTranslation = this.item.translations.find(translation =>
-    translation.languageCode === language.languageCode);
-    if (!itemTranslation) {
-      itemTranslation = new ItemTranslations('', '', language.languageCode);
-      this.item.sizes.forEach((size) => {
-        let itemSizeTranslation = new SizeTranslations('NO TRANSLATION', language.languageCode);
-        size.translations.push(itemSizeTranslation);
-        size.selectedTranslation = itemSizeTranslation;
-      });
-      let itemSizeTranslation = new SizeTranslations('', language.languageCode);
-      this.size.translations.push(itemSizeTranslation);
-      this.size.selectedTranslation = itemSizeTranslation;
-      this.item.translations.push(itemTranslation);
-
-      this.item.ingredientGroups.forEach(ingredientGroup => {
-        let ingredientGroupTranslation = new IngredientGroupTranslations('NO TRANSLATION', language.languageCode);
-        ingredientGroup.translations.push(ingredientGroupTranslation);
-        ingredientGroup.selectedTranslation = ingredientGroupTranslation;
-        ingredientGroup.ingredients.forEach(ingredient => {
-          let ingredientTranslations = new IngredientTranslations('NO TRANSLATION', language.languageCode);
-          ingredient.translations.push(ingredientTranslations);
-          ingredient.selectedTranslation = ingredientTranslations;
-        });
-      });
-    } else {
-      this.item.sizes.forEach(size => {
-        size.selectedTranslation = size.translations.find(translation => translation.languageCode === language.languageCode);
-      });
-      this.item.ingredientGroups.forEach(ingredientGroup => {
-        ingredientGroup.selectedTranslation = ingredientGroup.translations.find(translation => translation.languageCode === language.languageCode);
-        ingredientGroup.ingredients.forEach(ingredient => {
-          ingredient.selectedTranslation = ingredient.translations.find(translation => translation.languageCode === language.languageCode);
-        });
-      });
-      this.size.selectedTranslation = this.size.translations.find(translation => translation.languageCode === language.languageCode);
-    }
-    this.item.selectedTranslation = itemTranslation;
+    this.item.addAndSelectNewTranslation(language.languageCode);
   }
 
   selectFile() {
@@ -251,19 +213,19 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    let newIngredientGroup = new IngredientGroup([], null, '', [], 1, 1, this.item.ingredientGroups.length + 1, this.newIngredient());
-    this.addTranslationsToIngredientGroup(newIngredientGroup, this.translationSelectComponent.selectedLanguage);
+    let newIngredientGroup = new IngredientGroup([], null, '', [], 1, 1, this.item.ingredientGroups.length + 1, null);
+    newIngredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
+    newIngredientGroup.addAndSelectNewTranslation(this.translationSelectComponent.selectedLanguage.languageCode);
     this.item.ingredientGroups.push(newIngredientGroup);
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
     ingredientGroup.ingredients.push(ingredient);
-    ingredientGroup.newIngredient = this.newIngredient();
+    ingredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
   }
 
   removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
     ingredientGroup.ingredients.splice(ingredientGroup.ingredients.indexOf(ingredient), 1);
-
   }
 
   removeIngredientGroup(ingredientGroup: IngredientGroup) {
@@ -275,8 +237,7 @@ export class ItemComponent implements OnInit {
   }
 
   addSize() {
-    this.item.sizes.push(this.size);
-    this.newSizeTranslation();
+    this.item.addSize(this.translationSelectComponent.selectedLanguage.languageCode);
   }
 
   removeSize(size: Size) {
@@ -292,39 +253,6 @@ export class ItemComponent implements OnInit {
 
   cancelItem() {
     this.router.navigate(['/dashboard/items']);
-  }
-
-
-  private newSizeTranslation() {
-    let sizeTranslation = new SizeTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
-    this.size = new Size([sizeTranslation], sizeTranslation, 0);
-    this.item.translations.forEach(translation => {
-      if (translation.languageCode != this.translationSelectComponent.selectedLanguage.languageCode) {
-        this.size.translations.push(new SizeTranslations('', translation.languageCode));
-      }
-    });
-  }
-
-  private addTranslationsToIngredientGroup(ingredientGroup: IngredientGroup, language: Language) {
-    this.item.translations.forEach(translation => {
-      let newTranslation = new IngredientGroupTranslations('', translation.languageCode);
-      if (newTranslation.languageCode === language.languageCode) {
-        ingredientGroup.selectedTranslation = newTranslation;
-      }
-      ingredientGroup.translations.push(translation);
-    });
-    return ingredientGroup;
-  }
-
-  private newIngredient(): Ingredient {
-    let ingredient = new Ingredient([], null, false, 0, 1);
-    this.item.translations.forEach(translation => {
-      let newTranslation = new IngredientTranslations('', translation.languageCode);
-      if (translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode)
-        ingredient.selectedTranslation = newTranslation;
-      ingredient.translations.push(newTranslation);
-    });
-    return ingredient;
   }
 }
 
