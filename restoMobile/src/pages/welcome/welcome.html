@@ -1,12 +1,23 @@
 <ion-content padding>
+	<div swipe-vertical [swipeUp]="mySwipeUpAction()" [swipeDown]="mySwipeDownAction()">
+		<!-- login section-->
+		<div style="background-color: purple; height:50px; display:none;">
+			testting
+		</div>
+	</div>
 
 		<h1 text-center>Welcome to "{{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}}"</h1>
 		<br>
 
-		<!-- new implementation in button format-->
+	<!-- new implementation in button format-->
+	<ion-list>
+  	<button class="buttonList" ion-button *ngFor="let language of supportedLanguages" (click)="continueTapped($event)">
+    	{{ language.name }}
+  	</button>
+	</ion-list>
 
-
-		<ion-item *ngIf="selectedRestaurant">
+	<!-- old implementation for selecting language // TO BE DELETED -->
+		<!--<ion-item *ngIf="selectedRestaurant">
 			<ion-label>Please select a menu language:</ion-label>
 			<ion-select [(ngModel)] = "this.selectedLanguage" (ionChange)="selectLanguage()" placeholder="Language">
 				<ion-option *ngFor="let language of supportedLanguages" [value]="language">{{language.name}}</ion-option>
@@ -17,7 +28,7 @@
 
 		<div padding>
 		<button ion-button outline (click)="continueTapped($event)">Continue</button>
-		</div>
+		</div>-->
 </ion-content>
 
 
