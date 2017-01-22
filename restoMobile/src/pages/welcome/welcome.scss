@@ -2,8 +2,37 @@ page-welcome {
 
 .buttonList{
     display: list-item;
-    width: 20%;
+    width: 150px;
     margin: 20px auto;
 }
 
+.top{
+    display: none;
+    background-color: purple;
+    height:50px;
+
+}
+
+.top show{
+    display: block;
+}
+
+#bottom{
+    color: #aea0ba;
+    font-size: 90%;
+    position: absolute;
+    top:93%;
+    text-align:center;
+    left: 0;
+    right:0;
+    margin: auto;
+
+}
+
+#imgLogo{
+    vertical-align: middle;
+    /* resize logo to 75% */
+    width: 85px;
+    height: 25px;
+}
 }
