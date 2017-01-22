@@ -1,38 +1,77 @@
 page-welcome {
 
-.buttonList{
-    display: list-item;
-    width: 150px;
-    margin: 20px auto;
-}
+    .titleResto{
+        margin-top: 20%;
+        margin-bottom: 10%;
+        text-align:center;
+    }
 
-.top{
-    display: none;
-    background-color: purple;
-    height:50px;
+    .restoFont{
+        font-size: 350%;
+        font-weight: bolder;
+        margin-top:0;
+    }
 
-}
+    .welcomeFont{
+        font-size: 175%;
+        margin-bottom:0;
+    }
 
-.top show{
-    display: block;
-}
+    .addressFont{
+        font-size: 100%;
+    }
 
-#bottom{
-    color: #aea0ba;
-    font-size: 90%;
-    position: absolute;
-    top:93%;
-    text-align:center;
-    left: 0;
-    right:0;
-    margin: auto;
+    .language-btn {
+        color: #fff;
+        float: right;
+    }
 
-}
+    .language-btn:hover {
+        color: #fff;
+        background-color: transparent !important;
+    }
 
-#imgLogo{
-    vertical-align: middle;
-    /* resize logo to 75% */
-    width: 85px;
-    height: 25px;
-}
+    .language-btn:active {
+        color: #387ef5;
+        background-color: transparent !important;
+    }
+
+
+    .buttonList{
+        display: list-item;
+        width: 150px;
+        margin: 20px auto;
+    }
+
+    .top{
+        display: none;
+        background-color:#3c1065;
+        height:200px;
+        margin: 0;
+        padding:0;
+
+    }
+
+    .top show{
+        display: block;
+    }
+
+    #bottom{
+        color: #387ef5;
+        font-size: 90%;
+        position: absolute;
+        top:93%;
+        text-align:center;
+        left: 0;
+        right:0;
+        margin: auto;
+
+    }
+
+    #imgLogo{
+        vertical-align: middle;
+        /* resize logo to 75% */
+        width: 85px;
+        height: 25px;
+    }
 }

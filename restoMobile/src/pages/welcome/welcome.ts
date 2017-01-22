@@ -46,11 +46,30 @@ export class WelcomePage {
     });
   }
 
+  mySwipeUpAction(){
+    console.log('hello up');
+
+  }
+
+  mySwipeDownAction(){
+    console.log('hello down');
+
+  }
+
   selectLanguage() {
     let trans = this.selectedRestaurant.translations.find(translation =>
       translation.languageCode === this.selectedLanguage.languageCode);
     this.selectedRestaurant.selectedTranslation = trans;
     //to set the current language
     this.translate.use(this.selectedLanguage.languageCode);
+  }
+
+    // toggle btwn french and english for app language
+  switchLanguage(){
+    if(this.translate.currentLang === 'en'){
+      this.translate.use('fr');
+    }
+    else
+      this.translate.use('en');
   }
 }

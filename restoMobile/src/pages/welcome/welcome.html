@@ -6,9 +6,15 @@
 		</div>
 	</div>
 
-		<h1 text-center>Welcome to "{{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}}"</h1>
-		{{selectedRestaurant.address}}
+	<div>
+	  <button ion-button clear class="language-btn" (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
+	</div>
+	<div class="titleResto">
+		<h2 class="welcomeFont">{{ 'welcome.welcomeTitle' | translate }}</h2>
+		<h1 class="restoFont">{{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}}</h1>
+		<h3 class="addressFont">{{selectedRestaurant.address}}</h3>
 		<br>
+	</div>
 
 	<!-- new implementation in button format-->
 	<ion-list>
@@ -18,7 +24,7 @@
 	</ion-list>
 
 	<div id="bottom">
-		Powered by <img id="imgLogo" src="../assets/img/logoBlack50.png">
+		{{ 'welcome.poweredBottom' | translate }} <img id="imgLogo" src="../assets/img/logoBlack50.png">
 	</div>
 
 	<!-- old implementation for selecting language // TO BE DELETED -->
