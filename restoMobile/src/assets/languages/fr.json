@@ -9,5 +9,10 @@
 
   "selectResto": {
     "title": "Liste de vos Restaurants"
+  },
+
+  "welcome": {
+    "welcomeTitle": "Bienvenue à",
+    "poweredBottom": "Propulsé par "
   }
 }
