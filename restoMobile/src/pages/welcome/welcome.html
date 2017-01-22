@@ -1,25 +1,23 @@
-<ion-header>
-  <ion-navbar>
-  <!-- Menu toggle button will be removed -->
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Welcome</ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content padding>
 
-<ion-content padding> 
-	<h1 text-center>Welcome to {{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}} RestoTouch Virtual Menu</h1>
-	<br><h5> </h5>
-	<ion-item *ngIf="selectedRestaurant">
-		<ion-label>Please select a menu language:</ion-label>
-		<ion-select [(ngModel)] = "this.selectedLanguage" (ionChange)="selectLanguage()" placeholder="Language">
-			<ion-option *ngFor="let language of supportedLanguages" [value]="language">{{language.name}}</ion-option>
-		</ion-select>
-	</ion-item>
-	<div padding>
-	<button ion-button outline (click)="continueTapped($event)">Continue</button>
-	</div>
+		<h1 text-center>Welcome to "{{selectedRestaurant.selectedTranslation ? selectedRestaurant.selectedTranslation.name : "No translation"}}"</h1>
+		<br>
+
+		<!-- new implementation in button format-->
+
+
+		<ion-item *ngIf="selectedRestaurant">
+			<ion-label>Please select a menu language:</ion-label>
+			<ion-select [(ngModel)] = "this.selectedLanguage" (ionChange)="selectLanguage()" placeholder="Language">
+				<ion-option *ngFor="let language of supportedLanguages" [value]="language">{{language.name}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+
+
+		<div padding>
+		<button ion-button outline (click)="continueTapped($event)">Continue</button>
+		</div>
 </ion-content>
 
 
