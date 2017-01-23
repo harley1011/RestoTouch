@@ -5,19 +5,21 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="selectedMenu && menu && menu.categories">
-    <ion-item *ngFor="let category of menu.categories">
-      <h1>{{category.selectedTranslation ? category.selectedTranslation.name : "No translation"}}</h1>
+  <ion-list *ngIf="selectedMenu && menu && menu.categories && categories">
+    <ion-item *ngFor="let category of categories">
+      <h1>{{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}</h1>
       <ion-list>
         <ion-item *ngFor="let item of category.items">
           <ion-thumbnail item-left>
-            <img [src]="item.imageUrl"/>
+            <img [src]="item.item.imageUrl"/>
           </ion-thumbnail>
-          <h2>{{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}</h2>
-          <ion-list>
+          <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
+          <ion-list no-lines>
             <ion-item *ngFor="let size of item.sizes">
-              <p>{{size.name}} ${{size.price}}</p>
-              <button ion-button clear item-right="secondary">Order</button>
+              <p>{{size.size.name}} ${{size.size.price}}</p>
+              <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
+              <button ion-button item-right (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
+              <ion-badge item-right color="light">{{size.count}}</ion-badge>
             </ion-item>
           </ion-list>
         </ion-item>
@@ -26,10 +28,8 @@
   </ion-list>
 </ion-content>
 <ion-footer>
-  <ion-item>Test 1</ion-item>
-  <ion-item>Test 2</ion-item>
-  <ion-item>Test 3</ion-item>
-  <ion-item>Test 4</ion-item>
-  <ion-item>Test 5</ion-item>
-  <ion-item>Test 6</ion-item>
+  <ion-item>
+    <h1>Total: $0.0</h1>
+    <button ion-button item-right color="secondary" large [disabled]="orders.length == 0">Order</button>
+  </ion-item>
 </ion-footer>
