@@ -4,6 +4,8 @@ import { Language } from '../shared/models/language';
 import { LanguageService } from '../services/language.service';
 import {TranslateService} from 'ng2-translate';
 import { MenuListPage } from '../menu-list/menu-list';
+import { Page2 } from '../page2/page2'
+import { Restaurant } from '../shared/models/restaurant';
 
 @Component({
   selector: 'page-welcome',

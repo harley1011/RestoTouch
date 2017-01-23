@@ -19,7 +19,8 @@ import {TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoade
 import { Http } from '@angular/http';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
-
+import { LanguageService } from '../pages/services/language.service';
+import { RestaurantService } from '../pages/services/restaurant.service';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/languages', '.json');
