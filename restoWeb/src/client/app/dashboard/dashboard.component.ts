@@ -20,13 +20,12 @@ export class DashboardComponent {
 
   constructor(private languageService: LanguageService) {
     languageService.supplyLanguageModalPicker(() => {
-      this.childModal.show()
+      this.childModal.show();
     });
-
     this.languages = languageService.languages();
   }
 
-  addLanguage(){
+  addLanguage() {
     this.languageService.addSupportedLanguage(this.selectedLanguage);
     this.childModal.hide();
   }

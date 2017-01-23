@@ -5,6 +5,8 @@ import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { Auth, User } from '@ionic/cloud-angular';
@@ -13,6 +15,7 @@ import { Auth, User } from '@ionic/cloud-angular';
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
@@ -29,6 +32,8 @@ export class MyApp {
       { title: 'Page One', component: Page1 },
       { title: 'Page Two', component: Page2 },
       { title: 'Menu List Page', component: MenuListPage },
+      { title: 'Welcome Page', component: WelcomePage},
+      { title: 'Settings', component: SettingsPage},
       { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
     ];

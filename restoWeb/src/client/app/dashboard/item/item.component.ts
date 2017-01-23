@@ -133,7 +133,7 @@ export class ItemComponent implements OnInit {
 
   onSubmit() {
     this.uploading = true;
-    if (this.item.sizes.length == 0) {
+    if (this.item.sizes.length === 0) {
       alert('Please add at least one size to this item');
       return;
     }

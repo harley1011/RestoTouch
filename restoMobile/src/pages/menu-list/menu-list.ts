@@ -10,11 +10,13 @@ import { MenuPage } from '../menu/menu';
 export class MenuListPage {
     selectedMenu: any;
     selectedRestaurant: any;
+    selectedLanguage: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
 
         this.selectedRestaurant = navParams.get('restaurant');
         this.selectedMenu = navParams.get('menu');
+        this.selectedLanguage = navParams.get('language');
         this.selectedRestaurant.Menus.forEach( menu => {
             menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == 'en');
         })

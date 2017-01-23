@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
-import { TranslateService } from 'ng2-translate';
-import { TranslationSelectComponent } from '../shared/translation-select/translation-select.component';
-import { MenuListPage } from '../menu-list/menu-list'
+import {TranslateService} from 'ng2-translate';
+import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
+import { WelcomePage } from '../welcome/welcome';
 
 /*
   Generated class for the RestaurantList page.
@@ -19,25 +19,20 @@ import { MenuListPage } from '../menu-list/menu-list'
 export class RestaurantListPage {
     numOfRestaurants: number;
     restaurants: Restaurant[];
-    selectedRestaurant: any;
 
 @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private restaurantListService: RestaurantService,
               private translate: TranslateService) {
   translate.setDefaultLang('en');
-  this.selectedRestaurant = navParams.get('restaurant');
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RestaurantListPage');
     this.getRestaurants();
-//    console.log(this.restaurants);
-//    console.log('num: ' + this.restaurants.length);
-    
   }
 
     getRestaurants(): void {
@@ -56,10 +51,9 @@ export class RestaurantListPage {
         );
       }
 
-    restaurantTapped(restaurant){
-        this.navCtrl.push(MenuListPage, {
-            restaurant: restaurant
-        });
-    }
-
+  itemTapped(event, item) {
+    this.navCtrl.push(WelcomePage, {
+      item: item
+    });
+  }
 }

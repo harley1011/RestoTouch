@@ -12,10 +12,18 @@ import { RestaurantService } from '../pages/services/restaurant.service';
 import { ItemService } from '../pages/services/item.service';
 import { MenuService } from '../pages/services/menu.service';
 import { CategoryService } from '../pages/services/category.service';
+import { LanguageService } from '../pages/services/language.service';
 import { ApiEndpointService } from '../pages/services/api-endpoint.service';
 import { AuthHttpService } from '../pages/services/auth-http.services';
 import {TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
-import { HttpModule, Http } from '@angular/http';
+import { Http } from '@angular/http';
+import { WelcomePage } from '../pages/welcome/welcome';
+import { SettingsPage } from '../pages/settings/settings';
+
+
+export function createTranslateLoader(http: Http) {
+    return new TranslateStaticLoader(http, 'assets/languages', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -24,6 +32,8 @@ import { HttpModule, Http } from '@angular/http';
     Page2,
     MenuListPage,
     MenuPage,
+    WelcomePage,
+    SettingsPage,
     LoginPage,
     RestaurantListPage
   ],
@@ -42,9 +52,11 @@ import { HttpModule, Http } from '@angular/http';
     Page2,
     MenuListPage,
     MenuPage,
+    WelcomePage,
+    SettingsPage,
     LoginPage,
     RestaurantListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},LanguageService, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
 })
 export class AppModule {}
