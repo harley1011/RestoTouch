@@ -1,27 +1,25 @@
 <ion-header>
   <ion-navbar>
-    <ion-title *ngIf="selectedMenu">{{selectedMenu.selectedTranslation ? selectedMenu.selectedTranslation.name : "No translation"}}</ion-title>
+    <ion-title>{{selectedMenu?.selectedTranslation ? selectedMenu.selectedTranslation.name : "No translation"}}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="selectedMenu && menu && menu.categories">
-<!-- To make sure the menu is set before start executing -->
-
-  <ion-list>
+<ion-content>
+  <ion-list *ngIf="selectedMenu && menu && menu.categories">
     <ion-item *ngFor="let category of menu.categories">
-      {{category.selectedTranslation ? category.selectedTranslation.name : "No translation"}}
+      <h1>{{category.selectedTranslation ? category.selectedTranslation.name : "No translation"}}</h1>
       <ion-list>
-
-        <ion-item  *ngFor="let item of category.items">
-          <ng-container *ngIf="!isItemDisabled(item,category)">
-            <img class="card-img-top i  mg-thumbnail img-thumbnail-cust" height="30" width="30" [src]="item.imageUrl"/>
-            {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
-            <h3 *ngFor="let size of item.sizes">
-              {{size.name}}
-              ${{size.price}}
-              <button ion-button small color="secondary">Order</button>
-            </h3>
-          </ng-container>
+        <ion-item *ngFor="let item of category.items">
+          <ion-thumbnail item-left>
+            <img [src]="item.imageUrl"/>
+          </ion-thumbnail>
+          <h2>{{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}</h2>
+          <ion-list>
+            <ion-item *ngFor="let size of item.sizes">
+              <p>{{size.name}} ${{size.price}}</p>
+              <button ion-button clear item-right="secondary">Order</button>
+            </ion-item>
+          </ion-list>
         </ion-item>
       </ion-list>
     </ion-item>

@@ -13,12 +13,9 @@ import { MenuService } from '../services/menu.service';
   templateUrl: 'menu.html'
 })
 export class MenuPage {
- selectedMenu: any;
+  selectedMenu: any;
   selectedLanguage: any;
- menu: Menu;
- items: Array <Item>;
-
-
+  menu: Menu;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -41,22 +38,26 @@ export class MenuPage {
   }
 
   getMenu(id: number): void {
-        this.menuService.getMenu(id).subscribe(
-            menu => {
-                this.menu = menu;
-
-                this.menu.categories.forEach( category => {
-                    category.selectedTranslation = category.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
-
-                    category.items.forEach( item => {
-                      item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
-
-                  });
-                });
-            },
-            error => {
-                console.log(error);
+    this.menuService.getMenu(id).subscribe(
+      menu => {
+        this.menu = menu;
+        console.log(this.menu);
+        this.menu.categories.forEach( category => {
+          category.selectedTranslation = category.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+          var item: Item;
+          for (var i = 0; i < category.items.length; i++) {
+            item = category.items[i];
+            if (this.isItemDisabled(item, category)) {
+              category.items.splice(i--, 1);
+            } else {
+              item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
             }
-        );
+          }
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }
