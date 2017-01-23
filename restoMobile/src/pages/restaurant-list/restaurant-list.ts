@@ -6,7 +6,6 @@ import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 import { WelcomePage } from '../welcome/welcome';
 
-
 /*
   Generated class for the RestaurantList page.
 
@@ -24,19 +23,16 @@ export class RestaurantListPage {
 @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private restaurantListService: RestaurantService,
               private translate: TranslateService) {
   translate.setDefaultLang('en');
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RestaurantListPage');
     this.getRestaurants();
-//    console.log(this.restaurants);
-//    console.log('num: ' + this.restaurants.length);
-    
   }
 
     getRestaurants(): void {
@@ -55,10 +51,9 @@ export class RestaurantListPage {
         );
       }
 
-    itemTapped(event, item) {
-      this.navCtrl.push(WelcomePage, {
+  itemTapped(event, item) {
+    this.navCtrl.push(WelcomePage, {
       item: item
     });
   }
-
 }
