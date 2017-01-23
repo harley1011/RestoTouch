@@ -18,10 +18,7 @@ export class Item extends Translation {
   }
 
   addAndSelectNewTranslation(languageCode: string) {
-    if (!this.checkAndSelectIfTranslationExists(languageCode)) {
-      this.selectedTranslation = new ItemTranslations('', '', languageCode);
-      this.translations.push(this.selectedTranslation);
-    }
+    this.addIfNotExistsAndSelect(languageCode, new ItemTranslations('', '', languageCode));
 
     this.addNewIngredientGroupTranslation(languageCode);
     this.addNewSizeTranslation(languageCode);
@@ -41,7 +38,7 @@ export class Item extends Translation {
   }
 
   addNewIngredientGroup(languageCode: string) {
-    let newIngredientGroup = new IngredientGroup([], null, '', [], 1, 1, this.ingredientGroups.length + 1, null);
+    let newIngredientGroup = new IngredientGroup([], null, [], 1, 1, this.ingredientGroups.length + 1, null);
     this.translations.forEach(translation => {
       newIngredientGroup.addAndSelectNewTranslation(translation.languageCode);
     });
@@ -56,6 +53,33 @@ export class Item extends Translation {
 
   addNewSize(languageCode: string) {
     this.newSize = this.createNewSize(languageCode);
+  }
+
+  static fromJson(obj: any, selectLanguage: string): Item {
+    let translation = new Array<ItemTranslations>();
+    let sizes = new Array<Size>();
+    let ingredientGroups = new Array<IngredientGroup>();
+
+    obj.translations.forEach((t: ItemTranslations) => {
+      translation.push(ItemTranslations.fromJson(t));
+    });
+
+    ItemTranslations.fromJson(obj.translations);
+
+    obj.sizes.forEach((t: Size) => {
+      sizes.push(Size.fromJson(t));
+    });
+
+    obj.ingredientGroups.forEach((i : IngredientGroup) => {
+      let ingredientGroup = IngredientGroup.fromJson(i);
+      ingredientGroup.addNewIngredient(selectLanguage);
+      ingredientGroups.push(ingredientGroup);
+    });
+
+    let item = new Item(translation, null, [],ingredientGroups, obj.imageUrl, sizes, null, null, obj.id);
+    item.addNewSize(selectLanguage);
+    item.addAndSelectNewTranslation(selectLanguage);
+    return item;
   }
 
   private createNewSize(languageCode: string) {
@@ -73,5 +97,9 @@ export class ItemTranslations extends EntityTranslation {
               public description: string,
               public languageCode: string) {
     super(languageCode);
+  }
+
+  static fromJson(obj: any): ItemTranslations {
+    return new ItemTranslations(obj.name, obj.description, obj.languageCode);
   }
 }

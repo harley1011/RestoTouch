@@ -73,11 +73,10 @@ export class ItemComponent implements OnInit {
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
-          this.item = item;
-          item.ingredientGroups.forEach(ingredientGroup => {
+          this.item = Item.fromJson(item, this.translationSelectComponent.selectedLanguage.languageCode);
+          this.item.ingredientGroups.forEach(ingredientGroup => {
             ingredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
           });
-          this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
           this.create = false;
           this.pictureMode = PictureMode.Edit;
         }, error => {
@@ -87,7 +86,6 @@ export class ItemComponent implements OnInit {
         let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
           let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
           this.item = new Item([translation], translation, [], [], '', []);
-          this.item.addNewSize(this.translationSelectComponent.selectedLanguage.languageCode);
           this.create = true;
           this.pictureMode = PictureMode.Select;
           if (sub)
@@ -213,7 +211,7 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    let newIngredientGroup = new IngredientGroup([], null, '', [], 1, 1, this.item.ingredientGroups.length + 1, null);
+    let newIngredientGroup = new IngredientGroup([], null, [], 1, 1, this.item.ingredientGroups.length + 1, null);
     newIngredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
     newIngredientGroup.addAndSelectNewTranslation(this.translationSelectComponent.selectedLanguage.languageCode);
     this.item.ingredientGroups.push(newIngredientGroup);
