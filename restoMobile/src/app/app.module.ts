@@ -21,6 +21,8 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LanguageService } from '../pages/services/language.service';
 import { OrderService } from '../pages/services/order.service';
+import { RestaurantService } from '../pages/services/restaurant.service';
+import { SwipeVertical } from '../pages/welcome/swipeVertical.directive';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/languages', '.json');
@@ -37,7 +39,8 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     SettingsPage,
     LoginPage,
-    RestaurantListPage
+    RestaurantListPage,
+    SwipeVertical
   ],
   imports: [
     IonicModule.forRoot(MyApp),
