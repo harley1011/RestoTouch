@@ -14,6 +14,7 @@ import { MenuService } from '../services/menu.service';
 })
 export class MenuPage {
  selectedMenu: any;
+  selectedLanguage: any;
  menu: Menu;
  items: Array <Item>;
 
@@ -25,6 +26,8 @@ export class MenuPage {
               private menuService: MenuService) {
 
     this.selectedMenu = navParams.get('menu');
+    this.selectedLanguage = navParams.get('language');
+
     this.getMenu(this.selectedMenu.id);
   }
 
@@ -43,10 +46,10 @@ export class MenuPage {
                 this.menu = menu;
 
                 this.menu.categories.forEach( category => {
-                    category.selectedTranslation = category.translations.find(translation => translation.languageCode == 'en');
+                    category.selectedTranslation = category.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
 
                     category.items.forEach( item => {
-                      item.selectedTranslation = item.translations.find(translation => translation.languageCode == 'en');
+                      item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
 
                   });
                 });

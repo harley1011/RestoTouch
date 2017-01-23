@@ -18,13 +18,15 @@ export class MenuListPage {
         this.selectedMenu = navParams.get('menu');
         this.selectedLanguage = navParams.get('language');
         this.selectedRestaurant.Menus.forEach( menu => {
-            menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == 'en');
+          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+
         })
     }
 
     menuTapped(menu){
         this.navCtrl.push(MenuPage, {
-            menu: menu
+            menu: menu,
+            language: this.selectedLanguage
         });
     }
 }
