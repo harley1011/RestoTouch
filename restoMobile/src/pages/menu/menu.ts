@@ -15,10 +15,8 @@ import { MenuService } from '../services/menu.service';
 export class MenuPage {
  selectedMenu: any;
  menu: Menu;
- categoryItemsId: Array <number>;
  items: Array <Item>;
- //menuCategories: Array <Category> = [];
- //itemsizes: Array <Size> = [];
+
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -46,16 +44,9 @@ export class MenuPage {
 
                 this.menu.categories.forEach( category => {
                     category.selectedTranslation = category.translations.find(translation => translation.languageCode == 'en');
-                  //this.menuCategories.push(category);
 
                     category.items.forEach( item => {
                       item.selectedTranslation = item.translations.find(translation => translation.languageCode == 'en');
-
-                      //console.log(item); //TODO why not showing itemSizes
-                      //console.log(item.sizes);
-                      /*this.categoryItemsId.push(item.id);
-                      this.itemService.getItem(item.id);*/
-
 
                   });
                 });
@@ -65,19 +56,4 @@ export class MenuPage {
             }
         );
   }
-
-/*  getItem(id: number): void {
-    this.itemService.getItem(id).subscribe(
-      item => {
-        this.items.push(item);
-        console.log('HERE');
-        console.log(item);
-      },
-      error => {
-        console.log(error);
-      }
-
-    )
-  }*/
-
 }

@@ -16,11 +16,11 @@
           <ng-container *ngIf="!isItemDisabled(item,category)">
             <img class="card-img-top i  mg-thumbnail img-thumbnail-cust" height="30" width="30" [src]="item.imageUrl"/>
             {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
-            <button ion-button small color="secondary">Order</button>
-            <!--<h3 *ngFor="let size of itemsizes">
+            <h3 *ngFor="let size of item.sizes">
               {{size.name}}
-              {{size.price}}
-            </h3>-->
+              ${{size.price}}
+              <button ion-button small color="secondary">Order</button>
+            </h3>
           </ng-container>
         </ion-item>
       </ion-list>
