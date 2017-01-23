@@ -87,10 +87,10 @@ export class MenuPage {
   }
 
   addOrder(category: OrderableCategory, item: OrderableItem, size: OrderableSize): void {
-    console.log('add');
+    size.count++;
   }
 
   removeOrder(category: OrderableCategory, item: OrderableItem, size: OrderableSize): void {
-    console.log('remove');
+    size.count = size.count > 0 ? size.count-1 : 0;
   }
 }

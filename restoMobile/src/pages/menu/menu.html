@@ -19,7 +19,7 @@
               <p>{{size.size.name}} ${{size.size.price}}</p>
               <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
               <button ion-button item-right (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
-              <ion-badge item-right color="light">{{size.count}}</ion-badge>
+              <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
             </ion-item>
           </ion-list>
         </ion-item>
