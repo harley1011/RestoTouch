@@ -47,14 +47,18 @@ export class WelcomePage {
     });
   }
 
+  tapEvent(e) {
+    this.toggleSliderOpen();
+  }
+
   mySwipeUpAction(){
     console.log('hello up');
-    this.toggleClass();
+    this.toggleSliderOpen();
   }
 
   mySwipeDownAction(){
     console.log('hello down');
-    this.toggleClass();
+    this.toggleSliderOpen();
   }
 
   selectLanguage() {
@@ -74,7 +78,10 @@ export class WelcomePage {
       this.translate.use('en');
   }
 
-  toggleClass(){
+  /**
+  * toggle the top slider to open or close
+  **/
+  toggleSliderOpen(){
     this.openSlider = !this.openSlider;
     var d = document.getElementById("slider");
     if(this.openSlider){
