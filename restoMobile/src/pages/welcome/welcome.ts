@@ -18,6 +18,7 @@ export class WelcomePage {
   supportedLanguages: Array<Language> = [];
 	selectedLanguage: Language = new Language('','selectedLanguage','',0);
 	selectedRestaurant: any;
+  openSlider: boolean = false;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -48,12 +49,12 @@ export class WelcomePage {
 
   mySwipeUpAction(){
     console.log('hello up');
-
+    this.toggleClass();
   }
 
   mySwipeDownAction(){
     console.log('hello down');
-
+    this.toggleClass();
   }
 
   selectLanguage() {
@@ -71,5 +72,15 @@ export class WelcomePage {
     }
     else
       this.translate.use('en');
+  }
+
+  toggleClass(){
+    this.openSlider = !this.openSlider;
+    var d = document.getElementById("slider");
+    if(this.openSlider){
+      d.className += " show";
+    } else {
+      d.className ="top";
+    }
   }
 }

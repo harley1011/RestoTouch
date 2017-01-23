@@ -25,7 +25,6 @@ page-welcome {
         background-color:#387ef5;
         margin:-20px -20px 0 -20px;
         height:50px;
-
     }
 
     .language-btn {
@@ -50,15 +49,22 @@ page-welcome {
     }
 
     .top{
-        display: none;
+        visibility: hidden;
+        opacity: 0;
         background-color:#101a65;
-        height:200px;
-        margin:-20px -20px 0 -20px;
-
+        color: white;
+        height: 0px;
+         margin:-35px -20px -20px -20px;
+        padding: 35px 20px 0px 20px;
+        -webkit-transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
+        -moz-transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
+        transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
     }
 
-    .top show{
-        display: block;
+    .top.show{
+        visibility: visible;
+        opacity: 1;
+        height:200px;
     }
 
     #bottom{
@@ -77,6 +83,6 @@ page-welcome {
         vertical-align: middle;
         /* resize logo to 75% */
         width: 85px;
-        height: 25px;
+        height: 26px;
     }
 }
