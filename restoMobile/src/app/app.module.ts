@@ -12,7 +12,6 @@ import { RestaurantService } from '../pages/services/restaurant.service';
 import { ItemService } from '../pages/services/item.service';
 import { MenuService } from '../pages/services/menu.service';
 import { CategoryService } from '../pages/services/category.service';
-import { LanguageService } from '../pages/services/language.service';
 import { ApiEndpointService } from '../pages/services/api-endpoint.service';
 import { AuthHttpService } from '../pages/services/auth-http.services';
 import {TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate';
@@ -20,7 +19,6 @@ import { Http } from '@angular/http';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LanguageService } from '../pages/services/language.service';
-import { RestaurantService } from '../pages/services/restaurant.service';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/languages', '.json');
