@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
-
-import { Page2 } from '../page2/page2'
-
 import { Language } from '../shared/models/language';
 import { LanguageService } from '../services/language.service';
-import { Restaurant } from '../shared/models/restaurant';
 import {TranslateService} from 'ng2-translate';
+import { MenuListPage } from '../menu-list/menu-list';
+import { Page2 } from '../page2/page2'
+import { Restaurant } from '../shared/models/restaurant';
 
 @Component({
   selector: 'page-welcome',
@@ -37,13 +35,14 @@ export class WelcomePage {
 
   continueTapped(event) {
     // Will push to virtual menu page
-    this.navCtrl.push(Page2, {
-      language: this.selectedLanguage
+    this.navCtrl.push(MenuListPage, {
+      language: this.selectedLanguage,
+      restaurant: this.selectedRestaurant
     });
   }
 
   selectLanguage() {
-    let trans = this.selectedRestaurant.translations.find(translation => 
+    let trans = this.selectedRestaurant.translations.find(translation =>
       translation.languageCode === this.selectedLanguage.languageCode);
     this.selectedRestaurant.selectedTranslation = trans;
     //to set the current language
