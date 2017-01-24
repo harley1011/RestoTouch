@@ -5,13 +5,39 @@
       <small>View and edit your account information below</small>
     </h5>
     <div class="manage-button">
-      <button class="btn btn-success btn-green">Edit</button>
+      <button (click)="edit()" class="btn btn-success btn-green">Edit</button>
     </div>
     <hr>
   </div>
-  <div class="manage-list-container">  
+  <div *ngIf="!editing" class="manage-list-container">  
     <h5>First Name</h5>{{user.firstName}}<br><br>
     <h5>Last Name</h5>{{user.lastName}}<br><br>
     <h5>Email</h5>{{user.email}}<br><br>
   </div>
+  <div *ngIf="editing" class="formContainer" #formContainer>
+  	<form id="profileInfo" role="form">
+  		<div class="form-group">
+          <h5>First Name</h5>
+          <input id="firstName" class="form-control" name="firstName"
+                 required
+                 [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel"
+                 [ngClass]="{'form-error': !firstName.valid && !firstName.pristine}">
+        </div>
+        <div class="form-group">
+          <h5>Last Name</h5>
+          <input id="lastName" class="form-control" name="lastName"
+                 required
+                 [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel"
+                 [ngClass]="{'form-error': !lastName.valid && !lastName.pristine}">
+        </div>
+        <div class="form-group">
+          <h5>Email</h5>
+          <input id="email" class="form-control" name="email"
+                 required
+                 [(ngModel)]="user.email" name="email" #email="ngModel"
+                 [ngClass]="{'form-error': !email.valid && !email.pristine}">
+        </div>
+    </form>
+  </div>
+
 <div>
