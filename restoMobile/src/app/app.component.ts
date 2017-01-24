@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, NavController, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
@@ -29,12 +29,12 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 },
-      { title: 'Menu List Page', component: MenuListPage },
-      { title: 'Welcome Page', component: WelcomePage},
-      { title: 'Settings', component: SettingsPage},
-      { title: 'Restaurant List', component: RestaurantListPage },
+
+//      { title: 'Page One', component: Page1 },
+//      { title: 'Page Two', component: Page2 },
+//      { title: 'Welcome Page', component: WelcomePage},
+//      { title: 'Settings', component: SettingsPage},
+//      { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
     ];
 

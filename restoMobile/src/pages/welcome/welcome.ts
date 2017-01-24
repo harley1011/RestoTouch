@@ -52,12 +52,12 @@ export class WelcomePage {
   }
 
   mySwipeUpAction(){
-    console.log('hello up');
+//    console.log('hello up');
     this.toggleSliderOpen();
   }
 
   mySwipeDownAction(){
-    console.log('hello down');
+//    console.log('hello down');
     this.toggleSliderOpen();
   }
 
