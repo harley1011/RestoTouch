@@ -14,7 +14,7 @@ export class ProfileComponent {
 
 	constructor(private profileService: ProfileService) {
 		this.profileService.getProfile().subscribe(user => {
-			this.user.firstName = user.firstName;
+			this.user = user;
 			console.log(user);
 		});
 	}

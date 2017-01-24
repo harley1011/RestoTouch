@@ -1,3 +1,17 @@
-<div id="profileInfo">
-	<h5>Profile</h5>{{user.firstName}}
+<div id="restaurant">
+  <div class="manage-header">
+    <h2>Profile Information</h2>
+    <h5 class="subtitle">
+      <small>View and edit your account information below</small>
+    </h5>
+    <div class="manage-button">
+      <button class="btn btn-success btn-green">Edit</button>
+    </div>
+    <hr>
+  </div>
+  <div class="manage-list-container">  
+    <h5>First Name</h5>{{user.firstName}}<br><br>
+    <h5>Last Name</h5>{{user.lastName}}<br><br>
+    <h5>Email</h5>{{user.email}}<br><br>
+  </div>
 <div>
