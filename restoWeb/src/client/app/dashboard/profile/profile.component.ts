@@ -1,12 +1,21 @@
 import {Component} from '@angular/core';
-import {AccountSettingsService} from '../settings/account-settings.service';
-
+import {ProfileService} from './profile.service';
+import {User} from '../../shared/models/user';
 
 @Component({
   moduleId: module.id,
   selector: 'profile-cmp',
   templateUrl: 'profile.component.html',
-  providers: [AccountSettingsService]
+  providers: [ProfileService]
 })
 
-export class ProfileComponent {}
+export class ProfileComponent {
+	user = new User('', '');
+
+	constructor(private profileService: ProfileService) {
+		this.profileService.getProfile().subscribe(user => {
+			this.user.firstName = user.firstName;
+			console.log(user);
+		});
+	}
+}

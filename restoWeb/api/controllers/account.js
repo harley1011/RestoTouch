@@ -15,7 +15,8 @@ module.exports = {
   getAccountSettings: getAccountSettings,
   saveAccountSettings: saveAccountSettings,
   getSupportedLanguages: getSupportedLanguages,
-  saveNewSupportedLanguage: saveNewSupportedLanguage
+  saveNewSupportedLanguage: saveNewSupportedLanguage,
+  getProfile: getProfile
 };
 
 function setDatabase(m) {
@@ -146,3 +147,10 @@ function login(req, res) {
   });
 }
 
+function getProfile(req, res) {
+  return userModel.findOne({
+    where: {id: req.userId},
+  }).then(function (user) {
+    return res.json(user);
+  })
+}
