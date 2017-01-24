@@ -16,7 +16,8 @@
           <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
           <ion-list no-lines>
             <ion-item *ngFor="let size of item.sizes">
-              <p>{{size.size.name}} ${{size.size.price}}</p>
+              <p>{{size.size.name}} </p>
+              <p item-right>${{size.size.price.toFixed(2)}}</p>
               <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
               <button ion-button item-right (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
               <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
@@ -29,7 +30,7 @@
 </ion-content>
 <ion-footer>
   <ion-item>
-    <h1>Total: $0.0</h1>
-    <button ion-button item-right color="secondary" large [disabled]="orders.length == 0">Order</button>
+    <h1>Total: ${{total}}</h1>
+    <button ion-button item-right (click)="order()" color="secondary" large [disabled]="orders.length == 0">Order</button>
   </ion-item>
 </ion-footer>

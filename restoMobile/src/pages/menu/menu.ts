@@ -4,6 +4,7 @@ import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
 import { Size } from '../shared/models/size';
 import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
+import { Order } from '../shared/models/order';
 import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
@@ -18,7 +19,8 @@ export class MenuPage {
   selectedLanguage: any;
   menu: Menu;
   categories: Array<OrderableCategory>;
-  orders: Array<Item>;
+  orders: Array<Order>;
+  total: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -29,6 +31,7 @@ export class MenuPage {
     this.selectedLanguage = navParams.get('language');
     this.categories = [];
     this.orders = [];
+    this.total = "0.00";
 
     this.getMenu(this.selectedMenu.id);
   }
@@ -86,11 +89,41 @@ export class MenuPage {
     });
   }
 
-  addOrder(category: OrderableCategory, item: OrderableItem, size: OrderableSize): void {
-    size.count++;
+  addOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
+    orderableSize.count++;
+
+    var item = orderableItem.item;
+    var size = orderableSize.size;
+    var order = new Order(item.id, size.id, []);
+    this.orders.push(order);
+
+    var total = parseFloat(this.total);
+    total += size.price;
+    this.total = total.toFixed(2);
   }
 
-  removeOrder(category: OrderableCategory, item: OrderableItem, size: OrderableSize): void {
-    size.count = size.count > 0 ? size.count-1 : 0;
+  removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
+    orderableSize.count = orderableSize.count > 0 ? orderableSize.count-1 : 0;
+
+    var item = orderableItem.item;
+    var size = orderableSize.size;
+    let order: Order;
+    for (var i = 0; i < this.orders.length; i++) {
+      order = this.orders[i];
+      if (order.itemId === item.id && order.sizeId === size.id) {
+        this.orders.splice(i, 1);
+
+        var total = parseFloat(this.total);
+        total -= size.price;
+        if (total < 0) total = 0;
+        this.total = total.toFixed(2);
+
+        break;
+      }
+    }
+  }
+
+  order(): void {
+    console.log('ORDER');
   }
 }
