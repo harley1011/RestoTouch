@@ -1,5 +1,20 @@
 page-welcome {
 
+     ion-content {
+        background-image: url('../../assets/img/food-bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+        
+        color: #fff !important;
+    }
+    
+     .scroll-content {
+        background-color: rgba(0, 0, 0, 0.2);   
+    }
+    
     .titleResto{
         margin-top: 15vh;
         margin-bottom: 10%;

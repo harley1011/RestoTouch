@@ -1,20 +1,19 @@
 page-login {
     color: #fff;
+    background-color: #4a4747 !important;
     
-    ion-content {
-        background-image: url('../../assets/img/glass-15px.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        height: 100%;
-        
-        color: #fff !important;
+    ion-content.content-md {
+        background-color: transparent;
+//        background-image: url('../../assets/img/glass-15px.png');
+//        background-size: cover;
+//        background-repeat: no-repeat;
+//        background-position: center;
+//        background-attachment: fixed;
+//        height: 100%;
+//        
+//        color: #fff !important;
     }
     
-    .scroll-content {
-        background-color: rgba(0, 0, 0, 0.6);   
-    }
     
     div.logo-container {
         margin: 150px auto 0;
@@ -35,9 +34,6 @@ page-login {
         padding: 0 200px;
     }
     
-    input {
-        color: #fff;   
-    }
     
     .language-btn {
         color: #fff;
