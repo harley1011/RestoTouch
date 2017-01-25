@@ -6,6 +6,7 @@ import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
 import { MenuPage } from "../pages/menu/menu";
 import { IngredientGroupPage } from "../pages/ingredient-group/ingredient-group";
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { AuthService } from '../pages/services/auth.service';
@@ -39,6 +40,7 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     SettingsPage,
     LoginPage,
+    HomePage,
     RestaurantListPage,
     SwipeVertical
   ],
@@ -61,6 +63,7 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     SettingsPage,
     LoginPage,
+    HomePage,
     RestaurantListPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},LanguageService, OrderService, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]

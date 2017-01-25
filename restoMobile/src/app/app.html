@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu id="ownerMenu" [content]="content">
   
   <ion-content>
     <ion-nav [root]="rootPage"></ion-nav>
@@ -12,6 +12,18 @@
 -->
   </ion-content>
 
+</ion-menu>
+
+<ion-menu id="clientMenu" [content]="content">>
+<ion-content>
+    <ion-nav [root]="rootPage"></ion-nav>
+      
+    <ion-list>
+      <button ion-item>
+        hello
+      </button>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 
 <!--

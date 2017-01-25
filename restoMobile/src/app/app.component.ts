@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Nav, NavController, Platform } from 'ionic-angular';
+import { Nav, NavController, MenuController, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
@@ -8,6 +8,7 @@ import { MenuListPage } from '../pages/menu-list/menu-list';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { Auth, User } from '@ionic/cloud-angular';
 
@@ -22,6 +23,7 @@ export class MyApp {
   rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
+  usePage: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform,
               public authService: AuthService) {
@@ -36,8 +38,9 @@ export class MyApp {
 //      { title: 'Settings', component: SettingsPage},
 //      { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
+//      { title: 'Home', component: HomePage }
     ];
-
+      
   }
 
   initializeApp() {

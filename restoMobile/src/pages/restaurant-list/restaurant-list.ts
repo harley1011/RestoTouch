@@ -5,6 +5,7 @@ import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 import { WelcomePage } from '../welcome/welcome';
+import { HomePage } from '../home/home';
 
 /*
   Generated class for the RestaurantList page.
