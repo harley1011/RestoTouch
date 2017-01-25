@@ -8,8 +8,8 @@
   <ion-list *ngIf="selectedMenu && menu && menu.categories && categories">
     <ion-item *ngFor="let category of categories">
       <h1>{{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}</h1>
-      <ion-list>
-        <ion-item *ngFor="let item of category.items">
+      <ion-list class="flex-container">
+        <ion-item class="flex-item" *ngFor="let item of category.items">
           <ion-thumbnail item-left>
             <img [src]="item.item.imageUrl"/>
           </ion-thumbnail>
