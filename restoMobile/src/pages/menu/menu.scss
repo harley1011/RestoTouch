@@ -17,3 +17,23 @@ page-menu {
   flex-basis: 350px;
   flex-grow: 1;
 }
+
+.item-image {
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.item-image img {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.image-flex {
+  flex-basis: 80px;
+  flex-grow: 1;
+}
+
+.item-sizes {
+  flex-basis: 300px;
+  flex-grow: 2;
+}

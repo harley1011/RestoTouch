@@ -8,21 +8,27 @@
   <ion-list *ngIf="selectedMenu && menu && menu.categories && categories">
     <ion-item *ngFor="let category of categories">
       <h1>{{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}</h1>
-      <ion-list class="flex-container">
+      <ion-list class="flex-container" no-lines>
         <ion-item class="flex-item" *ngFor="let item of category.items">
-          <ion-thumbnail item-left>
-            <img [src]="item.item.imageUrl"/>
-          </ion-thumbnail>
-          <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
-          <ion-list no-lines>
-            <ion-item *ngFor="let size of item.sizes">
-              <p>{{size.size.name}} </p>
-              <p item-right>${{size.size.price.toFixed(2)}}</p>
-              <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
-              <button ion-button item-right (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
-              <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
+          <ion-item class="flex-container">
+            <ion-item class="image-flex">
+              <ion-thumbnail class="item-image" item-left>
+                <img [src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/utensils.jpg'"/>
+              </ion-thumbnail>
             </ion-item>
-          </ion-list>
+            <ion-item class="item-sizes">
+              <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
+              <ion-list no-lines>
+                <ion-item *ngFor="let size of item.sizes">
+                  <p>{{size.size.name}} </p>
+                  <p item-right>${{size.size.price.toFixed(2)}}</p>
+                  <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
+                  <button ion-button item-right (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
+                  <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
+                </ion-item>
+              </ion-list>
+            </ion-item>
+          </ion-item>
         </ion-item>
       </ion-list>
     </ion-item>
