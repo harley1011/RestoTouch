@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
@@ -27,7 +27,8 @@ export class RestaurantListPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private restaurantListService: RestaurantService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              public menuCtrl: MenuController) {
   translate.setDefaultLang('en');
 
   }
@@ -57,5 +58,6 @@ export class RestaurantListPage {
     this.navCtrl.push(WelcomePage, {
       item: restaurant
     });
+     this.menuCtrl.enable(false, 'ownerMenu');
   }
 }

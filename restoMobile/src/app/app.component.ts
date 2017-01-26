@@ -20,8 +20,8 @@ import { Auth, User } from '@ionic/cloud-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
-  startPage: any = LoginPage;
+  rootPage: any = LoginPage;
+  startPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
   usePage: Array<{title: string, component: any}>;
@@ -50,7 +50,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
-        this.nav.setRoot(HomePage);
+        this.nav.setRoot(LoginPage);
     });
     
   }
