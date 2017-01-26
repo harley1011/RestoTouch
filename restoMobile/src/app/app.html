@@ -1,8 +1,8 @@
-<ion-menu id="ownerMenu" [content]="content">
+<ion-menu id="ownerMenu" [content]="mycontent">
   
   <ion-content>
-    <ion-nav [root]="rootPage"></ion-nav>
-      {{pages.component}}
+    <ion-nav [root]="startPage"></ion-nav>
+    
 <!--
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
@@ -14,9 +14,9 @@
 
 </ion-menu>
 
-<ion-menu id="clientMenu" [content]="content">>
+<ion-menu side="right" id="clientMenu" [content]="content">>
 <ion-content>
-    <ion-nav [root]="rootPage"></ion-nav>
+<!--    <ion-nav [root]="rootPage"></ion-nav>-->
       
     <ion-list>
       <button ion-item>
@@ -48,3 +48,4 @@
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage" #mycontent swipeBackEnabled="false"></ion-nav>

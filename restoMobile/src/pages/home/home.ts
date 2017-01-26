@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, NavController, NavParams, MenuController } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 
 /*
   Generated class for the Home page.
@@ -12,11 +13,17 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
+@ViewChild(Nav) nav: Nav;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public menuCtrl: MenuController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+//    this.nav.setRoot(LoginPage);
+    this.menuCtrl.toggle('left');
+//    this.menuCtrl.enable(true, 'clientMenu');
   }
 
 }
