@@ -16,7 +16,8 @@ module.exports = {
   saveAccountSettings: saveAccountSettings,
   getSupportedLanguages: getSupportedLanguages,
   saveNewSupportedLanguage: saveNewSupportedLanguage,
-  getProfile: getProfile
+  getProfile: getProfile,
+  saveProfile: saveProfile
 };
 
 function setDatabase(m) {
