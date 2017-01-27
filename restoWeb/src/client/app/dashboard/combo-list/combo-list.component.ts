@@ -8,7 +8,8 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 @Component({
   moduleId: module.id,
   selector: 'combo-list-cmp',
-  templateUrl: 'combo-list.component.html'
+  templateUrl: 'combo-list.component.html',
+    providers: [ComboListService]
 })
 
 export class ComboListComponent implements OnInit {

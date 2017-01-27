@@ -1,0 +1,22 @@
+<div class="manage-list">
+  <div class="manage-header">
+    <h2>{{'combo.titleManage' | translate}}</h2>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="manage-button">
+      <form class="form-inline">
+        <button type="button" class="btn btn-success btn-green" (click)="add()">{{'combo.addcomboButtonManage' |
+          translate}}
+        </button>
+      </form>
+    </div>
+    <hr>
+  </div>
+  <div class="manage-list-container">
+    <div class="col-sm-3" *ngFor="let combo of combos; let i = index">
+      <div (click)="modify(combo)" class="card card-block">
+        <h4 class="card-title">{{ combo.selectedTranslation ? combo.selectedTranslation.name : "No translation"}} </h4>
+        <h6 style="margin:0">{{'combo.itemsCard' | translate}} <span class="label label-default"> {{ combo?.items?.length }}</span></h6>
+      </div>
+    </div>
+  </div>
+</div>

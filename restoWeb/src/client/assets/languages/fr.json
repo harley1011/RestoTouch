@@ -133,6 +133,23 @@
     "itemsCard": "Articles"
   },
 
+    "combo":{
+    "titleManage":"Gestion des Combos",
+    "sousTitleManage":"Sélectionner le combo que vous désirez faire des changements",
+    "addcomboButtonManage":"+ Ajouter un combo",
+    "titleCreate": "Création d'un combo",
+    "titleEdit":"Éditer le combo",
+    "sousTitleCombosetting":"Paramètres du combo",
+    "createButtonTopbar":"Créer",
+    "cancelButtonTopbar":"Annuler",
+    "langType2":"Langue diffusée actuellement: ",
+    "comboName":"Nom du combo",
+    "comboNameFieldHolder":"p. ex. Entrées",
+    "saveButton":"Sauvegarder",
+    "deleteButton":"Effacer",
+    "itemsCard": "Articles"
+  },
+
   "foodItem":{
     "titleManage":"Gestion des produits alimentaires",
     "sousTitleManage":"Sélectionner le produit que vous désirez faire des changements",

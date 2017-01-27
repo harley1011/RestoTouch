@@ -3,6 +3,7 @@ import {DashboardComponent} from './dashboard.component';
 import {CategoryRoutes} from './category/category.routes';
 import {CategoryListRoutes} from './category-list/category-list.routes';
 import {ComboListRoutes} from './combo-list/combo-list.routes';
+import {ComboRoutes} from './combo/combo.routes';
 import {RestaurantRoutes} from './restaurant/restaurant.routes';
 import {RestaurantsRoutes} from './restaurant-list/restaurant-list.routes';
 
@@ -26,6 +27,7 @@ const dashboardRoutes: Routes = [
       .concat(CategoryListRoutes)
       .concat(ComboListRoutes)
       .concat(RestaurantRoutes)
+      .concat(ComboRoutes)
       .concat(RestaurantsRoutes)
       .concat(ItemRoutes)
       .concat(ItemListRoutes)

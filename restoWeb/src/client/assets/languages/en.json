@@ -134,6 +134,23 @@
     "itemsCard": "Items"
   },
 
+  "combo":{
+    "titleManage":"Manage Combos",
+    "sousTitleManage":"You can select any combo below to make changes",
+    "addcomboButtonManage":"+ Add Combos",
+    "titleCreate": "Create Combo",
+    "titleEdit":"Edit Combo",
+    "sousTitleCombosetting":"Combos settings",
+    "createButtonTopbar":"Create",
+    "cancelButtonTopbar":"Cancel",
+    "langType2":"Currently showing in: ",
+    "comboName":"Combo Name",
+    "comboNameFieldHolder":"e.g. Appetizers",
+    "saveButton":"Save",
+    "deleteButton":"Delete",
+    "itemsCard": "Items"
+  },
+
    "foodItem":{
     "titleManage":"Manage Food Items",
     "sousTitleManage":"You can select any item below to make changes",
