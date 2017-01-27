@@ -13,6 +13,7 @@ import {User} from '../../shared/models/user';
 export class ProfileComponent {
 	user = new User('', '');
 	editing: boolean;
+	passChange: boolean = false;
 	hideMessageSuccess: boolean;
 
 	constructor(private profileService: ProfileService,
@@ -28,6 +29,10 @@ export class ProfileComponent {
 	edit() {
 		this.editing = !this.editing;
 		this.hideMessageSuccess = true;
+	}
+
+	changePass() {
+		this.passChange = !this.passChange;
 	}
 
 	save() {
