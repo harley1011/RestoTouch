@@ -162,12 +162,15 @@ function getProfile(req, res) {
 //modifies user profile information 
 function saveProfile(req, res) {
   var user = req.body;
-  var passwordData = passwordHasher.saltHashPassword(user.password);
-  user.password = passwordData.passwordHash;
-  user.salt = passwordData.salt;
   return userModel.findOne({
     where: {id: req.userId},
   }).then(function (oldUser) {
+    var passwordMatched = (user.password === oldUser.password);
+    if(!passwordMatched) {
+      var passwordData = passwordHasher.saltHashPassword(user.password);
+      user.password = passwordData.passwordHash;
+      user.salt = passwordData.salt;
+    }
     for(var prop in user) {
       oldUser[prop] = user[prop];
     }

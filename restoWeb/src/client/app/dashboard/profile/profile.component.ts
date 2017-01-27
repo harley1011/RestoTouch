@@ -13,7 +13,7 @@ import {User} from '../../shared/models/user';
 export class ProfileComponent {
 	user = new User('', '');
 	editing: boolean;
-	passChange: boolean = false;
+	editPass: boolean = false;
 	hideMessageSuccess: boolean;
 
 	constructor(private profileService: ProfileService,
@@ -31,9 +31,8 @@ export class ProfileComponent {
 		this.hideMessageSuccess = true;
 	}
 
-	changePass() {
-		this.passChange = !this.passChange;
-		this.user.password = "";
+	editPassword() {
+		this.editPass = !this.editPass;
 	}
 
 	save() {
@@ -42,12 +41,14 @@ export class ProfileComponent {
         		this.router.navigate(['/dashboard/profile']);
       	});
       	this.editing = false;
+      	this.editPass = false;
       	this.hideMessageSuccess = false;
 	}
 
 	cancel() {
 		//Could maybe be improved
 		this.editing = false;
+		this.editPass = false;
 		this.hideMessageSuccess = true;
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
