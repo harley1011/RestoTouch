@@ -7,7 +7,7 @@
     <div class="row">
     	<div class="manage-button">
 		    <button *ngIf="!editing" (click)="edit()" class="btn btn-success btn-green" type="button">Edit</button>
-		    <button *ngIf="editing" class="btn btn-success btn-green" type="button">Save</button>
+		    <button *ngIf="editing" (click)="save()" class="btn btn-success btn-green" type="button">Save</button>
 		    <button *ngIf="editing" (click)="cancel()" class="btn btn-default btn-normal" type="button">Cancel</button>
 		</div>
 	</div>

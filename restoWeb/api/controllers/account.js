@@ -163,7 +163,7 @@ function getProfile(req, res) {
 function saveProfile(req, res) {
   var user = req.body;
   return userModel.findOne({
-    where: {id: user.userId},
+    where: {id: req.userId},
   }).then(function (oldUser) {
     for(var prop in user) {
       oldUser[prop] = user[prop];

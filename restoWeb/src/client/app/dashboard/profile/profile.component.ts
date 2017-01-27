@@ -27,6 +27,14 @@ export class ProfileComponent {
 		this.editing = !this.editing;
 	}
 
+	save() {
+		this.profileService.saveProfile(this.user).subscribe(
+      		generalResponse => {
+        		this.router.navigate(['/dashboard/profile']);
+      	});
+      	this.editing = false;
+	}
+
 	cancel() {
 		//Could maybe be improved
 		this.profileService.getProfile().subscribe(user => {

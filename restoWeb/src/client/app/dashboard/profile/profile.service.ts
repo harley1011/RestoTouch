@@ -20,7 +20,16 @@ export class ProfileService {
       .catch(this.handleError);
   }
 
-    private extractData(res: Response) {
+  saveProfile (user: User): Observable<GeneralResponse> {
+    let body = JSON.stringify(user);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(this.api.getEndpoint() + this.url, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  private extractData(res: Response) {
     let body = res.json();
     return body || { };
   }
