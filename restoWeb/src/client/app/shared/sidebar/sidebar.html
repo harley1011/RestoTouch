@@ -20,6 +20,10 @@
       {{ 'dashboard.foodItemSidebar' | translate }}
     </a>
 
+    <a routerLink="/dashboard/combos" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      {{ 'dashboard.comboItemSidebar' | translate }}
+    </a>
+
     <!-- order-->
     <a class="list-group-item">
       {{ 'dashboard.orderSidebar' | translate }}
@@ -27,7 +31,7 @@
 
     <!-- statistic -->
     <a class="list-group-item">
-      {{ 'dashboard.statSidebar' | translate }}  
+      {{ 'dashboard.statSidebar' | translate }}
     </a>
 
     <!-- cashier mode -->

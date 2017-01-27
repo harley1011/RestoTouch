@@ -5,6 +5,7 @@ import {RestaurantListModule} from './restaurant-list/restaurant-list.module';
 import {RestaurantModule} from './restaurant/restaurant.module';
 import {CategoryListModule} from './category-list/category-list.module';
 import {CategoryModule} from './category/category.module';
+import {ComboListModule} from './combo-list/combo-list.module';
 import {MenuListModule} from './menu-list/menu-list.module';
 import {MenuModule} from './menu/menu.module';
 import {ItemListModule} from './item-list/item-list.module';
@@ -28,6 +29,7 @@ import {FormsModule} from '@angular/forms';
     RestaurantModule,
     CategoryListModule,
     CategoryModule,
+    ComboListModule,
     MenuListModule,
     SettingsModule,
     MenuModule,

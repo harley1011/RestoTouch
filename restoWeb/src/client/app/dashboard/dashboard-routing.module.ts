@@ -2,7 +2,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {CategoryRoutes} from './category/category.routes';
 import {CategoryListRoutes} from './category-list/category-list.routes';
-
+import {ComboListRoutes} from './combo-list/combo-list.routes';
 import {RestaurantRoutes} from './restaurant/restaurant.routes';
 import {RestaurantsRoutes} from './restaurant-list/restaurant-list.routes';
 
@@ -24,6 +24,7 @@ const dashboardRoutes: Routes = [
     component: DashboardComponent,
     children: HomeRoutes.concat(CategoryRoutes)
       .concat(CategoryListRoutes)
+      .concat(ComboListRoutes)
       .concat(RestaurantRoutes)
       .concat(RestaurantsRoutes)
       .concat(ItemRoutes)

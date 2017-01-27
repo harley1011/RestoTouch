@@ -43,6 +43,7 @@
     "menuSidebar": "MENUS",
     "catSidebar": "CATÉGORIES",
     "foodItemSidebar": "PRODUITS ALIMENTAIRES",
+    "comboItemSidebar": "MENU COMBO",
     "orderSidebar": "COMMANDES",
     "statSidebar": "STATISTIQUES",
     "cashierModeSidebar":"MODE DE CAISSE",

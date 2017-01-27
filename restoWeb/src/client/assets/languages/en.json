@@ -43,6 +43,7 @@
     "menuSidebar": "MENUS",
     "catSidebar": "CATEGORIES",
     "foodItemSidebar": "FOOD ITEMS",
+    "comboItemSidebar": "MENU COMBO",
     "orderSidebar": "ORDERS",
     "statSidebar": "STATISTICS",
     "cashierModeSidebar":"CASHIER MODE",
