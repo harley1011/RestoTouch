@@ -33,6 +33,7 @@ export class ProfileComponent {
 
 	changePass() {
 		this.passChange = !this.passChange;
+		this.user.password = "";
 	}
 
 	save() {

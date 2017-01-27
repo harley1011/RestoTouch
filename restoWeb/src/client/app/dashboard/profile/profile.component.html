@@ -54,14 +54,14 @@
 	              <input id="password" class="form-control" name="password"
 	                 required
 	                 [(ngModel)]="user.password" name="password" #password="ngModel"
-	                 [ngClass]="{'form-error': !email.valid && !email.pristine}">
+	                 [ngClass]="{'form-error': !password.valid && !password.pristine}">
 	        </div>
 	        <div class="form-group">
 	        	<h5>Repeat your password</h5>
 	              <input id="passwordConfirm" class="form-control" name="passwordConfirm"
 	                 required
 	                 [(ngModel)]="user.passwordConfirm" name="password" #passwordConfirm="ngModel"
-	                 [ngClass]="{'form-error': !email.valid && !email.pristine}">
+	                 [ngClass]="{'form-error': !passwordConfirm.valid && !passwordConfirm.pristine}">
 	        </div>
 	    </div>
     </form>
