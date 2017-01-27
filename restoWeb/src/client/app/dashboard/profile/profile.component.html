@@ -13,7 +13,10 @@
 	</div>
     <hr>
   </div>
-  <div *ngIf="!editing" class="manage-list-container">  
+  <div *ngIf="!editing" class="manage-list-container">
+  	<alert *ngIf="!hideMessageSuccess" type="success">
+       	Your profile information was saved successfully.
+    </alert>
     <h5>First Name</h5>{{user.firstName}}<br><br>
     <h5>Last Name</h5>{{user.lastName}}<br><br>
     <h5>Email</h5>{{user.email}}<br><br>

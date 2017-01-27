@@ -13,6 +13,7 @@ import {User} from '../../shared/models/user';
 export class ProfileComponent {
 	user = new User('', '');
 	editing: boolean;
+	hideMessageSuccess: boolean;
 
 	constructor(private profileService: ProfileService,
 				private router: Router) {
@@ -21,10 +22,12 @@ export class ProfileComponent {
 			console.log(user);
 		});
 		this.editing = false;
+		this.hideMessageSuccess = true;
 	}
 
 	edit() {
 		this.editing = !this.editing;
+		this.hideMessageSuccess = true;
 	}
 
 	save() {
@@ -33,14 +36,16 @@ export class ProfileComponent {
         		this.router.navigate(['/dashboard/profile']);
       	});
       	this.editing = false;
+      	this.hideMessageSuccess = false;
 	}
 
 	cancel() {
 		//Could maybe be improved
+		this.editing = false;
+		this.hideMessageSuccess = true;
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
 			console.log(user);
 		});
-		this.editing = false;
 	}
 }
