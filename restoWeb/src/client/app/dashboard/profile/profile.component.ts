@@ -12,9 +12,11 @@ import {User} from '../../shared/models/user';
 
 export class ProfileComponent {
 	user = new User('', '');
-	editing: boolean;
+	editing: boolean = false;
 	editPass: boolean = false;
-	hideMessageSuccess: boolean;
+	hideMessageSuccess: boolean = true;
+	passwordAlert: boolean = false;
+	errorMessage: string;
 
 	constructor(private profileService: ProfileService,
 				private router: Router) {
@@ -22,8 +24,6 @@ export class ProfileComponent {
 			this.user = user;
 			console.log(user);
 		});
-		this.editing = false;
-		this.hideMessageSuccess = true;
 	}
 
 	edit() {
@@ -36,20 +36,28 @@ export class ProfileComponent {
 	}
 
 	save() {
-		this.profileService.saveProfile(this.user).subscribe(
+		if(this.editPass && (this.user.password !== this.user.passwordConfirm)) {
+			this.passwordAlert = true;
+			this.errorMessage = "Passwords don't match.";
+		}
+		else {
+			this.passwordAlert = false;
+			this.profileService.saveProfile(this.user).subscribe(
       		generalResponse => {
         		this.router.navigate(['/dashboard/profile']);
-      	});
-      	this.editing = false;
-      	this.editPass = false;
-      	this.hideMessageSuccess = false;
+	      	});
+	      	this.editing = false;
+	      	this.editPass = false;
+	      	this.hideMessageSuccess = false;
+		}
 	}
 
 	cancel() {
-		//Could maybe be improved
 		this.editing = false;
 		this.editPass = false;
 		this.hideMessageSuccess = true;
+		this.passwordAlert = false;
+		//Could maybe be improved.
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
 			console.log(user);
