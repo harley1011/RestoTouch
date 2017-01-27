@@ -16,13 +16,11 @@ export class ProfileComponent {
 	editPass: boolean = false;
 	hideMessageSuccess: boolean = true;
 	passwordAlert: boolean = false;
-	errorMessage: string;
 
 	constructor(private profileService: ProfileService,
 				private router: Router) {
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
-			console.log(user);
 		});
 	}
 
@@ -38,7 +36,6 @@ export class ProfileComponent {
 	save() {
 		if(this.editPass && (this.user.password !== this.user.passwordConfirm)) {
 			this.passwordAlert = true;
-			this.errorMessage = "Passwords don't match.";
 		}
 		else {
 			this.passwordAlert = false;
@@ -60,7 +57,6 @@ export class ProfileComponent {
 		//Could maybe be improved.
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
-			console.log(user);
 		});
 	}
 }
