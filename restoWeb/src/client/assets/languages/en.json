@@ -173,7 +173,7 @@
     "title": "Profile Information",
     "sousTitle": "View and edit your account information below",
     "editButton": "Edit",
-    "editPasswordButton": "Edit Password",
+    "editPasswordButton": "Change Password",
     "saveButton": "Save",
     "cancelButton": "Cancel",
     "saveSuccessMessage": "Your profile information was saved successfully.",

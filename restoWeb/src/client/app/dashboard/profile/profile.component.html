@@ -22,7 +22,7 @@
     <h5>{{'profile.lastName' | translate}}</h5>{{user.lastName}}<br><br>
     <h5>{{'profile.email' | translate}}</h5>{{user.email}}<br><br>
   </div>
-  <div *ngIf="editing" class="formContainer" #formContainer>
+  <div *ngIf="editing" class="manage-list-container">
     <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
       {{'profile.firstNameAlert' | translate}}
     </div>
@@ -56,7 +56,7 @@
         </div>
     </form>
   </div>
-  <div *ngIf="editPass" class="formContainer" #formContainer>
+  <div *ngIf="editPass" class="manage-list-container">
   	<div *ngIf="passwordAlert" class="alert alert-danger">
     	{{'profile.errorMessage' | translate}}
     </div>
