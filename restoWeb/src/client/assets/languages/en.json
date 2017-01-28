@@ -182,7 +182,10 @@
     "email": "Email",
     "errorMessage": "Passwords don't match.",
     "enterPassword": "Enter new password",
-    "repeatPassword": "Confirm new password"
+    "repeatPassword": "Confirm new password",
+    "firstNameAlert": "Please enter your first name.",
+    "lastNameAlert": "Please enter your last name.",
+    "emailAlert": "Please enter a valid email address."
   }
   
 }

@@ -23,7 +23,16 @@
     <h5>{{'profile.email' | translate}}</h5>{{user.email}}<br><br>
   </div>
   <div *ngIf="editing" class="formContainer" #formContainer>
-  	<form id="profileInfo" role="form">
+    <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+      {{'profile.firstNameAlert' | translate}}
+    </div>
+    <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+      {{'profile.lastNameAlert' | translate}}
+    </div>
+    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+      {{'profile.emailAlert' | translate}}
+    </div>
+  	<form id="restaurantForm" (ngSubmit)="save()" role="form">
   		<div class="form-group">
           <h5>{{'profile.firstName' | translate}}</h5>
           <input id="firstName" class="form-control" name="firstName"
@@ -40,7 +49,7 @@
         </div>
         <div class="form-group">
           <h5>{{'profile.email' | translate}}</h5>
-          <input id="email" class="form-control" name="email"
+          <input type="email" id="email" class="form-control" name="email"
                  required
                  [(ngModel)]="user.email" name="email" #email="ngModel"
                  [ngClass]="{'form-error': !email.valid && !email.pristine}">

@@ -180,7 +180,10 @@
     "email": "Courriel",
     "errorMessage": "Les mots de passe ne se concordent pas.",
     "enterPassword": "Nouveau mot de passe",
-    "repeatPassword": "Confirmer nouveau mot de passe"
+    "repeatPassword": "Confirmer nouveau mot de passe",
+    "firstNameAlert": "Vous devez entrer votre prénom.",
+    "lastNameAlert": "Vous dever entrer votre nom de famille.",
+    "emailAlert": "Vous devez entrer un courriel valide."
   }
 
 }
