@@ -1,0 +1,11 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>List Of Menus</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content *ngIf="selectedRestaurant">
+    <ion-list>
+        <button ion-item *ngFor="let menu of selectedRestaurant.Menus" (click)="menuTapped(menu)"> {{menu.selectedTranslation ? menu.selectedTranslation.name : "No translation"}} </button>
+    </ion-list>
+</ion-content>

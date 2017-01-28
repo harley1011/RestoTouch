@@ -2,6 +2,7 @@ import {Size} from './size';
 import {Language} from './language';
 import {IngredientGroup} from './ingredient-group';
 import {Category} from './category';
+import {ItemCategory} from './item-category';
 
 export class Item {
     constructor(
@@ -11,6 +12,7 @@ export class Item {
                 public ingredientGroups?: Array<IngredientGroup>,
                 public imageUrl?: string,
                 public sizes?: Array<Size>,
+                public ItemCategory?: ItemCategory,
                 public id?: number,
                 ) { }
 }

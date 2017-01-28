@@ -12,7 +12,8 @@ export class Size extends Translation {
 
   constructor(public translations: Array<SizeTranslations>,
               public selectedTranslation: SizeTranslations,
-              public price: number) {
+              public price: number,
+              public id?: number) {
     super(translations, selectedTranslation);
   }
 
