@@ -70,6 +70,11 @@ function save(req, res) {
     return res.json({message: "At least one size is required"});
   }
 
+  if (!item.translations || item.translations.length == 0) {
+    res.status(400);
+    return res.json({message: "At least one translation is required"});
+  }
+
   return itemModel.create(item, {
     include: [{
       model: itemSizeModel,

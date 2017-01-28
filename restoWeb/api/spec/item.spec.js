@@ -219,11 +219,11 @@ describe("The Item API", function () {
       expect(res.obj.success).toBe(1);
       expect(res.obj.description).toBe("Item Added");
       done();
-    })
+    });
   })
 
 
-  it("should not create a invalid item because it has no sizes", function (done) {
+  it("should not create an item because it has no sizes", function (done) {
     var req = {
       body: {
         "translations": [
@@ -393,6 +393,55 @@ describe("The Item API", function () {
     expect(res.obj.message).toBe("At least one size is required");
     done();
   })
+
+  it("should not create an item because it has no translations", function (done) {
+    var req = {
+      body: {
+        "selectedTranslation": {
+          "languageCode": "ar",
+          "name": "jhgfuytf",
+          "description": "jhgfhjfg"
+        },
+        "categories": [],
+        "ingredientGroups": [],
+        "sizes": [
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "fghjjhgf"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "fghjjhgf"
+            },
+            "price": 0
+          }
+        ],
+        "newSize": {
+          "translations": [
+            {
+              "languageCode": "ar",
+              "name": ""
+            }
+          ],
+          "selectedTranslation": {
+            "languageCode": "ar",
+            "name": ""
+          },
+          "price": 0
+        },
+        "userId": 1
+      }
+    }
+
+    item.addItem(req, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.obj.message).toBe("At least one translation is required");
+    done();
+  })
+
 
 
 });
