@@ -22,7 +22,7 @@
         </div>
     </div>
     <form (ngSubmit)="addAndUpdate()" id="comboForm" role="form">
-      <div class="form-group">
+      <div class="form-group bottomSpacing">
         <label>Name</label>
         <input id="name" class="form-control" name="name"
           placeholder="combo #1">
@@ -32,7 +32,7 @@
           [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
           [ngClass]="{'form-error': !name.valid && !name.pristine}">-->
         <label>Description</label>
-        <textarea id="description" class="form-control" name="description"
+        <textarea id="description" rows="3" class="form-control" name="description"
           placeholder="combo #1 includes..."></textarea>
         <!--<input id="description" class="form-control" name="description"
           placeholder="{{'combo.comboDescriptionFieldHolder' | translate}}"
@@ -40,40 +40,81 @@
             [(ngModel)]="combo?.selectedTranslation.description" #name="ngModel"
             [ngClass]="{'form-error': !description.valid && !name.pristine}">-->
       </div>
-<br><br>
+
+
+     <!-- step header : choose category-->
       <div class="row">
-        <!-- step title : choose category-->
+        <!-- step title -->
         <div class="col-md-3 comStepTitleCell">
             <h6>choose</h6>
             <h3>CATEGORY</h3>
         </div>
         <!-- step description -->
         <div class="col-md-7 comStepDescriptionCell">
-            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+             Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
         </div>
       </div>
- <br><br>
+    <!-- step content-->
       <div class="row">
-        <!-- step title : link food item-->
+        <div class="col-md-10 bottomSpacing">
+            CONTENT HERE
+        </div>
+      </div>
+
+
+     <!-- step header : link food item -->
+      <div class="row">
+        <!-- step title -->
         <div class="col-md-3 comStepTitleCell">
             <h6>link</h6>
             <h3>FOOD ITEM</h3>
         </div>
         <!-- step description -->
         <div class="col-md-7 comStepDescriptionCell">
-            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+             Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
         </div>
       </div>
- <br><br>
+    <!-- step content-->
       <div class="row">
-        <!-- step title : determine pricing -->
+        <div class="col-md-10 bottomSpacing">
+            CONTENT HERE
+        </div>
+      </div>
+
+
+     <!-- step header : determine pricing -->
+      <div class="row">
+        <!-- step title -->
         <div class="col-md-3 comStepTitleCell">
             <h6>determine</h6>
             <h3>PRICING</h3>
         </div>
         <!-- step description -->
         <div class="col-md-7 comStepDescriptionCell">
-            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+             Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+        </div>
+      </div>
+    <!-- step content-->
+      <div class="row">
+        <div class="col-md-10 bottomSpacing">
+            <h5>Select the type of pricing:</h5>
+            <div class="radio">
+                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(1)"> Discount by dollar amount</label>
+                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(2)"> Discount by percentage </label>
+                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(3)"> Fixed price</label>
+            </div>
+            <hr/>
+            <div *ngIf="priceSelected">
+                <label *ngIf="dollarAmount">Enter the discount dollar amount:</label>
+                <label *ngIf="percDisc">Enter the amount of percentage of discount:</label>
+                <label *ngIf="fixedPrice">Enter the fixed price:</label>
+                <input id="priceNumber" class="form-control" name="priceNumber" placeholder="E.g.: 2">
+                <!--<input id="name" class="form-control" name="name"
+                placeholder="{{'combo.comboNameFieldHolder' | translate}}"
+                required
+                [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
+                [ngClass]="{'form-error': !name.valid && !name.pristine}">-->
+            </div>
         </div>
       </div>
 

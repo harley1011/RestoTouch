@@ -19,6 +19,11 @@ export class ComboComponent implements OnInit {
   combo: Combo;
 	items: Array<Item>;
   errorMessage: string;
+  dollarAmount = false;
+  percDisc = false;
+  fixedPrice = false;
+  priceSelected = false;
+
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
@@ -30,5 +35,21 @@ export class ComboComponent implements OnInit {
 
     ngOnInit(): void {
     // this.getCombo();
+    }
+
+    priceTypeSelected(ptype: number): void{
+      this.priceSelected = true;
+      this.percDisc = false;
+      this.fixedPrice = false;
+      this.dollarAmount = false;
+      if(ptype == 1){
+        this.dollarAmount = true;
+      }
+      else if(ptype == 2){
+        this.percDisc = true;
+      }
+      else {
+        this.fixedPrice = true;
+      }
     }
 }
