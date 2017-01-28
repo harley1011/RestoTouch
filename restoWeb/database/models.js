@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 var configDB = require('../config/database.js');
-var sequelize = new Sequelize(configDB.url, {logging: false});
+var sequelize = new Sequelize(configDB.url, {logging: console.log});
 var userModel = sequelize.import('./models/users.js');
 var restaurantModel = sequelize.import('./models/restaurants.js');
 var businessHoursModel = sequelize.import('./models/businessHours.js');
