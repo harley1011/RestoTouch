@@ -1,27 +1,15 @@
 //Reference for writing tests: http://www.protractortest.org/#/api
-import { browser, by, element } from 'protractor';
+import { browser, element, by, ElementFinder } from 'protractor';
 //import { LoginPage } from '../pages/login/login';
 
-describe("Dummy Test Case", () => {
+describe("Login Page::", () => {
   beforeEach(() => {
     browser.get('');
   });
 
-  it('should pass!', () => {
-    expect('test').toEqual('test');
+  it('should have a title', () => {
+    expect(browser.getTitle()).toEqual('Ionic App');
+    console.log(browser.getTitle());
   });
 
 });
-
-
-/*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-* */

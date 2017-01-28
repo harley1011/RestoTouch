@@ -9,17 +9,12 @@ exports.config = {
     allScriptsTimeout: 11000,
     specs: [
           'e2e/*.e2e-spec.ts'
-        //'./restoMobile/src/e2e/*.e2e-spec.ts'
-        //'/Users/Samer/Desktop/RestoTouch/restoMobile/src/e2e'
-        //'**/*.e2e-spec.ts'
-        //'./src/e2e/**/*.e2e-spec.ts'
-        //'./restoMobile/src/e2e/**/*.e2e-spec.ts'
     ],
     capabilities: {
         'browserName': 'chrome'
     },
     directConnect: true,
-    baseUrl: 'http://localhost:8100/',
+    baseUrl: 'http://localhost:8101/',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
@@ -32,7 +27,7 @@ exports.config = {
             project: 'e2e'
         });
 
-        require('connect')().use(require('serve-static')('www')).listen(8100);
+        require('connect')().use(require('serve-static')('www')).listen(8101);
     },
     onPrepare: function() {
         jasmine.getEnv().addReporter(new SpecReporter());
