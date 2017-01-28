@@ -107,6 +107,9 @@ function getMenu(req, res) {
         include: [{
           model: itemTranslationModel,
           as: 'translations'
+        },{
+          model: itemSizeModel,//TODO this is where i added it
+          as: 'sizes'
         }]
       }]
     }, {

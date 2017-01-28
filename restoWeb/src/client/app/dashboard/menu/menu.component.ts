@@ -94,7 +94,7 @@ export class MenuComponent implements OnInit {
         itemCheck = new ItemCheckbox(item, item.ItemCategory.id, true);
 
         for (var i = 0; i < self.menu.disabledCategoryItems.length; i++) {
-          itemCategory = self.menu.disabledCategoryItems[i]
+          itemCategory = self.menu.disabledCategoryItems[i];
           if (itemCategory.categoryId === category.id && itemCategory.itemId === item.id) {
             itemCheck.enabled = false;
             break;

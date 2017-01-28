@@ -899,10 +899,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/IngredientGroup"
-      categories:
-        type: array
-        items:
-          "$ref": "#/definitions/Category"
+      #categories:
+        #type: array
+        #items:
+          #"$ref": "#/definitions/Category"
     required:
       - imageUrl
   Ingredient:

@@ -87,7 +87,7 @@ export function main() {
 
     it('should delete a category', () => {
       var mockTranslation = new CategoryTranslations('', '');
-      var mockCategory = new Category([], [], mockTranslation, 1);
+      var mockCategory = new Category([], mockTranslation ,[]);
 
       initialResponse = categoryService.deleteCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +

@@ -30,7 +30,7 @@ export class TranslationSelectComponent {
   }
 
   selectLanguage(language: Language) {
-    if (language == this.addNewLanguage) {
+    if (language === this.addNewLanguage) {
       this.languageService.openModalPicker();
     } else {
       this.selectedLanguage = language;
@@ -38,7 +38,4 @@ export class TranslationSelectComponent {
       this.onSelectLanguage.emit(this.selectedLanguage);
     }
   }
-
-
-
 }

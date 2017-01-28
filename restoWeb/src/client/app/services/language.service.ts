@@ -295,11 +295,11 @@ export class LanguageService {
 
   private removeSupportedLanguagesFromLanguageList() {
     this.supportedLanguages.forEach((language: Language) => {
-      let foundLanguageIndex = this.isoLanguages.findIndex(isoLanguage => isoLanguage.name == language.name);
+      let foundLanguageIndex = this.isoLanguages.findIndex(isoLanguage => isoLanguage.name === language.name);
       if (foundLanguageIndex >= 0) {
         this.isoLanguages.splice(foundLanguageIndex, 1);
       }
-    })
+    });
   }
 
   private handleError(error: any) {
