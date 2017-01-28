@@ -1,16 +1,15 @@
 import {Component, OnInit, ElementRef, ViewChild, NgZone} from '@angular/core';
 import {Item, ItemTranslations} from '../../shared/models/items';
-import {IngredientGroup} from '../../shared/models/ingredient-group';
+import {IngredientGroup, IngredientGroupTranslations} from '../../shared/models/ingredient-group';
 
-import {Size} from '../../shared/models/size';
+import {Size, SizeTranslations} from '../../shared/models/size';
 import {ItemService} from './item.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {ImageCropperComponent} from 'ng2-img-cropper/src/imageCropperComponent';
 import {CropperSettings} from 'ng2-img-cropper/src/cropperSettings';
 import {ImageUploadService} from '../../services/image-upload.service';
-import {Ingredient} from '../../shared/models/ingredient';
+import {Ingredient, IngredientTranslations} from '../../shared/models/ingredient';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
@@ -23,7 +22,6 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 export class ItemComponent implements OnInit {
   create: boolean;
   item: Item;
-  size = new Size('', 0);
   errorMessage: any;
   cropperSettings: CropperSettings;
   name: string;
@@ -41,7 +39,6 @@ export class ItemComponent implements OnInit {
   constructor(private itemService: ItemService,
               private router: Router,
               private route: ActivatedRoute,
-              private languageService: LanguageService,
               private element: ElementRef,
               private imageUploadService: ImageUploadService,
               private zone: NgZone) {
@@ -57,7 +54,6 @@ export class ItemComponent implements OnInit {
 
     this.cropperSettings.minWidth = 100;
     this.cropperSettings.minHeight = 100;
-
     this.cropperSettings.rounded = false;
 
     this.cropperSettings.noFileInput = true;
@@ -73,37 +69,36 @@ export class ItemComponent implements OnInit {
           if (item.imageUrl.length !== 0) {
             this.croppedImage = item.imageUrl;
           }
-          item.ingredientGroups.forEach(ingredientGroup => {
-            ingredientGroup.newIngredient = new Ingredient('', false, 0, 1);
-          });
 
           item.ingredientGroups.sort((a: IngredientGroup, b: IngredientGroup) => {
             return a.orderPriority - b.orderPriority;
           });
-          this.item = item;
-          this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+          this.item = Item.fromJson(item, this.translationSelectComponent.selectedLanguage.languageCode);
+          this.item.ingredientGroups.forEach(ingredientGroup => {
+            ingredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
+          });
           this.create = false;
           this.pictureMode = PictureMode.Edit;
         }, error => {
           console.log(error);
         });
       } else {
-        let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
-        this.item = new Item([translation], translation, [], [], '', []);
-        this.create = true;
-        this.pictureMode = PictureMode.Select;
+        let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
+          let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+          this.item = new Item([translation], translation, [], [], '', []);
+          this.item.addNewSize(this.translationSelectComponent.selectedLanguage.languageCode);
+          this.create = true;
+          this.pictureMode = PictureMode.Select;
+          if (sub)
+            sub.unsubscribe();
+        });
+
       }
     });
   }
 
   onSelectLanguage(language: Language) {
-    let restaurantTranslation = this.item.translations.find(translation =>
-    translation.languageCode === language.languageCode);
-    if (!restaurantTranslation) {
-      restaurantTranslation = new ItemTranslations('', '', language.languageCode);
-      this.item.translations.push(restaurantTranslation);
-    }
-    this.item.selectedTranslation = restaurantTranslation;
+    this.item.addAndSelectNewTranslation(language.languageCode);
   }
 
   selectFile() {
@@ -113,12 +108,11 @@ export class ItemComponent implements OnInit {
       this.croppedImage = this.croppedImageContainer.image;
       this.pictureMode = PictureMode.CropSelected;
     } else {
-      var imageSelector = this.element.nativeElement.querySelector('.item-image-select');
+      let imageSelector = this.element.nativeElement.querySelector('.item-image-select');
       imageSelector.click();
 
     }
   }
-
 
   onChange(fileInput: File) {
     this.cropper.fileChangeListener(fileInput);
@@ -138,12 +132,10 @@ export class ItemComponent implements OnInit {
       return;
     }
     if (this.create) {
-      var imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
-
+      let imageSelector = this.element.nativeElement.querySelector('.item-image-select').files[0];
       if (imageSelector) {
         this.imageUploadService.getS3Key(imageSelector.name, imageSelector.type).subscribe((response) => {
           this.item.imageUrl = response.url;
-
           this.uploadImage(response.url, response.signedRequest);
 
           this.itemService.addItem(this.item).subscribe(result => {
@@ -220,13 +212,15 @@ export class ItemComponent implements OnInit {
   }
 
   addIngredientGroup() {
-    this.item.ingredientGroups.push(
-      new IngredientGroup('', [], 1, 1, this.item.ingredientGroups.length + 1, new Ingredient('', false, 0, 1)));
+    let newIngredientGroup = new IngredientGroup([], null, [], 1, 1, this.item.ingredientGroups.length + 1, null);
+    newIngredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
+    newIngredientGroup.addAndSelectNewTranslation(this.translationSelectComponent.selectedLanguage.languageCode);
+    this.item.ingredientGroups.push(newIngredientGroup);
   }
 
   addIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
-    ingredientGroup.ingredients.push(new Ingredient(ingredient.name, ingredient.addByDefault, ingredient.price, ingredient.allowQuantity));
-    ingredient.name = '';
+    ingredientGroup.ingredients.push(ingredient);
+    ingredientGroup.addNewIngredient(this.translationSelectComponent.selectedLanguage.languageCode);
   }
 
   removeIngredient(ingredientGroup: IngredientGroup, ingredient: Ingredient) {
@@ -242,13 +236,12 @@ export class ItemComponent implements OnInit {
   }
 
   addSize() {
-    this.item.sizes.push(this.size);
-    this.size = new Size('', 0);
+    this.item.addSize(this.translationSelectComponent.selectedLanguage.languageCode);
   }
 
   removeSize(size: Size) {
-    let sizeToRemove = this.item.sizes.find(currentSize => currentSize.name === size.name);
-    this.item.sizes.splice(this.item.sizes.indexOf(sizeToRemove), 1);
+    let sizeToRemoveIndex = this.item.sizes.indexOf(size);
+    this.item.sizes.splice(sizeToRemoveIndex, 1);
   }
 
   deleteItem() {
