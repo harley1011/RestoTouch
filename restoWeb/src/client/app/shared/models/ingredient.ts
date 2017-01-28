@@ -1,6 +1,15 @@
 import {Translation, EntityTranslation} from './translation';
 
 export class Ingredient extends Translation {
+
+  static fromJson(obj: any): Ingredient {
+    let translation = Array<IngredientTranslations>();
+    obj.translations.forEach((t: IngredientTranslations) => {
+      translation.push(IngredientTranslations.fromJson(t));
+    });
+    return new Ingredient(translation, null, obj.addByDefault, obj.price, obj.allowQuantity);
+  }
+
   constructor(public translations: Array<IngredientTranslations>,
               public selectedTranslation: IngredientTranslations,
               public addByDefault: boolean,
@@ -15,22 +24,16 @@ export class Ingredient extends Translation {
     this.addIfNotExistsAndSelect(languageCode, new IngredientTranslations('', languageCode));
   }
 
-  static fromJson(obj: any): Ingredient {
-    let translation = Array<IngredientTranslations>();
-    obj.translations.forEach((t: IngredientTranslations) => {
-      translation.push(IngredientTranslations.fromJson(t));
-    });
-    return new Ingredient(translation, null, obj.addByDefault, obj.price, obj.allowQuantity);
-  }
 }
 
 export class IngredientTranslations extends EntityTranslation {
-  constructor(public name: string,
-              public languageCode: string) {
-    super(languageCode);
-  }
 
   static fromJson(obj: any): IngredientTranslations {
     return new IngredientTranslations(obj.name, obj.languageCode);
+  }
+
+  constructor(public name: string,
+              public languageCode: string) {
+    super(languageCode);
   }
 }

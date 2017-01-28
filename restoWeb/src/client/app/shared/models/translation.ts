@@ -6,15 +6,14 @@ export abstract class Translation {
   abstract addAndSelectNewTranslation(languageCode: string): void;
 
   public addIfNotExistsAndSelect(languageCode: string, entityTranslation: EntityTranslation) {
-    if (!this.checkAndSelectIfTranslationExists(languageCode))
-    {
-      this.selectedTranslation = entityTranslation
+    if (!this.checkAndSelectIfTranslationExists(languageCode)) {
+      this.selectedTranslation = entityTranslation;
       this.translations.push(entityTranslation);
     }
   }
 
   public checkAndSelectIfTranslationExists(languageCode: string) {
-    let translation = this.translations.find((translation: EntityTranslation) => translation.languageCode === languageCode)
+    let translation = this.translations.find((translation: EntityTranslation) => translation.languageCode === languageCode);
     if (translation) {
       this.selectedTranslation = translation;
       return true;
