@@ -2,9 +2,14 @@
 import { browser, element, by, ElementFinder } from 'protractor';
 //import { LoginPage } from '../pages/login/login';
 
+//let removeButton: ElementFinder = element.all(by.in)
+//let loginHeader: ElementFinder = element(by.className('loginHeader'));
+let loginHeader: ElementFinder = element.all(by.id('loginHeader')).first();
+//let loginHeader: element
+
 describe("Login Page::", () => {
   beforeEach(() => {
-    browser.get('');
+    browser.get('http://localhost:8100/');
   });
 
   it('should have a title', () => {
@@ -12,4 +17,32 @@ describe("Login Page::", () => {
     console.log(browser.getTitle());
   });
 
+  it('should have a login title', () => {
+   let loginTitle = element(by.id('loginHeader'));
+  //console.log(loginHeader.getText());
+  //console.log(loginTitle);
+  //browser.waitForAngular();
+  //expect(loginHeader.getText()).toEqual('Hello');// TODO y gives me empty
+  //expect(loginTitle)
+    //browser.sleep(10000);
+  //console.log(loginTitle.getText());
+   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+   console.log(loginTitle.getText()); //TODO y not able to give me text
+   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    expect(loginTitle.getText()).toEqual('Hello');
+  });
+
+  /*  it('should translate', () => {
+   expect('test').toEqual('test');
+   });*/
+
+  /* it('should able to login', () => {
+   //element(by.model('email')).sendKeys('samer@gmail.com');
+   //browser.sleep(10000);
+   //element(by.model('password')).sendKeys('password');
+   //browser.sleep(10000);
+   browser.waitForAngular();
+   });*/
+
 });
+
