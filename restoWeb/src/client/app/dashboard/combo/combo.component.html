@@ -1,24 +1,84 @@
-<div> ADD COMBO</div>
-
-<!--<div class="manage-content">
+<div class="manage-content">
   <div class="manage-header">
-    <h2>{{ combo?.id ? ('combo.titleEdit' | translate) : ('combo.titleCreate' | translate) }}</h2>
+    <!--<h2>{{ combo?.id ? ('combo.titleEdit' | translate) : ('combo.titleCreate' | translate) }}</h2>-->
+    <h2>Some kind of temporary title for Combo</h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
-  <div *ngIf="combo" class="form-container">
-    <form (ngSubmit)="addAndUpdate()" id="comboForm" role="form">
 
+  <div class="comContentContainer"> <!-- do mettre *ngIf="combo" dans le tag apres-->
+    <div class="row textAlignment">
+            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+    </div>
+    <div class="row">
+        <!-- step title: define combo -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>define</h6>
+            <h3>COMBO</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+        </div>
+    </div>
+    <form (ngSubmit)="addAndUpdate()" id="comboForm" role="form">
       <div class="form-group">
-        <label>{{'combo.comboName' | translate}}</label>
+        <label>Name</label>
         <input id="name" class="form-control" name="name"
+          placeholder="combo #1">
+        <!--<input id="name" class="form-control" name="name"
           placeholder="{{'combo.comboNameFieldHolder' | translate}}"
           required
-               [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
-          [ngClass]="{'form-error': !name.valid && !name.pristine}">
+          [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
+          [ngClass]="{'form-error': !name.valid && !name.pristine}">-->
+        <label>Description</label>
+        <textarea id="description" class="form-control" name="description"
+          placeholder="combo #1 includes..."></textarea>
+        <!--<input id="description" class="form-control" name="description"
+          placeholder="{{'combo.comboDescriptionFieldHolder' | translate}}"
+          required
+            [(ngModel)]="combo?.selectedTranslation.description" #name="ngModel"
+            [ngClass]="{'form-error': !description.valid && !name.pristine}">-->
+      </div>
+<br><br>
+      <div class="row">
+        <!-- step title : choose category-->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>choose</h6>
+            <h3>CATEGORY</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+        </div>
+      </div>
+ <br><br>
+      <div class="row">
+        <!-- step title : link food item-->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>link</h6>
+            <h3>FOOD ITEM</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+        </div>
+      </div>
+ <br><br>
+      <div class="row">
+        <!-- step title : determine pricing -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>determine</h6>
+            <h3>PRICING</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
+        </div>
       </div>
 
-      <div *ngIf="items" class="row">
+
+      <!--<div class="row"> <!-- do mettre *ngIf="items" dans le tag apres
         <div class="col-md-6">
           <label>Available Food Items</label>
           <ul class="list-group scrollable-list">
@@ -43,7 +103,7 @@
             <i class="fa fa-exclamation-circle"></i> Add some food items to this combo
           </div>
         </div>
-      </div>
+      </div>-->
 
       <div class="row">
         <div class="manage-button">
@@ -55,4 +115,4 @@
       </div>
     </form>
   </div>
-</div>-->
+</div>

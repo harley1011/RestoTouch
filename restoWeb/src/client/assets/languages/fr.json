@@ -134,20 +134,22 @@
   },
 
     "combo":{
-    "titleManage":"Gestion des Combos",
-    "sousTitleManage":"Sélectionner le combo que vous désirez faire des changements",
-    "addcomboButtonManage":"+ Ajouter un combo",
-    "titleCreate": "Création d'un combo",
-    "titleEdit":"Éditer le combo",
-    "sousTitleCombosetting":"Paramètres du combo",
-    "createButtonTopbar":"Créer",
-    "cancelButtonTopbar":"Annuler",
-    "langType2":"Langue diffusée actuellement: ",
-    "comboName":"Nom du combo",
-    "comboNameFieldHolder":"p. ex. Entrées",
-    "saveButton":"Sauvegarder",
-    "deleteButton":"Effacer",
-    "itemsCard": "Articles"
+      "titleManage":"Gestion des Combos",
+      "sousTitleManage":"Sélectionner le combo que vous désirez faire des changements",
+      "addcomboButtonManage":"+ Ajouter un combo",
+      "titleCreate": "Création d'un combo",
+      "titleEdit":"Éditer le combo",
+      "sousTitleCombosetting":"Paramètres du combo",
+      "createButtonTopbar":"Créer",
+      "cancelButtonTopbar":"Annuler",
+      "langType2":"Langue diffusée actuellement: ",
+      "comboName":"Nom du combo",
+      "comboNameFieldHolder":"p. ex. Trio #1; Table d'hôte; Duo du jour",
+      "comboDescription":"Description du combo",
+      "comboDescriptionFieldHolder":"p. ex. 1 choix par catégorie; Le duo du jour comprend...",
+      "saveButton":"Sauvegarder",
+      "deleteButton":"Effacer",
+      "itemsCard": "Articles"
   },
 
   "foodItem":{
