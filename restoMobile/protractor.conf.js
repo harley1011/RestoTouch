@@ -14,7 +14,7 @@ exports.config = {
         'browserName': 'chrome'
     },
     directConnect: true,
-    baseUrl: 'http://localhost:8101/',
+    baseUrl: 'http://localhost:8100/',
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
@@ -27,7 +27,7 @@ exports.config = {
             project: 'e2e'
         });
 
-        require('connect')().use(require('serve-static')('www')).listen(8101);
+        require('connect')().use(require('serve-static')('www')).listen(8100);
     },
     onPrepare: function() {
         jasmine.getEnv().addReporter(new SpecReporter());
