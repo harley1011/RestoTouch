@@ -86,6 +86,7 @@ export class ItemComponent implements OnInit {
         let sub = this.translationSelectComponent.getSelectedLanguage().subscribe(language => {
           let translation = new ItemTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
           this.item = new Item([translation], translation, [], [], '', []);
+          this.item.addNewSize(this.translationSelectComponent.selectedLanguage.languageCode);
           this.create = true;
           this.pictureMode = PictureMode.Select;
           if (sub)
