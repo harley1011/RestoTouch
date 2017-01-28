@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {ProfileService} from './profile.service';
 import {User} from '../../shared/models/user';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   moduleId: module.id,
@@ -18,8 +19,9 @@ export class ProfileComponent {
 	passwordAlert: boolean = false;
 
 	constructor(private profileService: ProfileService,
-				private router: Router) {
-		this.profileService.getProfile().subscribe(user => {
+				private router: Router,
+				private authService: AuthService) {
+		profileService.getProfile().subscribe(user => {
 			this.user = user;
 		});
 	}
@@ -46,6 +48,8 @@ export class ProfileComponent {
 	      	this.editing = false;
 	      	this.editPass = false;
 	      	this.hideMessageSuccess = false;
+	      	this.authService.loggedInUser.firstName = this.user.firstName;
+	      	this.authService.loggedInUser.lastName = this.user.lastName;
 		}
 	}
 
