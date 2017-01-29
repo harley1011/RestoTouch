@@ -12,12 +12,12 @@
 
 .bottomSpacing{
     margin-bottom: 8%;
+    margin-top: 4%;
 }
 
 .comStepTitleCell{
     border-top: 25px solid black;
     padding-top: 5px;
-    margin-bottom:15px;
     margin-top:2%;
 }
 
@@ -26,6 +26,21 @@
     padding-left:10px;
 }
 
+.comCatDiv{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2px;
+    text-align: center;
+    margin: 3px;
+}
+
+.comCatButton{
+    display: inline;
+    margin: 3px;
+}
+
 .border{
     border:1px solid red;
 }
+

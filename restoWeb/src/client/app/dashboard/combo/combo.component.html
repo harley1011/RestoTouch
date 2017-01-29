@@ -57,7 +57,13 @@
     <!-- step content-->
       <div class="row">
         <div class="col-md-10 bottomSpacing">
-            CONTENT HERE
+            CATEGORY LIST<br/>
+            <div class="btn-group" data-toggle="buttons" role="group">
+              <label *ngFor="let category of categoryList; let i = index" [attr.id]=i class="btn btn-secondary">
+                <input type="checkbox" (click)="saveCategory(category, i)"> {{ category }}
+              </label>
+              <input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="saveCategory('No Category', 'e')">
+            </div>
         </div>
       </div>
 
@@ -77,7 +83,15 @@
     <!-- step content-->
       <div class="row">
         <div class="col-md-10 bottomSpacing">
-            CONTENT HERE
+          FOOD ITEM LIST
+          <div class="wrapper">
+            <div class="container">
+              <div *ngFor="let item of foodItemList" [innerHTML]="item"></div>
+            </div>
+            <div class="container">
+              <div *ngFor="let category of categorySelected" [innerHTML]="category"></div>
+            </div>
+          </div>
         </div>
       </div>
 

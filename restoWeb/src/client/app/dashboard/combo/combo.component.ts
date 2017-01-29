@@ -11,7 +11,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 	moduleId: module.id,
 	selector: 'combo-cmp',
 	templateUrl: 'combo.component.html',
-  providers: [ComboService,ItemService]
+  providers: [ComboService,ItemService],
 })
 
 export class ComboComponent implements OnInit {
@@ -23,13 +23,18 @@ export class ComboComponent implements OnInit {
   percDisc = false;
   fixedPrice = false;
   priceSelected = false;
+  foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
+  categoryList: Array<string> = ['Appetizer', 'Main Meal', 'Dessert', 'Drink' ];
+  categorySelected: Array<string>;
 
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
               private comboService: ComboService,
               private router: Router,
-              private itemService: ItemService) {
+              private itemService: ItemService,
+              ) {
+    this.categorySelected =[];
 
   }
 
@@ -37,19 +42,70 @@ export class ComboComponent implements OnInit {
     // this.getCombo();
     }
 
-    priceTypeSelected(ptype: number): void{
+
+
+    /*
+    * store chosen category into array
+    */
+    private saveCategory(catChoosen: string, catId: any): void {
+      var found = false;
+
+      // add the first category to array
+      if (this.categorySelected.length===0) {
+        this.categorySelected.push(catChoosen);
+        document.getElementById(catId).className='btn btn-primary'; // change color of the chosen category
+        document.getElementById('e').className='btn btn-secondary'; // reset "no category" button to no color
+        found = true;
+      }else {
+        // check if category is already in array, avoid duplicates
+        for(var i = 0; i < this.categorySelected.length; i++ ) {
+          if (catChoosen===this.categorySelected[i]) {
+            this.categorySelected.splice(i, 1); // remove chosen category from array, act like a toggle
+            document.getElementById(catId).className='btn btn-secondary'; // reset back to no color
+            found = true;
+          }
+        }
+      }
+
+      // if category is not already in the array, add to it
+      if (!found) {
+        this.categorySelected.push(catChoosen);
+        document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
+      }
+
+      // remove all elemenets from array if "No category" is choosen
+      if ('No Category'===catChoosen) {
+        this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
+        this.resetCategoryCssClass(); // reset back to no color
+        document.getElementById('e').className='btn btn-primary';// change color of the no category button
+      }
+    }
+
+    /*
+    * reset color of the category to no color
+    */
+    private resetCategoryCssClass(){
+      for(var i = 0; i < this.categoryList.length; i++){
+        document.getElementById(i.toString()).className='btn btn-secondary';
+      }
+    }
+
+    /*
+    * displaying the text depending on the price/discount type chosen
+    */
+    private priceTypeSelected(ptype: number): void {
       this.priceSelected = true;
       this.percDisc = false;
       this.fixedPrice = false;
       this.dollarAmount = false;
-      if(ptype == 1){
+      if(ptype===1){
         this.dollarAmount = true;
-      }
-      else if(ptype == 2){
+      } else if(ptype===2){
         this.percDisc = true;
-      }
-      else {
+      } else {
         this.fixedPrice = true;
       }
     }
+
+
 }
