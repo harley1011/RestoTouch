@@ -79,3 +79,24 @@ describe("Login Tests", function() {
 
 });
 
+describe("Profile Tests", function() {
+
+  var req = {}
+
+  var res = {json: function (obj) {
+    res.obj = obj;
+  }};
+
+  //Override models in account so that we don't actually insert into the DB and we mock the database operations
+  account.setDatabase(mocks);
+
+  it("Get a valid user", function (done) {
+    account.getProfile(req, res).then(function (result) {
+      expect(res.obj.id).toBe(100);
+      expect(typeof res.obj).toBe('object');
+      expect(res.obj.email).toBe('test123@sample.com');
+      done();
+    })
+  })
+
+});

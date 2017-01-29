@@ -167,6 +167,25 @@
     "save": "Save",
     "saveSuccessMessage": "The changes below have been saved"
 
-  }
+  },
 
+  "profile": {
+    "title": "Profile Information",
+    "sousTitle": "View and edit your account information below",
+    "editButton": "Edit",
+    "editPasswordButton": "Change Password",
+    "saveButton": "Save",
+    "cancelButton": "Cancel",
+    "saveSuccessMessage": "Your profile information was saved successfully.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "errorMessage": "Passwords don't match.",
+    "enterPassword": "Enter new password",
+    "repeatPassword": "Confirm new password",
+    "firstNameAlert": "Please enter your first name.",
+    "lastNameAlert": "Please enter your last name.",
+    "emailAlert": "Please enter a valid email address."
+  }
+  
 }

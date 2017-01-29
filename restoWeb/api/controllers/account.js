@@ -15,7 +15,9 @@ module.exports = {
   getAccountSettings: getAccountSettings,
   saveAccountSettings: saveAccountSettings,
   getSupportedLanguages: getSupportedLanguages,
-  saveNewSupportedLanguage: saveNewSupportedLanguage
+  saveNewSupportedLanguage: saveNewSupportedLanguage,
+  getProfile: getProfile,
+  saveProfile: saveProfile
 };
 
 function setDatabase(m) {
@@ -146,3 +148,35 @@ function login(req, res) {
   });
 }
 
+//GET /profile 
+//(returns the user object) 
+function getProfile(req, res) {
+  return userModel.findOne({
+    where: {id: req.userId},
+  }).then(function (user) {
+    return res.json(user);
+  })
+}
+
+//PUT /profile
+//modifies user profile information 
+function saveProfile(req, res) {
+  var user = req.body;
+  return userModel.findOne({
+    where: {id: req.userId},
+  }).then(function (oldUser) {
+    var passwordMatched = (user.password === oldUser.password);
+    if(!passwordMatched) {
+      var passwordData = passwordHasher.saltHashPassword(user.password);
+      user.password = passwordData.passwordHash;
+      user.salt = passwordData.salt;
+    }
+    for(var prop in user) {
+      oldUser[prop] = user[prop];
+    }
+
+    oldUser.save().then(function (result) {
+      return res.json({success: 1, description: 'Profile Updated'});
+    });
+  });
+}
