@@ -19,17 +19,10 @@ describe("Login Page::", () => {
 
   it('should have a login title', () => {
    let loginTitle = element(by.id('loginHeader'));
-  //console.log(loginHeader.getText());
-  //console.log(loginTitle);
-  //browser.waitForAngular();
-  //expect(loginHeader.getText()).toEqual('Hello');// TODO y gives me empty
-  //expect(loginTitle)
-    //browser.sleep(10000);
-  //console.log(loginTitle.getText());
    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-   console.log(loginTitle.getText()); //TODO y not able to give me text
+   console.log(loginTitle.getAttribute('textContent')); //TODO y not able to give me text
    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    expect(loginTitle.getText()).toEqual('Hello');
+    expect(loginTitle.getAttribute('textContent')).toEqual('Hello');
   });
 
   /*  it('should translate', () => {
