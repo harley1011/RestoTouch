@@ -23,7 +23,8 @@ export class HomePage {
     console.log('ionViewDidLoad HomePage');
 //    this.nav.setRoot(LoginPage);
     this.menuCtrl.toggle('left');
-//    this.menuCtrl.enable(true, 'clientMenu');
+//    this.menuCtrl.enable(false, 'ownerMenu');
+//    this.menuCtrl.enable(true, 'ownerMenu2');
   }
 
 }

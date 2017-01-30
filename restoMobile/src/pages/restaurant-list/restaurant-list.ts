@@ -1,11 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { App, Nav, NavController, NavParams, MenuController, Platform} from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 import { WelcomePage } from '../welcome/welcome';
 import { HomePage } from '../home/home';
+import { Page2 } from '../page2/page2';
+import { StatusBar, Splashscreen } from 'ionic-native';
+import { MyApp } from '../../app/app.component';
 
 /*
   Generated class for the RestaurantList page.
@@ -15,17 +18,27 @@ import { HomePage } from '../home/home';
 */
 @Component({
   selector: 'page-restaurant-list',
-  templateUrl: 'restaurant-list.html'
+  templateUrl: 'restaurant-list.html',
+  queries: {
+      nav: new ViewChild('content')
+  }
 })
 export class RestaurantListPage {
+//    @ViewChild('content') nav: Nav;
+    
+    rootPage: any = WelcomePage;
+
     numOfRestaurants: number;
     restaurants: Restaurant[];
 
-@ViewChild(TranslationSelectComponent)
-  private translationSelectComponent: TranslationSelectComponent;
+
+//@ViewChild(TranslationSelectComponent)
+//  private translationSelectComponent: TranslationSelectComponent;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public platform: Platform,
+              public app: App,
               private restaurantListService: RestaurantService,
               private translate: TranslateService,
               public menuCtrl: MenuController) {
