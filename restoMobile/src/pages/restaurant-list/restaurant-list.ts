@@ -10,6 +10,7 @@ import { Page2 } from '../page2/page2';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { MyApp } from '../../app/app.component';
 
+import { AuthService } from '../services/auth.service';
 /*
   Generated class for the RestaurantList page.
 
@@ -25,7 +26,7 @@ import { MyApp } from '../../app/app.component';
 })
 export class RestaurantListPage {
 //    @ViewChild('content') nav: Nav;
-    
+
     rootPage: any = WelcomePage;
 
     numOfRestaurants: number;
@@ -41,9 +42,9 @@ export class RestaurantListPage {
               public app: App,
               private restaurantListService: RestaurantService,
               private translate: TranslateService,
-              public menuCtrl: MenuController) {
-  translate.setDefaultLang('en');
-
+              public menuCtrl: MenuController,
+              public authService: AuthService) {
+      translate.setDefaultLang('en');
   }
 
   ionViewDidLoad() {
@@ -72,5 +73,6 @@ export class RestaurantListPage {
       item: restaurant
     });
      this.menuCtrl.enable(false, 'ownerMenu');
+      this.authService.mainNavController.push(WelcomePage, {item: item});
   }
 }

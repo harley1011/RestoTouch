@@ -19,6 +19,7 @@ import { Auth, User } from '@ionic/cloud-angular';
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  @ViewChild('content') navController: NavController;
 
   rootPage: any = HomePage;
   startPage: any = LoginPage;
@@ -32,6 +33,7 @@ export class MyApp {
               public authService: AuthService) {
     this.initializeApp();
 
+
     // used for an example of ngFor and navigation
     this.pages = [
 
@@ -43,7 +45,7 @@ export class MyApp {
       { title: 'Login', component: LoginPage }
 //      { title: 'Home', component: HomePage }
     ];
-      
+
   }
 
   initializeApp() {
@@ -52,11 +54,12 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.authService.setMainNavController(this.navController);
 //        this.nav.setRoot(LoginPage);
         //this.loadedResto = navParams.get('loadedResto');
-        
+
     });
-    
+
   }
 
   openPage(page) {
