@@ -41,7 +41,7 @@
                 <td>
                   <div class="input-group"><span class="input-group-addon">$</span>
                     <input class="form-control" #price="ngModel" [(ngModel)]="size.price" name="price{{i}}"
-                           type="number">
+                           step="0.01" type="number">
                   </div>
                 </td>
 
@@ -56,7 +56,7 @@
                 <td>
                   <div class="input-group"><span class="input-group-addon">$</span>
                     <input class="form-control" #price="ngModel" id="price" [(ngModel)]="item.newSize.price" name="price"
-                           type="number">
+                           step="0.01" type="number">
                   </div>
                 </td>
                 <td>
