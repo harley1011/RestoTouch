@@ -12,16 +12,16 @@
     <ion-list>
       <ion-item>
         <ion-label stacked>{{ 'login.emailHolderFieldForm' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="user.email" name="email"></ion-input>
+        <ion-input id="userEmail" type="email" [(ngModel)]="user.email" name="email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label stacked>{{ 'login.passwordHolderFieldForm' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
+        <ion-input id="userPassword" type="password" [(ngModel)]="user.password" name="password"></ion-input>
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button round block type="submit">{{ 'login.logButton' | translate }}</button>
+      <button ion-button round block id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
       <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     </div>
   </form>

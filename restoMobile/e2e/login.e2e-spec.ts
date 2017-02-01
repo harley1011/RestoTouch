@@ -19,9 +19,6 @@ describe("Login Page::", () => {
 
   it('should have a login title', () => {
    let loginTitle = element(by.id('loginHeader'));
-   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-   console.log(loginTitle.getAttribute('textContent')); //TODO y not able to give me text
-   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     expect(loginTitle.getAttribute('textContent')).toEqual('Hello');
   });
 
@@ -29,13 +26,15 @@ describe("Login Page::", () => {
    expect('test').toEqual('test');
    });*/
 
-  /* it('should able to login', () => {
-   //element(by.model('email')).sendKeys('samer@gmail.com');
+   it('should able to login', () => {
+   browser.sleep(1000);
+   element(by.id('userEmail')).sendKeys('samer@gmail.com');
+   browser.sleep(1000);
+   element(by.id('userPassword')).sendKeys('password');
+   element(by.id('loginButton')).click();
    //browser.sleep(10000);
-   //element(by.model('password')).sendKeys('password');
-   //browser.sleep(10000);
-   browser.waitForAngular();
-   });*/
+   //browser.waitForAngular();
+   });
 
 });
 
