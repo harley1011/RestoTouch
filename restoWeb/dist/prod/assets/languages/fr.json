@@ -165,5 +165,25 @@
     "supportedLanguage": "Supported Languages",
     "save": "Sauvegarder",
     "saveSuccessMessage": "Les changements ci-dessous ont été enregistrés"
+  },
+
+  "profile": {
+    "title": "Votre profile",
+    "sousTitle": "Visionner et modifier vos informations",
+    "editButton": "Modifier",
+    "editPasswordButton": "Changer votre mot de passe",
+    "saveButton": "Sauvegarder",
+    "cancelButton": "Canceler",
+    "saveSuccessMessage": "Votre profile a été sauvegarder avec succès.",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "email": "Courriel",
+    "errorMessage": "Les mots de passe ne se concordent pas.",
+    "enterPassword": "Nouveau mot de passe",
+    "repeatPassword": "Confirmer nouveau mot de passe",
+    "firstNameAlert": "Vous devez entrer votre prénom.",
+    "lastNameAlert": "Vous dever entrer votre nom de famille.",
+    "emailAlert": "Vous devez entrer un courriel valide."
   }
+
 }
