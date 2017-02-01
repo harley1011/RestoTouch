@@ -1,14 +1,17 @@
 var models = require("../../database/models");
 var s3File = require("./s3File");
+var utility = require("../helpers/utility");
+var _ = require('lodash');
+
 var itemModel;
 var itemSizeModel;
 var itemTranslationModel;
 var ingredientGroupModel;
 var ingredientModel;
 var categoryModel;
-
-var _ = require('lodash');
-
+var itemSizeTranslationModel;
+var ingredientGroupTranslationModel;
+var ingredientTranslationModel;
 
 setDatabase(models);
 
@@ -29,6 +32,9 @@ function setDatabase(m) {
   ingredientGroupModel = models.getIngredientGroupModel();
   ingredientModel = models.getIngredientModel();
   categoryModel = models.getCategoryModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
+  ingredientGroupTranslationModel = models.getIngredientGroupTranslationModel();
+  ingredientTranslationModel = models.getIngredientTranslationModel();
 }
 
 
@@ -37,7 +43,11 @@ function getAll(req, res) {
     where: {userId: req.userId},
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
@@ -60,10 +70,19 @@ function save(req, res) {
     return res.json({message: "At least one size is required"});
   }
 
-  itemModel.create(item, {
+  if (!item.translations || item.translations.length == 0) {
+    res.status(400);
+    return res.json({message: "At least one translation is required"});
+  }
+
+  return itemModel.create(item, {
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
@@ -72,7 +91,14 @@ function save(req, res) {
       as: 'ingredientGroups',
       include: [{
         model: ingredientModel,
-        as: 'ingredients'
+        as: 'ingredients',
+        include: [{
+          model: ingredientTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: ingredientGroupTranslationModel,
+        as: 'translations'
       }]
     }]
   }).then(function (result) {
@@ -90,7 +116,11 @@ function get(req, res) {
     },
     include: [{
       model: itemSizeModel,
-      as: 'sizes'
+      as: 'sizes',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
     }, {
       model: itemTranslationModel,
       as: 'translations'
@@ -99,7 +129,14 @@ function get(req, res) {
       as: 'ingredientGroups',
       include: [{
         model: ingredientModel,
-        as: 'ingredients'
+        as: 'ingredients',
+        include: [{
+          model: ingredientTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: ingredientGroupTranslationModel,
+        as: 'translations'
       }]
     }, {
       model: categoryModel,
@@ -120,7 +157,13 @@ function update(req, res) {
 
   itemModel.findOne({
       where: {id: item.id},
-      include: [{model: itemSizeModel, as: 'sizes'},
+      include: [{
+        model: itemSizeModel, as: 'sizes',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      },
         {model: itemTranslationModel, as: 'translations'},
         {
           model: ingredientGroupModel, as: 'ingredientGroups',
@@ -131,88 +174,56 @@ function update(req, res) {
         }]
     }
   ).then(function (oldItem) {
-
-    var sizesToRemove = _.differenceBy(oldItem.sizes, item.sizes, 'id');
-    var sizesToAdd = _.differenceBy(item.sizes, oldItem.sizes, 'id');
-
-    var ingredientGroupsToAdd = _.differenceBy(item.ingredientGroups, oldItem.ingredientGroups, 'id');
-    var ingredientGroupsToRemove = _.differenceBy(oldItem.ingredientGroups, item.ingredientGroups, 'id');
-    var ingredientGroupsToCheckForUpdate = _.differenceBy(_.differenceBy(item.ingredientGroups, ingredientGroupsToAdd, 'id'), ingredientGroupsToRemove, 'id');
-
-    if (item.imageUrl != oldItem.imageUrl) {
-      var split = oldItem.imageUrl.split('/');
-      req.imageKey = split[split.length - 1];
-      s3File.deleteImage(req, res);
-    }
-
-    for (var prop in item) {
-      if (prop != 'translations' && prop != 'ingredientGroups')
-        oldItem[prop] = item[prop];
-    }
-
-    ingredientGroupsToAdd.forEach(function (ingredientGroup) {
-      ingredientGroup.itemId = oldItem.id;
-    });
-
-    ingredientGroupModel.bulkCreate(ingredientGroupsToAdd);
-
-    sizesToAdd.forEach(function (size) {
-      size.itemId = oldItem.id;
-    });
-
-    ingredientGroupsToCheckForUpdate.forEach(function (ingredientGroup) {
-      var ingredientGroupToCheck = _.find(oldItem.ingredientGroups, {'id': ingredientGroup.id});
-      var ingredientToAdd = _.differenceBy(ingredientGroup.ingredients, ingredientGroupToCheck.ingredients, 'id');
-      var ingredientToRemove = _.differenceBy(ingredientGroupToCheck.ingredients, ingredientGroup.ingredients, 'id');
-
-      ingredientGroupToCheck.name = ingredientGroup.name;
-      ingredientGroupToCheck.maxNumberOfIngredients = ingredientGroup.maxNumberOfIngredients;
-      ingredientGroupToCheck.minNumberOfIngredients = ingredientGroup.minNumberOfIngredients;
-      ingredientGroupToCheck.orderPriority = ingredientGroup.orderPriority;
-      ingredientGroupToCheck.save();
-
-      ingredientToAdd.forEach(function (ingredient) {
-        ingredient.ingredientGroupId = ingredientGroup.id;
-      });
-      ingredientModel.bulkCreate(ingredientToAdd);
-
-      ingredientToRemove.forEach(function (ingredient) {
-        ingredientModel.destroy({where: {id: ingredient.id}})
-      });
-    });
-
-    itemSizeModel.bulkCreate(sizesToAdd);
-
-    ingredientGroupsToRemove.forEach(function (ingredientGroup) {
-      ingredientGroupModel.destroy({where: {id: ingredientGroup.id}})
-    });
-
-    sizesToRemove.forEach(function (size) {
-      itemSizeModel.destroy({where: {id: size.id}})
-    });
-
-    oldItem.translations.forEach(function (translation) {
-      var newTranslation = _.find(item.translations, function (tr) {
-        return tr.languageCode === translation.languageCode
-      });
-      for (var prop in newTranslation) {
-        translation[prop] = newTranslation[prop];
-      }
-      translation.save();
-      _.remove(item.translations, function (tr) {
-        return tr.languageCode === translation.languageCode
-      });
-    });
-
-    item.translations.forEach(function (translation) {
-      translation.itemId = item.id;
-    })
-
-    itemTranslationModel.bulkCreate(item.translations);
-
-    oldItem.save().then(function (result) {
+    utility.nestedUpdateModel(item, oldItem, {
+      include: [{
+          model: itemTranslationModel,
+          as: 'translations',
+          updateColumn: 'languageCode',
+          addIdColumn: 'itemId',
+          idToAdd: 'id',
+        }, {
+          model: itemSizeModel,
+          as: 'sizes',
+          updateColumn: 'id',
+          addIdColumn: 'itemId',
+          idToAdd: 'id',
+          include: [{
+            model: itemSizeTranslationModel,
+            as: 'translations',
+            updateColumn: 'languageCode',
+            addIdColumn: 'itemSizesId',
+            idToAdd: 'id',
+          }]
+        }, {
+        model: ingredientGroupModel,
+        as: 'ingredientGroups',
+        updateColumn: 'id',
+        addIdColumn: 'itemId',
+        idToAdd: 'id',
+        include: [{
+          model: ingredientModel,
+          as: 'ingredients',
+          updateColumn: 'id',
+          addIdColumn: 'ingredientGroupId',
+          idToAdd: 'id',
+          include: [{
+            model: ingredientTranslationModel,
+            as: 'translations',
+            updateColumn: 'languageCode',
+            addIdColumn: 'ingredientId',
+            idToAdd: 'id'
+          }]
+        }, {
+          model: ingredientGroupTranslationModel,
+          as: 'translations',
+          updateColumn: 'languageCode',
+          addIdColumn: 'ingredientGroupId',
+          idToAdd: 'id'
+        }]
+      }]
+    }).then(function (result) {
       return res.json({success: 1, description: "Item updated"});
-    })
+    });
   });
 }
 

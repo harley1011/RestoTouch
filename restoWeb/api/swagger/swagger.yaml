@@ -743,6 +743,47 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /profile:
+    x-swagger-router-controller: account
+    put:
+      operationId: saveProfile
+      description: Save the user's profile settings
+      parameters:
+        - name: profile
+          description: User information
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      operationId: getProfile
+      description: Get the user's account information
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/User"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -858,10 +899,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/IngredientGroup"
-      categories:
-        type: array
-        items:
-          "$ref": "#/definitions/Category"
+      #categories:
+        #type: array
+        #items:
+          #"$ref": "#/definitions/Category"
     required:
       - imageUrl
   Ingredient:

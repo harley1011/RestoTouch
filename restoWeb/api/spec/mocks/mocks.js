@@ -1,81 +1,12 @@
 var userModel = {};
-var restaurantModel = {};
-var businessHoursModel = {};
-var paymentsModel = {};
-var menuModel = {};
-var menuCategoryModel = {};
-var restaurantMenuModel = {};
-var restaurantsLanguageModel = {};
-var restaurantsTranslationModel = {};
-var itemModel = {};
-var itemSizesModel = {};
-var menuLanguageModel = {};
-var menuTranslationModel = {};
-var itemTranslationModel = {};
-var ingredientGroupModel = {};
-var ingredientModel = {};
-var supportedLanguageModel = {};
+var mockedSequelizeObject = {};
 
 var Promise = require('promise');
 
 userModel.create = create;
 userModel.findOne = findOne_user;
 
-restaurantModel.create = create;
-restaurantModel.update = update;
-restaurantModel.findAll = findAll;
-restaurantModel.findOne = findOne;
-restaurantModel.destroy = destroy;
-
-businessHoursModel.create = create;
-businessHoursModel.update = update;
-businessHoursModel.findAll = findAll;
-businessHoursModel.findOne = findOne;
-businessHoursModel.destroy = destroy;
-
-paymentsModel.create = create;
-paymentsModel.update = update;
-paymentsModel.findAll = findAll;
-paymentsModel.findOne = findOne;
-paymentsModel.destroy = destroy;
-
-menuModel.create = create;
-menuModel.update = update;
-menuModel.findAll = findAll;
-menuModel.findOne = findOne;
-menuModel.destroy = destroy;
-
-menuCategoryModel.create = create;
-menuCategoryModel.destroy = destroy;
-
-restaurantMenuModel.create = create;
-restaurantMenuModel.destroy = destroy;
-
-restaurantsLanguageModel.create = create;
-restaurantsLanguageModel.update = update;
-restaurantsLanguageModel.findAll = findAll;
-restaurantsLanguageModel.destroy = destroy;
-
-restaurantsTranslationModel.create = create;
-restaurantsTranslationModel.update = update;
-restaurantsTranslationModel.findAll = findAll;
-restaurantsTranslationModel.destroy = destroy;
-
-itemTranslationModel.create = create;
-itemTranslationModel.update = update;
-itemTranslationModel.findAll = findAll;
-itemTranslationModel.destroy = destroy;
-
-menuTranslationModel.create = create;
-menuTranslationModel.update = update;
-menuTranslationModel.findAll = findAll;
-menuTranslationModel.destroy = destroy;
-
-addMethodsToObject(itemModel);
-addMethodsToObject(itemSizesModel);
-addMethodsToObject(ingredientModel);
-addMethodsToObject(ingredientGroupModel);
-addMethodsToObject(supportedLanguageModel);
+addMethodsToObject(mockedSequelizeObject);
 
 function addMethodsToObject(obj) {
   obj.create = create;
@@ -90,70 +21,96 @@ exports.getUserModel = function() {
 };
 
 exports.getRestaurantModel = function () {
-  return restaurantModel;
+  return mockedSequelizeObject;
 }
 
 exports.getBusinessHoursModel = function () {
-  return businessHoursModel;
+  return mockedSequelizeObject;
 }
 
 exports.getPaymentsModel = function () {
-  return paymentsModel;
+  return mockedSequelizeObject;
 }
 
 exports.getMenuModel = function () {
-  return menuModel;
+  return mockedSequelizeObject;
 }
 
 exports.getMenuLanguageModel = function () {
-  return menuLanguageModel;
+  return mockedSequelizeObject;
 }
 
 exports.getMenuTranslationsModel = function () {
-  return menuTranslationModel;
+  return mockedSequelizeObject;
 }
 
 exports.getMenuCategoryModel = function () {
-    return menuCategoryModel;
+    return mockedSequelizeObject;
 }
 
 exports.getRestaurantMenuModel = function () {
-  return restaurantMenuModel;
+  return mockedSequelizeObject;
 }
 
 exports.getRestaurantsLanguageModel = function () {
-  return restaurantsLanguageModel;
+  return mockedSequelizeObject;
 }
 
 exports.getRestaurantsTranslationModel = function () {
-  return restaurantsTranslationModel;
+  return mockedSequelizeObject;
 }
 
 exports.getItemModel = function () {
-  return itemModel;
+  return mockedSequelizeObject;
 }
 
 exports.getItemSizesModel = function () {
-  return itemSizesModel;
+  return mockedSequelizeObject;
 }
 
 exports.getItemTranslationModel = function () {
-  return itemTranslationModel;
+  return mockedSequelizeObject;
 }
 
 exports.getIngredientGroupModel  = function () {
-  return ingredientGroupModel;
+  return mockedSequelizeObject;
 }
 
 exports.getIngredientModel = function () {
-  return ingredientModel;
+  return mockedSequelizeObject;
 }
 
 exports.getSupportedLanguageModel = function () {
-  return supportedLanguageModel;
+  return mockedSequelizeObject;
 }
 
+exports.getCategoryModel = function () {
+  return mockedSequelizeObject;
+}
 
+exports.getCategoryTranslationModel = function () {
+  return mockedSequelizeObject;
+}
+
+exports.getItemCategoryModel = function () {
+  return mockedSequelizeObject;
+}
+
+exports.getDisabledMenuItemCategoryModel = function () {
+  return mockedSequelizeObject;
+}
+
+exports.getItemSizeTranslationsModel = function () {
+  return mockedSequelizeObject;
+}
+
+exports.getIngredientGroupTranslationModel = function () {
+  return mockedSequelizeObject;
+}
+
+exports.getIngredientTranslationModel = function () {
+  return mockedSequelizeObject;
+}
 
 function create(object) {
   return new Promise(function (fulfill, reject) {
