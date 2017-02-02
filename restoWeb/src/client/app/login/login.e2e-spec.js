@@ -50,7 +50,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   })
 
-  it("Create a valid order item", function () {
+  it("Create a valid food item", function () {
     browser.get(browser.baseUrl + 'dashboard/items');
     var addItemBtn = element(by.id('addItemBtn'));
     addItemBtn.click();
@@ -78,8 +78,46 @@ describe("RESTOTOUCH TEST CASES", function () {
     createItemBtn.click();
 
     //Verify that user gets redirected to correct page, and that an element (the 
-    //created restaurant) is present on the restaurant-list page.
+    //created food item) is present on the restaurant-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/items');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
+  });
+
+  it("Create a valid category", function () {
+    browser.get(browser.baseUrl + 'dashboard/categories');
+    var addCategoryBtn = element(by.id('addCategoryBtn'));
+    addCategoryBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/category');
+
+    //Enter valid category information
+    element(by.id("name")).sendKeys("Category Name");
+
+    //Click on the create category button
+    var createCategoryBtn = element(by.id('createCategoryBtn'));
+    createCategoryBtn.click();
+
+    //Verify that user gets redirected to correct page, and that an element (the 
+    //created category) is present on the restaurant-list page.
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/categories');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
+  });
+
+  it("Create a valid menu", function () {
+    browser.get(browser.baseUrl + 'dashboard/menus');
+    var addMenuBtn = element(by.id('addMenuBtn'));
+    addMenuBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menu');
+
+    //Enter valid menu information
+    element(by.id("name")).sendKeys("Menu Name");
+
+    //Click on the create menu button
+    var createMenuBtn = element(by.id('createMenuBtn'));
+    createMenuBtn.click();
+
+    //Verify that user gets redirected to correct page, and that an element (the 
+    //created menu) is present on the restaurant-list page.
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });
 
