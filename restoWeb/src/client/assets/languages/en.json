@@ -99,6 +99,7 @@
     "titleManage":"Manage Menus",
     "sousTitleManage":"You can select any menu below to make changes",
     "addmenuButtonManage":"+ Add Menu",
+    "confirmButtonManage":"Confirm",
     "titleCreate": "Create Menu",
     "titleEdit":"Edit Menu",
     "sousTitleMenusetting":"Menu settings",
@@ -187,5 +188,5 @@
     "lastNameAlert": "Please enter your last name.",
     "emailAlert": "Please enter a valid email address."
   }
-  
+
 }
