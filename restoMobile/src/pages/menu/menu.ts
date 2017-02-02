@@ -9,6 +9,7 @@ import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
+import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 
 @Component({
   selector: 'page-menu',
@@ -92,16 +93,21 @@ export class MenuPage {
   addOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
-    console.log(orderableItem);
+    if (orderableItem.item.ingredientGroups.length > 0) {
+      this.navCtrl.push(IngredientGroupPage, {
+          item: item,
+          language: this.selectedLanguage
+      });
+    } else {
+      var item = orderableItem.item;
+      var size = orderableSize.size;
+      var order = new Order(item.id, size.id, []);
+      this.orders.push(order);
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-    var order = new Order(item.id, size.id, []);
-    this.orders.push(order);
-
-    var total = parseFloat(this.total);
-    total += size.price;
-    this.total = total.toFixed(2);
+      var total = parseFloat(this.total);
+      total += size.price;
+      this.total = total.toFixed(2);
+    }
   }
 
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
