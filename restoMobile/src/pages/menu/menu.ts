@@ -92,6 +92,8 @@ export class MenuPage {
   addOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
+    console.log(orderableItem);
+
     var item = orderableItem.item;
     var size = orderableSize.size;
     var order = new Order(item.id, size.id, []);
