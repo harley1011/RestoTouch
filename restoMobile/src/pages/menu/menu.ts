@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
 import { Size } from '../shared/models/size';
+import { IngredientGroup } from '../shared/models/ingredient-group';
 import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
 import { Order } from '../shared/models/order';
 import { Menu } from '../shared/models/menu';
@@ -85,6 +86,7 @@ export class MenuPage {
           orderableItem.sizes.push(orderableSize);
         });
         orderableCategory.items.push(orderableItem);
+        item.ingredientGroups.sort(compareIngredientGroup);
       });
       self.categories.push(orderableCategory);
     });
@@ -133,9 +135,17 @@ export class MenuPage {
   }
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
+    var self = this;
     var getComplexOrder = function(complexOrder) {
       return new Promise((resolve, reject) => {
         console.log(complexOrder);
+        orderableSize.count++;
+
+        var item = orderableItem.item;
+        var size = orderableSize.size;
+        var order = new Order(item.id, size.id, []);
+        self.orders.push(order);
+
         resolve();
       });
     };
@@ -150,5 +160,15 @@ export class MenuPage {
 
   order(): void {
     console.log('ORDER');
+  }
+}
+
+function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {
+  if (group1.orderPriority < group2.orderPriority) {
+    return -1;
+  } else if (group1.orderPriority > group2.orderPriority) {
+    return 1;
+  } else {
+  	return 0;
   }
 }

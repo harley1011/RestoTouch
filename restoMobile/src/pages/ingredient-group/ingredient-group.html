@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Ingredient Group</ion-title>
+        <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-item>
+  <ion-item *ngIf="item && ingredientGroup">
     <button ion-button (click)="nextIngredientGroup()" color="default" outline>Next</button>
   </ion-item>
 
