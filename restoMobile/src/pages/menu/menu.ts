@@ -91,22 +91,10 @@ export class MenuPage {
   }
 
   addOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
-    orderableSize.count++;
-
     if (orderableItem.item.ingredientGroups.length > 0) {
-      this.navCtrl.push(IngredientGroupPage, {
-          item: item,
-          language: this.selectedLanguage
-      });
+      this.addComplexOrder(orderableItem, orderableSize);
     } else {
-      var item = orderableItem.item;
-      var size = orderableSize.size;
-      var order = new Order(item.id, size.id, []);
-      this.orders.push(order);
-
-      var total = parseFloat(this.total);
-      total += size.price;
-      this.total = total.toFixed(2);
+      this.addSimpleOrder(orderableItem, orderableSize);
     }
   }
 
@@ -129,6 +117,35 @@ export class MenuPage {
         break;
       }
     }
+  }
+
+  addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
+    orderableSize.count++;
+
+    var item = orderableItem.item;
+    var size = orderableSize.size;
+    var order = new Order(item.id, size.id, []);
+    this.orders.push(order);
+
+    var total = parseFloat(this.total);
+    total += size.price;
+    this.total = total.toFixed(2);
+  }
+
+  addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
+    var getComplexOrder = function(complexOrder) {
+      return new Promise((resolve, reject) => {
+        console.log(complexOrder);
+        resolve();
+      });
+    };
+
+    this.navCtrl.push(IngredientGroupPage, {
+      item: orderableItem.item,
+      ingredientGroupIndex: 0,
+      language: this.selectedLanguage,
+      callback: getComplexOrder
+    });
   }
 
   order(): void {
