@@ -98,6 +98,7 @@
     "titleManage":"Gestion des menus",
     "sousTitleManage":"Sélectionner le menu que vous désirez faire des changements",
     "addmenuButtonManage":"+ Ajouter un Menu",
+    "confirmButtonManage":"Confirmer",
     "titleCreate": "Création d'un menu",
     "titleEdit":"Éditer le menu",
     "sousTitleMenusetting":"Paramètres du menu",
