@@ -24,6 +24,9 @@
     <ion-item *ngFor="let orderableIngredient of orderableIngredients; let i = index">
       <ion-label>{{orderableIngredient.ingredient.translations[0].name}}</ion-label>
       <ion-checkbox [(ngModel)]="orderableIngredient.selected" disabled={{orderableIngredient.disabled}} (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" ion-button item-right clear><ion-icon name="remove-circle-outline"></ion-icon></button>
+      <p *ngIf="orderableIngredient.ingredient.allowQuantity > 1" item-right>{{orderableIngredient.amount}}</p>
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" ion-button item-right clear><ion-icon name="add-circle-outline"></ion-icon></button>
     </ion-item>
   </ion-list>
 
