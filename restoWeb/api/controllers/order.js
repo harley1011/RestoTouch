@@ -17,26 +17,43 @@ function setDatabase() {
 }
 
 function placeOrder(req, res) {
-  var restaurantId = req.restaurantId;
-  var order = req.placedOrder;
-  var restaurantOrders = [];
 
-  //todo add redis lock
-  if (client.exists('restaurantOrders:' + restaurantId)) {
-    restaurantOrders = JSON.parse(client.get('restaurantId'));
-  }
 
-  restaurantOrders.push(order);
-  client.set('restaurantOrders:' + restaurantId, JSON.stringify(restaurantOrders));
+  return new promise(function (fulfill, reject) {
+    var restaurantId = req.restaurantId;
+    var order = req.placedOrder;
+    var restaurantOrders = [];
+
+    //todo add redis lock
+    if (client.exists('restaurantOrders:' + restaurantId)) {
+      restaurantOrders = JSON.parse(client.get('restaurantId'));
+    }
+
+    restaurantOrders.push(order);
+    client.set('restaurantOrders:' + restaurantId, JSON.stringify(restaurantOrders), function (err, reply) {
+
+      if (reply == "OK") {
+        res.json({success: true, message: "Order stored"})
+        fulfill();
+      }
+      else {
+        res.json({success: false, message: "Order failed to store"})
+        reject();
+      }
+    });
+  });
+
+
   //todo notify listeners
 }
 
 function retrieveOrders(req, res) {
   var restaurantId = req.restaurantId;
 
-  return new promise(function (fulfill, reject){
+  return new promise(function (fulfill, reject) {
     client.get('restaurantOrders:' + restaurantId, function (err, reply) {
-      fulfill({success: true, orders: reply});
+      res.json({success: true, orders:  JSON.parse(reply)});
+      fulfill();
     });
   });
 }
@@ -44,10 +61,19 @@ function retrieveOrders(req, res) {
 
 function removeAllOrders(req, res) {
   var restaurantId = req.restaurantId;
-  return client.del('restaurantOrders:' + restaurantId).then(function () {
-    return res.json({success: true});
-  });
 
+  return new promise(function (fulfill, reject) {
+    client.del('restaurantOrders:' + restaurantId, function (err, reply) {
+      if (reply == 1) {
+        res.json({success: true, message: "Orders removed"})
+        fulfill();
+      }
+      else {
+        res.json({success: false, message: "No orders for received restaurant exists "})
+        fulfill();
+      }
+    });
+  });
 }
 
 function closeRedis() {
