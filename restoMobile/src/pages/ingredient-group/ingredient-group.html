@@ -11,7 +11,7 @@
 
       <ion-buttons end>
         <button (click)="nextIngredientGroup()" ion-button icon-right clear>
-          {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? "Next" : "Done" }} 
+          {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? "Next" : "Done" }}
           <ion-icon *ngIf="ingredientGroupIndex + 1 < item.ingredientGroups.length" name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
@@ -20,7 +20,11 @@
 
 <ion-content>
 
-  <ion-item *ngIf="item && ingredientGroup">
-  </ion-item>
+  <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
+    <ion-item *ngFor="let orderableIngredient of orderableIngredients; let i = index">
+      <ion-label>{{orderableIngredient.ingredient.translations[0].name}}</ion-label>
+      <ion-checkbox [(ngModel)]="orderableIngredient.selected" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

@@ -1,26 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Item } from '../shared/models/items';
 import { IngredientGroup } from '../shared/models/ingredient-group';
+import { Ingredient } from '../shared/models/ingredient';
+import { OrderIngredients } from '../shared/models/order-ingredients';
+import { OrderableIngredient } from './orderable-ingredient';
 
 @Component({
   selector: 'page-ingredient-group',
   templateUrl: 'ingredient-group.html'
 })
-export class IngredientGroupPage {
+export class IngredientGroupPage implements OnInit {
   selectedLanguage: any;
   item: Item;
   ingredientGroup: IngredientGroup;
   ingredientGroupIndex: number;
   complexOrderCallback: any;
+  orderableIngredients: Array<OrderableIngredient>;
+  orderAllIngredients: Array<OrderIngredients>;
+  orderGroupIngredients: Array<OrderIngredients>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.selectedLanguage = navParams.get('language');
-    this.item = navParams.get('item');
-    this.ingredientGroupIndex = navParams.get('ingredientGroupIndex');
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+
+  ngOnInit(): void {
+    this.selectedLanguage = this.navParams.get('language');
+    this.item = this.navParams.get('item');
+    this.ingredientGroupIndex = this.navParams.get('ingredientGroupIndex');
+
     this.ingredientGroup = this.item.ingredientGroups[this.ingredientGroupIndex];
     this.ingredientGroup.selectedTranslation = this.ingredientGroup.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
-    this.complexOrderCallback = navParams.get('callback');
+    /*this.ingredientGroup.ingredients.forEach(ingredient => {
+      ingredient.selectedTranslation = ingredient.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+    });*/
+
+    this.complexOrderCallback = this.navParams.get('callback');
+    this.orderAllIngredients = this.navParams.get('ingredients');
+    this.orderGroupIngredients = [];
+
+    this.initOrderableIngredients();
+
+    console.log(this.ingredientGroup);
+  }
+
+  initOrderableIngredients(): void {
+    this.orderableIngredients = [];
+
+    let ingredient: Ingredient;
+    let orderableIngredient: OrderableIngredient;
+    for (var i = 0; i < this.ingredientGroup.ingredients.length; i++) {
+      ingredient = this.ingredientGroup.ingredients[i];
+      orderableIngredient = new OrderableIngredient(ingredient, ingredient.addByDefault, 1);
+      this.orderableIngredients.push(orderableIngredient);
+    }
   }
 
   previousIngredientGroup(): void {
@@ -28,6 +59,7 @@ export class IngredientGroupPage {
       animate: true,
       animation: "ios-transition"
     };
+
     if (this.ingredientGroupIndex == 0) {
       opts['direction'] = 'back';
       opts['animation'] = 'md-transition';
@@ -54,7 +86,8 @@ export class IngredientGroupPage {
       item: this.item,
       ingredientGroupIndex: index,
       language: this.selectedLanguage,
-      callback: this.complexOrderCallback
+      callback: this.complexOrderCallback,
+      ingredients: this.orderAllIngredients
     }, {
       animate: true,
       animation: "ios-transition"
@@ -67,8 +100,27 @@ export class IngredientGroupPage {
       var startIndex = this.navCtrl.indexOf(this.navCtrl.last()) - (this.ingredientGroupIndex);
       this.navCtrl.remove(startIndex, index, {
         animate: true,
-        animation: "ios-transition"
+        animation: "md-transition"
       });
     });
+  }
+
+  selectIngredient(orderableIngredient: OrderableIngredient): void {
+    if (orderableIngredient.selected) {
+      this.orderGroupIngredients.push(
+        new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
+      );
+    } else {
+      let orderIngredient: OrderIngredients;
+      for (var i = 0; i < this.orderGroupIngredients.length; i++) {
+        orderIngredient = this.orderGroupIngredients[i];
+        if (orderIngredient.ingredientId == orderableIngredient.ingredient.id) {
+          this.orderGroupIngredients.splice(i--, 1);
+          break;
+        }
+      }
+    }
+
+    console.log(this.orderGroupIngredients);
   }
 }

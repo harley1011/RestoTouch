@@ -154,7 +154,8 @@ export class MenuPage {
       item: orderableItem.item,
       ingredientGroupIndex: 0,
       language: this.selectedLanguage,
-      callback: getComplexOrder
+      callback: getComplexOrder,
+      ingredients: []
     }, {
       animate: true,
       animation: "md-transition",
