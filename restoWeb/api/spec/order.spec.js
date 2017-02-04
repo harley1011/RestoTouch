@@ -16,7 +16,7 @@ describe("The Order API", function () {
     }
   };
 
-  it("should place and retrieve an order", function (done) {
+  it("should place, retrieve an order and then delete it", function (done) {
     order.placeOrder(req, res).then(function () {
       expect(res.obj.success).toBe(true);
       expect(res.obj.message).toBe("Order stored");
@@ -35,29 +35,16 @@ describe("The Order API", function () {
 
   });
 
-  // it("should retrieve a non existing order", function (done) {
-  //   var res = {};
-  //   order.placeOrder(req, res);
-  //
-  //   order.retrieveOrders(req, res).then(function (result) {
-  //     var orders = JSON.parse(result.orders);
-  //     console.log(orders[0]);
-  //     expect({orderId: 1}.orderId).toBe(orders[0].orderId);
-  //
-  //     done();
-  //   });
-  //
-  // });
+  it("should retrieve a empty array with no orders", function (done) {
+    order.retrieveOrders(req, res).then(function (result) {
+      var orders = res.obj.orders;
+      expect(orders.length).toBe(0);
+      done();
+    });
+
+  });
 
   afterAll(function () {
     order.closeRedis();
   });
-
-  afterEach(function (done) {
-    order.removeAllOrders(req, res).then(function () {
-      done();
-    });
-  })
-
-
 });

@@ -52,7 +52,13 @@ function retrieveOrders(req, res) {
 
   return new promise(function (fulfill, reject) {
     client.get('restaurantOrders:' + restaurantId, function (err, reply) {
-      res.json({success: true, orders:  JSON.parse(reply)});
+      if (reply == null) {
+        res.json({success: true, orders: []});
+      }
+      else {
+        res.json({success: true, orders: JSON.parse(reply)});
+      }
+
       fulfill();
     });
   });
