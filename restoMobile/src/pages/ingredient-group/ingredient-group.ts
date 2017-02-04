@@ -24,10 +24,18 @@ export class IngredientGroupPage {
   }
 
   previousIngredientGroup(): void {
-    this.navCtrl.pop({
+    var opts = {
       animate: true,
       animation: "ios-transition"
-    });
+    };
+    if (this.ingredientGroupIndex == 0) {
+      opts['direction'] = 'back';
+      opts['animation'] = 'md-transition';
+    } else {
+      opts['direction'] = 'back';
+    }
+
+    this.navCtrl.pop(opts);
   }
 
   nextIngredientGroup(): void {

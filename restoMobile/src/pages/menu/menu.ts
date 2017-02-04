@@ -155,6 +155,10 @@ export class MenuPage {
       ingredientGroupIndex: 0,
       language: this.selectedLanguage,
       callback: getComplexOrder
+    }, {
+      animate: true,
+      animation: "md-transition",
+      direction: "forward"
     });
   }
 

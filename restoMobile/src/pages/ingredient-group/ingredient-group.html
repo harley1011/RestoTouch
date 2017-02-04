@@ -2,15 +2,17 @@
     <ion-navbar hideBackButton>
       <ion-buttons start>
         <button (click)="previousIngredientGroup()" ion-button icon-left clear>
-          <ion-icon name="arrow-back"></ion-icon> Back
+          <ion-icon *ngIf="ingredientGroupIndex > 0" name="arrow-back"></ion-icon>
+          {{ ingredientGroupIndex == 0 ? "Cancel" : "Back" }}
         </button>
       </ion-buttons>
-      
+
       <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
 
       <ion-buttons end>
         <button (click)="nextIngredientGroup()" ion-button icon-right clear>
-          Next <ion-icon name="arrow-forward"></ion-icon>
+          {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? "Next" : "Done" }} 
+          <ion-icon *ngIf="ingredientGroupIndex + 1 < item.ingredientGroups.length" name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
     </ion-navbar>
