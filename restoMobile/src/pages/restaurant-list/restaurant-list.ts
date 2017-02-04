@@ -6,6 +6,7 @@ import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 import { WelcomePage } from '../welcome/welcome';
 import { HomePage } from '../home/home';
+import { MenuListPage } from '../menu-list/menu-list';
 import { Page2 } from '../page2/page2';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { MyApp } from '../../app/app.component';
@@ -69,11 +70,10 @@ export class RestaurantListPage {
 
   itemTapped(event, restaurant) {
     this.restaurantListService.selectedRestaurant = restaurant;
-    this.navCtrl.push(WelcomePage, {
+    this.navCtrl.push(MenuListPage, {
       item: restaurant
     });
-     this.menuCtrl.enable(false, 'ownerMenu');
-      this.authService.mainNavController.push(WelcomePage, {item: item});
-      this.menuCtrl.toggle('right');
+    this.menuCtrl.enable(false, 'ownerMenu');
+    this.menuCtrl.toggle('right');
   }
 }

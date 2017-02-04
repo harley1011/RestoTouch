@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Language } from '../shared/models/language';
 import { LanguageService } from '../services/language.service';
 import {TranslateService} from 'ng2-translate';
-import { MenuListPage } from '../menu-list/menu-list';
+import { MenuPage } from '../menu/menu';
 import { Page2 } from '../page2/page2'
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
@@ -18,6 +18,7 @@ export class WelcomePage {
   supportedLanguages: Array<Language> = [];
 	selectedLanguage: Language = new Language('','selectedLanguage','',0);
 	selectedRestaurant: any;
+	selectedMenu: any;
   openSlider: boolean = false;
 
   constructor(public navCtrl: NavController,
@@ -41,9 +42,9 @@ export class WelcomePage {
 
   continueTapped(event) {
     // Will push to virtual menu page
-    this.navCtrl.push(MenuListPage, {
+    this.navCtrl.push(MenuPage, {
       language: this.selectedLanguage,
-      restaurant: this.selectedRestaurant
+      menu: this.selectedMenu
     });
   }
 
