@@ -74,5 +74,6 @@ export class RestaurantListPage {
     });
      this.menuCtrl.enable(false, 'ownerMenu');
       this.authService.mainNavController.push(WelcomePage, {item: item});
+      this.menuCtrl.toggle('right');
   }
 }
