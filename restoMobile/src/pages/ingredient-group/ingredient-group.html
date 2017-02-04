@@ -1,14 +1,24 @@
 <ion-header>
-    <ion-navbar>
-      <button (click)="previousIngredientGroup()" ion-button icon-left clear small item-left></button>
+    <ion-navbar hideBackButton>
+      <ion-buttons start>
+        <button (click)="previousIngredientGroup()" ion-button icon-left clear>
+          <ion-icon name="arrow-back"></ion-icon> Back
+        </button>
+      </ion-buttons>
+      
       <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
+
+      <ion-buttons end>
+        <button (click)="nextIngredientGroup()" ion-button icon-right clear>
+          Next <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
 
   <ion-item *ngIf="item && ingredientGroup">
-    <button ion-button (click)="nextIngredientGroup()" color="default" outline>Next</button>
   </ion-item>
 
 </ion-content>
