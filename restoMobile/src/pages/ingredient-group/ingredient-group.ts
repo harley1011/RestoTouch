@@ -49,7 +49,7 @@ export class IngredientGroupPage implements OnInit {
     let orderableIngredient: OrderableIngredient;
     for (var i = 0; i < this.ingredientGroup.ingredients.length; i++) {
       ingredient = this.ingredientGroup.ingredients[i];
-      orderableIngredient = new OrderableIngredient(ingredient, ingredient.addByDefault, 1);
+      orderableIngredient = new OrderableIngredient(ingredient, ingredient.addByDefault, false, 1);
       this.orderableIngredients.push(orderableIngredient);
     }
   }
@@ -107,20 +107,48 @@ export class IngredientGroupPage implements OnInit {
 
   selectIngredient(orderableIngredient: OrderableIngredient): void {
     if (orderableIngredient.selected) {
-      this.orderGroupIngredients.push(
-        new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
-      );
+      this.addIngredient(orderableIngredient);
     } else {
-      let orderIngredient: OrderIngredients;
-      for (var i = 0; i < this.orderGroupIngredients.length; i++) {
-        orderIngredient = this.orderGroupIngredients[i];
-        if (orderIngredient.ingredientId == orderableIngredient.ingredient.id) {
-          this.orderGroupIngredients.splice(i--, 1);
-          break;
-        }
-      }
+      this.removeIngredient(orderableIngredient);
     }
 
     console.log(this.orderGroupIngredients);
+  }
+
+  addIngredient(orderableIngredient: OrderableIngredient): void {
+    this.orderGroupIngredients.push(
+      new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
+    );
+
+    // check if need to disable
+    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
+      let otherOrderableIngredient: OrderableIngredient;
+      for (var i = 0; i < this.orderableIngredients.length; i++) {
+        otherOrderableIngredient = this.orderableIngredients[i];
+        if (otherOrderableIngredient != orderableIngredient) {
+          otherOrderableIngredient.disabled = true;
+        }
+      }
+    }
+  }
+
+  removeIngredient(orderableIngredient: OrderableIngredient): void {
+    // check if should enable
+    if (this.ingredientGroup.maxNumberOfIngredients <= this.orderGroupIngredients.length) {
+      let otherOrderableIngredient: OrderableIngredient;
+      for (var i = 0; i < this.orderableIngredients.length; i++) {
+        otherOrderableIngredient = this.orderableIngredients[i];
+        otherOrderableIngredient.disabled = false;
+      }
+    }
+
+    let orderIngredient: OrderIngredients;
+    for (var i = 0; i < this.orderGroupIngredients.length; i++) {
+      orderIngredient = this.orderGroupIngredients[i];
+      if (orderIngredient.ingredientId == orderableIngredient.ingredient.id) {
+        this.orderGroupIngredients.splice(i--, 1);
+        break;
+      }
+    }
   }
 }

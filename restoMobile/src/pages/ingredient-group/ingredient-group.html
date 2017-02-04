@@ -10,7 +10,7 @@
       <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
 
       <ion-buttons end>
-        <button (click)="nextIngredientGroup()" ion-button icon-right clear>
+        <button (click)="nextIngredientGroup()" [disabled]="ingredientGroup.minNumberOfIngredients > orderGroupIngredients.length" ion-button icon-right clear>
           {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? "Next" : "Done" }}
           <ion-icon *ngIf="ingredientGroupIndex + 1 < item.ingredientGroups.length" name="arrow-forward"></ion-icon>
         </button>
@@ -23,7 +23,7 @@
   <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
     <ion-item *ngFor="let orderableIngredient of orderableIngredients; let i = index">
       <ion-label>{{orderableIngredient.ingredient.translations[0].name}}</ion-label>
-      <ion-checkbox [(ngModel)]="orderableIngredient.selected" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="orderableIngredient.selected" disabled={{orderableIngredient.disabled}} (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
     </ion-item>
   </ion-list>
 
