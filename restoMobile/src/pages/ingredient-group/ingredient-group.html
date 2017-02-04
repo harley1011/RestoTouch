@@ -1,6 +1,7 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
+      <button (click)="previousIngredientGroup()" ion-button icon-left clear small item-left></button>
+      <ion-title>{{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}}</ion-title>
     </ion-navbar>
 </ion-header>
 

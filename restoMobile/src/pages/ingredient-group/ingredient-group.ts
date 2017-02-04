@@ -23,6 +23,13 @@ export class IngredientGroupPage {
     this.complexOrderCallback = navParams.get('callback');
   }
 
+  previousIngredientGroup(): void {
+    this.navCtrl.pop({
+      animate: true,
+      animation: "ios-transition"
+    });
+  }
+
   nextIngredientGroup(): void {
     var index = this.ingredientGroupIndex + 1;
 
