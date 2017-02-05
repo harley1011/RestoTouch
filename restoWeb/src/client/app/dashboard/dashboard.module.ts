@@ -19,6 +19,7 @@ import {DashboardComponent} from './dashboard.component';
 import {TopNavComponent, SidebarComponent} from '../shared/index';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import {FormsModule} from '@angular/forms';
+import {ProfileModule} from './profile/profile.module';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import {FormsModule} from '@angular/forms';
     ItemListModule,
     DashboardRoutingModule,
     ItemModule,
-    TranslateModule
+    TranslateModule,
+    ProfileModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]
