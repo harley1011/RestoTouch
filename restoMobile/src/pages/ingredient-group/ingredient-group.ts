@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Item } from '../shared/models/items';
 import { IngredientGroup } from '../shared/models/ingredient-group';
 import { Ingredient } from '../shared/models/ingredient';
-import { OrderIngredients } from '../shared/models/order-ingredients';
+import { SelectedIngredients } from '../shared/models/selected-ingredients';
 import { OrderableIngredient } from './orderable-ingredient';
 
 @Component({
@@ -17,7 +17,7 @@ export class IngredientGroupPage implements OnInit {
   ingredientGroupIndex: number;
   complexOrderCallback: any;
   orderableIngredients: Array<OrderableIngredient>;
-  orderGroupIngredients: OrderIngredients;
+  selectedIngredients: SelectedIngredients;
   ingredientCount: number;
   total: number;
   totalStr: string;
@@ -36,7 +36,7 @@ export class IngredientGroupPage implements OnInit {
     });*/
 
     this.complexOrderCallback = this.navParams.get('callback');
-    this.orderGroupIngredients = this.navParams.get('ingredients');
+    this.selectedIngredients = this.navParams.get('ingredients');
     this.ingredientCount = 0;
     this.total = this.navParams.get('total');
     this.totalStr = this.total.toFixed(2);
@@ -53,7 +53,7 @@ export class IngredientGroupPage implements OnInit {
       ingredient = this.ingredientGroup.ingredients[i];
       if (ingredient.addByDefault) {
         orderableIngredient = new OrderableIngredient(ingredient, false, 1);
-        this.orderGroupIngredients.ingredients.push(
+        this.selectedIngredients.ingredients.push(
           {ingredientGroup: this.ingredientGroup, ingredient: ingredient, quantity: 1}
         );
         this.ingredientCount++;
@@ -105,7 +105,7 @@ export class IngredientGroupPage implements OnInit {
       ingredientGroupIndex: index,
       language: this.selectedLanguage,
       callback: this.complexOrderCallback,
-      ingredients: this.orderGroupIngredients,
+      ingredients: this.selectedIngredients,
       total: this.total
     }, {
       animate: true,
@@ -114,7 +114,7 @@ export class IngredientGroupPage implements OnInit {
   }
 
   doneIngredientOrder(): void {
-    this.complexOrderCallback(this.orderGroupIngredients, this.total).then(() => {
+    this.complexOrderCallback(this.selectedIngredients, this.total).then(() => {
       var index = this.ingredientGroupIndex + 1;
       var startIndex = this.navCtrl.indexOf(this.navCtrl.last()) - (this.ingredientGroupIndex);
       this.navCtrl.remove(startIndex, index, {
@@ -137,12 +137,12 @@ export class IngredientGroupPage implements OnInit {
     this.total += orderableIngredient.ingredient.price;
     this.totalStr = this.total.toFixed(2);
 
-    let foundIngredient = this.orderGroupIngredients.ingredients.find((currentIngredient: any) => currentIngredient.ingredient.id == orderableIngredient.ingredient.id);
+    let foundIngredient = this.selectedIngredients.ingredients.find((currentIngredient: any) => currentIngredient.ingredient.id == orderableIngredient.ingredient.id);
     if (foundIngredient) {
       foundIngredient.quantity++;
       this.ingredientCount++;
     } else {
-      this.orderGroupIngredients.ingredients.push(
+      this.selectedIngredients.ingredients.push(
         {ingredientGroup: this.ingredientGroup, ingredient: orderableIngredient.ingredient, quantity: 1}
       );
       this.ingredientCount++;
@@ -152,9 +152,6 @@ export class IngredientGroupPage implements OnInit {
     if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
-
-    console.log(this.orderGroupIngredients.ingredients);
-    console.log(this.ingredientCount);
   }
 
   removeIngredient(orderableIngredient: OrderableIngredient, fromCheckbox: boolean): void {
@@ -177,14 +174,14 @@ export class IngredientGroupPage implements OnInit {
       }
     }
 
-    var orderIngredient: any;
-    for (var i = 0; i < this.orderGroupIngredients.ingredients.length; i++) {
-      orderIngredient = this.orderGroupIngredients.ingredients[i];
-      if (orderIngredient.ingredient.id == orderableIngredient.ingredient.id) {
-        if (orderIngredient.quantity > 1) {
-          orderIngredient.quantity--;
+    var selectedIngredient: any;
+    for (var i = 0; i < this.selectedIngredients.ingredients.length; i++) {
+      selectedIngredient = this.selectedIngredients.ingredients[i];
+      if (selectedIngredient.ingredient.id == orderableIngredient.ingredient.id) {
+        if (selectedIngredient.quantity > 1) {
+          selectedIngredient.quantity--;
         } else {
-          this.orderGroupIngredients.ingredients.splice(i--, 1);
+          this.selectedIngredients.ingredients.splice(i--, 1);
         }
 
         this.ingredientCount--;
@@ -192,9 +189,6 @@ export class IngredientGroupPage implements OnInit {
         if (orderableIngredient.amount > 0) break;
       }
     }
-
-    console.log(this.orderGroupIngredients.ingredients);
-    console.log(this.ingredientCount);
   }
 
   disableIngredients(): void {

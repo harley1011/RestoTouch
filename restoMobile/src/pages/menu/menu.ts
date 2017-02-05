@@ -6,7 +6,7 @@ import { Size } from '../shared/models/size';
 import { IngredientGroup } from '../shared/models/ingredient-group';
 import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
 import { Order } from '../shared/models/order';
-import { OrderIngredients } from '../shared/models/order-ingredients';
+import { SelectedIngredients } from '../shared/models/selected-ingredients';
 import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
@@ -115,8 +115,8 @@ export class MenuPage {
 
     let ingredient: any;
     this.currentOrder.total -= orderableSize.size.price;
-    for (var i = 0; i < foundSize.ingredients.ingredients.length; i++) {
-      ingredient = foundSize.ingredients.ingredients[i];
+    for (var i = 0; i < foundSize.selectedIngredients.ingredients.length; i++) {
+      ingredient = foundSize.selectedIngredients.ingredients[i];
       this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);
     }
   }
@@ -129,9 +129,9 @@ export class MenuPage {
 
     let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
     if (foundItem) {
-      foundItem.sizes.push({size: size, ingredients: null});
+      foundItem.sizes.push({size: size, selectedIngredients: null});
     } else {
-      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, ingredients: null}]});
+      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: null}]});
     }
 
     this.currentOrder.total += size.price;
@@ -139,7 +139,7 @@ export class MenuPage {
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     var self = this;
-    var getComplexOrder = function(ingredients: OrderIngredients, price: number) {
+    var getComplexOrder = function(selectedIngredients: SelectedIngredients, price: number) {
       return new Promise((resolve, reject) => {
         orderableSize.count++;
 
@@ -148,9 +148,9 @@ export class MenuPage {
 
         let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
         if (foundItem) {
-          foundItem.sizes.push({size: size, ingredients: ingredients});
+          foundItem.sizes.push({size: size, selectedIngredients: selectedIngredients});
         } else {
-          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, ingredients: ingredients}]});
+          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
         }
 
         self.currentOrder.total += size.price + price;
@@ -164,7 +164,7 @@ export class MenuPage {
       ingredientGroupIndex: 0,
       language: this.selectedLanguage,
       callback: getComplexOrder,
-      ingredients: new OrderIngredients([]),
+      ingredients: new SelectedIngredients([]),
       total: 0
     }, {
       animate: true,
