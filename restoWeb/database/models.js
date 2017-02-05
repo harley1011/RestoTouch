@@ -24,6 +24,9 @@ var disabledMenuItemCategoryModel = sequelize.import('./models/disabledMenuItemC
 var itemSizesTranslationsModel = sequelize.import('./models/itemSizeTranslations.js');
 var ingredientGroupTranslationModel = sequelize.import('./models/ingredientGroupTranslation.js');
 var ingredientTranslationModel = sequelize.import('./models/ingredientTranslation.js');
+var comboModel = sequelize.import('./models/combos.js');
+var comboTranslationModel = sequelize.import('./models/comboTranslation');
+var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -82,6 +85,25 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'categoryId'
     });
     categoryTranslationModel.sync({force: dropTable});
+
+  });
+
+  comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
+  comboModel.sync({force: dropTable}).then(function () {
+
+    comboModel.hasMany(comboTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'comboId'
+    });
+    comboTranslationModel.sync({force: dropTable});
+
+    comboModel.hasMany(comboCatFoodItemModel, {
+      as: 'comboFood',
+      onDelete: 'cascade',
+      foreignKey: 'comboId'
+    });
+    comboCatFoodItemModel.sync({force: dropTable});
 
   });
 
