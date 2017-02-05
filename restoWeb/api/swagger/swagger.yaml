@@ -255,6 +255,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+            
+   # -----------------------------------------/// Category ///
+  /combo:
+     # binds a127 app logic to a route
+    x-swagger-router-controller: combo
+    get:
+      # used as the method name of the controller
+      operationId: getAllCombos
+      description: Returns the list of combos
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CombosResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   # -----------------------------------------/// Restaurant ///
   /restaurant:
@@ -870,6 +889,42 @@ definitions:
     required:
       - name
       - languageCode
+      ##################################################
+  CombosResponse:
+    required:
+      - combos
+    properties:
+      # Array of combo
+      combos:
+        type: array
+        items:
+          "$ref": "#/definitions/Combo"
+  Combo:
+    type: object
+    properties:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ComboTranslations"
+      items:
+        type: array
+        items:
+          "$ref": "#/definitions/Item"
+  ComboTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      languageCode:
+        type: string
+    required:
+      - name
+      - languageCode
+      ###################################################
   ItemsResponse:
     required:
       - items
