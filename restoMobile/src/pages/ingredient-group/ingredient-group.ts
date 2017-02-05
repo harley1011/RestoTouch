@@ -42,8 +42,6 @@ export class IngredientGroupPage implements OnInit {
     this.totalStr = this.total.toFixed(2);
 
     this.initOrderableIngredients();
-
-    console.log(this.ingredientGroup);
   }
 
   initOrderableIngredients(): void {

@@ -139,8 +139,6 @@ export class MenuPage {
     var self = this;
     var getComplexOrder = function(ingredients: Array<OrderIngredients>, price: number) {
       return new Promise((resolve, reject) => {
-        console.log(ingredients);
-        console.log(price);
         orderableSize.count++;
 
         var item = orderableItem.item;
