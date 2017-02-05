@@ -1,14 +1,12 @@
-import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {Category} from '../shared/models/category';
-import {Item} from '../shared/models/items';
-import {Size} from '../shared/models/size';
-import {OrderableCategory, OrderableItem, OrderableSize} from './orderable-category';
-import {Order} from '../shared/models/order';
-import {Menu} from '../shared/models/menu';
-import {CategoryService} from '../services/category.service';
-import {ItemService} from '../services/item.service';
-import {MenuService} from '../services/menu.service';
+import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
+import { Item } from '../shared/models/items';
+import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
+import { Order } from '../shared/models/order';
+import { Menu } from '../shared/models/menu';
+import { OrderService } from '../services/order.service';
+import { ItemService } from '../services/item.service';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'page-menu',
@@ -22,9 +20,8 @@ export class MenuPage {
   total: string;
   currentOrder = new Order([], 0);
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private categoryService: CategoryService,
-              private itemService: ItemService,
+  constructor(public navParams: NavParams,
+              private orderService: OrderService,
               private menuService: MenuService) {
 
     this.selectedMenu = navParams.get('menu');
@@ -120,6 +117,8 @@ export class MenuPage {
   }
 
   order(): void {
-    console.log('ORDER');
+    this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+      console.log(response);
+    });
   }
 }

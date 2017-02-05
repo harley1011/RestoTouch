@@ -7,20 +7,19 @@ import { Response, Headers, RequestOptions } from '@angular/http';
 import { AuthHttpService } from '../services/auth-http.services';
 import { Observable } from 'rxjs/Observable';
 import  {ApiEndpointService} from '../services/api-endpoint.service';
+import  {RestaurantService} from '../services/restaurant.service';
 
 @Injectable()
 export class OrderService {
-    private url = '/order';
 
-    constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
+    constructor (private http: AuthHttpService, private api: ApiEndpointService, private restaurantListService: RestaurantService,) {}
 
-
-    placeOrder (orders: Array<Order>): Observable<GeneralResponse> {
-        let body = JSON.stringify(orders);
+    placeOrder (orders: Order): Observable<GeneralResponse> {
+        let body = JSON.stringify({placedOrder: orders, restaurantId: this.restaurantListService.selectedRestaurant.id});
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put(this.api.getEndpoint() + this.url, body, options)
+        return this.http.put(this.api.getEndpoint() + '/placeOrder', body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -31,11 +30,9 @@ export class OrderService {
     }
 
     private handleError (error: any) {
-        // In a real world app, we might use a remote logging infrastructure
-        // We'd also dig deeper into the error to get a better message
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
+        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 }

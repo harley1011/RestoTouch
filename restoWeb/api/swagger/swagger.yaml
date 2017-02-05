@@ -894,7 +894,34 @@ definitions:
       items:
         type: array
         items:
-          "$ref": "#/definitions/Item"      
+          "$ref": "#/definitions/Item"
+  Order:
+    required:
+      - orderedItems
+    properties:
+      orderedItems:
+        type: array
+        items:
+          "$ref": "#/definitions/OrderedItem"
+  OrderedItem:
+    required:
+      - items
+    properties:
+      item:
+       "$ref": "#/definitions/Item"
+      items:
+        type: array
+        items:
+          "$ref": "#/definitions/OrderSize"
+  OrderSize:
+    required:
+      - size
+      - quantity
+    properties:
+      size:
+          "$ref": "#/definitions/ItemSize"
+      quantity:
+          type: number
   Item:
     type: object
     properties:
@@ -971,13 +998,6 @@ definitions:
       - name
       - description
       - languageCode
-  Order:
-    type: object
-    properties:
-      item: 
-        "$ref": "#/definitions/Item"
-      size: 
-        "$ref": "#/definitions/ItemSize"
   RestaurantListResponse:
     required:
       - restaurants
