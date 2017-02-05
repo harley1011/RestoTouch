@@ -5,6 +5,7 @@ export class Order {
     public itemId: number,
     public sizeId: number,
     public ingredients: Array<OrderIngredients>,
+    public cost: number,
     public id?: number
   ) { }
 }

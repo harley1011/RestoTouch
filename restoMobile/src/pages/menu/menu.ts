@@ -6,6 +6,7 @@ import { Size } from '../shared/models/size';
 import { IngredientGroup } from '../shared/models/ingredient-group';
 import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
 import { Order } from '../shared/models/order';
+import { OrderIngredients } from '../shared/models/order-ingredients';
 import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
@@ -112,7 +113,7 @@ export class MenuPage {
         this.orders.splice(i, 1);
 
         var total = parseFloat(this.total);
-        total -= size.price;
+        total -= order.cost;
         if (total < 0) total = 0;
         this.total = total.toFixed(2);
 
@@ -126,7 +127,7 @@ export class MenuPage {
 
     var item = orderableItem.item;
     var size = orderableSize.size;
-    var order = new Order(item.id, size.id, []);
+    var order = new Order(item.id, size.id, [], size.price);
     this.orders.push(order);
 
     var total = parseFloat(this.total);
@@ -136,15 +137,20 @@ export class MenuPage {
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     var self = this;
-    var getComplexOrder = function(complexOrder) {
+    var getComplexOrder = function(ingredients: Array<OrderIngredients>, price: number) {
       return new Promise((resolve, reject) => {
-        console.log(complexOrder);
+        console.log(ingredients);
+        console.log(price);
         orderableSize.count++;
 
         var item = orderableItem.item;
         var size = orderableSize.size;
-        var order = new Order(item.id, size.id, []);
+        var order = new Order(item.id, size.id, ingredients, size.price + price);
         self.orders.push(order);
+
+        var total = parseFloat(self.total);
+        total += order.cost;
+        self.total = total.toFixed(2);
 
         resolve();
       });
@@ -155,7 +161,8 @@ export class MenuPage {
       ingredientGroupIndex: 0,
       language: this.selectedLanguage,
       callback: getComplexOrder,
-      ingredients: []
+      ingredients: [],
+      total: 0
     }, {
       animate: true,
       animation: "md-transition",

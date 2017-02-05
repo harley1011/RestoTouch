@@ -19,6 +19,8 @@ export class IngredientGroupPage implements OnInit {
   orderableIngredients: Array<OrderableIngredient>;
   orderAllIngredients: Array<OrderIngredients>;
   orderGroupIngredients: Array<OrderIngredients>;
+  total: number;
+  totalStr: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
@@ -36,6 +38,8 @@ export class IngredientGroupPage implements OnInit {
     this.complexOrderCallback = this.navParams.get('callback');
     this.orderAllIngredients = this.navParams.get('ingredients');
     this.orderGroupIngredients = [];
+    this.total = this.navParams.get('total');
+    this.totalStr = this.total.toFixed(2);
 
     this.initOrderableIngredients();
 
@@ -54,6 +58,8 @@ export class IngredientGroupPage implements OnInit {
         this.orderGroupIngredients.push(
           new OrderIngredients(this.ingredientGroup.id, ingredient.id)
         );
+        this.total += ingredient.price;
+        this.totalStr = this.total.toFixed(2);
       } else {
         orderableIngredient = new OrderableIngredient(ingredient, false, 0);
       }
@@ -62,7 +68,7 @@ export class IngredientGroupPage implements OnInit {
 
     // check if need to disable
     if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
-      this.disableIngredients(null);
+      this.disableIngredients();
     }
   }
 
@@ -93,13 +99,16 @@ export class IngredientGroupPage implements OnInit {
   }
 
   nextIngredientOrder(): void {
+    this.orderAllIngredients = this.orderAllIngredients.concat(this.orderGroupIngredients);
+
     var index = this.ingredientGroupIndex + 1;
     this.navCtrl.push(IngredientGroupPage, {
       item: this.item,
       ingredientGroupIndex: index,
       language: this.selectedLanguage,
       callback: this.complexOrderCallback,
-      ingredients: this.orderAllIngredients
+      ingredients: this.orderAllIngredients,
+      total: this.total
     }, {
       animate: true,
       animation: "ios-transition"
@@ -107,7 +116,9 @@ export class IngredientGroupPage implements OnInit {
   }
 
   doneIngredientOrder(): void {
-    this.complexOrderCallback(23).then(() => {
+    this.orderAllIngredients = this.orderAllIngredients.concat(this.orderGroupIngredients);
+
+    this.complexOrderCallback(this.orderAllIngredients, this.total).then(() => {
       var index = this.ingredientGroupIndex + 1;
       var startIndex = this.navCtrl.indexOf(this.navCtrl.last()) - (this.ingredientGroupIndex);
       this.navCtrl.remove(startIndex, index, {
@@ -121,13 +132,14 @@ export class IngredientGroupPage implements OnInit {
     if (orderableIngredient.amount == 0) {
       this.addIngredient(orderableIngredient);
     } else {
-      // prevent from decrease triggering checkbox change event
       this.removeIngredient(orderableIngredient, true);
     }
   }
 
   addIngredient(orderableIngredient: OrderableIngredient): void {
     orderableIngredient.amount++;
+    this.total += orderableIngredient.ingredient.price;
+    this.totalStr = this.total.toFixed(2);
 
     this.orderGroupIngredients.push(
       new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
@@ -135,17 +147,19 @@ export class IngredientGroupPage implements OnInit {
 
     // check if need to disable
     if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
-      this.disableIngredients(orderableIngredient);
+      this.disableIngredients();
     }
-
-    console.log(this.orderGroupIngredients);
   }
 
   removeIngredient(orderableIngredient: OrderableIngredient, fromCheckbox: boolean): void {
     if (fromCheckbox) {
+      this.total -= (orderableIngredient.amount * orderableIngredient.ingredient.price);
+      this.totalStr = this.total.toFixed(2);
       orderableIngredient.amount -= orderableIngredient.amount;
     } else {
       orderableIngredient.amount--;
+      this.total -= orderableIngredient.ingredient.price;
+      this.totalStr = this.total.toFixed(2);
     }
 
     // check if should enable
@@ -166,16 +180,13 @@ export class IngredientGroupPage implements OnInit {
         if (orderableIngredient.amount > 0) break;
       }
     }
-
-    console.log(this.orderGroupIngredients);
   }
 
-  disableIngredients(orderableIngredient: OrderableIngredient): void {
+  disableIngredients(): void {
     let otherOrderableIngredient: OrderableIngredient;
     for (var i = 0; i < this.orderableIngredients.length; i++) {
       otherOrderableIngredient = this.orderableIngredients[i];
-      if (otherOrderableIngredient != orderableIngredient &&
-        (otherOrderableIngredient.amount != 1 || otherOrderableIngredient.ingredient.allowQuantity != 1)) {
+      if (otherOrderableIngredient.amount != 1 || otherOrderableIngredient.ingredient.allowQuantity != 1) {
         otherOrderableIngredient.disabled = true;
       }
     }
