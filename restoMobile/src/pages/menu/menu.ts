@@ -103,15 +103,22 @@ export class MenuPage {
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
+    let foundSize: any;
     let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
     for (var i = 0; i < foundItem.sizes.length; i++) {
-      let foundSize = foundItem.sizes[i];
+      foundSize = foundItem.sizes[i];
       if (orderableSize.size.id === foundSize.size.id) {
         foundItem.sizes.splice(i, 1);
         break;
       }
     }
+
+    let ingredient: any;
     this.currentOrder.total -= orderableSize.size.price;
+    for (var i = 0; i < foundSize.ingredients.ingredients.length; i++) {
+      ingredient = foundSize.ingredients.ingredients[i];
+      this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);
+    }
   }
 
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
