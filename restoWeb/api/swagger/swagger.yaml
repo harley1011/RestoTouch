@@ -18,6 +18,29 @@ consumes:
 produces:
   - application/json
 paths:
+  /placeOrder:
+    x-swagger-router-controller: order
+    put:
+      # used as the method name of the controller
+      operationId: placeOrder
+      description: Places an order 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - name: order
+          description: item properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
   /s3ImageUploadUrl:
     x-swagger-router-controller: s3File
     get:
@@ -35,18 +58,12 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       parameters:
-      - name: imageName
-        in: query
-        description: name of image
-        required: true
-        type: string
-        format: string
-      - name: imageType
-        in: query
-        description: type of image
-        required: true
-        type: string
-        format: string
+        - name: order
+          description: item properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Item"
   /item:
      # binds a127 app logic to a route
     x-swagger-router-controller: item
@@ -954,6 +971,13 @@ definitions:
       - name
       - description
       - languageCode
+  Order:
+    type: object
+    properties:
+      item: 
+        "$ref": "#/definitions/Item"
+      size: 
+        "$ref": "#/definitions/ItemSize"
   RestaurantListResponse:
     required:
       - restaurants
