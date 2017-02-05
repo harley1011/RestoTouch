@@ -96,7 +96,7 @@ export class MenuPage {
 
     var item = orderableItem.item;
     var size = orderableSize.size;
-    var order = new Order(item.id, size.id, []);
+    var order = new Order(item, size, []);
     this.orders.push(order);
 
     var total = parseFloat(this.total);
@@ -112,7 +112,7 @@ export class MenuPage {
     let order: Order;
     for (var i = 0; i < this.orders.length; i++) {
       order = this.orders[i];
-      if (order.itemId === item.id && order.sizeId === size.id) {
+      if (order.item.id === item.id && order.size.id === size.id) {
         this.orders.splice(i, 1);
 
         var total = parseFloat(this.total);
