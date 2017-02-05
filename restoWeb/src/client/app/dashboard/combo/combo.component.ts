@@ -42,16 +42,6 @@ export class ComboComponent implements OnInit {
     // this.getCombo();
     }
 
-    private onDropModel(args) {
-      let [el, target, source] = args;
-    // do something else
-    }
-
-    private onRemoveModel(args) {
-      let [el, source] = args;
-    // do something else
-    }
-
     /*
     * store chosen category into array
     */
