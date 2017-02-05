@@ -57,7 +57,7 @@
     <!-- step content-->
       <div class="row">
         <div class="col-md-10 bottomSpacing">
-            CATEGORY LIST<br/>
+            <h5>Category list:</h5>
             <div class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let category of categoryList; let i = index" [attr.id]=i class="btn btn-secondary">
                 <input type="checkbox" (click)="saveCategory(category, i)"> {{ category }}
@@ -83,13 +83,18 @@
     <!-- step content-->
       <div class="row">
         <div class="col-md-10 bottomSpacing">
-          FOOD ITEM LIST
           <div class="wrapper">
-            <div class="container">
-              <div *ngFor="let item of foodItemList" [innerHTML]="item"></div>
+            <div class="container col-md-3">
+              <h5>Food item list:</h5>
+              <div style="background-color:rgba(4,5,6,0.1); padding:6px;">
+                <div *ngFor="let item of foodItemList" style="background-color:rgba(4,5,6,0.2); padding:6px; margin:3px;"> {{ item }}</div>
+              </div>
             </div>
-            <div class="container">
-              <div *ngFor="let category of categorySelected" [innerHTML]="category"></div>
+            <div class="container col-md-9">
+              <h5>Chosen categories:</h5>
+              <div class="col-md-3" *ngFor="let category of categorySelected" style="background-color:rgba(240,50,66,0.9); height:150px;">{{category}}
+                <div style="background-color:rgba(4,5,6,0.2); padding:6px; margin:3px;">item dropped here</div>
+              </div>
             </div>
           </div>
         </div>

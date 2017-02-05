@@ -32,17 +32,25 @@ export class ComboComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private comboService: ComboService,
               private router: Router,
-              private itemService: ItemService,
-              ) {
+              private itemService: ItemService) {
     this.categorySelected =[];
 
   }
+
 
     ngOnInit(): void {
     // this.getCombo();
     }
 
+    private onDropModel(args) {
+      let [el, target, source] = args;
+    // do something else
+    }
 
+    private onRemoveModel(args) {
+      let [el, source] = args;
+    // do something else
+    }
 
     /*
     * store chosen category into array

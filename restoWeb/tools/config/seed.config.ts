@@ -370,7 +370,6 @@ export class SeedConfig {
       'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
       'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js',
-      'ng2-dragula': 'node_modules/ng2-dragula/bundles/ng2-dragula.umd.js',
       'app/*': '/app/*',
       // For test config
       'dist/dev/*': '/base/dist/dev/*',
@@ -406,8 +405,7 @@ export class SeedConfig {
       'dist/tmp/node_modules/*': 'dist/tmp/node_modules/*',
       'node_modules/*': 'node_modules/*',
       '*': 'node_modules/*',
-      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js',
-      'ng2-dragula': 'node_modules/ng2-dragula/bundles/ng2-dragula.umd.js'
+      'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js'
     },
     packages: {
       '@angular/common': {
@@ -451,9 +449,6 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       'ng2-translate': {
-        defaultExtension: 'js'
-      },
-      'ng2-dragula': {
         defaultExtension: 'js'
       }
     }

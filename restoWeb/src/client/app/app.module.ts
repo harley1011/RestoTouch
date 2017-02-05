@@ -15,7 +15,7 @@ import { ApiEndpointService } from './services/api-endpoint.service';
 import { ImageUploadService } from './services/image-upload.service';
 import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 import { LanguageService } from './services/language.service';
-import { DragulaModule } from 'ng2-dragula';
+
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -25,7 +25,6 @@ import { DragulaModule } from 'ng2-dragula';
 		LogoutModule,
 		SignupModule,
 		DashboardModule,
-		DragulaModule,
 		SharedModule.forRoot(),
 		TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -34,7 +33,7 @@ import { DragulaModule } from 'ng2-dragula';
         })
 	],
 	exports: [
-		TranslateModule
+		TranslateModule,
 	],
 	declarations: [AppComponent],
 	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, {
