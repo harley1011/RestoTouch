@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/harley1011/RestoTouch/issues"
   },
-  "homepage": "https://github.com/harley1011/RestoTouch#readme",
-  "dependencies": {
-    "redlock": "^2.1.0"
-  }
+  "homepage": "https://github.com/harley1011/RestoTouch#readme"
 }
