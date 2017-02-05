@@ -1,6 +1,8 @@
 var order = require('../controllers/order');
 // var mocks = require('./mocks/mocks');
 var promise = require('promise');
+var _ = require('lodash');
+
 describe("The Order API", function () {
 
   var req = {
@@ -23,16 +25,13 @@ describe("The Order API", function () {
       order.retrieveOrders(req, res).then(function (result) {
         var orders = res.obj.orders;
         expect({orderId: 1}.orderId).toBe(orders[0].orderId);
-        order.removeAllOrders(req, res).then(function (result) {
+        order.removeAllRestaurantsOrders(req, res).then(function (result) {
           expect(res.obj.success).toBe(true);
           expect(res.obj.message).toBe("Orders removed");
           done();
         });
-
       });
     });
-
-
   });
 
   it("should retrieve a empty array with no orders", function (done) {
@@ -44,11 +43,9 @@ describe("The Order API", function () {
 
   });
 
-
-
-  it("should store ten orders then ask for the fifth order by id", function (done) {
+  it("should store seven orders then remove the fifth order and try to remove it again to make it fail", function (done) {
     var promises = [];
-    var numberOfOrders = 4;
+    var numberOfOrders = 7;
     var expectedArray = [];
     for (var i = 0; i < numberOfOrders; i++) {
       var res = {
@@ -67,14 +64,30 @@ describe("The Order API", function () {
     }
 
     promise.all(promises).then(function (values) {
-
       order.retrieveOrders(req, res).then(function (result) {
-        console.log(res.obj);
         expect(JSON.stringify(res.obj.orders)).toBe(JSON.stringify(expectedArray));
-        done();
+        req.orderId = 5;
+        order.removeRestaurantsOrder(req, res).then(function () {
+          expect(res.obj.success).toBe(true);
+          expect(res.obj.message).toBe("Order removed from restaurants order");
+
+          _.remove(expectedArray, function (n) {
+            return n.orderId == req.orderId;
+          });
+
+          order.retrieveOrders(req, res).then(function (result) {
+            expect(JSON.stringify(res.obj.orders)).toBe(JSON.stringify(expectedArray));
+
+            order.removeRestaurantsOrder(req, res).then(function () {
+              expect(res.obj.success).toBe(false);
+              expect(res.obj.message).toBe("Order not removed because it doesn't exist in the restaurants orders");
+              done();
+            });
+          });
+        });
+
       });
     });
-
   });
 
   beforeEach(function () {
@@ -93,7 +106,7 @@ describe("The Order API", function () {
   });
 
   beforeAll(function () {
-    order.removeAllOrders(req, res);
+    order.removeAllRestaurantsOrders(req, res);
   });
 
   afterAll(function () {
