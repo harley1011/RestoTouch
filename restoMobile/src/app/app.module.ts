@@ -5,6 +5,7 @@ import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
 import { MenuPage } from "../pages/menu/menu";
+import { IngredientGroupPage } from "../pages/ingredient-group/ingredient-group";
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { AuthService } from '../pages/services/auth.service';
@@ -31,6 +32,7 @@ export function createTranslateLoader(http: Http) {
     Page2,
     MenuListPage,
     MenuPage,
+    IngredientGroupPage,
     WelcomePage,
     SettingsPage,
     LoginPage,
@@ -51,6 +53,7 @@ export function createTranslateLoader(http: Http) {
     Page2,
     MenuListPage,
     MenuPage,
+    IngredientGroupPage,
     WelcomePage,
     SettingsPage,
     LoginPage,
