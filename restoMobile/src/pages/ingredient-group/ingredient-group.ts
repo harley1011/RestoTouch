@@ -59,6 +59,11 @@ export class IngredientGroupPage implements OnInit {
       }
       this.orderableIngredients.push(orderableIngredient);
     }
+
+    // check if need to disable
+    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
+      this.disableIngredients(null);
+    }
   }
 
   previousIngredientGroup(): void {
@@ -130,13 +135,7 @@ export class IngredientGroupPage implements OnInit {
 
     // check if need to disable
     if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
-      let otherOrderableIngredient: OrderableIngredient;
-      for (var i = 0; i < this.orderableIngredients.length; i++) {
-        otherOrderableIngredient = this.orderableIngredients[i];
-        if (otherOrderableIngredient != orderableIngredient) {
-          otherOrderableIngredient.disabled = true;
-        }
-      }
+      this.disableIngredients(orderableIngredient);
     }
 
     console.log(this.orderGroupIngredients);
@@ -169,5 +168,16 @@ export class IngredientGroupPage implements OnInit {
     }
 
     console.log(this.orderGroupIngredients);
+  }
+
+  disableIngredients(orderableIngredient: OrderableIngredient): void {
+    let otherOrderableIngredient: OrderableIngredient;
+    for (var i = 0; i < this.orderableIngredients.length; i++) {
+      otherOrderableIngredient = this.orderableIngredients[i];
+      if (otherOrderableIngredient != orderableIngredient &&
+        (otherOrderableIngredient.amount != 1 || otherOrderableIngredient.ingredient.allowQuantity != 1)) {
+        otherOrderableIngredient.disabled = true;
+      }
+    }
   }
 }
