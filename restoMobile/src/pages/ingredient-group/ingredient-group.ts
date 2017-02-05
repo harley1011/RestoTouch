@@ -49,7 +49,14 @@ export class IngredientGroupPage implements OnInit {
     let orderableIngredient: OrderableIngredient;
     for (var i = 0; i < this.ingredientGroup.ingredients.length; i++) {
       ingredient = this.ingredientGroup.ingredients[i];
-      orderableIngredient = new OrderableIngredient(ingredient, ingredient.addByDefault, false, 1);
+      if (ingredient.addByDefault) {
+        orderableIngredient = new OrderableIngredient(ingredient, false, 1);
+        this.orderGroupIngredients.push(
+          new OrderIngredients(this.ingredientGroup.id, ingredient.id)
+        );
+      } else {
+        orderableIngredient = new OrderableIngredient(ingredient, false, 0);
+      }
       this.orderableIngredients.push(orderableIngredient);
     }
   }
@@ -106,16 +113,17 @@ export class IngredientGroupPage implements OnInit {
   }
 
   selectIngredient(orderableIngredient: OrderableIngredient): void {
-    if (orderableIngredient.selected) {
+    if (orderableIngredient.amount == 0) {
       this.addIngredient(orderableIngredient);
     } else {
-      this.removeIngredient(orderableIngredient);
+      // prevent from decrease triggering checkbox change event
+      this.removeIngredient(orderableIngredient, true);
     }
-
-    console.log(this.orderGroupIngredients);
   }
 
   addIngredient(orderableIngredient: OrderableIngredient): void {
+    orderableIngredient.amount++;
+
     this.orderGroupIngredients.push(
       new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
     );
@@ -130,11 +138,19 @@ export class IngredientGroupPage implements OnInit {
         }
       }
     }
+
+    console.log(this.orderGroupIngredients);
   }
 
-  removeIngredient(orderableIngredient: OrderableIngredient): void {
+  removeIngredient(orderableIngredient: OrderableIngredient, fromCheckbox: boolean): void {
+    if (fromCheckbox) {
+      orderableIngredient.amount -= orderableIngredient.amount;
+    } else {
+      orderableIngredient.amount--;
+    }
+
     // check if should enable
-    if (this.ingredientGroup.maxNumberOfIngredients <= this.orderGroupIngredients.length) {
+    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
       let otherOrderableIngredient: OrderableIngredient;
       for (var i = 0; i < this.orderableIngredients.length; i++) {
         otherOrderableIngredient = this.orderableIngredients[i];
@@ -147,8 +163,11 @@ export class IngredientGroupPage implements OnInit {
       orderIngredient = this.orderGroupIngredients[i];
       if (orderIngredient.ingredientId == orderableIngredient.ingredient.id) {
         this.orderGroupIngredients.splice(i--, 1);
-        break;
+
+        if (orderableIngredient.amount > 0) break;
       }
     }
+
+    console.log(this.orderGroupIngredients);
   }
 }
