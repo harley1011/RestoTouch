@@ -22,8 +22,8 @@ export class MenuPage {
   selectedLanguage: any;
   menu: Menu;
   categories: Array<OrderableCategory>;
-  orders: Array<Order>;
   total: string;
+  currentOrder = new Order([], 0);
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -33,15 +33,14 @@ export class MenuPage {
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
     this.categories = [];
-    this.orders = [];
     this.total = "0.00";
 
     this.getMenu(this.selectedMenu.id);
   }
 
   isItemDisabled(targetItem, category): boolean {
-    for(let item of this.menu.disabledCategoryItems) {
-      if(item.itemId === targetItem.id  && item.categoryId === category.id) {
+    for (let item of this.menu.disabledCategoryItems) {
+      if (item.itemId === targetItem.id && item.categoryId === category.id) {
         return true;
       }
     }
@@ -102,24 +101,17 @@ export class MenuPage {
   }
 
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
-    orderableSize.count = orderableSize.count > 0 ? orderableSize.count-1 : 0;
+    orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-    let order: Order;
-    for (var i = 0; i < this.orders.length; i++) {
-      order = this.orders[i];
-      if (order.itemId === item.id && order.sizeId === size.id) {
-        this.orders.splice(i, 1);
-
-        var total = parseFloat(this.total);
-        total -= order.cost;
-        if (total < 0) total = 0;
-        this.total = total.toFixed(2);
-
+    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
+    for (var i = 0; i < foundItem.sizes.length; i++) {
+      let foundSize = foundItem.sizes[i];
+      if (orderableSize.size.id === foundSize.size.id) {
+        foundItem.sizes.splice(i, 1);
         break;
       }
     }
+    this.currentOrder.total -= orderableSize.size.price;
   }
 
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
@@ -127,28 +119,34 @@ export class MenuPage {
 
     var item = orderableItem.item;
     var size = orderableSize.size;
-    var order = new Order(item.id, size.id, [], size.price);
-    this.orders.push(order);
 
-    var total = parseFloat(this.total);
-    total += size.price;
-    this.total = total.toFixed(2);
+    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
+    if (foundItem) {
+      foundItem.sizes.push({size: size, ingredients: null});
+    } else {
+      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, ingredients: null}]});
+    }
+
+    this.currentOrder.total += size.price;
   }
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     var self = this;
-    var getComplexOrder = function(ingredients: Array<OrderIngredients>, price: number) {
+    var getComplexOrder = function(ingredients: OrderIngredients, price: number) {
       return new Promise((resolve, reject) => {
         orderableSize.count++;
 
         var item = orderableItem.item;
         var size = orderableSize.size;
-        var order = new Order(item.id, size.id, ingredients, size.price + price);
-        self.orders.push(order);
 
-        var total = parseFloat(self.total);
-        total += order.cost;
-        self.total = total.toFixed(2);
+        let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
+        if (foundItem) {
+          foundItem.sizes.push({size: size, ingredients: ingredients});
+        } else {
+          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, ingredients: ingredients}]});
+        }
+
+        self.currentOrder.total += size.price + price;
 
         resolve();
       });
@@ -159,7 +157,7 @@ export class MenuPage {
       ingredientGroupIndex: 0,
       language: this.selectedLanguage,
       callback: getComplexOrder,
-      ingredients: [],
+      ingredients: new OrderIngredients([]),
       total: 0
     }, {
       animate: true,

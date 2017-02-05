@@ -17,8 +17,8 @@ export class IngredientGroupPage implements OnInit {
   ingredientGroupIndex: number;
   complexOrderCallback: any;
   orderableIngredients: Array<OrderableIngredient>;
-  orderAllIngredients: Array<OrderIngredients>;
-  orderGroupIngredients: Array<OrderIngredients>;
+  orderGroupIngredients: OrderIngredients;
+  ingredientCount: number;
   total: number;
   totalStr: string;
 
@@ -36,8 +36,8 @@ export class IngredientGroupPage implements OnInit {
     });*/
 
     this.complexOrderCallback = this.navParams.get('callback');
-    this.orderAllIngredients = this.navParams.get('ingredients');
-    this.orderGroupIngredients = [];
+    this.orderGroupIngredients = this.navParams.get('ingredients');
+    this.ingredientCount = 0;
     this.total = this.navParams.get('total');
     this.totalStr = this.total.toFixed(2);
 
@@ -53,9 +53,10 @@ export class IngredientGroupPage implements OnInit {
       ingredient = this.ingredientGroup.ingredients[i];
       if (ingredient.addByDefault) {
         orderableIngredient = new OrderableIngredient(ingredient, false, 1);
-        this.orderGroupIngredients.push(
-          new OrderIngredients(this.ingredientGroup.id, ingredient.id)
+        this.orderGroupIngredients.ingredients.push(
+          {ingredientGroup: this.ingredientGroup, ingredient: ingredient, quantity: 1}
         );
+        this.ingredientCount++;
         this.total += ingredient.price;
         this.totalStr = this.total.toFixed(2);
       } else {
@@ -65,7 +66,7 @@ export class IngredientGroupPage implements OnInit {
     }
 
     // check if need to disable
-    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
+    if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
   }
@@ -97,7 +98,6 @@ export class IngredientGroupPage implements OnInit {
   }
 
   nextIngredientOrder(): void {
-    this.orderAllIngredients = this.orderAllIngredients.concat(this.orderGroupIngredients);
 
     var index = this.ingredientGroupIndex + 1;
     this.navCtrl.push(IngredientGroupPage, {
@@ -105,7 +105,7 @@ export class IngredientGroupPage implements OnInit {
       ingredientGroupIndex: index,
       language: this.selectedLanguage,
       callback: this.complexOrderCallback,
-      ingredients: this.orderAllIngredients,
+      ingredients: this.orderGroupIngredients,
       total: this.total
     }, {
       animate: true,
@@ -114,9 +114,7 @@ export class IngredientGroupPage implements OnInit {
   }
 
   doneIngredientOrder(): void {
-    this.orderAllIngredients = this.orderAllIngredients.concat(this.orderGroupIngredients);
-
-    this.complexOrderCallback(this.orderAllIngredients, this.total).then(() => {
+    this.complexOrderCallback(this.orderGroupIngredients, this.total).then(() => {
       var index = this.ingredientGroupIndex + 1;
       var startIndex = this.navCtrl.indexOf(this.navCtrl.last()) - (this.ingredientGroupIndex);
       this.navCtrl.remove(startIndex, index, {
@@ -139,14 +137,24 @@ export class IngredientGroupPage implements OnInit {
     this.total += orderableIngredient.ingredient.price;
     this.totalStr = this.total.toFixed(2);
 
-    this.orderGroupIngredients.push(
-      new OrderIngredients(this.ingredientGroup.id, orderableIngredient.ingredient.id)
-    );
+    let foundIngredient = this.orderGroupIngredients.ingredients.find((currentIngredient: any) => currentIngredient.ingredient.id == orderableIngredient.ingredient.id);
+    if (foundIngredient) {
+      foundIngredient.quantity++;
+      this.ingredientCount++;
+    } else {
+      this.orderGroupIngredients.ingredients.push(
+        {ingredientGroup: this.ingredientGroup, ingredient: orderableIngredient.ingredient, quantity: 1}
+      );
+      this.ingredientCount++;
+    }
 
     // check if need to disable
-    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
+    if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
+
+    console.log(this.orderGroupIngredients.ingredients);
+    console.log(this.ingredientCount);
   }
 
   removeIngredient(orderableIngredient: OrderableIngredient, fromCheckbox: boolean): void {
@@ -161,7 +169,7 @@ export class IngredientGroupPage implements OnInit {
     }
 
     // check if should enable
-    if (this.ingredientGroup.maxNumberOfIngredients == this.orderGroupIngredients.length) {
+    if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       let otherOrderableIngredient: OrderableIngredient;
       for (var i = 0; i < this.orderableIngredients.length; i++) {
         otherOrderableIngredient = this.orderableIngredients[i];
@@ -169,15 +177,24 @@ export class IngredientGroupPage implements OnInit {
       }
     }
 
-    let orderIngredient: OrderIngredients;
-    for (var i = 0; i < this.orderGroupIngredients.length; i++) {
-      orderIngredient = this.orderGroupIngredients[i];
-      if (orderIngredient.ingredientId == orderableIngredient.ingredient.id) {
-        this.orderGroupIngredients.splice(i--, 1);
+    var orderIngredient: any;
+    for (var i = 0; i < this.orderGroupIngredients.ingredients.length; i++) {
+      orderIngredient = this.orderGroupIngredients.ingredients[i];
+      if (orderIngredient.ingredient.id == orderableIngredient.ingredient.id) {
+        if (orderIngredient.quantity > 1) {
+          orderIngredient.quantity--;
+        } else {
+          this.orderGroupIngredients.ingredients.splice(i--, 1);
+        }
+
+        this.ingredientCount--;
 
         if (orderableIngredient.amount > 0) break;
       }
     }
+
+    console.log(this.orderGroupIngredients.ingredients);
+    console.log(this.ingredientCount);
   }
 
   disableIngredients(): void {
