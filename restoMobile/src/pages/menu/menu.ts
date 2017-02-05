@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { Category } from '../shared/models/category';
-import { Item } from '../shared/models/items';
-import { Size } from '../shared/models/size';
-import { OrderableCategory, OrderableItem, OrderableSize } from './orderable-category';
-import { Order } from '../shared/models/order';
-import { Menu } from '../shared/models/menu';
-import { CategoryService } from '../services/category.service';
-import { ItemService } from '../services/item.service';
-import { MenuService } from '../services/menu.service';
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
+import {Category} from '../shared/models/category';
+import {Item} from '../shared/models/items';
+import {Size} from '../shared/models/size';
+import {OrderableCategory, OrderableItem, OrderableSize} from './orderable-category';
+import {Order} from '../shared/models/order';
+import {Menu} from '../shared/models/menu';
+import {CategoryService} from '../services/category.service';
+import {ItemService} from '../services/item.service';
+import {MenuService} from '../services/menu.service';
 
 @Component({
   selector: 'page-menu',
@@ -19,8 +19,8 @@ export class MenuPage {
   selectedLanguage: any;
   menu: Menu;
   categories: Array<OrderableCategory>;
-  orders: Array<Order>;
   total: string;
+  currentOrder = new Order([], 0);
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -30,15 +30,14 @@ export class MenuPage {
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
     this.categories = [];
-    this.orders = [];
     this.total = "0.00";
 
     this.getMenu(this.selectedMenu.id);
   }
 
   isItemDisabled(targetItem, category): boolean {
-    for(let item of this.menu.disabledCategoryItems) {
-      if(item.itemId === targetItem.id  && item.categoryId === category.id) {
+    for (let item of this.menu.disabledCategoryItems) {
+      if (item.itemId === targetItem.id && item.categoryId === category.id) {
         return true;
       }
     }
@@ -92,37 +91,32 @@ export class MenuPage {
   addOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
-    console.log(orderableItem);
-
     var item = orderableItem.item;
     var size = orderableSize.size;
-    var order = new Order(item, size, []);
-    this.orders.push(order);
 
-    var total = parseFloat(this.total);
-    total += size.price;
-    this.total = total.toFixed(2);
+    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
+    if (foundItem) {
+      let foundSize = foundItem.sizes.find((currentSize: any) => currentSize.size.id == size.id);
+      if (foundSize) {
+        foundSize.quantity++;
+      }
+      else {
+        foundItem.sizes.push({size: size, quantity: 1});
+      }
+    } else {
+      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, quantity: 1}], ingredients: []});
+    }
+
+    this.currentOrder.total += size.price;
   }
 
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
-    orderableSize.count = orderableSize.count > 0 ? orderableSize.count-1 : 0;
+    orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-    let order: Order;
-    for (var i = 0; i < this.orders.length; i++) {
-      order = this.orders[i];
-      if (order.item.id === item.id && order.size.id === size.id) {
-        this.orders.splice(i, 1);
-
-        var total = parseFloat(this.total);
-        total -= size.price;
-        if (total < 0) total = 0;
-        this.total = total.toFixed(2);
-
-        break;
-      }
-    }
+    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
+    let foundSize = foundItem.sizes.find((currentSize: any) => currentSize.size.id == orderableSize.size.id);
+    foundSize.quantity--;
+    this.currentOrder.total -= orderableSize.size.price;
   }
 
   order(): void {
