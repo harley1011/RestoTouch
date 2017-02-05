@@ -6,7 +6,8 @@ export class Order {
   constructor (
     public orderedItems: Array<{item: Item, sizes: Array<{size: Size, quantity: number}>, ingredients:  Array<OrderIngredients>}>,
     public total: number,
-    public id?: number
+    public id?: number,
+    public restaurantId?: number
   ) { }
 }
 

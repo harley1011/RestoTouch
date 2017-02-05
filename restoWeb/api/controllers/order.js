@@ -39,49 +39,51 @@ function setDatabase() {
 
   //models = m;
 }
+redlock.on('clientError', function (err) {
+  console.error('A redis error has occurred:', err);
+});
 
 function placeOrder(req, res) {
   return new promise(function (fulfill, reject) {
-      var restaurantId = req.restaurantId;
-      var order = req.placedOrder;
-      var restaurantOrders = [];
-      var restaurantKey = 'restaurantOrders:' + restaurantId;
-      var uuidGen = uuid.v4();
-      redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
-        var internalPromise = new promise(function (internalFulfill, reject) {
-          client.get(restaurantKey, function (err, reply) {
-            if (reply) {
-              restaurantOrders = JSON.parse(reply);
-              unlock(lock);
-              internalFulfill(restaurantOrders);
-            }
-            else {
-              unlock(lock);
-              internalFulfill([]);
-            }
-          });
-        });
+    var order = req.body.order;
+    var restaurantId = order.restaurantId;
+    var restaurantOrders = [];
+    var restaurantKey = 'restaurantOrders:' + restaurantId;
+    var uuidGen = uuid.v4();
+    order.id = uuidGen;
 
-        internalPromise.then(function (restaurantOrders) {
-          restaurantOrders.push(order);
-          client.setex(restaurantKey, 24*60*60, JSON.stringify(restaurantOrders), function (err, reply) {
-            if (reply == "OK") {
-              res.json({success: true, message: "Order stored"});
-              unlock(lock);
-              fulfill();
-            }
-            else {
-              res.json({success: false, message: "Order failed to store"});
-              unlock(lock);
-              reject();
-            }
-          });
+    redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
+      var internalPromise = new promise(function (internalFulfill, reject) {
+        client.get(restaurantKey, function (err, reply) {
+          if (reply) {
+            restaurantOrders = JSON.parse(reply);
+            unlock(lock);
+            internalFulfill(restaurantOrders);
+          }
+          else {
+            unlock(lock);
+            internalFulfill([]);
+          }
         });
       });
-      //todo add redis lock
 
-    }
-  );
+      internalPromise.then(function (restaurantOrders) {
+        restaurantOrders.push(order);
+        client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
+          if (reply == "OK") {
+            unlock(lock);
+            res.json({success: 1, description: "Order stored", orderId: order.id});
+            fulfill(order.id);
+          }
+          else {
+            res.json({success: 1, description: "Order failed to store"});
+            unlock(lock);
+            reject();
+          }
+        });
+      });
+    });
+  });
 
 
 //todo notify listeners
@@ -95,16 +97,16 @@ function unlock(lock) {
 }
 
 function retrieveRestaurantOrders(req, res) {
-  var restaurantId = req.restaurantId;
+  var restaurantId = req.body.restaurantId;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return new promise(function (fulfill, reject) {
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
       client.get(restaurantKey, function (err, reply) {
         if (reply == null) {
-          res.json({success: true, orders: []});
+          res.json({success: 1, orders: []});
         }
         else {
-          res.json({success: true, orders: JSON.parse(reply)});
+          res.json({success: 1, orders: JSON.parse(reply)});
         }
         unlock(lock);
         fulfill();
@@ -114,37 +116,43 @@ function retrieveRestaurantOrders(req, res) {
 }
 
 function removeRestaurantsOrder(req, res) {
-  var restaurantKey = 'restaurantOrders:' + req.restaurantId;
+  var restaurantKey = 'restaurantOrders:' + req.body.restaurantId;
   return new promise(function (fulfill, reject) {
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
       client.get(restaurantKey, function (err, reply) {
         if (reply) {
           var restaurantOrders = JSON.parse(reply);
           var removed = _.remove(restaurantOrders, function (n) {
-            return n.orderId == req.orderId;
+            return n.id == req.body.orderId;
           });
 
           if (removed.length == 0) {
-            res.json({success: false, message: "Order not removed because it doesn't exist in the restaurants orders"});
             unlock(lock);
             fulfill();
+            return res.json({
+              success: 0,
+              description: "Order not removed because it doesn't exist in the restaurants orders"
+            });
           }
 
-          client.setex(restaurantKey, 24*60*60, JSON.stringify(restaurantOrders), function (err, reply) {
+          client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
             if (reply == "OK") {
-              res.json({success: true, message: "Order removed from restaurants order"});
+              res.json({success: 1, description: "Order removed from restaurants order"});
               unlock(lock);
               fulfill();
             }
             else {
-              res.json({success: false, message: "Order failed to store, removed would be persisted"});
+              res.json({success: 0, description: "Order failed to store, removed would be persisted"});
               unlock(lock);
               reject();
             }
           });
         }
         else {
-          res.json({success: false, message: "Order not removed because it doesn't exist in the restaurants orders"})
+          res.json({
+            success: 0,
+            description: "Order not removed because it doesn't exist in the restaurants orders"
+          })
           unlock(lock);
           fulfill();
         }
@@ -155,16 +163,16 @@ function removeRestaurantsOrder(req, res) {
 
 
 function removeAllOrders(req, res) {
-  var restaurantId = req.restaurantId;
+  var restaurantId = req.body.restaurantId;
 
   return new promise(function (fulfill, reject) {
     client.del('restaurantOrders:' + restaurantId, function (err, reply) {
       if (reply == 1) {
-        res.json({success: true, message: "Orders removed"});
+        res.json({success: 1, description: "Orders removed"});
         fulfill();
       }
       else {
-        res.json({success: false, message: "No orders for restaurant exists"});
+        res.json({success: 1, description: "No orders for restaurant exists"});
         fulfill();
       }
     });

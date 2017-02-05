@@ -20,7 +20,7 @@ produces:
 paths:
   /placeOrder:
     x-swagger-router-controller: order
-    put:
+    post:
       # used as the method name of the controller
       operationId: placeOrder
       description: Places an order 
@@ -28,7 +28,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/GeneralResponse"
+            $ref: "#/definitions/PlaceOrderResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -36,9 +36,9 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       parameters:
         - name: order
-          description: item properties
+          description: order properties
           in: body
-          required: true
+          required: false
           schema:
             $ref: "#/definitions/Order"
   /s3ImageUploadUrl:
@@ -853,6 +853,19 @@ definitions:
     required:
       - success
       - description
+  PlaceOrderResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+      orderId:
+        type: string
+    required:
+      - success
+      - description
   CategoriesResponse:
     required:
       - categories
@@ -896,8 +909,6 @@ definitions:
         items:
           "$ref": "#/definitions/Item"
   Order:
-    required:
-      - orderedItems
     properties:
       orderedItems:
         type: array
@@ -905,11 +916,12 @@ definitions:
           "$ref": "#/definitions/OrderedItem"
   OrderedItem:
     required:
-      - items
+      - item
+      - sizes
     properties:
       item:
        "$ref": "#/definitions/Item"
-      items:
+      sizes:
         type: array
         items:
           "$ref": "#/definitions/OrderSize"

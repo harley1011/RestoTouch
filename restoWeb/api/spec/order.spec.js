@@ -5,13 +5,13 @@ var _ = require('lodash');
 
 describe("The Order API", function () {
 
-  var req = {
-    restaurantId: 1010100,
-    placedOrder: {
-      orderId: 1
+  var req = {};
+
+  var restaurantReq = {
+    body: {
+      restaurantId: 100100
     }
   };
-
   var res = {
     json: function (obj) {
       res.obj = obj;
@@ -20,14 +20,19 @@ describe("The Order API", function () {
 
   it("should place, retrieve an order and then delete it", function (done) {
     order.placeOrder(req, res).then(function () {
-      expect(res.obj.success).toBe(true);
-      expect(res.obj.message).toBe("Order stored");
-      order.retrieveOrders(req, res).then(function (result) {
+      expect(res.obj.success).toBe(1);
+      expect(res.obj.description).toBe("Order stored");
+      expect(res.obj.orderId).toBeDefined();
+      var generatedId = res.obj.orderId;
+      var retReq = {body: {
+        restaurantId: req.body.order.restaurantId
+      }}
+      order.retrieveOrders(retReq, res).then(function (result) {
         var orders = res.obj.orders;
-        expect({orderId: 1}.orderId).toBe(orders[0].orderId);
-        order.removeAllRestaurantsOrders(req, res).then(function (result) {
-          expect(res.obj.success).toBe(true);
-          expect(res.obj.message).toBe("Orders removed");
+        expect(generatedId).toBe(orders[0].id);
+        order.removeAllRestaurantsOrders(retReq, res).then(function (result) {
+          expect(res.obj.success).toBe(1);
+          expect(res.obj.description).toBe("Orders removed");
           done();
         });
       });
@@ -53,34 +58,31 @@ describe("The Order API", function () {
           res.obj = obj;
         }
       };
-      var req = {
-        restaurantId: 1010100,
-        placedOrder: {
-          orderId: i + 1
-        }
-      };
-      expectedArray.push(req.placedOrder);
-      promises.push(order.placeOrder(req, res));
+      var creq = JSON.parse(JSON.stringify(req));
+      creq.body.order.total += i * 5;
+      expectedArray.push(creq.body.order);
+      promises.push(order.placeOrder(creq, res));
     }
 
     promise.all(promises).then(function (values) {
-      order.retrieveOrders(req, res).then(function (result) {
-        expect(JSON.stringify(res.obj.orders)).toBe(JSON.stringify(expectedArray));
-        req.orderId = 5;
-        order.removeRestaurantsOrder(req, res).then(function () {
-          expect(res.obj.success).toBe(true);
-          expect(res.obj.message).toBe("Order removed from restaurants order");
+      order.retrieveOrders(restaurantReq, res).then(function (result) {
+        for(var i = 0; i  < res.obj.orders.length; i++) {
+          expect(res.obj.orders[i].total).toBe(expectedArray[i].total);
+        }
+        restaurantReq.body.orderId = values[5];
+        order.removeRestaurantsOrder(restaurantReq, res).then(function () {
+         expect(res.obj.success).toBe(1);
+         expect(res.obj.description).toBe("Order removed from restaurants order");
 
-          _.remove(expectedArray, function (n) {
-            return n.orderId == req.orderId;
-          });
+          order.retrieveOrders(restaurantReq, res).then(function (result) {
+            expect(res.obj.orders.length).toBe(numberOfOrders - 1);
+            res.obj.orders.forEach(function (order) {
+              expect(order.id != restaurantReq.body.orderId).toBe(true);
+            });
 
-          order.retrieveOrders(req, res).then(function (result) {
-            expect(JSON.stringify(res.obj.orders)).toBe(JSON.stringify(expectedArray));
-
-            order.removeRestaurantsOrder(req, res).then(function () {
-              expect(res.obj.success).toBe(false);
-              expect(res.obj.message).toBe("Order not removed because it doesn't exist in the restaurants orders");
+            order.removeRestaurantsOrder(restaurantReq, res).then(function () {
+              expect(res.obj.success).toBe(0);
+              expect(res.obj.description).toBe("Order not removed because it doesn't exist in the restaurants orders");
               done();
             });
           });
@@ -92,11 +94,65 @@ describe("The Order API", function () {
 
   beforeEach(function () {
     req = {
-      restaurantId: 1010100,
-      placedOrder: {
-        orderId: 1
+      body: {
+        order: {
+          "orderedItems": [
+            {
+              "item": {
+                "id": 1,
+                "imageUrl": "",
+                "createdAt": "2017-02-01T18:38:45.759Z",
+                "updatedAt": "2017-02-01T18:38:45.759Z",
+                "userId": 1,
+                "ItemCategory": {
+                  "id": 1,
+                  "createdAt": "2017-02-01T18:53:04.323Z",
+                  "updatedAt": "2017-02-01T18:53:04.323Z",
+                  "itemId": 1,
+                  "categoryId": 1
+                },
+                "translations": [
+                  {
+                    "languageCode": "en",
+                    "language": null,
+                    "name": "Burger",
+                    "description": "Yummy burger",
+                    "itemId": 1,
+                    "createdAt": "2017-02-01T18:38:45.872Z",
+                    "updatedAt": "2017-02-01T18:38:45.872Z"
+                  }
+                ],
+                "sizes": [
+                  {
+                    "id": 1,
+                    "price": 2,
+                    "createdAt": "2017-02-01T18:38:45.865Z",
+                    "updatedAt": "2017-02-01T18:38:45.865Z",
+                    "itemId": 1
+                  }
+                ]
+              },
+              "sizes": [
+                {
+                  "size": {
+                    "id": 1,
+                    "price": 2,
+                    "createdAt": "2017-02-01T18:38:45.865Z",
+                    "updatedAt": "2017-02-01T18:38:45.865Z",
+                    "itemId": 1
+                  },
+                  "quantity": 3
+                }
+              ],
+              "ingredients": []
+            }
+          ],
+          "total": 6,
+          "restaurantId": 100100
+        }
       }
     };
+
 
     res = {
       json: function (obj) {
@@ -105,12 +161,18 @@ describe("The Order API", function () {
     };
   });
 
-  beforeAll(function () {
-    order.removeAllRestaurantsOrders(req, res);
+
+  beforeEach(function () {
+    order.removeAllRestaurantsOrders({
+      body: {
+        restaurantId: 100100
+      }
+    }, res);
   });
 
-  afterAll(function () {
-
-    order.closeRedis();
-  });
-});
+  // afterAll(function () {
+  //
+  //   order.closeRedis();
+  // });
+})
+;
