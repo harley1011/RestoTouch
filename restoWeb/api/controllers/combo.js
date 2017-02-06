@@ -32,6 +32,7 @@ function setDatabase(m) {
 
 // GET /combo
 function getAllCombos(req, res) {
+  console.log('combo:');
   return comboModel.findAll({
     where: {userId: req.userId},
     include: [{
@@ -53,6 +54,7 @@ function getAllCombos(req, res) {
 
 // GET /combo/{id}
 function getCombo(req, res) {
+    console.log('combo with id:');
   var id = req.swagger.params.id.value;
   return comboModel.findOne({
     where: {

@@ -10,7 +10,7 @@ import { ApiEndpointService } from '../../services/api-endpoint.service';
 
 @Injectable()
 export class ComboListService {
-  private url = '/combos';
+  /*private url = '/combos';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
@@ -31,5 +31,5 @@ export class ComboListService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
       console.error(error);
     return Observable.throw(errMsg);
-  }
+  }*/
 }

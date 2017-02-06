@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Combo} from '../../shared/models/combo';
-import {ComboListService} from '../combo-list/combo-list.service';
+import {ComboService} from '../combo/combo.service';
 import {Language} from '../../shared/models/language';
 import {Router} from '@angular/router';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -9,7 +9,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
   moduleId: module.id,
   selector: 'combo-list-cmp',
   templateUrl: 'combo-list.component.html',
-    providers: [ComboListService]
+    providers: [ComboService]
 })
 
 export class ComboListComponent implements OnInit {
@@ -17,7 +17,7 @@ export class ComboListComponent implements OnInit {
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
-  constructor(private comboService: ComboListService,
+  constructor(private comboService: ComboService,
               private router: Router) {
   }
 

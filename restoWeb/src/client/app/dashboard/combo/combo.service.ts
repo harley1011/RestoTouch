@@ -20,7 +20,11 @@ export class ComboService {
       .catch(this.handleError);
   }
 
-
+  getCombo (id: number): Observable<Combo> {
+    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   private extractData(res: Response) {
     let body = res.json();

@@ -39,20 +39,31 @@ export class ComboComponent implements OnInit {
 
 
     ngOnInit(): void {
-     this.getCombos();
+    this.route.params.forEach((params: Params) => {
+      if (params['id']) {
+        this.getCombo(params['id']);
+        this.create = false;
+      } else {
+        let translation = new ComboTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
+        this.combo = new Combo([translation], translation, []);
+        //this.getItems();
+        this.create = true;
+      }
+    });
   }
 
-    getCombos(): void {
-    this.comboService.getCombos().subscribe(
-      combos => {
-        this.combos = combos;
-        console.warn(this.combos);
-        combos.forEach(combo => {
-          combo.selectedTranslation = combo.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+  getCombo(id: number): void {
+    this.comboService.getCombo(id).subscribe(
+      combo => {
+        this.combo = combo;
+        //this.getItems();
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        this.combo.items.forEach(item => {
+          item.selectedTranslation = item.translations[0];
         });
       },
       error => {
-        console.log(error);
+        this.errorMessage = <any>error;
       }
     );
   }
