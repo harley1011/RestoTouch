@@ -11,9 +11,9 @@ var _ = require('lodash');
 setDatabase(models);
 
 module.exports = {
-  getAllCombo: getAllCombo,
+  getAllCombos: getAllCombos,
   getCombo: getCombo,
-  addCombo: addCombo,
+  //addCombo: addCombo,
  // updateCategory: updateCategory,
  // deleteCategory: deleteCategory,
   setDatabase: setDatabase
@@ -46,8 +46,8 @@ function getAllCombos(req, res) {
       }]
     }]
   }).then(function (combos) {
-    //return res.json({combos: combos});
-    return res.json({success: 1, description: "New Combo added"});
+    return res.json({combos: combos});
+    //return res.json({success: 1, description: "New Combo added"});
   });
 }
 
@@ -71,30 +71,10 @@ function getCombo(req, res) {
       }]
     }]
   }).then(function (combo) {
-    /*if (combo) {
+    if (combo) {
       return res.json(combo);
     } else {
       res.status(204).send();
-    }*/
-    return res.json({success: 1, description: "New Combo added"});
-  });
-}
-
-// POST /combo
-function addCombo(req, res) {
-  var combo = req.body;
-  combo.userId = req.userId;
-  return comboModel.create(combo, {
-    include: [{
-      model: comboTranslationModel,
-      as: 'translations'
-    }]
-  }).then(function (result) {
-    var itemComboAssociations = [];
-    combo.items.forEach(function (item) {
-      itemComboAssociations.push({itemId: item.id, comboId: result.id});
-    })
-    itemComboModel.bulkCreate(itemComboAssociations);
-    return res.json({success: 1, description: "New Combo added"});
+    }
   });
 }

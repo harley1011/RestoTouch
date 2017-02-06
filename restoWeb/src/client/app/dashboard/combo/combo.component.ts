@@ -26,7 +26,7 @@ export class ComboComponent implements OnInit {
   foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
   categoryList: Array<string> = ['Appetizer', 'Main Meal', 'Dessert', 'Drink' ];
   categorySelected: Array<string>;
-
+  combos: Array<Combo>;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
@@ -39,13 +39,29 @@ export class ComboComponent implements OnInit {
 
 
     ngOnInit(): void {
-    // this.getCombo();
-    }
+     this.getCombos();
+  }
+
+    getCombos(): void {
+    this.comboService.getCombos().subscribe(
+      combos => {
+        this.combos = combos;
+        console.warn(this.combos);
+        combos.forEach(combo => {
+          combo.selectedTranslation = combo.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+}
 
     /*
     * store chosen category into array
     */
-    private saveCategory(catChoosen: string, catId: any): void {
+    function saveCategory(catChoosen: string, catId: any): void {
       var found = false;
 
       // add the first category to array
@@ -82,7 +98,7 @@ export class ComboComponent implements OnInit {
     /*
     * reset color of the category to no color
     */
-    private resetCategoryCssClass(){
+    function resetCategoryCssClass(){
       for(var i = 0; i < this.categoryList.length; i++){
         document.getElementById(i.toString()).className='btn btn-secondary';
       }
@@ -91,7 +107,7 @@ export class ComboComponent implements OnInit {
     /*
     * displaying the text depending on the price/discount type chosen
     */
-    private priceTypeSelected(ptype: number): void {
+    function priceTypeSelected(ptype: number): void {
       this.priceSelected = true;
       this.percDisc = false;
       this.fixedPrice = false;
@@ -104,6 +120,3 @@ export class ComboComponent implements OnInit {
         this.fixedPrice = true;
       }
     }
-
-
-}

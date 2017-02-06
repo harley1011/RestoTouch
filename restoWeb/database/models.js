@@ -188,6 +188,19 @@ userModel.sync({force: dropTable}).then(function () {
       disabledMenuItemCategoryModel.sync({force: dropTable});
     });
 
+    itemModel.belongsToMany(comboModel, {
+      as: 'combos',
+      through: comboCatFoodItemModel,
+      onDelete: 'cascade',
+      foreignKey: "itemId"
+    });
+    comboModel.belongsToMany(itemModel, {
+      as: 'items',
+      through: comboCatFoodItemModel,
+      onDelete: 'cascade',
+      foreignKey: "comboId"
+    });
+
     itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
     ingredientGroupModel.sync({force: dropTable});
     ingredientGroupModel.hasMany(ingredientGroupTranslationModel, {
@@ -232,6 +245,14 @@ exports.getCategoryModel = function () {
 
 exports.getCategoryTranslationModel = function () {
   return categoryTranslationModel;
+}
+
+exports.getComboModel = function () {
+  return comboModel;
+};
+
+exports.getComboTranslationModel = function () {
+  return comboTranslationModel;
 }
 
 exports.getMenuModel = function () {

@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       unique: 'comboCFICompositeIndex'
     },
-    itemSizesId: {
+    itemId: {
       type: DataTypes.INTEGER,
       unique: 'comboCFICompositeIndex'
     }

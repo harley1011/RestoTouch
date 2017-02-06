@@ -256,7 +256,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-   # -----------------------------------------/// Category ///
+   # -----------------------------------------/// Combo ///
   /combo:
      # binds a127 app logic to a route
     x-swagger-router-controller: combo
@@ -274,7 +274,30 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
+            
+  /combo/{id}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: combo
+    get:
+      description: Returns a specific combo
+      # used as the method name of the controller
+      operationId: getCombo
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Combo"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   # -----------------------------------------/// Restaurant ///
   /restaurant:
     # binds a127 app logic to a route

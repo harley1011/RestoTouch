@@ -14,9 +14,9 @@ export class ComboService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getCombo (id: number): Observable<Combo> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
-      .map(this.extractData)
+  getCombos (): Observable<Combo[]> {
+    return this.http.get(this.api.getEndpoint() + this.url)
+      .map((response) => this.extractData(response).combos)
       .catch(this.handleError);
   }
 
