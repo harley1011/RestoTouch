@@ -2,69 +2,322 @@ var model = require('./models');
 var passwordHasher = require("../api/helpers/passwordHash.js");
 var passwordData = passwordHasher.saltHashPassword('password');
 
-var users = [{
-  firstName: 'harley',
-  lastName: 'mcphee',
-  email: 'harley@gmail.com',
-  phoneNumber: '514 514 1111',
-  password: passwordData.passwordHash,
-  salt: passwordData.salt
-},
+var users = [
   {
-    firstName: 'david',
-    lastName: 'bastien',
-    email: 'davidbastien@gmail.com',
-    phoneNumber: '514 514 2222',
-    password: passwordData.passwordHash,
-    salt: passwordData.salt,
-    emailVerified: true
-  },
-  {
-    firstName: 'tamy',
-    lastName: 'huynh',
-    email: 'tamyhuynh@gmail.com',
-    phoneNumber: '514 514 3333',
-    password: passwordData.passwordHash,
-    salt: passwordData.salt,
-    emailVerified: true
-  },
-  {
-    firstName: 'hilary',
-    lastName: 'chan',
-    email: 'hilary@gmail.com',
-    phoneNumber: '514 514 4444',
-    password: passwordData.passwordHash,
-    salt: passwordData.salt,
-    emailVerified: true
-  },
-  {
-    firstName: 'alex',
-    lastName: 'pelletier',
-    email: 'alex@gmail.com',
-    phoneNumber: '514 514 5555',
-    password: passwordData.passwordHash,
-    salt: passwordData.salt,
-    emailVerified: true
-  },
-
-  {
-    firstName: 'samer',
-    lastName: 'elachkar',
-    email: 'samer@gmail.com',
-    phoneNumber: '514 514 6666',
-    password: passwordData.passwordHash,
-    salt: passwordData.salt,
-    emailVerified: true
+    "firstName": "Harley",
+    "lastName": "McPhee",
+    "email": "harley.1011@gmail.com",
+    "password": passwordData.passwordHash,
+    "salt": passwordData.salt,
+    "emailVerified": true,
+    "supportedLanguages": [
+      {
+        "name": "English",
+        "languageCode": "en"
+      }]
   }];
+// },
+//
+// {
+//   firstName: 'tamy',
+//   lastName: 'huynh',
+//   email: 'tamyhuynh@gmail.com',
+//   phoneNumber: '514 514 3333',
+//   password: passwordData.passwordHash,
+//   salt: passwordData.salt,
+//   emailVerified: true
+// },
+// {
+//   firstName: 'hilary',
+//   lastName: 'chan',
+//   email: 'hilary@gmail.com',
+//   phoneNumber: '514 514 4444',
+//   password: passwordData.passwordHash,
+//   salt: passwordData.salt,
+//   emailVerified: true
+// },
+// {
+//   firstName: 'alex',
+//   lastName: 'pelletier',
+//   email: 'alex@gmail.com',
+//   phoneNumber: '514 514 5555',
+//   password: passwordData.passwordHash,
+//   salt: passwordData.salt,
+//   emailVerified: true
+// },
+//
+// {
+//   firstName: 'samer',
+//   lastName: 'elachkar',
+//   email: 'samer@gmail.com',
+//   phoneNumber: '514 514 6666',
+//   password: passwordData.passwordHash,
+//   salt: passwordData.salt,
+//   emailVerified: true
+// }
+
 
 var menus = [{name: 'breakfast1 Menu'}, {name: 'dinner1 Menu'}];
-var categories = [{categoryName:'Burgers'}, {categoryName:'Sandwiches'}, {categoryName:'Drinks'}, {categoryName:'Sweets'}];
-var restaurantsLangs = [{name:'McDonald'}, {name:'BurgerKing'}, {name:'Rubens'}, {name:'Damas'}];
-var restaurantsTrans = [{name:'McDonald', description:'Ordering burgers'}, {name:'BurgerKing', description:'Ordering burgers'}, {name:'Rubens', description:'Famous Steak'}, {name:'Damas', description:'Fresh food'}];
-var restaurants = [{address:'1 Rue Notre-Dame O, Montréal, QC H2Y 1S5', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'},
-                   {address:'Sainte-Catherine', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'},
-                   {address:'Centre Eaton de Montréal, 977 Rue Sainte-Catherine O, Montréal, QC H3B 4W3', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'},
-                   {address:'Crescent Street Montréal, H3G 2B2', mOpen:'9:00', mClose:'21:00', tuOpen:'9:00', tuClose:'21:00', wOpen:'9:00', wClose:'21:00', thOpen:'9:00', thClose:'21:00', fOpen:'9:00', fClose:'21:00', saOpen:'9:00', saClose:'21:00', suOpen:'9:00', suClose:'21:00'}];
+var categories = [{
+  "translations": [
+    {
+      "name": "Lunch",
+      "languageCode": "en"
+    }
+  ],
+  "items": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }]
+}];
+
+var restaurantsLangs = [{name: 'McDonald'}, {name: 'BurgerKing'}, {name: 'Rubens'}, {name: 'Damas'}];
+var restaurantsTrans = [{name: 'McDonald', description: 'Ordering burgers'}, {
+  name: 'BurgerKing',
+  description: 'Ordering burgers'
+}, {name: 'Rubens', description: 'Famous Steak'}, {name: 'Damas', description: 'Fresh food'}];
+var restaurants = [
+  {
+    "address": "Burger Street",
+    "supportedLanguages": [
+      {
+        "languageCode": "en",
+        "name": "English",
+        "userId": 1
+      }
+    ],
+    "translations": [
+      {
+        "name": "Burger King",
+        "description": "Burgersss",
+        "languageCode": "en"
+      }
+    ],
+    "Menus": [],
+    "payments": [
+      {
+        "name": "Cash",
+        "used": true
+      },
+      {
+        "name": "Debit",
+        "used": false
+      },
+      {
+        "name": "Credit",
+        "used": false
+      }
+    ],
+    "businessHours": [
+      {
+        "day": 0,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 0,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 1,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 1,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 2,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 2,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 3,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 3,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 4,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 4,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 5,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 5,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 6,
+        "shift": 0,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      },
+      {
+        "day": 6,
+        "shift": 1,
+        "openTime": "9:00",
+        "closeTime": "21:00",
+        "active": false
+      }
+    ],
+
+  }
+];
+var items = [{
+  "translations": [
+    {
+      "languageCode": "en",
+      "name": "Burger",
+      "description": "Yummy burger"
+    }
+  ],
+  "categories": [],
+  "ingredientGroups": [],
+  "imageUrl": "",
+  "sizes": [
+    {
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Regular"
+        }
+      ],
+      "price": 2
+    }
+  ]
+}, {
+  "translations": [
+    {
+      "languageCode": "en",
+      "name": "Soda",
+      "description": "A sugary drink"
+    }
+  ],
+  "categories": [],
+  "ingredientGroups": [],
+  "imageUrl": "",
+  "sizes": [
+    {
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Small"
+        }
+      ],
+      "price": 2
+    },
+    {
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Medium"
+        }
+      ],
+      "price": 3
+    },
+    {
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Large"
+        }
+      ],
+      "price": 4.50
+    },
+  ]
+},
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Fries",
+        "description": "Deep fried taters"
+      }
+    ],
+    "categories": [],
+    "ingredientGroups": [],
+    "imageUrl": "",
+    "sizes": [
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Small"
+          }
+        ],
+        "price": 1
+      },
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Medium"
+          }
+        ],
+        "price": 2
+      },
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Large"
+          }
+        ],
+        "price": 3.50
+      },
+    ]
+  }];
 
 
 // Let the db tables get created
@@ -74,8 +327,21 @@ setTimeout(function () {
   var categoryModel = model.getCategoryModel();
   var restaurantsLanguagesModel = model.getRestaurantsLanguageModel();
   var restaurantsTranslationsModel = model.getRestaurantsTranslationModel();
+  var supportedLanguageModel = model.getSupportedLanguageModel();
   var restaurantModel = model.getRestaurantModel();
-
+  var restaurantLanguageModel = model.getRestaurantsLanguageModel();
+  var restaurantsTranslations = model.getRestaurantsTranslationModel();
+  var businessHoursModel = model.getBusinessHoursModel();
+  var paymentsModel = model.getPaymentsModel();
+  var itemModel = model.getItemModel();
+  var itemSizeModel = model.getItemSizesModel();
+  var itemSizeTranslationModel = model.getItemSizeTranslationsModel();
+  var itemTranslationModel = model.getItemTranslationModel();
+  var ingredientGroupModel = model.getIngredientGroupModel();
+  var ingredientModel = model.getIngredientModel();
+  var ingredientTranslationModel = model.getIngredientTranslationModel();
+  var ingredientGroupTranslationModel = model.getIngredientGroupTranslationModel();
+  var categoryTranslationModel = model.getCategoryTranslationModel();
 
   users.forEach(function (user) {
 
@@ -83,41 +349,85 @@ setTimeout(function () {
       where: {
         email: user.email
       },
-      defaults: {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        password: user.password,
-        salt: user.salt,
-        emailVerified: true
-      }
+      include: [{
+        model: supportedLanguageModel,
+        as: 'supportedLanguages'
+      }],
+      defaults: user
     }).then(function (result) {
       var user = result[0];//[object SequelizeInstance:Users]
 
-      menus.forEach(function (menu) {
-        menu.userId = user.id;
-        menuModel.findOrCreate({where: menu, defaults: menu});
-      });
-
-      categories.forEach(function (category) {
-        category.userId = user.id;
-        categoryModel.findOrCreate({where: category, defaults: category});
-      });
-
-      restaurantsLangs.forEach(function (restaurantsLang) {
-        //TODO
-        restaurantsLangs.findOrCreate({where: restaurantsLang, defaults: restaurantsLang});
-      });
-
-      restaurantsTrans.forEach(function (restaurantsTrs){
-        //TODO
-        restaurantsLangs.findOrCreate({where: restaurantsTrs, defaults: restaurantsTrs})
-      });
-
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.findOrCreate({where: restaurant, defaults: restaurant});
+        restaurantModel.findOrCreate({
+          where: {address: restaurant.address}, include: [{
+            model: restaurantLanguageModel,
+            as: 'supportedLanguages'
+          }, {
+            model: restaurantsTranslations,
+            as: 'translations'
+          }, {
+            model: businessHoursModel,
+            as: 'businessHours'
+          }, {
+            model: paymentsModel,
+            as: 'payments'
+          }], defaults: restaurant
+        }).then(function () {
+
+
+          var createdItem = [];
+          items.forEach(function (item) {
+            item.userId = user.id;
+            itemModel.create(item, {
+              include: [{
+                model: itemSizeModel,
+                as: 'sizes',
+                include: [{
+                  model: itemSizeTranslationModel,
+                  as: 'translations'
+                }]
+              }, {
+                model: itemTranslationModel,
+                as: 'translations'
+              }, {
+                model: ingredientGroupModel,
+                as: 'ingredientGroups',
+                include: [{
+                  model: ingredientModel,
+                  as: 'ingredients',
+                  include: [{
+                    model: ingredientTranslationModel,
+                    as: 'translations'
+                  }]
+                }, {
+                  model: ingredientGroupTranslationModel,
+                  as: 'translations'
+                }]
+              }]
+            }).then(function (result) {
+              createdItem.push(result);
+
+            });
+          });
+
+
+          setTimeout(function () {
+            categories.forEach(function (category) {
+              categoryModel.create(category, {
+                include: [{
+                  model: categoryTranslationModel,
+                  as: 'translations'
+                }]
+              }).then(function (result) {
+
+              })
+
+            });
+
+          }, 5000)
+
+        });
       });
     });
   });

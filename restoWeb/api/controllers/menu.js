@@ -7,6 +7,11 @@ var categoryTranslationModel;
 var menuTranslationsModel;
 var itemModel;
 var itemTranslationModel;
+var itemSizeModel;
+var ingredientGroupModel;
+var ingredientModel;
+var ingredientTranslationModel;
+var ingredientGroupTranslationModel;
 var itemCategoryModel;
 var disabledMenuItemCategoryModel;
 var _ = require('lodash');
@@ -32,6 +37,11 @@ function setDatabase(m) {
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
   itemTranslationModel = models.getItemTranslationModel();
+  itemSizeModel = models.getItemSizesModel();
+  ingredientGroupModel = models.getIngredientGroupModel();
+  ingredientModel = models.getIngredientModel();
+  ingredientGroupTranslationModel = models.getIngredientGroupTranslationModel();
+  ingredientTranslationModel = models.getIngredientTranslationModel();
   itemCategoryModel = models.getItemCategoryModel();
   disabledMenuItemCategoryModel = models.getDisabledMenuItemCategoryModel();
 }
@@ -110,6 +120,20 @@ function getMenu(req, res) {
         },{
           model: itemSizeModel,//TODO this is where i added it
           as: 'sizes'
+        }, {
+          model: ingredientGroupModel,
+          as: 'ingredientGroups',
+          include: [{
+            model: ingredientModel,
+            as: 'ingredients',
+            include: [{
+              model: ingredientTranslationModel,
+              as: 'translations'
+            }]
+          }, {
+            model: ingredientGroupTranslationModel,
+            as: 'translations'
+          }]
         }]
       }]
     }, {

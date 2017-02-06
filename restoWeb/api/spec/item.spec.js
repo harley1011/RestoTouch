@@ -19,31 +19,429 @@ describe("The Item API", function () {
   it("should create a valid item", function (done) {
     var req = {
       body: {
-        sizes: [{"name": "regular", "price": 1}],
-        "supportedLanguages": [{"languageCode":"en","name":"English","itemId":2}],
-        "translations": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","itemId":2}]
+        "translations": [
+          {
+            "languageCode": "ar",
+            "name": "Test1_Arabic",
+            "description": ""
+          },
+          {
+            "languageCode": "en",
+            "name": "Test Item",
+            "description": "This is a test item"
+          }
+        ],
+        "selectedTranslation": {
+          "languageCode": "ar",
+          "name": "Test1_Arabic",
+          "description": ""
+        },
+        "categories": [],
+        "ingredientGroups": [
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Test1_Arabic"
+              },
+              {
+                "languageCode": "en",
+                "name": "Test1"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Test1_Arabic"
+            },
+            "ingredients": [
+              {
+                "translations": [
+                  {
+                    "languageCode": "ar",
+                    "name": "Test1_Arabic"
+                  },
+                  {
+                    "languageCode": "en",
+                    "name": "Test1"
+                  }
+                ],
+                "selectedTranslation": {
+                  "languageCode": "ar",
+                  "name": "Test1_Arabic"
+                },
+                "addByDefault": false,
+                "price": 0,
+                "allowQuantity": 1
+              }
+            ],
+            "maxNumberOfIngredients": 1,
+            "minNumberOfIngredients": 1,
+            "orderPriority": 1,
+            "newIngredient": {
+              "translations": [
+                {
+                  "languageCode": "ar",
+                  "name": ""
+                },
+                {
+                  "languageCode": "en",
+                  "name": ""
+                }
+              ],
+              "selectedTranslation": {
+                "languageCode": "ar",
+                "name": ""
+              },
+              "addByDefault": false,
+              "price": 0,
+              "allowQuantity": 1
+            }
+          },
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Test2_Arabic"
+              },
+              {
+                "languageCode": "en",
+                "name": "Test2_EN"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Test2_Arabic"
+            },
+            "ingredients": [
+              {
+                "translations": [
+                  {
+                    "languageCode": "ar",
+                    "name": "Test2_Arabic"
+                  },
+                  {
+                    "languageCode": "en",
+                    "name": "Test2_EN"
+                  }
+                ],
+                "selectedTranslation": {
+                  "languageCode": "ar",
+                  "name": "Test2_Arabic"
+                },
+                "addByDefault": false,
+                "price": 5,
+                "allowQuantity": 1
+              }
+            ],
+            "maxNumberOfIngredients": 1,
+            "minNumberOfIngredients": 1,
+            "orderPriority": 2,
+            "newIngredient": {
+              "translations": [
+                {
+                  "languageCode": "ar",
+                  "name": ""
+                },
+                {
+                  "languageCode": "en",
+                  "name": ""
+                }
+              ],
+              "selectedTranslation": {
+                "languageCode": "ar",
+                "name": ""
+              },
+              "addByDefault": false,
+              "price": 0,
+              "allowQuantity": 1
+            }
+          }
+        ],
+        "imageUrl": "",
+        "sizes": [
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Regular_AR"
+              },
+              {
+                "languageCode": "en",
+                "name": "Regular"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Regular_AR"
+            },
+            "price": 2
+          },
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Large_AR"
+              },
+              {
+                "languageCode": "en",
+                "name": "Large"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Large_AR"
+            },
+            "price": 3
+          }
+        ],
+        "newSize": {
+          "translations": [
+            {
+              "languageCode": "ar",
+              "name": ""
+            },
+            {
+              "languageCode": "en",
+              "name": ""
+            }
+          ],
+          "selectedTranslation": {
+            "languageCode": "ar",
+            "name": ""
+          },
+          "price": 0
+        },
+        "userId": 1
       }
     }
 
-    // item.addItem(req, res).then(function (result) {
-    //   expect(res.obj.success).toBe(1);
-    //   expect(res.obj.description).toBe("Item Added");
-    //   done();
-    // })
-    done();
+    item.addItem(req, res).then(function (result) {
+      expect(res.obj.success).toBe(1);
+      expect(res.obj.description).toBe("Item Added");
+      done();
+    });
   })
 
 
-  it("should not create a invalid item because it has no sizes", function (done) {
+  it("should not create an item because it has no sizes", function (done) {
     var req = {
       body: {
-        "name": "Item 1"
+        "translations": [
+          {
+            "languageCode": "ar",
+            "name": "Test1_Arabic",
+            "description": ""
+          },
+          {
+            "languageCode": "en",
+            "name": "Test Item",
+            "description": "This is a test item"
+          }
+        ],
+        "selectedTranslation": {
+          "languageCode": "ar",
+          "name": "Test1_Arabic",
+          "description": ""
+        },
+        "categories": [],
+        "ingredientGroups": [
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Test1_Arabic"
+              },
+              {
+                "languageCode": "en",
+                "name": "Test1"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Test1_Arabic"
+            },
+            "ingredients": [
+              {
+                "translations": [
+                  {
+                    "languageCode": "ar",
+                    "name": "Test1_Arabic"
+                  },
+                  {
+                    "languageCode": "en",
+                    "name": "Test1"
+                  }
+                ],
+                "selectedTranslation": {
+                  "languageCode": "ar",
+                  "name": "Test1_Arabic"
+                },
+                "addByDefault": false,
+                "price": 0,
+                "allowQuantity": 1
+              }
+            ],
+            "maxNumberOfIngredients": 1,
+            "minNumberOfIngredients": 1,
+            "orderPriority": 1,
+            "newIngredient": {
+              "translations": [
+                {
+                  "languageCode": "ar",
+                  "name": ""
+                },
+                {
+                  "languageCode": "en",
+                  "name": ""
+                }
+              ],
+              "selectedTranslation": {
+                "languageCode": "ar",
+                "name": ""
+              },
+              "addByDefault": false,
+              "price": 0,
+              "allowQuantity": 1
+            }
+          },
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "Test2_Arabic"
+              },
+              {
+                "languageCode": "en",
+                "name": "Test2_EN"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "Test2_Arabic"
+            },
+            "ingredients": [
+              {
+                "translations": [
+                  {
+                    "languageCode": "ar",
+                    "name": "Test2_Arabic"
+                  },
+                  {
+                    "languageCode": "en",
+                    "name": "Test2_EN"
+                  }
+                ],
+                "selectedTranslation": {
+                  "languageCode": "ar",
+                  "name": "Test2_Arabic"
+                },
+                "addByDefault": false,
+                "price": 5,
+                "allowQuantity": 1
+              }
+            ],
+            "maxNumberOfIngredients": 1,
+            "minNumberOfIngredients": 1,
+            "orderPriority": 2,
+            "newIngredient": {
+              "translations": [
+                {
+                  "languageCode": "ar",
+                  "name": ""
+                },
+                {
+                  "languageCode": "en",
+                  "name": ""
+                }
+              ],
+              "selectedTranslation": {
+                "languageCode": "ar",
+                "name": ""
+              },
+              "addByDefault": false,
+              "price": 0,
+              "allowQuantity": 1
+            }
+          }
+        ],
+        "imageUrl": "",
+        "sizes": [
+        ],
+        "newSize": {
+          "translations": [
+            {
+              "languageCode": "ar",
+              "name": ""
+            },
+            {
+              "languageCode": "en",
+              "name": ""
+            }
+          ],
+          "selectedTranslation": {
+            "languageCode": "ar",
+            "name": ""
+          },
+          "price": 0
+        },
+        "userId": 1
       }
     }
 
-    // item.addItem(req, res)
-    // expect(res.statusCode).toBe(400);
-    // expect(res.obj.message).toBe("At least one size is required");
+    item.addItem(req, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.obj.message).toBe("At least one size is required");
     done();
   })
+
+  it("should not create an item because it has no translations", function (done) {
+    var req = {
+      body: {
+        "selectedTranslation": {
+          "languageCode": "ar",
+          "name": "jhgfuytf",
+          "description": "jhgfhjfg"
+        },
+        "categories": [],
+        "ingredientGroups": [],
+        "sizes": [
+          {
+            "translations": [
+              {
+                "languageCode": "ar",
+                "name": "fghjjhgf"
+              }
+            ],
+            "selectedTranslation": {
+              "languageCode": "ar",
+              "name": "fghjjhgf"
+            },
+            "price": 0
+          }
+        ],
+        "newSize": {
+          "translations": [
+            {
+              "languageCode": "ar",
+              "name": ""
+            }
+          ],
+          "selectedTranslation": {
+            "languageCode": "ar",
+            "name": ""
+          },
+          "price": 0
+        },
+        "userId": 1
+      }
+    }
+
+    item.addItem(req, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.obj.message).toBe("At least one translation is required");
+    done();
+  })
+
+
+
 });
