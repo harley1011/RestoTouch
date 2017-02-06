@@ -12,8 +12,11 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform } from 'ionic-angular';
+import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, Platform } from 'ionic-angular';
 import { ConfigMock, PlatformMock } from './mocks';
+import { TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import { AuthService } from './pages/services/auth.service';
+import { ApiEndpointService } from './pages/services/api-endpoint.service';
 
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -56,11 +59,14 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, MenuController, NavController,
+        //TODO check this error :: Failed: Response with status: 404 Not Found for URL: http://localhost:9876/i18n/en.json
+        App, Form, Keyboard, DomController, GestureController, MenuController, NavController, //TranslateLoader, TranslateStaticLoader,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
+        AuthService, ApiEndpointService, //TranslateService
       ],
       imports: [
+        TranslateModule.forRoot(),
         FormsModule,
         IonicModule,
         ReactiveFormsModule,
