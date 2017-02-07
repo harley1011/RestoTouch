@@ -1,3 +1,12 @@
-<div id="unpaidOrders">
-	<h5>orders</h5>
-<div> 
+<div id="restaurant">
+  <div class="manage-header">
+    <h2>Unpaid Orders</h2>
+    <hr>
+  </div>
+
+  <div class="manage-list-container col col-md-5">
+  	<ul class="list-group">
+  		<li *ngFor= "let item of items" class="list-group-item"><h4>Item Name: </h4>{{item.translations[0].name}}</li>
+  	</ul>
+  </div>
+</div>
