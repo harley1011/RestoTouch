@@ -16,6 +16,7 @@ import {TranslateService} from 'ng2-translate';
 export class LoginComponent implements OnInit {
   user = new User('', '');
   errorMessage = '';
+  isEmployee: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -25,13 +26,22 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initLanguages();
+    this.isEmployee = false;
   }
 
   onSubmit() {
-    this.authService.authenticateUser(this.user)
+    if(this.isEmployee) {
+      this.authService.authenticateUser(this.user)
+      .subscribe(generalResponse =>
+          this.router.navigate(['/dashboard/unpaidOrders'])
+        , error => this.errorMessage = error);
+    }
+    else {
+      this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
           this.router.navigate(['/dashboard/home'])
         , error => this.errorMessage = error);
+    }
   }
 
   initLanguages():void {
