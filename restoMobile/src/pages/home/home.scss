@@ -13,4 +13,41 @@ page-home {
      .scroll-content {
         background-color: rgba(0, 0, 0, 0.2);   
     }
+    
+    #side-menu-desc {
+        background-color: rgba(255,255,255,0.5);
+        width: 36%;
+        margin-top: 20vh;
+        margin-left: 15vw;
+        padding: 30px 15px;
+        font-family: "Maven Pro";
+        
+        ion-card-header {
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        ion-card-content {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        img.tutorial-img {
+            width: 180px;
+            margin: 0 auto;
+        }
+    }
+    
+    .arrow-right {
+        width: 0; 
+        height: 0; 
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 25px solid rgba(255,255,255,0.4);
+        position: absolute;
+        margin-top: 25vh;
+        margin-left: 49.8vw
+    }
+    
 }
