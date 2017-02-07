@@ -29,6 +29,8 @@ export class RestaurantListPage {
 //    @ViewChild('content') nav: Nav;
 
     rootPage: any = WelcomePage;
+    @ViewChild(TranslationSelectComponent)
+    private translationSelectComponent: TranslationSelectComponent;
 
     numOfRestaurants: number;
     restaurants: Restaurant[];
@@ -57,7 +59,7 @@ export class RestaurantListPage {
           restaurants => {
             restaurants.forEach(restaurant => {
 //              restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-                restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === 'en');
+            restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === 'en');
             });
             this.restaurants = restaurants;
             this.numOfRestaurants = this.restaurants.length;

@@ -19,7 +19,7 @@
 		<br/>
 
 		<!-- button list of available languages -->
-		<ion-list>
+		<ion-list>      
 			<button class="buttonList" ion-button round *ngFor="let language of supportedLanguages" (click)="continueTapped($event)">
 			{{ language.name }}
 			</button>

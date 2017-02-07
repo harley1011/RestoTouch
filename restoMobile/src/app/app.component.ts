@@ -10,8 +10,6 @@ import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
-import { Auth, User } from '@ionic/cloud-angular';
-
 
 @Component({
   templateUrl: 'app.html'

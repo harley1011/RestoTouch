@@ -6,6 +6,7 @@
 
 <ion-content *ngIf="selectedRestaurant">
     <ion-list>
-        <button ion-item *ngFor="let menu of selectedRestaurant.Menus" (click)="menuTapped(menu)"> {{menu.selectedTranslation ? menu.selectedTranslation.name : "No translation"}} </button>
+        <button ion-item *ngFor="let menu of menus" (click)="menuTapped(menu)"> {{menu.selectedTranslation ? menu.selectedTranslation.name : "No translation"}} </button>
+<!--        <button ion-item *ngFor="let menu of selectedRestaurant.Menus" (click)="menuTapped(menu)"> {{menu.selectedTranslation ? menu.selectedTranslation.name : "No translation"}} </button>-->
     </ion-list>
 </ion-content>
