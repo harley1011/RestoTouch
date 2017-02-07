@@ -5,8 +5,23 @@
   </div>
 
   <div class="manage-list-container col col-md-5">
-  	<ul class="list-group">
-  		<li *ngFor= "let item of items" class="list-group-item"><h4>Item Name: </h4>{{item.translations[0].name}}</li>
-  	</ul>
-  </div>
+		<table class="table table-sm td-size-table">
+  			<thead>
+  				<tr>
+  					<th>Order Number</th>
+  					<th>Price</th>
+  					<th>Items</th>
+  					<th>Status</th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				<tr *ngFor= "let item of items">
+  					<td>{{item.translations[0].name}}</td>
+  					<td>10.00$</td>
+  					<td><button class="btn btn-default btn-normal">View Items</button></td>
+  					<td><button class="btn btn-success">Paid</button></td>
+  				</tr>
+  			</tbody>
+  		</table>
+  	</div>
 </div>
