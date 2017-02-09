@@ -38,7 +38,7 @@
                 <div [hidden]="password.valid || password.pristine" class="alert alert-danger">{{ 'login.passwordRequiredAlert' | translate }}</div>
                 <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
                 <!-- employee mode checkbox -->
-                <div><p>Employee Mode: <input type="checkbox" name="isEmployee" [(ngModel)]="isEmployee"></p>
+                <div><p>Cashier Mode: <input type="checkbox" name="isEmployee" [(ngModel)]="user.isEmployee"></p>
                 </div>
                 <!-- buttons -->
                 <button id="loginBtn" type="submit" class="btn btn-success loginBtn rounded-btn">{{ 'login.logButton' | translate }}</button>

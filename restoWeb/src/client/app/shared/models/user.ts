@@ -5,6 +5,7 @@ export class User {
     public lastName?: string,
 		public email?: string,
 		public password?: string,
-    public passwordConfirm?: string
+    public passwordConfirm?: string,
+    	public isEmployee?: boolean
 	) { }
 }

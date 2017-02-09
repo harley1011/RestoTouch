@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 import {Restaurant} from '../../shared/models/restaurant';
 import {Language} from '../../shared/models/language';
@@ -23,7 +24,8 @@ export class RestaurantListComponent implements OnInit {
 
   constructor(private restaurantListService: RestaurantService,
               private router: Router,
-              private translate: TranslateService,) {
+              private translate: TranslateService,
+              private authService: AuthService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
   }
@@ -51,6 +53,7 @@ export class RestaurantListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRestaurants();
+    console.log(this.authService.loggedInUser.isEmployee);
   }
 
   add(): void {
@@ -58,6 +61,11 @@ export class RestaurantListComponent implements OnInit {
   }
 
   modify(restaurant: Restaurant): void {
-    this.router.navigate(['/dashboard/restaurant', restaurant.id]);
+    if(this.authService.loggedInUser.isEmployee) {
+      this.router.navigate(['/dashboard/unpaidOrders']);
+    }
+    else {
+      this.router.navigate(['/dashboard/restaurant', restaurant.id]);
+    }
   }
 }

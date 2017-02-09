@@ -51,7 +51,8 @@ function userInfo(user) {
       "id": user.id,
       "firstName": user.firstName,
       "lastName": user.lastName,
-      "email": user.email
+      "email": user.email,
+      "isEmployee": user.isEmployee,
     },
     "token": token.token
   }
@@ -136,10 +137,13 @@ function login(req, res) {
       res.status(401);
       return res.json({message: "User access denied"});
     }
+    newUser.isEmployee = user.isEmployee;
     var info = userInfo(newUser);
     var passwordMatched = passwordHasher.comparePassword(user.password, newUser.salt, newUser.password);
     if (passwordMatched) {
-      return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken": info.token});
+      newUser.save().then(function (result) {
+        return res.json({success: 1, description: "User logged in", "user": info.user, "accessToken": info.token});
+      });
     } else {
       res.status(401);
       return res.json({message: "User access denied"});
