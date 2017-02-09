@@ -17,6 +17,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 export class RestaurantListComponent implements OnInit {
   numOfRestaurants: number;
   restaurants: Restaurant[];
+  isEmployee: boolean;
 
 
   @ViewChild(TranslationSelectComponent)
@@ -53,7 +54,7 @@ export class RestaurantListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRestaurants();
-    console.log(this.authService.loggedInUser.isEmployee);
+    this.isEmployee = this.authService.loggedInUser.isEmployee;
   }
 
   add(): void {
