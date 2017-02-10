@@ -3,7 +3,28 @@
     <h2>Unpaid Orders</h2>
     <hr>
   </div>
+  <div class="manage-list-container">
+    <div class="row">
+      <div class="col-sm-2"> <!-- Going to repeat '*ngFor let order of orders' -->
+        <div class="card card-primary card-inverse">
+          <div class="card-block">
+            <h4 class="card-title">Order #5</h4>
+            <button class="btn btn-success">Paid</button> <!-- Will call function 'paid(order)' to save order to db and remove from list/cache -->
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Item 1 M x2</li> <!-- Will repeat for each item in order '*ngFor let item of order.items' -->
+            <li class="list-group-item">Item 2 L x1</li>
+            <li class="list-group-item">Item 3 S x5</li>
+          </ul>
+          <div class="card-block">
+            <h6 class="card-title">Total: 8$</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+<!--
   <div class="manage-list-container col col-md-5">
 		<table class="table table-sm td-size-table">
   			<thead>
@@ -24,4 +45,5 @@
   			</tbody>
   		</table>
   	</div>
+-->
 </div>
