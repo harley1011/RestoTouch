@@ -28,6 +28,7 @@ function setDatabase(m) {
   itemModel = models.getItemModel();
   itemTranslationModel = models.getItemTranslationModel();
   itemCategoryModel = models.getItemCategoryModel();
+  comboCatFoodItemModel = models.getComboCatFoodItemModel();
 }
 
 // GET /combo
@@ -82,10 +83,10 @@ function getCombo(req, res) {
 
 // POST /combo
 function addCombo(req, res) {
-    console.log("IN POST");
+
   var combo = req.body;
-      console.log(combo);
   combo.userId = req.userId;
+
   return comboModel.create(combo, {
     include: [{
       model: comboTranslationModel,
@@ -94,7 +95,7 @@ function addCombo(req, res) {
   }).then(function (result) {
     var itemComboAssociations = [];
     combo.items.forEach(function (item) {
-      itemComboAssociations.push({itemId: item.id, comboId: result.id});
+      itemComboAssociations.push({itemId: item.id, comboId: result.id, categoryId: null}); /// TODO CHANGE categoryId
     })
     comboCatFoodItemModel.bulkCreate(itemComboAssociations);
     return res.json({success: 1, description: "New Combo added"});

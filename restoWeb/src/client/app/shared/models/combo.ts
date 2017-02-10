@@ -13,6 +13,7 @@ export class Combo {
 export class ComboTranslations {
 	constructor(
 		public name: string,
+    public description: string,
 		public languageCode: string
 		) { }
 }

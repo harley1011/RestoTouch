@@ -51,6 +51,6 @@ export class ComboListComponent implements OnInit {
   }
 
   modify(combo: Combo): void {
-    this.router.navigate(['/dashboard/combos', combo.id]);
+    this.router.navigate(['/dashboard/combo', combo.id]);
   }
 }

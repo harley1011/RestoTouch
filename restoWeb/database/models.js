@@ -253,7 +253,11 @@ exports.getComboModel = function () {
 
 exports.getComboTranslationModel = function () {
   return comboTranslationModel;
-}
+};
+
+exports.getComboCatFoodItemModel= function(){
+  return comboCatFoodItemModel;
+};
 
 exports.getMenuModel = function () {
   return menuModel;

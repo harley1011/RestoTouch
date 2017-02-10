@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define("ComboTranslations", {
-    languageCode: {type: DataTypes.STRING(3), unique: 'categoryTrCompositeIndex', primaryKey: true},
+    languageCode: {type: DataTypes.STRING(3), unique: 'comboTrCompositeIndex', primaryKey: true},
 		language: {type: DataTypes.STRING(3)},
 		name: {type: DataTypes.STRING},
         description: {type: DataTypes.STRING},
