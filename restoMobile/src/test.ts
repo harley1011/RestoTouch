@@ -13,8 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, Platform } from 'ionic-angular';
-import { ConfigMock, PlatformMock } from './mocks';
-import { TranslateModule, TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import { ConfigMock, NavMock , PlatformMock } from './mocks';
+import { TranslateModule} from 'ng2-translate/ng2-translate';
 import { AuthService } from './pages/services/auth.service';
 import { ApiEndpointService } from './pages/services/api-endpoint.service';
 
@@ -59,11 +59,11 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        //TODO check this error :: Failed: Response with status: 404 Not Found for URL: http://localhost:9876/i18n/en.json
-        App, Form, Keyboard, DomController, GestureController, MenuController, NavController, //TranslateLoader, TranslateStaticLoader,
+        App, Form, Keyboard, DomController, GestureController, MenuController,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
-        AuthService, ApiEndpointService, //TranslateService
+        {provide: NavController, useClass: NavMock},
+        AuthService, ApiEndpointService,
       ],
       imports: [
         TranslateModule.forRoot(),
