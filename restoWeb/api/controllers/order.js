@@ -7,6 +7,8 @@ var uuid = require('node-uuid');
 var ttl = 1000;
 var _ = require('lodash');
 
+//var orderNotifier = require('orderNotifier.js');
+
 var redlock = new Redlock(
   // you should have one client for each redis node
   // in your cluster
@@ -85,8 +87,6 @@ function placeOrder(req, res) {
     });
   });
 
-
-//todo notify listeners
 }
 
 function unlock(lock) {
