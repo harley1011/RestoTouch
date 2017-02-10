@@ -110,9 +110,11 @@
                      {{user.firstName}} {{user.lastName}} <div *ngIf="user.isEmployee">(Cashier Mode)</div> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="single-button">
-                    <li>
-                        <a class="dropdown-item" routerLink="/dashboard/profile" href="javascript:;"><i class="fa fa-fw fa-user"></i> {{ 'dashboard.profileTopnav' | translate }}</a>
-                    </li>
+                    <div *ngIf="!user.isEmployee">
+                        <li>
+                            <a class="dropdown-item" routerLink="/dashboard/profile" href="javascript:;"><i class="fa fa-fw fa-user"></i> {{ 'dashboard.profileTopnav' | translate }}</a>
+                        </li>
+                    </div>
                     <!--<li>-->
                         <!--<a class="dropdown-item" href="javascript:;"><i class="fa fa-fw fa-envelope"></i> Inbox</a>-->
                     <!--</li>-->
