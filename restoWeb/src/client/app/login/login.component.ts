@@ -16,7 +16,6 @@ import {TranslateService} from 'ng2-translate';
 export class LoginComponent implements OnInit {
   user = new User('', '');
   errorMessage = '';
-  //isEmployee: boolean;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -31,6 +30,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if(this.user.isEmployee) {
+      this.user.employeePassword = this.user.password;
       this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
           this.router.navigate(['/dashboard/restaurants'])

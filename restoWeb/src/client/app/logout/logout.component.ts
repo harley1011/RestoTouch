@@ -41,6 +41,7 @@ export class LogoutComponent implements OnInit {
   */
   onSubmit() {
     if(this.user.isEmployee) {
+      this.user.employeePassword = this.user.password;
       this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
           window.location.href = '/dashboard/restaurants'
