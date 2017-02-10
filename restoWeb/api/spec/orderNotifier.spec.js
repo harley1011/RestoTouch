@@ -1,5 +1,8 @@
 describe("The Order API", function () {
-  var socket = require('socket.io-client')('http://localhost:10010/');
+  var express = require('express');
+  var app = express();
+  var orderNotifier = require('../controllers/orderNotifier.js')(app.listen(1017));
+  var socket = require('socket.io-client')('http://localhost:1017/');
   var redis = require('redis');
   var client = redis.createClient("redis://rediscloud:6wPtT2Oi8rVx458z@redis-19567.c8.us-east-1-3.ec2.cloud.redislabs.com:19567", {no_ready_check: false});
 
@@ -64,23 +67,21 @@ describe("The Order API", function () {
   it("should subscribe to the socket and recieve an order", function (done) {
 
     var restaurantId = 100100;
-    socket.on('connect', function () {
-    });
-
-
     socket.on('newOrder', function (data) {
-      console.log(data);
-      done();
+      expect(data).toBe(JSON.stringify(testOrder));
 
-
+      socket.emit('orderUnsubscribe', {restaurantId: restaurantId});
+      setTimeout(function () {
+        done();
+      }, 1000)
     });
-    socket.on('disconnect', function () {
-
-    });
-
     socket.emit('orderSubscribe', {restaurantId: restaurantId});
 
-    client.publish('restaurantNewOrder' + restaurantId, testOrder);
+    setTimeout(function () {
+
+      client.publish('restaurantNewOrder' + restaurantId, JSON.stringify(testOrder));
+    }, 1000)
+
 
   })
 });

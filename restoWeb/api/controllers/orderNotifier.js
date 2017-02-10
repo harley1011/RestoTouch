@@ -6,15 +6,12 @@ module.exports = function (app) {
   var client = redis.createClient("redis://rediscloud:6wPtT2Oi8rVx458z@redis-19567.c8.us-east-1-3.ec2.cloud.redislabs.com:19567", {no_ready_check: false});
 
   client.on("subscribe", function (channel, count) {
-    console.log("subscribe" + channel + ": " + count);
 
   });
 
   client.on("message", function (channel, message) {
-    console.log("sub channel " + channel + ": " + message);
-
     // Send to all clients connected over the socket
-    io.sockets.in(channel).emit('newOrder', message);
+    io.to(channel).emit('newOrder', message);
 
   });
 
@@ -25,11 +22,19 @@ module.exports = function (app) {
 
       // Client joins socket group for this id
       socket.join('restaurantNewOrder' + restaurantId);
-
-      // Subscribe this notifier to recieve and publishes from the channel
+      // Subscribe to recieve new orders from when the api stores messages in the redis cache
       client.subscribe('restaurantNewOrder' + restaurantId);
-
     });
+
+    socket.on('orderUnsubscribe', function (data) {
+      var restaurantId = data.restaurantId;
+      socket.leave('restaurantNewOrder' + restaurantId);
+
+      var numberOfListeners = io.sockets.adapter.rooms['restaurantNewOrder' + restaurantId];
+      if (!numberOfListeners) {
+        client.unsubscribe('restaurantNewOrder' + restaurantId);
+      }
+    })
 
 
   });
