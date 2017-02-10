@@ -1,4 +1,6 @@
 var io;
+var configAuth = require('../../config/auth');
+var jwt = require('jwt-simple');
 module.exports = function (app) {
   var io = require('socket.io')(app);
 
@@ -19,6 +21,11 @@ module.exports = function (app) {
 
     socket.on('orderSubscribe', function (data) {
       var restaurantId = data.restaurantId;
+
+      if (!data.token || !validateUser(data.token))
+        return;
+
+
 
       // Client joins socket group for this id
       socket.join('restaurantNewOrder' + restaurantId);
@@ -42,6 +49,13 @@ module.exports = function (app) {
 }
 
 
-function setup() {
+function validateUser(token) {
+  try {
+    var decoded = jwt.decode(token, configAuth.secret);
+  }
+  catch (e) {
+    return null;
+  }
+  return decoded;
 
 }

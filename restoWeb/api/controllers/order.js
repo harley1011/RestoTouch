@@ -98,7 +98,7 @@ function unlock(lock) {
 }
 
 function notifyNewOrder(restaurantId, order) {
-  client.publish('restaurantNewOrder' + restaurantId, order);
+  client.publish('restaurantNewOrder' + restaurantId, JSON.stringify(order));
 }
 
 function retrieveRestaurantOrders(req, res) {
