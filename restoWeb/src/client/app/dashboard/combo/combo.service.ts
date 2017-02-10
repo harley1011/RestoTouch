@@ -36,6 +36,16 @@ export class ComboService {
       .catch(this.handleError);
   }
 
+updateCombo (combo: Combo): Observable<GeneralResponse> {
+    let body = JSON.stringify(combo);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + combo.id, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   deleteCombo (combo: Combo): Observable<Combo> {
     return this.http.delete(this.api.getEndpoint() + this.url + '/' + combo.id)
       .map(this.extractData)

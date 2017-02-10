@@ -14,7 +14,7 @@ module.exports = {
   getAllCombos: getAllCombos,
   getCombo: getCombo,
   addCombo: addCombo,
- // updateCategory: updateCategory,
+  updateCombo: updateCombo,
   deleteCombo: deleteCombo,
   setDatabase: setDatabase
 };
@@ -27,7 +27,6 @@ function setDatabase(m) {
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
   itemTranslationModel = models.getItemTranslationModel();
-  itemCategoryModel = models.getItemCategoryModel();
   comboCatFoodItemModel = models.getComboCatFoodItemModel();
 }
 
@@ -102,7 +101,6 @@ function addCombo(req, res) {
   });
 }
 
-
 // DELETE /combo/{id}
 function deleteCombo(req, res) {
   var id = req.swagger.params.id.value;
@@ -115,3 +113,66 @@ function deleteCombo(req, res) {
     return res.json({success: 1, description: "Combo deleted"});
   });
 }
+
+  //PUT /combo/{id}
+function updateCombo(req, res) {
+  var combo = req.body;
+  var id = req.swagger.params.id.value;
+  return comboModel.findOne({
+    where: {
+      id: id,
+      userId: req.userId
+    },
+    include: [{
+      model: comboTranslationModel,
+      as: 'translations'
+    }, {
+      model: itemModel,
+      as: 'items'
+    }]
+  }).then(function (oldCombo) {
+
+    var itemsToRemove = _.differenceBy(oldCombo.items, combo.items, 'id');
+    var itemsToAdd = _.differenceBy(combo.items, oldCombo.items, 'id');
+
+    var itemComboAssociations = [];
+    itemsToAdd.forEach(function (item) {
+      itemComboAssociations.push({itemId: item.id, comboId: oldCombo.id});
+    });
+    comboCatFoodItemModel.bulkCreate(itemComboAssociations);
+
+    itemsToRemove.forEach(function (item) {
+      comboCatFoodItemModel.destroy({where: {itemId: item.id, comboId: oldCombo.id}});
+    });
+
+    for (var prop in combo) {
+      if (prop != 'translations')
+        oldCombo[prop] = combo[prop];
+    }
+
+    oldCombo.translations.forEach(function (translation) {
+      var newTranslation = _.find(combo.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
+      for (var prop in newTranslation) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(combo.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
+    });
+
+    combo.translations.forEach(function (translation) {
+      translation.comboId = combo.id;
+    });
+
+    comboTranslationModel.bulkCreate(combo.translations);
+
+    oldCombo.save().then(function (result) {
+      return res.json({success: 1, description: 'Combo Updated'});
+    });
+
+  });
+}
+

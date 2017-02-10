@@ -84,7 +84,7 @@ export class ComboComponent implements OnInit {
     if (this.create) {
       this.add();
     } else {
-      //this.update();
+      this.update();
     }
   }
 
@@ -96,6 +96,17 @@ export class ComboComponent implements OnInit {
       },
       error => {
         this.errorMessage = <any> error;
+      }
+    );
+  }
+
+  update(): void {
+    this.comboService.updateCombo(this.combo).subscribe(
+      generalResponse => {
+        this.router.navigate(['/dashboard/combos']);
+      },
+      error => {
+        this.errorMessage = <any>error;
       }
     );
   }
