@@ -76,6 +76,7 @@ function placeOrder(req, res) {
             unlock(lock);
             res.json({success: 1, description: "Order stored", orderId: order.id});
             fulfill(order.id);
+            notifyNewOrder(restaurantId, order);
           }
           else {
             res.json({success: 1, description: "Order failed to store"});
@@ -94,6 +95,10 @@ function unlock(lock) {
     .catch(function (err) {
       console.error(err);
     });
+}
+
+function notifyNewOrder(restaurantId, order) {
+  client.publish('restaurantNewOrder' + restaurantId, order);
 }
 
 function retrieveRestaurantOrders(req, res) {
