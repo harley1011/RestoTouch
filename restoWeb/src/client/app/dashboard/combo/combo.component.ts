@@ -53,14 +53,6 @@ export class ComboComponent implements OnInit {
     console.warn(this.translationSelectComponent.getSelectedLanguage());
   }
 
-  addAndUpdate(): void {
-    if (this.create) {
-      this.add();
-    } else {
-      //this.update();
-    }
-  }
-
   onSelectLanguage(language: Language) {
     let comboTranslation = this.combo.translations.find(translation =>
     translation.languageCode === language.languageCode);
@@ -88,6 +80,14 @@ export class ComboComponent implements OnInit {
     );
   }
 
+  addAndUpdate(): void {
+    if (this.create) {
+      this.add();
+    } else {
+      //this.update();
+    }
+  }
+
   add(): void {
     // calling add comboService
     this.comboService.addCombo(this.combo).subscribe(
@@ -96,6 +96,18 @@ export class ComboComponent implements OnInit {
       },
       error => {
         this.errorMessage = <any> error;
+      }
+    );
+  }
+
+  delete(): void {
+    this.comboService.deleteCombo(this.combo).subscribe(
+      generalResponse => {
+        console.log('response', generalResponse);
+        this.router.navigate(['/dashboard/combos']);
+      },
+      error => {
+        this.errorMessage = <any>error;
       }
     );
   }

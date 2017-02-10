@@ -15,7 +15,7 @@ module.exports = {
   getCombo: getCombo,
   addCombo: addCombo,
  // updateCategory: updateCategory,
- // deleteCategory: deleteCategory,
+  deleteCombo: deleteCombo,
   setDatabase: setDatabase
 };
 
@@ -99,5 +99,19 @@ function addCombo(req, res) {
     })
     comboCatFoodItemModel.bulkCreate(itemComboAssociations);
     return res.json({success: 1, description: "New Combo added"});
+  });
+}
+
+
+// DELETE /combo/{id}
+function deleteCombo(req, res) {
+  var id = req.swagger.params.id.value;
+  return comboModel.destroy({
+    where: {
+      id: id,
+      userId: req.userId
+    }
+  }).then(function (result) {
+    return res.json({success: 1, description: "Combo deleted"});
   });
 }

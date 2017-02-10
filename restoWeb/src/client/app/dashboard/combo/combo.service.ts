@@ -36,6 +36,12 @@ export class ComboService {
       .catch(this.handleError);
   }
 
+  deleteCombo (combo: Combo): Observable<Combo> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + combo.id)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
 
   private extractData(res: Response) {
     let body = res.json();
