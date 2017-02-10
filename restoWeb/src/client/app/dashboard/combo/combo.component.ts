@@ -4,7 +4,7 @@ import {ComboService} from './combo.service';
 import {Combo, ComboTranslations} from '../../shared/models/combo';
 import {Language} from '../../shared/models/language';
 import { ItemService } from '../item/item.service';
-import { Item } from '../../shared/models/items';
+import { Item, ItemTranslations } from '../../shared/models/items';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 @Component({
@@ -34,28 +34,48 @@ export class ComboComponent implements OnInit {
               private router: Router,
               private itemService: ItemService) {
     this.categorySelected =[];
-
   }
 
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         this.getCombo(params['id']);
         this.create = false;
       } else {
-        let translation = new ComboTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
+        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
         this.combo = new Combo([translation], translation, []);
         //this.getItems();
         this.create = true;
       }
     });
+
+    console.warn(this.translationSelectComponent.getSelectedLanguage());
+  }
+
+  addAndUpdate(): void {
+    if (this.create) {
+      this.add();
+    } else {
+      //this.update();
+    }
+  }
+
+  onSelectLanguage(language: Language) {
+    let comboTranslation = this.combo.translations.find(translation =>
+    translation.languageCode === language.languageCode);
+    if (!comboTranslation) {
+      comboTranslation = new ComboTranslations('', '', language.languageCode);
+      this.combo.translations.push(comboTranslation);
+    }
+    this.combo.selectedTranslation = comboTranslation;
   }
 
   getCombo(id: number): void {
     this.comboService.getCombo(id).subscribe(
       combo => {
         this.combo = combo;
+        console.warn(this.combo);
         //this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.combo.items.forEach(item => {
@@ -67,12 +87,24 @@ export class ComboComponent implements OnInit {
       }
     );
   }
+
+  add(): void {
+    // calling add comboService
+    this.comboService.addCombo(this.combo).subscribe(
+      generalResponse => {
+        this.router.navigate(['/dashboard/combos']);
+      },
+      error => {
+        this.errorMessage = <any> error;
+      }
+    );
+  }
 }
 
-    /*
-    * store chosen category into array
-    */
-    function saveCategory(catChoosen: string, catId: any): void {
+/*
+* store chosen category into array
+*/
+function saveCategory(catChoosen: string, catId: any): void {
       var found = false;
 
       // add the first category to array

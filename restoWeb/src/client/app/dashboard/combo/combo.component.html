@@ -6,7 +6,7 @@
     <hr>
   </div>
 
-  <div class="comContentContainer"> <!-- do mettre *ngIf="combo" dans le tag apres-->
+  <div *ngIf="combo" class="comContentContainer">
     <div class="row textAlignment">
             Nulla facilisi. Sed finibus in felis placerat semper. In bibendum nibh ac tellus elementum, eget mollis urna condimentum. Aenean nec ornare leo.
     </div>
@@ -25,22 +25,24 @@
       <div class="form-group bottomSpacing">
         <label>Name</label>
         <input id="name" class="form-control" name="name"
-          placeholder="combo #1">
+          placeholder="combo #1" required
+          [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
+          [ngClass]="{'form-error': !name.valid && !name.pristine}">
         <!--<input id="name" class="form-control" name="name"
           placeholder="{{'combo.comboNameFieldHolder' | translate}}"
           required
           [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
           [ngClass]="{'form-error': !name.valid && !name.pristine}">-->
         <label>Description</label>
-        <textarea id="description" rows="3" class="form-control" name="description"
-          placeholder="combo #1 includes..."></textarea>
+        <input id="description" rows="3" class="form-control" name="description"
+          placeholder="combo #1 includes..." required
+            [(ngModel)]="combo?.selectedTranslation.description">
         <!--<input id="description" class="form-control" name="description"
           placeholder="{{'combo.comboDescriptionFieldHolder' | translate}}"
           required
             [(ngModel)]="combo?.selectedTranslation.description" #name="ngModel"
             [ngClass]="{'form-error': !description.valid && !name.pristine}">-->
       </div>
-
 
      <!-- step header : choose category-->
       <div class="row">
