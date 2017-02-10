@@ -13,7 +13,7 @@ setDatabase(models);
 module.exports = {
   getAllCombos: getAllCombos,
   getCombo: getCombo,
-  //addCombo: addCombo,
+  addCombo: addCombo,
  // updateCategory: updateCategory,
  // deleteCategory: deleteCategory,
   setDatabase: setDatabase
@@ -48,7 +48,6 @@ function getAllCombos(req, res) {
     }]
   }).then(function (combos) {
     return res.json({combos: combos});
-    //return res.json({success: 1, description: "New Combo added"});
   });
 }
 
@@ -78,5 +77,26 @@ function getCombo(req, res) {
     } else {
       res.status(204).send();
     }
+  });
+}
+
+// POST /combo
+function addCombo(req, res) {
+    console.log("IN POST");
+  var combo = req.body;
+      console.log(combo);
+  combo.userId = req.userId;
+  return comboModel.create(combo, {
+    include: [{
+      model: comboTranslationModel,
+      as: 'translations'
+    }]
+  }).then(function (result) {
+    var itemComboAssociations = [];
+    combo.items.forEach(function (item) {
+      itemComboAssociations.push({itemId: item.id, comboId: result.id});
+    })
+    comboCatFoodItemModel.bulkCreate(itemComboAssociations);
+    return res.json({success: 1, description: "New Combo added"});
   });
 }

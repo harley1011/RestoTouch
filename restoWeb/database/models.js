@@ -25,7 +25,7 @@ var itemSizesTranslationsModel = sequelize.import('./models/itemSizeTranslations
 var ingredientGroupTranslationModel = sequelize.import('./models/ingredientGroupTranslation.js');
 var ingredientTranslationModel = sequelize.import('./models/ingredientTranslation.js');
 var comboModel = sequelize.import('./models/combos.js');
-var comboTranslationModel = sequelize.import('./models/comboTranslation');
+var comboTranslationModel = sequelize.import('./models/comboTranslations');
 var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem');
 
 // Enable this if you want to drop all tables and create them,

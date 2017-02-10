@@ -274,7 +274,25 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+    post:
+      operationId: addCombo
+      description: Add a combo
+      parameters:
+        - name: combo
+          description: combo properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Combo"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /combo/{id}:
     # binds a127 app logic to a route
     x-swagger-router-controller: combo
@@ -942,10 +960,13 @@ definitions:
     properties:
       name:
         type: string
+      description:
+        type: string
       languageCode:
         type: string
     required:
       - name
+      - description
       - languageCode
       ###################################################
   ItemsResponse:
