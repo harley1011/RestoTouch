@@ -49,7 +49,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   })
-*/
+
   it("Create a valid food item", function () {
     browser.get(browser.baseUrl + 'dashboard/items');
     var addItemBtn = element(by.id('addItemBtn'));
@@ -102,7 +102,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/categories');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });
-
+*/
   it("Create a valid menu", function () {
     browser.get(browser.baseUrl + 'dashboard/menus');
     var addMenuBtn = element(by.id('addMenuBtn'));
@@ -121,6 +121,16 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });
+
+  it("Deletes a menu", function () {
+    browser.get(browser.baseUrl + 'dashboard/menus');
+    var menu = element(by.className('card'));
+    menu.click();
+    var deleteMenuBtn = element(by.id('deleteMenuBtn'));
+    deleteMenuBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+  })
 
 });
 

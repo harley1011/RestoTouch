@@ -63,7 +63,7 @@
           <button *ngIf="!create" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">{{
             'menu.saveButton' | translate}}
           </button>
-          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red">{{ 'menu.deleteButton'
+          <button *ngIf="!create" id="deleteMenuBtn" type="button" (click)="delete()" class="btn btn-danger btn-red">{{ 'menu.deleteButton'
             | translate}}
           </button>
           <button *ngIf="create" id="createMenuBtn" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">{{'menu.createButtonTopbar' | translate}}
