@@ -83,24 +83,46 @@
         </div>
       </div>
     <!-- step content-->
-      <div class="row">
-        <div class="col-md-10 bottomSpacing">
-          <div class="wrapper">
-            <div class="container col-md-3">
-              <h5>Food item list:</h5>
-              <div style="background-color:rgba(4,5,6,0.1); padding:6px;">
-                <div *ngFor="let item of foodItemList" style="background-color:rgba(4,5,6,0.2); padding:6px; margin:3px;"> {{ item }}</div>
-              </div>
-            </div>
-            <div class="container col-md-9">
-              <h5>Chosen categories:</h5>
-              <div class="col-md-3" *ngFor="let category of categorySelected" style="background-color:rgba(240,50,66,0.9); height:150px;">{{category}}
-                <div style="background-color:rgba(4,5,6,0.2); padding:6px; margin:3px;">item dropped here</div>
-              </div>
-            </div>
-          </div>
+    <div *ngIf="items" class="row">
+      <div class="col-md-6">
+        <label>Available Food Items</label>
+        <ul class="list-group scrollable-list">
+          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}}
+            <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
+                (click)="addItemToCategory(item)"></i>
+          </li>
+        </ul>
+        <div [hidden]="items.length != 0">
+          <i class="fa fa-exclamation-circle"></i> There are no items left to add
         </div>
       </div>
+
+      <!-- SELECTED CAT ---->
+      <div class="row">
+        <div class="col-md-10 bottomSpacing">
+            <h5>Category list:</h5>
+            <div class="btn-group" data-toggle="buttons" role="group">
+              <label *ngFor="let category of catToFill; let i = index" [attr.id]=i class="btn btn-secondary">
+                <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
+              </label>
+            </div>
+        </div>
+      </div>
+      <!--- EO SELECTED CAT -->
+
+      <div class="col-md-6">
+        <label>Food Items In Category {{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }}</label>
+        <ul class="list-group scrollable-list">
+          <li *ngFor="let item of categoryShowing.items" class="list-group-item"> {{item.selectedTranslation?.name}}
+            <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                (click)="removeItemFromCategory(item)"></i>
+          </li>
+        </ul>
+        <div [hidden]="categoryShowing.items.length != 0">
+          <i class="fa fa-exclamation-circle"></i> Add some food items to this category
+        </div>
+      </div>
+    </div>
 
 
      <!-- step header : determine pricing -->
