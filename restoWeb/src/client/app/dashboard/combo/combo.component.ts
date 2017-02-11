@@ -42,6 +42,7 @@ export class ComboComponent implements OnInit {
               private itemService: ItemService) {
     this.categorySelected =[];
     this.catToFill = [];
+    this.categoryShowing = null;
   }
 
 
@@ -53,7 +54,7 @@ export class ComboComponent implements OnInit {
       } else {
         let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
         this.combo = new Combo([translation], translation, []);
-        //this.getItems();
+        this.getItems();
         this.create = true;
       }
 
@@ -139,8 +140,6 @@ export class ComboComponent implements OnInit {
         categories.forEach(category => {
           category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
           category.items = [];
-          this.categoryShowing = category;
-          this.categoryShowing .selectedTranslation = category.selectedTranslation;
         });
 
       },
@@ -259,7 +258,7 @@ fillCatSelected(catin: any, catId: any): void {
       this.resetCategoryCssClass(); // reset back to no color
       document.getElementById('e').className='btn btn-primary';// change color of the no category button
       this.catToFill = [];
-      this.catToFill.push(this.noCat);
+      // this.catToFill.push(this.noCat);
   }
 
     /*
