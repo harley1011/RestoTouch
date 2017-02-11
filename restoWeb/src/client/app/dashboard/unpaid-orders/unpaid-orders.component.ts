@@ -26,6 +26,10 @@ export class UnpaidOrdersComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-    this.orderNotifierService.connectToOrderNotifier().subscribe(data => console.log(data));
+    this.orderNotifierService.connectToOrderNotifier().subscribe((order: any) => {
+      console.log(order); // As a test
+      //Order needs to be parse with JSON.parse(order)
+      //Then added to 
+    });
   }
 }
