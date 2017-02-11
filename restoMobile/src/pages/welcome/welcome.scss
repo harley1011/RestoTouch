@@ -1,5 +1,6 @@
 page-welcome {
-
+    font-family: "Montserrat";
+    
      ion-content {
         background-image: url('../../assets/img/food-bg-3px.jpg');
         background-size: cover;
@@ -39,7 +40,7 @@ page-welcome {
     }
 
     .languageBar{
-        background-color:#387ef5;
+//        background-color: $colors(danger);
         margin:-20px -20px 0 -20px;
         height:50px;
     }

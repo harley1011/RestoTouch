@@ -40,8 +40,9 @@ export class WelcomePage {
     }
   }
 
-  continueTapped(event) {
+  continueTapped(event, lang) {
     // Will push to virtual menu page
+      this.selectedLanguage = lang;
     this.navCtrl.push(MenuPage, {
       language: this.selectedLanguage,
       menu: this.selectedMenu
