@@ -3,6 +3,7 @@ import {User} from '../shared/models/user';
 import {AuthService}       from '../services/auth.service';
 import {Router} from '@angular/router';
 import {TranslateService} from 'ng2-translate';
+import * as io from 'socket.io-client';
 /**
  *  This class represents the lazy loaded LoginComponent.
  */

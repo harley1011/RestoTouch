@@ -20,6 +20,7 @@ import { Http } from '@angular/http';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LanguageService } from '../pages/services/language.service';
+import { OrderService } from '../pages/services/order.service';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/languages', '.json');
@@ -59,6 +60,6 @@ export function createTranslateLoader(http: Http) {
     LoginPage,
     RestaurantListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},LanguageService, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},LanguageService, OrderService, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
 })
 export class AppModule {}

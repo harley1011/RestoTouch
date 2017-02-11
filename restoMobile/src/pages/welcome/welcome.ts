@@ -6,6 +6,7 @@ import {TranslateService} from 'ng2-translate';
 import { MenuListPage } from '../menu-list/menu-list';
 import { Page2 } from '../page2/page2'
 import { Restaurant } from '../shared/models/restaurant';
+import { RestaurantService } from '../services/restaurant.service';
 
 @Component({
   selector: 'page-welcome',
@@ -21,11 +22,15 @@ export class WelcomePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
   			      private languageService: LanguageService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private restaurantService: RestaurantService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
 
-    this.selectedRestaurant = navParams.get('item');
+    if (this.restaurantService.selectedRestaurant)
+      this.selectedRestaurant = this.restaurantService.selectedRestaurant;
+    else
+      this.selectedRestaurant = navParams.get('item');
     this.languages = languageService.languages();
     for (let availLang of this.selectedRestaurant.translations){
       let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
