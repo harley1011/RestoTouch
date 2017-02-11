@@ -161,6 +161,15 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
   });
+  
+  it("Diplay correct webpage after log out", function () {
+    browser.get(browser.baseUrl + 'dashboard/home');
+    var dropdown = element(by.className('dropdown-toggle'));
+    dropdown.click();
+    var logoutBtn = element(by.id('logout'));
+    logoutBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'logout');
+  });
 
 });
 
