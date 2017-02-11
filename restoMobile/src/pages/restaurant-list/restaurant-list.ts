@@ -75,7 +75,7 @@ export class RestaurantListPage {
     this.navCtrl.push(MenuListPage, {
       item: restaurant
     });
-    this.menuCtrl.enable(false, 'ownerMenu');
-    this.menuCtrl.toggle('right');
+//    this.menuCtrl.enable(false, 'ownerMenu');
+//    this.menuCtrl.toggle('right');
   }
 }

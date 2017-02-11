@@ -57,8 +57,6 @@ getMenus(): void {
         });
         this.restaurant = this.selectedRestaurant;
         this.menus = menus;
-        console.log("inside menu");
-        console.log(this.menus);
         this.numOfMenus = this.menus.length;
         this.menusInRestaurant = new Array(this.menus.length);
 

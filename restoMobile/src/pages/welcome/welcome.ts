@@ -29,10 +29,12 @@ export class WelcomePage {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
 
-    if (this.restaurantService.selectedRestaurant)
-      this.selectedRestaurant = this.restaurantService.selectedRestaurant;
-    else
-      this.selectedRestaurant = navParams.get('item');
+    if (this.restaurantService.selectedRestaurant) {
+    this.selectedRestaurant = this.restaurantService.selectedRestaurant;
+    } else {
+        this.selectedRestaurant = navParams.get('restaurant');
+    }
+    this.selectedMenu = navParams.get('item');
     this.languages = languageService.languages();
     for (let availLang of this.selectedRestaurant.translations){
       let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
