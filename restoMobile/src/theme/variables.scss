@@ -98,3 +98,15 @@ $colors: (
     src: url('../assets/fonts/Montserrat-Bold.ttf') format('truetype');
     font-weight: 700;
 }
+
+@font-face {
+    font-family: 'OpenSans Condensed';
+    src: url('../assets/fonts/OpenSans-CondBold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'OpenSans Condensed';
+    src: url('../assets/fonts/OpenSans-CondLight.ttf') format('truetype');
+    font-weight: light;
+}

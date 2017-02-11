@@ -31,7 +31,9 @@
     </div>
 
    <div class="login-list" text-center>
-    <button ion-button round outline block color="light" id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
+   
+   <div text-center>
+    <button class="login-btn" ion-button block round outline color="light" id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
     <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     </div>
   </form>
