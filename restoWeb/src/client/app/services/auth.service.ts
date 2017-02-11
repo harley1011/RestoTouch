@@ -62,6 +62,10 @@ export class AuthService implements CanActivate, CanActivateChild {
       .catch(this.handleError);
   }
 
+  loginToken() {
+    return localStorage.getItem('authToken');
+  }
+
   logout() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');

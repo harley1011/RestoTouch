@@ -12,6 +12,8 @@ import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
+import { OrderService } from '../services/order.service';
+import { WelcomePage } from '../welcome/welcome';
 
 @Component({
   selector: 'page-menu',
@@ -27,6 +29,7 @@ export class MenuPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
+              private orderService: OrderService,
               private itemService: ItemService,
               private menuService: MenuService) {
 
@@ -174,7 +177,9 @@ export class MenuPage {
   }
 
   order(): void {
-    console.log('ORDER');
+    this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+      this.navCtrl.setRoot(WelcomePage);
+    });
   }
 }
 

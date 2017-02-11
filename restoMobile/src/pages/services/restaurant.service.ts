@@ -12,6 +12,8 @@ import  {ApiEndpointService} from './api-endpoint.service';
 export class RestaurantService {
   private url = '/restaurant';
 
+  public selectedRestaurant: Restaurant;
+
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
   getRestaurant (id: number): Observable<Restaurant> {

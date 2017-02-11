@@ -62,6 +62,15 @@ export class ProjectConfig extends SeedConfig {
           main: 'moment.js',
           defaultExtension: 'js'
         }
+      },
+
+      {
+        name: 'socket.io-client',
+        path: 'node_modules/socket.io-client/dist',
+        packageMeta: {
+          main: 'socket.io.min.js',
+          defaultExtension: 'js'
+        }
       }
     ];
     this.addPackagesBundles(additionalPackages);

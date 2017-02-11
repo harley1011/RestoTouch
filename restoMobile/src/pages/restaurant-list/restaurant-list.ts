@@ -51,9 +51,10 @@ export class RestaurantListPage {
         );
       }
 
-  itemTapped(event, item) {
+  itemTapped(event, restaurant) {
+    this.restaurantListService.selectedRestaurant = restaurant;
     this.navCtrl.push(WelcomePage, {
-      item: item
+      item: restaurant
     });
   }
 }
