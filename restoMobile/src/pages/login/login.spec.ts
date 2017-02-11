@@ -66,7 +66,9 @@ describe('Pages: LoginPage', () => {
     event.emit();
   });
 
-
-
+  it('initialises with the correct languages', () => {
+    expect(instance.translate.getDefaultLang()).toEqual('en');
+    expect(instance.translate.currentLang).toEqual('en');
+  });
 
 });
