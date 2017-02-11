@@ -1,7 +1,9 @@
 import {Injectable}     from '@angular/core';
 import * as io from 'socket.io-client';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
+import  {AuthService} from './auth.service';
+
 @Injectable()
 export class OrderNotifierService {
   public socketEndpoint = 'http://localhost:10010';
@@ -9,8 +11,7 @@ export class OrderNotifierService {
 
   private socket: SocketIOClient.Socket;
 
-  constructor() {
-    console.log(this.env);
+  constructor(private authService: AuthService) {
     if (this.env === 'dev') {
       this.socketEndpoint = 'http://localhost:10010';
     } else {
@@ -27,13 +28,13 @@ export class OrderNotifierService {
         observer.next(data);
       });
 
-      this.socket.emit('orderSubscribe', {restaurantId: 100, token: ''});
+      //todo changed restaurantId to the one selected
+      this.socket.emit('orderSubscribe', {restaurantId: 100, token: this.authService.loginToken()});
     });
   }
 
-
-  getEndpoint() {
-    return this.socketEndpoint;
+  disconnectFromOrderNotifier() {
+    //todo changed restaurantId to the one selected
+    this.socket.emit('orderUnsubscribe', {restaurantId: 100, token: this.authService.loginToken()})
   }
-
 }
