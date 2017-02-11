@@ -7,7 +7,8 @@
     "passwordRequiredAlert": "Password is required",
     "emailHolderFieldForm": "E-mail",
     "passwordHolderFieldForm": "Password",
-    "logButton": "Log in"
+    "logButton": "Log in",
+    "cashierMode": "Cashier Mode"
   },
 
   "logout": {
@@ -16,7 +17,8 @@
     "formTitle": "Oops",
     "formSousTitle": "Got signed out by mistake?",
     "formTitle2": "Sign back in:",
-    "formLogButton": "Log back in"
+    "formLogButton": "Log back in",
+    "cashierMode": "Cashier Mode"
   },
 
   "registration": {
@@ -51,7 +53,8 @@
     "profileTopnav": "Profile",
     "settingTopnav": "Settings",
     "logoutTopnav": "Log Out",
-    "modalLanguageTitle": "Add Supported Language"
+    "modalLanguageTitle": "Add Supported Language",
+    "cashierMode": "Cashier Mode"
   },
 
   "restaurant":{
@@ -186,7 +189,12 @@
     "repeatPassword": "Confirm new password",
     "firstNameAlert": "Please enter your first name.",
     "lastNameAlert": "Please enter your last name.",
-    "emailAlert": "Please enter a valid email address."
+    "emailAlert": "Please enter a valid email address.",
+    "employeePassword": "Employee Password"
+  },
+
+  "unpaidOrders": {
+    "title": "Unpaid Orders"
   }
 
 }

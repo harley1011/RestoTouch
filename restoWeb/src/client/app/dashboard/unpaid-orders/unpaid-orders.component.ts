@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Order} from '../../shared/models/order';
 import {ItemService} from '../item/item.service';
 import {Item} from './../../shared/models/items';
+import {TranslateService} from 'ng2-translate';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class UnpaidOrdersComponent implements OnInit {
 	orders: Array<Order>;
 	items: Array<Item>;
 
-	constructor(private itemService: ItemService) {
+	constructor(private itemService: ItemService,
+              private translate: TranslateService) {
 	}
 
 	ngOnInit(): void {

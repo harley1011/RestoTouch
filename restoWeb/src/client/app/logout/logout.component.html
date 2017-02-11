@@ -42,7 +42,7 @@
             <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
 
             <!-- employee mode checkbox -->
-            <div><p>Cashier Mode: <input type="checkbox" name="isEmployee" [(ngModel)]="user.isEmployee"></p>
+            <div><p>{{ 'logout.cashierMode' | translate }}: <input type="checkbox" name="isEmployee" [(ngModel)]="user.isEmployee"></p>
             </div>
 
             <!-- buttons -->
