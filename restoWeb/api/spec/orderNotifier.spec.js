@@ -1,6 +1,7 @@
 var configAuth = require('../../config/auth');
 var jwt = require('jwt-simple');
 var promise = require('promise');
+var order = require('../controllers/order');
 describe("The Order API", function () {
   var express = require('express');
   var app = express();
@@ -185,9 +186,128 @@ describe("The Order API", function () {
       });
 
     }, 2000);
+  });
+
+  it("should place, retrieve an order and then delete it using the order controller and recieve an order from the orderNotifier", function (done) {
+
+    var req = {
+      body: {
+        order: {
+          "orderedItems": [
+            {
+              "item": {
+                "id": 1,
+                "imageUrl": "",
+                "createdAt": "2017-02-01T18:38:45.759Z",
+                "updatedAt": "2017-02-01T18:38:45.759Z",
+                "userId": 1,
+                "ItemCategory": {
+                  "id": 1,
+                  "createdAt": "2017-02-01T18:53:04.323Z",
+                  "updatedAt": "2017-02-01T18:53:04.323Z",
+                  "itemId": 1,
+                  "categoryId": 1
+                },
+                "translations": [
+                  {
+                    "languageCode": "en",
+                    "language": null,
+                    "name": "Burger",
+                    "description": "Yummy burger",
+                    "itemId": 1,
+                    "createdAt": "2017-02-01T18:38:45.872Z",
+                    "updatedAt": "2017-02-01T18:38:45.872Z"
+                  }
+                ],
+                "sizes": [
+                  {
+                    "id": 1,
+                    "price": 2,
+                    "createdAt": "2017-02-01T18:38:45.865Z",
+                    "updatedAt": "2017-02-01T18:38:45.865Z",
+                    "itemId": 1
+                  }
+                ]
+              },
+              "sizes": [
+                {
+                  "size": {
+                    "id": 1,
+                    "price": 2,
+                    "createdAt": "2017-02-01T18:38:45.865Z",
+                    "updatedAt": "2017-02-01T18:38:45.865Z",
+                    "itemId": 1
+                  },
+                  "quantity": 3
+                }
+              ],
+              "ingredients": []
+            }
+          ],
+          "total": 6,
+          "restaurantId": 108000
+        }
+      }
+    };
 
 
-  })
+    var res = {
+      json: function (obj) {
+        res.obj = obj;
+      }
+    };
+    var retReq = {
+      body: {
+        restaurantId: req.body.order.restaurantId
+      }
+    }
+    var promises = [];
+    order.removeAllRestaurantsOrders(retReq, res).then(function (result) {
+      promises.push(new promise(function (fulfill) {
+        var socket = io('http://localhost:1017/');
+        socket.on('newOrder', function (data) {
+         // var result = JSON.stringify();
+          expect(data).toBe(JSON.stringify(req.body.order));
+
+          socket.emit('orderUnsubscribe', {restaurantId: req.body.order.restaurantId, token: tokenContainer.token});
+          setTimeout(function () {
+            fulfill();
+          }, 1000)
+        });
+        socket.emit('orderSubscribe', {restaurantId: req.body.order.restaurantId, token: tokenContainer.token});
+      }));
+
+
+      setTimeout(function () {
+        promises.push(new promise(function (fulfill) {
+          order.placeOrder(req, res).then(function () {
+            expect(res.obj.success).toBe(1);
+            expect(res.obj.description).toBe("Order stored");
+            expect(res.obj.orderId).toBeDefined();
+            var generatedId = res.obj.orderId;
+
+            order.retrieveOrders(retReq, res).then(function (result) {
+              var orders = res.obj.orders;
+              expect(generatedId).toBe(orders[0].id);
+              order.removeAllRestaurantsOrders(retReq, res).then(function (result) {
+                expect(res.obj.success).toBe(1);
+                expect(res.obj.description).toBe("Orders removed");
+                fulfill();
+              });
+            });
+          });
+
+        }));
+      }, 2000);
+
+      promise.all(promises).then(function () {
+        done();
+      })
+    });
+
+
+
+  });
 
 
 });

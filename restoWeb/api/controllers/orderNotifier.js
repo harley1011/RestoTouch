@@ -25,8 +25,6 @@ module.exports = function (app) {
       if (!data.token || !validateUser(data.token))
         return;
 
-
-
       // Client joins socket group for this id
       socket.join('restaurantNewOrder' + restaurantId);
       // Subscribe to recieve new orders from when the api stores messages in the redis cache
