@@ -5,7 +5,7 @@ simply change the variable belows to your dbs info
 
 var host = "restotouch.ctjlsabjnpsa.us-east-1.rds.amazonaws.com";
 var port = "5432";
-var database = "samerDb";
+var database = "testDb2";
 var dbtype = "postgres";
 var user = "restotouch";
 var password = "soen490resto";
