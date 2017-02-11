@@ -173,9 +173,9 @@ describe("The Order API", function () {
     }, res);
   });
 
-  // afterAll(function () {
-  //
-  //   order.closeRedis();
-  // });
+  afterAll(function () {
+
+    order.closeRedis();
+  });
 })
 ;
