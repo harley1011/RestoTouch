@@ -19,7 +19,7 @@ import { Auth, User } from '@ionic/cloud-angular';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RestaurantListPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
 

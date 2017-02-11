@@ -13,6 +13,7 @@ import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
+import { WelcomePage } from '../welcome/welcome';
 
 @Component({
   selector: 'page-menu',
@@ -177,7 +178,7 @@ export class MenuPage {
 
   order(): void {
     this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-      console.log(response);
+      this.navCtrl.setRoot(WelcomePage);
     });
   }
 }
