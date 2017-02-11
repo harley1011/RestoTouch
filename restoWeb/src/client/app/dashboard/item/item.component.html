@@ -225,7 +225,7 @@
                   [disabled]="!itemForm.form.valid">{{ create? ('foodItem.createButtonTopbar'
             | translate) : ('foodItem.saveButton' | translate)}}
           </button>
-          <button *ngIf="!create" type="button" (click)="deleteItem()" class="btn btn-danger btn-red">{{
+          <button *ngIf="!create" id="deleteItemBtn" type="button" (click)="deleteItem()" class="btn btn-danger btn-red">{{
             'foodItem.deleteButton' | translate }}
           </button>
           <button class="btn btn-default btn-normal" (click)="cancelItem()" type="button">{{
