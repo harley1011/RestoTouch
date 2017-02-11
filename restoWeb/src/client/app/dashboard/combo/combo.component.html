@@ -85,7 +85,7 @@
 
 
      <!-- step header : link food item -->
-      <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row">
+      <div *ngIf="(items && catToFill?.length > 0 && categoryShowing?.selectedTranslation) || fillNocat" class="row">
         <!-- step title -->
         <div class="col-md-3 comStepTitleCell">
             <h6>link</h6>
@@ -97,7 +97,7 @@
         </div>
       </div>
     <!-- step content-->
-    <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row">
+    <div *ngIf="(items && catToFill?.length > 0 && categoryShowing?.selectedTranslation) || fillNocat" class="row">
       <div class="col-md-6">
         <label>Available Food Items</label>
         <ul class="list-group scrollable-list">

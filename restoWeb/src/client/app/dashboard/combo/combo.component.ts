@@ -32,6 +32,7 @@ export class ComboComponent implements OnInit {
   categorySelected: Array<string>;
   catToFill: Array<Category>;
   combos: Array<Combo>;
+  fillNocat: boolean;
   selectedCatFill:false;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
@@ -43,6 +44,7 @@ export class ComboComponent implements OnInit {
     this.categorySelected =[];
     this.catToFill = [];
     this.categoryShowing = null;
+    this.fillNocat = false;
   }
 
 
@@ -211,6 +213,7 @@ export class ComboComponent implements OnInit {
   }
 
 fillCatSelected(catin: any, catId: any): void {
+  this.fillNocat = false;
   this.categoryShowing = catin;
 }
 
@@ -219,7 +222,7 @@ fillCatSelected(catin: any, catId: any): void {
 * store chosen category into array
 */
  saveCategory(catin: any, catId: any): void {
-
+      this.fillNocat = false;
       /////////// TO Refactor //////////
       var found = false;
       var catChoosen = catin.selectedTranslation.name;
@@ -254,6 +257,7 @@ fillCatSelected(catin: any, catId: any): void {
   }
 
   nocat(): void {
+      //this.fillNocat = true;
       this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
       this.resetCategoryCssClass(); // reset back to no color
       document.getElementById('e').className='btn btn-primary';// change color of the no category button
