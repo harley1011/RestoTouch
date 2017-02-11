@@ -64,7 +64,7 @@
               <label *ngFor="let category of categories; let i = index" [attr.id]=i class="btn btn-secondary">
                 <input type="checkbox" (click)="saveCategory(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
               </label>
-              <input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="nocat()">
+              <!--<input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="nocat()">-->
             </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
 
 
      <!-- step header : link food item -->
-      <div *ngIf="(items && catToFill?.length > 0 && categoryShowing?.selectedTranslation) || fillNocat" class="row">
+      <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row">
         <!-- step title -->
         <div class="col-md-3 comStepTitleCell">
             <h6>link</h6>
@@ -97,7 +97,7 @@
         </div>
       </div>
     <!-- step content-->
-    <div *ngIf="(items && catToFill?.length > 0 && categoryShowing?.selectedTranslation) || fillNocat" class="row">
+    <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row">
       <div class="col-md-6">
         <label>Available Food Items</label>
         <ul class="list-group scrollable-list">

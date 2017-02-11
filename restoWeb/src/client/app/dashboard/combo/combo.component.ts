@@ -44,7 +44,7 @@ export class ComboComponent implements OnInit {
     this.categorySelected =[];
     this.catToFill = [];
     this.categoryShowing = null;
-    this.fillNocat = false;
+    // this.fillNocat = false;
   }
 
 
@@ -213,7 +213,7 @@ export class ComboComponent implements OnInit {
   }
 
 fillCatSelected(catin: any, catId: any): void {
-  this.fillNocat = false;
+  // this.fillNocat = false;
   this.categoryShowing = catin;
 }
 
@@ -222,7 +222,7 @@ fillCatSelected(catin: any, catId: any): void {
 * store chosen category into array
 */
  saveCategory(catin: any, catId: any): void {
-      this.fillNocat = false;
+
       /////////// TO Refactor //////////
       var found = false;
       var catChoosen = catin.selectedTranslation.name;
@@ -232,14 +232,19 @@ fillCatSelected(catin: any, catId: any): void {
 
         this.categorySelected.push(catChoosen);
         document.getElementById(catId).className='btn btn-primary'; // change color of the chosen category
-        document.getElementById('e').className='btn btn-secondary'; // reset "no category" button to no color
+        //document.getElementById('e').className='btn btn-secondary'; // reset "no category" button to no color
         found = true;
       }else {
         // check if category is already in array, avoid duplicates
         for(var i = 0; i < this.categorySelected.length; i++ ) {
           if (catChoosen===this.categorySelected[i]) {
-            this.removeAllItemsFromCategory(catin);
+
+            this.removeAllItemsFromCategory(this.catToFill[this.catToFill.indexOf(catin)]);
             this.catToFill.splice(this.catToFill.indexOf(catin),1);
+            if(this.catToFill.length < 1) {
+                this.categoryShowing = null;
+            }
+
             this.categorySelected.splice(i, 1); // remove chosen category from array, act like a toggle
             document.getElementById(catId).className='btn btn-secondary'; // reset back to no color
             found = true;
@@ -256,14 +261,13 @@ fillCatSelected(catin: any, catId: any): void {
       ////////////////////////////////
   }
 
-  nocat(): void {
-      //this.fillNocat = true;
-      this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
-      this.resetCategoryCssClass(); // reset back to no color
-      document.getElementById('e').className='btn btn-primary';// change color of the no category button
-      this.catToFill = [];
-      // this.catToFill.push(this.noCat);
-  }
+  // nocat(): void {
+  //     this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
+  //     this.resetCategoryCssClass(); // reset back to no color
+  //     document.getElementById('e').className='btn btn-primary';// change color of the no category button
+  //     this.catToFill = [];
+  //     // this.catToFill.push(this.noCat);
+  // }
 
     /*
     * displaying the text depending on the price/discount type chosen
