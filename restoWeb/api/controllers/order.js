@@ -102,7 +102,7 @@ function notifyNewOrder(restaurantId, order) {
 }
 
 function retrieveRestaurantOrders(req, res) {
-  var restaurantId = req.body.restaurantId;
+  var restaurantId = extractRestaurantId(req);
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return new promise(function (fulfill, reject) {
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
@@ -121,7 +121,8 @@ function retrieveRestaurantOrders(req, res) {
 }
 
 function removeRestaurantsOrder(req, res) {
-  var restaurantKey = 'restaurantOrders:' + req.body.restaurantId;
+  var restaurantId = extractRestaurantId(req);
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
   return new promise(function (fulfill, reject) {
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
       client.get(restaurantKey, function (err, reply) {
@@ -166,9 +167,12 @@ function removeRestaurantsOrder(req, res) {
   });
 }
 
+function extractRestaurantId(req) {
+  return req.body ? req.body.restaurantId ? req.body.restaurantId : req.swagger.params.restaurantId.value : req.swagger.params.restaurantId.value;
+}
 
 function removeAllOrders(req, res) {
-  var restaurantId = req.body.restaurantId;
+  var restaurantId = extractRestaurantId(req);
 
   return new promise(function (fulfill, reject) {
     client.del('restaurantOrders:' + restaurantId, function (err, reply) {

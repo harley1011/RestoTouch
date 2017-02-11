@@ -41,6 +41,28 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Order"
+  /retrieveOrders{restaurantId}:
+    x-swagger-router-controller: order
+    get:
+      # used as the method name of the controller
+      parameters:
+        - name: restaurantId
+          type: number
+          in: path
+          required: true
+      operationId: retrieveOrders
+      description: Retrieves restaurants orders
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/PlaceOrderResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
   /s3ImageUploadUrl:
     x-swagger-router-controller: s3File
     get:

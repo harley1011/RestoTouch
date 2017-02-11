@@ -40,7 +40,9 @@ describe("The Order API", function () {
   });
 
   it("should retrieve a empty array with no orders", function (done) {
-    order.retrieveOrders(req, res).then(function (result) {
+    order.retrieveOrders({body: {
+      "restaurantId": 100100
+    }}, res).then(function (result) {
       var orders = res.obj.orders;
       expect(orders.length).toBe(0);
       done();
@@ -91,6 +93,7 @@ describe("The Order API", function () {
       });
     });
   });
+
 
   beforeEach(function () {
     req = {
