@@ -22,7 +22,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/home');
 
   });
-
+/*
   it("Navigate to the restaurant page", function () {
     browser.get(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
@@ -49,7 +49,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   })
-
+*/
   it("Create a valid food item", function () {
     browser.get(browser.baseUrl + 'dashboard/items');
     var addItemBtn = element(by.id('addItemBtn'));
@@ -70,6 +70,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var addIngredientGroupBtn = element(by.id('addIngredientGroupBtn'));
     addIngredientGroupBtn.click();
     element(by.name("ingredientGroupName")).sendKeys("Ingredient group test");
+    element(by.name("newIngredientName")).sendKeys("Ingredient name test");
     var confirmIngredientGroupBtn = element(by.id('confirmIngredientGroupBtn'));
     confirmIngredientGroupBtn.click();
 

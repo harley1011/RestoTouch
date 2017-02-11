@@ -50,12 +50,14 @@
                 </td>
               </tr>
               <tr class="td-size-input">
-                <td><input class="form-control" type="text" [(ngModel)]="item.newSize.selectedTranslation.name" name="sizeName"
+                <td><input class="form-control" type="text" [(ngModel)]="item.newSize.selectedTranslation.name" 
+                           name="sizeName"
                            placeholder="Size Name">
                 </td>
                 <td>
                   <div class="input-group"><span class="input-group-addon">$</span>
-                    <input class="form-control" #price="ngModel" id="price" [(ngModel)]="item.newSize.price" name="price"
+                    <input class="form-control" #price="ngModel" id="price" [(ngModel)]="item.newSize.price" 
+                           name="price"
                            step="0.01" type="number">
                   </div>
                 </td>
@@ -123,7 +125,7 @@
             <div class=" col-sm-2">
               <div class="form-group">
                 <label for="name">Ingredient Group Name</label>
-                <input type="text" class="form-control"
+                <input type="text" class="form-control" name="ingredientGroupName"
                        required
                        [(ngModel)]="newIngredientGroup.selectedTranslation.name" [ngModelOptions]="{standalone: true}">
               </div>
