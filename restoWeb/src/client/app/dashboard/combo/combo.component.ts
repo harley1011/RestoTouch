@@ -6,12 +6,14 @@ import {Language} from '../../shared/models/language';
 import { ItemService } from '../item/item.service';
 import { Item, ItemTranslations } from '../../shared/models/items';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
+import {CategoryService} from '../category/category.service';
+import {Category} from '../../shared/models/category';
 
 @Component({
 	moduleId: module.id,
 	selector: 'combo-cmp',
 	templateUrl: 'combo.component.html',
-  providers: [ComboService,ItemService],
+  providers: [ComboService,ItemService,CategoryService],
 })
 
 export class ComboComponent implements OnInit {
@@ -24,13 +26,14 @@ export class ComboComponent implements OnInit {
   fixedPrice = false;
   priceSelected = false;
   foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
-  categoryList: Array<string> = ['Appetizer', 'Main Meal', 'Dessert', 'Drink' ];
+  categories: Array<Category>;
   categorySelected: Array<string>;
   combos: Array<Combo>;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
               private comboService: ComboService,
+              private categoryService: CategoryService,
               private router: Router,
               private itemService: ItemService) {
     this.categorySelected =[];
@@ -48,9 +51,9 @@ export class ComboComponent implements OnInit {
         //this.getItems();
         this.create = true;
       }
-    });
 
-    console.warn(this.translationSelectComponent.getSelectedLanguage());
+      this.getCategories();
+    });
   }
 
   onSelectLanguage(language: Language) {
@@ -67,7 +70,6 @@ export class ComboComponent implements OnInit {
     this.comboService.getCombo(id).subscribe(
       combo => {
         this.combo = combo;
-        console.warn(this.combo);
         //this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.combo.items.forEach(item => {
@@ -122,14 +124,32 @@ export class ComboComponent implements OnInit {
       }
     );
   }
-}
 
+
+////// Handle categories
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.categories = categories;
+        categories.forEach(category => {
+          category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+        });
+        console.warn(categories);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+//////////////////////////////////////////////////////////////////////////
 /*
 * store chosen category into array
 */
-function saveCategory(catChoosen: string, catId: any): void {
+ saveCategory(catin: any, catId: any): void {
       var found = false;
-
+      console.warn(catin);
+      var catChoosen = catin.selectedTranslation.name;
       // add the first category to array
       if (this.categorySelected.length===0) {
         this.categorySelected.push(catChoosen);
@@ -152,28 +172,18 @@ function saveCategory(catChoosen: string, catId: any): void {
         this.categorySelected.push(catChoosen);
         document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
       }
-
-      // remove all elemenets from array if "No category" is choosen
-      if ('No Category'===catChoosen) {
-        this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
-        this.resetCategoryCssClass(); // reset back to no color
-        document.getElementById('e').className='btn btn-primary';// change color of the no category button
-      }
     }
 
-    /*
-    * reset color of the category to no color
-    */
-    function resetCategoryCssClass(){
-      for(var i = 0; i < this.categoryList.length; i++){
-        document.getElementById(i.toString()).className='btn btn-secondary';
-      }
+    nocat(): void {
+              this.categorySelected.splice(0, this.categorySelected.length); // remove everything from array
+        this.resetCategoryCssClass(); // reset back to no color
+        document.getElementById('e').className='btn btn-primary';// change color of the no category button
     }
 
     /*
     * displaying the text depending on the price/discount type chosen
     */
-    function priceTypeSelected(ptype: number): void {
+     priceTypeSelected(ptype: number): void {
       this.priceSelected = true;
       this.percDisc = false;
       this.fixedPrice = false;
@@ -186,3 +196,14 @@ function saveCategory(catChoosen: string, catId: any): void {
         this.fixedPrice = true;
       }
     }
+
+    /*
+    * reset color of the category to no color
+    */
+    resetCategoryCssClass(){
+      for(var i = 0; i < this.categories.length; i++){
+        document.getElementById(i.toString()).className='btn btn-secondary';
+      }
+    }
+}
+

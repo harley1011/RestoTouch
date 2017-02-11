@@ -1,14 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define("ComboCatFoodItem", {
     comboId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      unique: "comboItemCompositeIndex",
+      primaryKey: true
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: true
     },
     itemId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      unique: "comboItemCompositeIndex",
+      primaryKey: true
     }
 	});
 };

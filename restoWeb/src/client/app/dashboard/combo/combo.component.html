@@ -61,10 +61,10 @@
         <div class="col-md-10 bottomSpacing">
             <h5>Category list:</h5>
             <div class="btn-group" data-toggle="buttons" role="group">
-              <label *ngFor="let category of categoryList; let i = index" [attr.id]=i class="btn btn-secondary">
-                <input type="checkbox" (click)="saveCategory(category, i)"> {{ category }}
+              <label *ngFor="let category of categories; let i = index" [attr.id]=i class="btn btn-secondary">
+                <input type="checkbox" (click)="saveCategory(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
               </label>
-              <input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="saveCategory('No Category', 'e')">
+              <input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="nocat()">
             </div>
         </div>
       </div>
