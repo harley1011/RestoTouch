@@ -6,6 +6,7 @@ import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
 import { MenuPage } from "../pages/menu/menu";
 import { IngredientGroupPage } from "../pages/ingredient-group/ingredient-group";
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
 import { AuthService } from '../pages/services/auth.service';
@@ -21,6 +22,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LanguageService } from '../pages/services/language.service';
 import { OrderService } from '../pages/services/order.service';
+import { SwipeVertical } from '../pages/welcome/swipeVertical.directive';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/languages', '.json');
@@ -37,7 +39,9 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     SettingsPage,
     LoginPage,
-    RestaurantListPage
+    HomePage,
+    RestaurantListPage,
+    SwipeVertical
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -58,6 +62,7 @@ export function createTranslateLoader(http: Http) {
     WelcomePage,
     SettingsPage,
     LoginPage,
+    HomePage,
     RestaurantListPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},LanguageService, OrderService, AuthService, ApiEndpointService, RestaurantService, ItemService, MenuService, CategoryService , AuthHttpService, TranslateService]
