@@ -38,7 +38,6 @@ export class UnpaidOrdersComponent implements OnInit {
             this.order.orderedItems.forEach(orderedItem => {
               orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });
-            console.log(this.order);
             this.orders.push(this.order);
           });
         }
@@ -47,9 +46,14 @@ export class UnpaidOrdersComponent implements OnInit {
 
   onSelectLanguage(language: Language) {
     this.orders.forEach(order => {
-      this.order.orderedItems.forEach(orderedItem => {
+      order.orderedItems.forEach(orderedItem => {
         orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === language.languageCode);
       });
     });
+  }
+
+  paid(order: Order) {
+    let i = this.orders.indexOf(order);
+    this.orders.splice(i, 1);
   }
 }
