@@ -5,5 +5,8 @@ export const UnpaidOrdersRoutes: Route[] = [
   	{
     	path: 'unpaidOrders',
     	component: UnpaidOrdersComponent
+  	}, {
+	    path: 'unpaidOrders/:id',
+	  	component: UnpaidOrdersComponent
   	}
 ];

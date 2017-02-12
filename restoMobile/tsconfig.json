@@ -13,7 +13,6 @@
     "sourceMap": true,
     "target": "es5",
     "types": [
-      "jasmine"
     ]
   },
   "include": [

@@ -29,12 +29,12 @@ export class OrderNotifierService {
       });
 
       //todo changed restaurantId to the one selected
-      this.socket.emit('orderSubscribe', {restaurantId: 100, token: this.authService.loginToken()});
+      this.socket.emit('orderSubscribe', {restaurantId: 1, token: this.authService.loginToken()});
     });
   }
 
   disconnectFromOrderNotifier() {
     //todo changed restaurantId to the one selected
-    this.socket.emit('orderUnsubscribe', {restaurantId: 100, token: this.authService.loginToken()})
+    this.socket.emit('orderUnsubscribe', {restaurantId: 1, token: this.authService.loginToken()})
   }
 }

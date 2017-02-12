@@ -1,4 +1,4 @@
-import { async, ComponentFixture } from '@angular/core/testing';
+/*import { async, ComponentFixture } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { LoginPage } from './login';
 
@@ -25,8 +25,9 @@ describe('Pages: LoginPage', () => {
   afterEach(() => {
     fixture.destroy();
   });
-  */
+  
   it('should work with dummy test', () => {
     expect(3).toBe(3);
   });
 });
+*/
