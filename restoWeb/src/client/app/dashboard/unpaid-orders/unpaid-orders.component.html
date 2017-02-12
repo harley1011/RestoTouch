@@ -6,19 +6,18 @@
   </div>
   <div class="manage-list-container">
     <div class="row">
-      <div class="col-sm-3"> <!-- Going to repeat '*ngFor let order of orders' -->
+      <div *ngFor="let order of orders" class="col-sm-3">
         <div class="card card-primary card-inverse">
           <div class="card-block">
-            <h4 class="card-title">Order #5</h4>
-            <button class="btn btn-success">Paid</button> <!-- Will call function 'paid(order)' to save order to db and remove from list/cache -->
+            <h4 class="card-title">Order: {{order.id}}</h4>
+            <button class="btn btn-success">Paid</button>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Item 1 M x2</li> <!-- Will repeat for each item in order '*ngFor let item of order.items' -->
-            <li class="list-group-item">Item 2 L x1</li>
-            <li class="list-group-item">Item 3 S x5</li>
+            <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
+            {{orderedItem.item.translations[0].name}}</li>
           </ul>
           <div class="card-block">
-            <h6 class="card-title">Total: 8$</h6>
+            <h6 class="card-title">Total: {{order.total}}$</h6>
           </div>
         </div>
       </div>
