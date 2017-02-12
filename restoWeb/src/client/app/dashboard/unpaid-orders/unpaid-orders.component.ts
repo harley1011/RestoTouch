@@ -35,10 +35,21 @@ export class UnpaidOrdersComponent implements OnInit {
           this.id = params['id'];
           this.orderNotifierService.connectToOrderNotifier(this.id).subscribe((order: any) => { // As a test
             this.order = JSON.parse(order);
+            this.order.orderedItems.forEach(orderedItem => {
+              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+            });
             console.log(this.order);
             this.orders.push(this.order);
           });
         }
+    });
+  }
+
+  onSelectLanguage(language: Language) {
+    this.orders.forEach(order => {
+      this.order.orderedItems.forEach(orderedItem => {
+        orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === language.languageCode);
+      });
     });
   }
 }
