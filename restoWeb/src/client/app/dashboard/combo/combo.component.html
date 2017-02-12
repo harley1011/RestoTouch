@@ -101,9 +101,9 @@
       <div class="col-md-6">
         <label>Available Food Items</label>
         <ul class="list-group scrollable-list">
-          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}}
+          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
             <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
-                (click)="addItemToCategory(item)"></i>
+                (click)="addItemToCategory(item,itemSize)"></i>
           </li>
         </ul>
         <div [hidden]="items.length != 0">
@@ -112,9 +112,9 @@
       </div>
 
       <div class="col-md-6">
-        <label>Food Items In Category {{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }}</label>
+        <label>Food Items In Category {{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }} </label>
         <ul class="list-group scrollable-list">
-          <li *ngFor="let item of categoryShowing?.items" class="list-group-item"> {{item.selectedTranslation?.name}}
+          <li *ngFor="let item of categoryShowing?.items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
             <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
                 (click)="removeItemFromCategory(item)"></i>
           </li>

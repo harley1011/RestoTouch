@@ -5,6 +5,7 @@ import {Combo, ComboTranslations} from '../../shared/models/combo';
 import {Language} from '../../shared/models/language';
 import { ItemService } from '../item/item.service';
 import { Item, ItemTranslations } from '../../shared/models/items';
+import {Size} from '../../shared/models/size';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 import {CategoryService} from '../category/category.service';
 import {Category} from '../../shared/models/category';
@@ -152,33 +153,26 @@ export class ComboComponent implements OnInit {
   }
 
 	getItems(): void {
+    this.items = [];
+
 		this.itemService.getItems().subscribe(
-			items => {
-				let exists = false;
-				let item: Item;
-				let category: Category;
-				for (var i = 0; i < items.length; i++) {
-					item = items[i];
-					// for (var j = 0; j < item.categories.length; j++) {
-					// 	category = item.categories[j];
-					// 	if (category.id === this.category.id) {
-					// 		exists = true;
-					// 		break;
-					// 	}
-					// }
+			itemsList => {
+        itemsList.forEach( item => {
+          let parentItem =  item;
 
-					// if (exists) {
-					// 	exists = false;
-					// 	items.splice(i--, 1);
-					// 	continue;
-					// }
-					item.selectedTranslation = item.translations[0];
-          console.warn(item);
-				}
+          // Clean up
+          parentItem.selectedTranslation = item.translations[0];
+          parentItem.categories = [];
 
-        this.items = items;
+          // Split item by size
+          parentItem.sizes.forEach(itemSize => {
+              let tempItem:Item = Object.assign({},parentItem);
+              tempItem.sizes = [];
+              tempItem.sizes.push(itemSize);
+              this.items.push(tempItem);
+          });
+        });
         console.warn(this.items);
-				//this.items.sort(compareItem);
     	},
       error =>  {
         console.log(error);
@@ -187,7 +181,7 @@ export class ComboComponent implements OnInit {
 	}
 
 
-  addItemToCategory(item: Item): void {
+  addItemToCategory(item: Item, itemSize:Size): void {
     this.items.splice(this.items.indexOf(item), 1);
     this.categoryShowing.items.push(item);
 
