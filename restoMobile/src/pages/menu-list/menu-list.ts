@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { MenuPage } from '../menu/menu';
 import { WelcomePage } from '../welcome/welcome';
 import { Menu } from '../shared/models/menu';
+import { Language } from '../shared/models/language';
 import { MenuService } from '../services/menu.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
@@ -18,7 +19,8 @@ import { AuthService } from '../services/auth.service';
 export class MenuListPage {
     selectedMenu: any;
     selectedRestaurant: any;
-    selectedLanguage: any;
+    selectedLanguage: Language = new Language('en','selectedLanguage','',0);
+    
     
     numOfMenus: number;
     menus: Menu[];
@@ -35,7 +37,7 @@ export class MenuListPage {
          translate.setDefaultLang('en');
         this.selectedRestaurant = navParams.get('item');
 //        this.selectedMenu = navParams.get('menu');
-//        this.selectedLanguage = navParams.get('language');
+//        this.selectedLanguage = this.translate.currentLang;
 //        this.selectedRestaurant.Menus.forEach( menu => {
 //          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
 
@@ -43,19 +45,18 @@ export class MenuListPage {
     }
     
  ionViewDidLoad() {
-    this.getMenus();
+    this.getMenus();                            
   }
 
 getMenus(): void {
+    this.restaurant = this.selectedRestaurant;
     this.menuService.getMenus().subscribe(
-      menus => {
         
+      menus => {
         menus.forEach(menu => {
-//          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode
-            menu.selectedTranslation = menu.translations.find(translation => translation.languageCode === 'en'
-            );
+          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
         });
-        this.restaurant = this.selectedRestaurant;
+        
         this.menus = menus;
         this.numOfMenus = this.menus.length;
         this.menusInRestaurant = new Array(this.menus.length);
@@ -71,6 +72,8 @@ getMenus(): void {
             if (this.menus[i].id === this.restaurant.Menus[j].id) {
               this.menusInRestaurant[i] = true;
               this.numOfMenus++;
+               console.log(this.restaurant.Menus[j]);
+
               break;
             }
           }
