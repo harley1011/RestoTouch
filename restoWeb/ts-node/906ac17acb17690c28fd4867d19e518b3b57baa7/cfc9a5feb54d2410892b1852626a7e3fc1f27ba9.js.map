@@ -1,0 +1,1 @@
+{"version":3,"file":"/Users/Samer/Desktop/RestoTouch/restoWeb/tools/utils/project/sample_util.ts","sources":["/Users/Samer/Desktop/RestoTouch/restoWeb/tools/utils/project/sample_util.ts"],"names":[],"mappings":";AAAA;AAEA,CAAC;AAFe,cAAM,SAErB,CAAA","sourcesContent":["export function myUtil() {\n  // Code goes here\n}\n"]}

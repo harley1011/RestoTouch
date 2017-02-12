@@ -3,7 +3,7 @@
     <h2>{{ 'foodItem.titleManage' | translate }}</h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <div class="manage-button">
-      <button (click)="add()" class="btn btn-success btn-green">{{ 'foodItem.addFoodItemButtonManage' | translate }}
+      <button id="addItemBtn" (click)="add()" class="btn btn-success btn-green">{{ 'foodItem.addFoodItemButtonManage' | translate }}
       </button>
     </div>
     <hr>

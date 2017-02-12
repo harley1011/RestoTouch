@@ -7,7 +7,8 @@
     "passwordRequiredAlert": "Le mot de passe est requis",
     "emailHolderFieldForm": "Courrier électronique",
     "passwordHolderFieldForm": "Mot de passe",
-    "logButton": "Se connecter"
+    "logButton": "Se connecter",
+    "cashierMode": "Mode d'employé"
   },
 
   "logout": {
@@ -16,7 +17,8 @@
     "formTitle": "Oups",
     "formSousTitle": "Déconnecté par erreur?",
     "formTitle2": "Se connecter à nouveau:",
-    "formLogButton": "Reconnecter"
+    "formLogButton": "Reconnecter",
+    "cashierMode": "Mode d'employé"
   },
 
   "registration": {
@@ -50,7 +52,8 @@
     "currentSales": "Ventes en cours: $",
     "profileTopnav": "Profil",
     "settingTopnav": "Paramètres",
-    "logoutTopnav": "Se Déconnecter"
+    "logoutTopnav": "Se Déconnecter",
+    "cashierMode": "Mode employé"
   },
 
   "restaurant":{
@@ -184,7 +187,12 @@
     "repeatPassword": "Confirmer nouveau mot de passe",
     "firstNameAlert": "Vous devez entrer votre prénom.",
     "lastNameAlert": "Vous dever entrer votre nom de famille.",
-    "emailAlert": "Vous devez entrer un courriel valide."
+    "emailAlert": "Vous devez entrer un courriel valide.",
+    "employeePassword": "Mot de passe d'employé"
+  },
+
+  "unpaidOrders": {
+    "title": "Liste de commandes non-payées"
   }
 
 }

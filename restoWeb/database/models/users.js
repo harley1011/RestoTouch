@@ -7,5 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     password: DataTypes.STRING,
     salt: DataTypes.STRING,
     emailVerified: {type: DataTypes.BOOLEAN, defaultValue: false},
+    isEmployee: {type: DataTypes.BOOLEAN, defaultValue: false},
+    employeePassword: DataTypes.STRING,
+    employeeSalt: DataTypes.STRING,
   });
 };

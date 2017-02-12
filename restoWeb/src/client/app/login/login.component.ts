@@ -26,13 +26,23 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initLanguages();
+    this.user.isEmployee = false;
   }
 
   onSubmit() {
-    this.authService.authenticateUser(this.user)
+    if(this.user.isEmployee) {
+      this.user.employeePassword = this.user.password;
+      this.authService.authenticateUser(this.user)
+      .subscribe(generalResponse =>
+          this.router.navigate(['/dashboard/restaurants'])
+        , error => this.errorMessage = error);
+    }
+    else {
+      this.authService.authenticateUser(this.user)
       .subscribe(generalResponse =>
           this.router.navigate(['/dashboard/home'])
         , error => this.errorMessage = error);
+    }
   }
 
   initLanguages():void {

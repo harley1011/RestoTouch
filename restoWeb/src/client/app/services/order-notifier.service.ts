@@ -19,7 +19,7 @@ export class OrderNotifierService {
     }
   }
 
-  connectToOrderNotifier() {
+  connectToOrderNotifier(id: number) {
     return new Observable((observer: Observer<any>) => {
 
       this.socket = io.connect(this.socketEndpoint);
@@ -27,14 +27,11 @@ export class OrderNotifierService {
       this.socket.on('newOrder', (data: any) => {
         observer.next(data);
       });
-
-      //todo changed restaurantId to the one selected
-      this.socket.emit('orderSubscribe', {restaurantId: 100, token: this.authService.loginToken()});
+      this.socket.emit('orderSubscribe', {restaurantId: id, token: this.authService.loginToken()});
     });
   }
 
-  disconnectFromOrderNotifier() {
-    //todo changed restaurantId to the one selected
-    this.socket.emit('orderUnsubscribe', {restaurantId: 100, token: this.authService.loginToken()})
+  disconnectFromOrderNotifier(id: number) {
+    this.socket.emit('orderUnsubscribe', {restaurantId: id, token: this.authService.loginToken()})
   }
 }

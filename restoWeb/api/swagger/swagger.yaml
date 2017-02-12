@@ -840,6 +840,10 @@ definitions:
         type: string
       passwordConfirm:
         type: string
+      isEmployee:
+        type: boolean
+      employeePassword:
+        type: string
     required:
       - firstName
       - lastName
