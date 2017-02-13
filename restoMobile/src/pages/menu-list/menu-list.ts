@@ -54,7 +54,7 @@ getMenus(): void {
         
       menus => {
         menus.forEach(menu => {
-          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
+          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode === this.translate.currentLang);
         });
         
         this.menus = menus;
