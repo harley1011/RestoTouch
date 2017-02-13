@@ -101,13 +101,16 @@ export class ComboComponent implements OnInit {
   }
 
   add(): void {
-    // calling add comboService
+    this.storeItemsInCombo();
+
+    //calling add comboService
     this.comboService.addCombo(this.combo).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/combos']);
+        //this.router.navigate(['/dashboard/combos']);
       },
       error => {
         this.errorMessage = <any> error;
+        console.log(this.errorMessage);
       }
     );
   }
@@ -115,7 +118,7 @@ export class ComboComponent implements OnInit {
   update(): void {
     this.comboService.updateCombo(this.combo).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/combos']);
+        //this.router.navigate(['/dashboard/combos']);
       },
       error => {
         this.errorMessage = <any>error;
@@ -182,6 +185,9 @@ export class ComboComponent implements OnInit {
 
 
   addItemToCategory(item: Item): void {
+    item.categories = [];
+    item.categories.push(this.categoryShowing);
+
     this.items.splice(this.items.indexOf(item), 1);
     this.categoryShowing.items.push(item);
     console.warn(this.catToFill);
@@ -208,6 +214,18 @@ export class ComboComponent implements OnInit {
 fillCatSelected(catin: any, catId: any): void {
   // this.fillNocat = false;
   this.categoryShowing = catin;
+}
+
+storeItemsInCombo(): void {
+  this.combo.items = [];
+  console.warn("TOOTOTT");
+  console.warn(this.catToFill);
+
+  this.catToFill.forEach(cat => {
+    cat.items.forEach(item => {
+        this.combo.items.push(item);
+    });
+  });
 }
 
 //////////////////////////////////////////////////////////////////////////
