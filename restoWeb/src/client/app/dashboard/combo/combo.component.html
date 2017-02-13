@@ -103,7 +103,7 @@
         <ul class="list-group scrollable-list">
           <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
             <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
-                (click)="addItemToCategory(item,itemSize)"></i>
+                (click)="addItemToCategory(item)"></i>
           </li>
         </ul>
         <div [hidden]="items.length != 0">

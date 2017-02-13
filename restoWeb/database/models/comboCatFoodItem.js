@@ -13,6 +13,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       unique: "comboItemCompositeIndex",
       primaryKey: true
+    },
+    itemSizesId: {
+      type: DataTypes.INTEGER,
+      unique: "comboItemCompositeIndex",
+      primaryKey: true
     }
 	});
 };

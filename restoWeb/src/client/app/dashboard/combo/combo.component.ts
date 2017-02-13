@@ -84,6 +84,7 @@ export class ComboComponent implements OnInit {
         this.combo.items.forEach(item => {
           item.selectedTranslation = item.translations[0];
         });
+        console.warn(combo);
       },
       error => {
         this.errorMessage = <any>error;
@@ -172,7 +173,6 @@ export class ComboComponent implements OnInit {
               this.items.push(tempItem);
           });
         });
-        console.warn(this.items);
     	},
       error =>  {
         console.log(error);
@@ -181,10 +181,10 @@ export class ComboComponent implements OnInit {
 	}
 
 
-  addItemToCategory(item: Item, itemSize:Size): void {
+  addItemToCategory(item: Item): void {
     this.items.splice(this.items.indexOf(item), 1);
     this.categoryShowing.items.push(item);
-
+    console.warn(this.catToFill);
 		//this.items.sort(compareItem);
 		//this.category.items.sort(compareItem);
   }
@@ -198,7 +198,6 @@ export class ComboComponent implements OnInit {
   }
 
   removeAllItemsFromCategory(catin: Category): void {
-    console.log("REMOVEVEEEEE RERRHTIN");
     console.warn(catin.items);
     catin.items.forEach(item => {
       this.items.push(item);
