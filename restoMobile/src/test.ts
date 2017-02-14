@@ -1,22 +1,27 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
 import './polyfills.ts';
-
 import 'zone.js/dist/long-stack-trace-zone';
-import 'zone.js/dist/proxy.js';
-import 'zone.js/dist/sync-test';
-import 'zone.js/dist/jasmine-patch';
 import 'zone.js/dist/async-test';
+import 'zone.js/dist/sync-test';
+import 'zone.js/dist/proxy.js';
+import 'zone.js/dist/jasmine-patch';
 import 'zone.js/dist/fake-async-test';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, Platform } from 'ionic-angular';
-import { ConfigMock, NavMock , PlatformMock } from './mocks';
+import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
+import { ConfigMock, NavMock, PlatformMock } from './mocks';
 import { TranslateModule} from 'ng2-translate/ng2-translate';
+import { AuthHttpService } from './pages/services/auth-http.services';
 import { AuthService } from './pages/services/auth.service';
 import { ApiEndpointService } from './pages/services/api-endpoint.service';
+import { CategoryService } from './pages/services/category.service';
+import { ItemService } from './pages/services/item.service';
+import { MenuService } from './pages/services/menu.service';
+import { RestaurantService } from './pages/services/restaurant.service';
+import { LanguageService } from './pages/services/language.service';
 
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -63,7 +68,9 @@ export class TestUtils {
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
-        AuthService, ApiEndpointService,
+        {provide: NavParams, useClass: NavMock},
+        AuthService, ApiEndpointService, AuthHttpService,
+        CategoryService, ItemService, MenuService, RestaurantService, LanguageService,
       ],
       imports: [
         TranslateModule.forRoot(),

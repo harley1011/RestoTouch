@@ -1,6 +1,7 @@
 /* tslint:disable */
 // IONIC:
 
+import any = jasmine.any;
 export class ConfigMock {
 
   public get(): any {
@@ -43,6 +44,9 @@ export class NavMock {
       },
     };
   }
+
+  public get(param: string): any { } //TODO check it out !
+  public getMenu(param: number): any { } //TODO check it out!
 
   public setRoot(): any {
     return true;

@@ -71,4 +71,15 @@ describe('Pages: LoginPage', () => {
     expect(instance.translate.currentLang).toEqual('en');
   });
 
+/*
+  it('correctly switch to the correct language', () => { //TODO
+    instance.switchLanguage();
+    expect(instance.translate.get).toEqual('fr');
+    /!*
+    instance.switchLanguage();
+    expect(instance.translate.currentLang).toEqual('en');
+    *!/
+  });
+*/
+
 });
