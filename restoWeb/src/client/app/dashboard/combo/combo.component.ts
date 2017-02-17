@@ -56,7 +56,7 @@ export class ComboComponent implements OnInit {
         this.create = false;
       } else {
         //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
-        let translation = new ComboTranslations('', '', 'en');
+        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
         this.combo = new Combo([translation], translation, []);
         this.getItems();
         this.create = true;
