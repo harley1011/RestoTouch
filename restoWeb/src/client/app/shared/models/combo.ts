@@ -1,11 +1,13 @@
 import { Language } from './language';
 import { Item } from './items';
+import { Category } from './category';
 
 export class Combo {
   constructor (
     public translations: Array<ComboTranslations>,
     public selectedTranslation: ComboTranslations,
-    public items: Array<Item>,
+    public categories: Array<Category>,
+   // public items: Array<Item>,
     public id?: number
   ) { }
 }

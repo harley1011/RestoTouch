@@ -1,7 +1,7 @@
 <div class="manage-content">
   <div class="manage-header">
-    <h2>{{ combo?.id ? ('combo.titleEdit' | translate) : ('combo.titleCreate' | translate) }}</h2>
-
+    <h2>{{ combo?.id ? ('combo.titleEdit' | translate) : ('combo.titleCreate' | translate) }}
+    </h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
@@ -86,18 +86,19 @@
 
     <!-- SELECTED CAT ---->
       <div *ngIf="catToFill?.length > 0" class="row">
-        <div class="col-md-10 bottomSpacing">
+        <div class="col-md-10">
             <h5>Selected categories:</h5>
             <div class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let category of catToFill; let i = index" [attr.id]=i class="btn btn-secondary">
                 <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
               </label>
             </div>
+          <br/>
         </div>
       </div>
       <!--- EO SELECTED CAT -->
 
-    <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row">
+    <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row bottomSpacing">
       <div class="col-md-6">
         <label>Available Food Items</label>
         <ul class="list-group scrollable-list">

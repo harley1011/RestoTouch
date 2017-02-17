@@ -27,7 +27,7 @@ export class ComboComponent implements OnInit {
   percDisc = false;
   fixedPrice = false;
   priceSelected = false;
-  foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
+  //foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
   categories: Array<Category>;
   categoryShowing: Category;
   categorySelected: Array<string>;
@@ -55,7 +55,8 @@ export class ComboComponent implements OnInit {
         this.getCombo(params['id']);
         this.create = false;
       } else {
-        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+        //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
+        let translation = new ComboTranslations('', '', 'en');
         this.combo = new Combo([translation], translation, []);
         this.getItems();
         this.create = true;
@@ -81,9 +82,9 @@ export class ComboComponent implements OnInit {
         this.combo = combo;
         this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        this.combo.items.forEach(item => {
-          item.selectedTranslation = item.translations[0];
-        });
+        //this.combo.items.forEach(item => {
+        //  item.selectedTranslation = item.translations[0];
+        //});
         console.warn(combo);
       },
       error => {
@@ -106,7 +107,7 @@ export class ComboComponent implements OnInit {
     //calling add comboService
     this.comboService.addCombo(this.combo).subscribe(
       generalResponse => {
-        //this.router.navigate(['/dashboard/combos']);
+        this.router.navigate(['/dashboard/combos']);
       },
       error => {
         this.errorMessage = <any> error;
@@ -146,7 +147,7 @@ export class ComboComponent implements OnInit {
         this.categories = categories;
         categories.forEach(category => {
           category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-          category.items = [];
+          category.items = []; // wipe existing items
         });
 
       },
@@ -186,7 +187,7 @@ export class ComboComponent implements OnInit {
 
   addItemToCategory(item: Item): void {
     item.categories = [];
-    item.categories.push(this.categoryShowing);
+    //item.categories.push(this.categoryShowing);
 
     this.items.splice(this.items.indexOf(item), 1);
     this.categoryShowing.items.push(item);
@@ -217,14 +218,14 @@ fillCatSelected(catin: any, catId: any): void {
 }
 
 storeItemsInCombo(): void {
-  this.combo.items = [];
-  console.warn("TOOTOTT");
-  console.warn(this.catToFill);
+  var tempCat: Category;
 
   this.catToFill.forEach(cat => {
-    cat.items.forEach(item => {
-        this.combo.items.push(item);
-    });
+    // tempCat=cat;
+    // cat.items.forEach(item => {
+    //   tempCat.items.push(item);
+    // });
+    this.combo.categories.push(cat);
   });
 }
 
@@ -280,9 +281,9 @@ storeItemsInCombo(): void {
   //     // this.catToFill.push(this.noCat);
   // }
 
-    /*
-    * displaying the text depending on the price/discount type chosen
-    */
+  /*
+  * displaying the text depending on the price/discount type chosen
+  */
   priceTypeSelected(ptype: number): void {
       this.priceSelected = true;
       this.percDisc = false;

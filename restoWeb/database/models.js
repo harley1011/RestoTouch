@@ -98,10 +98,10 @@ userModel.sync({force: dropTable}).then(function () {
     });
     comboTranslationModel.sync({force: dropTable});
 
-    //comboModel.hasMany(comboCatFoodItemModel, {
-      //onDelete: 'cascade',
-      //foreignKey: 'comboId'
-    //});
+   // comboModel.hasMany(comboCatFoodItemModel, {
+   //   onDelete: 'cascade',
+   //   foreignKey: 'comboId'
+   // });
     comboCatFoodItemModel.sync({force: dropTable}).then(function(){
       itemModel.belongsToMany(comboModel, {
         as: 'combos',
@@ -115,14 +115,14 @@ userModel.sync({force: dropTable}).then(function () {
         onDelete: 'cascade',
         foreignKey: "comboId"
       });
-      itemSizesModel.belongsToMany(comboModel, {
+      categoryModel.belongsToMany(comboModel, {
         as: 'combos',
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
-        foreignKey: "itemId"
+        foreignKey: "categoryId"
       });
-      comboModel.belongsToMany(itemSizesModel, {
-        as: 'itemSizes',
+      comboModel.belongsToMany(categoryModel, {
+        as: 'categories',
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
         foreignKey: "comboId"

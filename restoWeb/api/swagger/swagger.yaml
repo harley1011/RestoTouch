@@ -997,10 +997,14 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/ComboTranslations"
-      items:
+      categories:
         type: array
         items:
-          "$ref": "#/definitions/Item"
+          "$ref": "#/definitions/Category"
+#      items:
+#        type: array
+#        items:
+#          "$ref": "#/definitions/Item"
   ComboTranslations:
     type: object
     properties:

@@ -1,11 +1,13 @@
 var models = require("../../database/models");
 var comboModel;
 var comboTranslationModel;
+var comboCatFoodItemModel;
 var categoryModel;
 var categoryTranslationModel;
 var itemModel;
 var itemTranslationModel;
-var itemCategoryModel;
+var itemSizeModel;
+var itemSizeTranslationModel;
 var _ = require('lodash');
 
 setDatabase(models);
@@ -26,6 +28,8 @@ function setDatabase(m) {
   categoryModel = models.getCategoryModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
+  itemSizesModel = models.getItemSizesModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
   itemTranslationModel = models.getItemTranslationModel();
   comboCatFoodItemModel = models.getComboCatFoodItemModel();
 }
@@ -82,7 +86,7 @@ function getCombo(req, res) {
 
 // POST /combo
 function addCombo(req, res) {
-
+  console.log("have u reach me?");
   var combo = req.body;
   combo.userId = req.userId;
 
@@ -92,14 +96,24 @@ function addCombo(req, res) {
       as: 'translations'
     }]
   }).then(function (result) {
+    console.warn('result back from swagger : ', result);
     var itemComboAssociations = [];
-    combo.items.forEach(function (item) {
-      itemComboAssociations.push({itemId: item.id, comboId: result.id, categoryId: null}); /// TODO CHANGE categoryId
-    })
-    comboCatFoodItemModel.bulkCreate(itemComboAssociations);
+    // combo.items.forEach(function (item) {
+    //   itemComboAssociations.push({comboId: result.id, categoryId: '1', itemId: '1', itemSizesId: '1' });
+    // })
+    // comboCatFoodItemModel.bulkCreate(itemComboAssociations)
+      combo.categories.forEach(function (cat) {
+          cat.items.forEach(function(item){
+            console.log('hellloooo anyone here?');
+            console.warn(item);
+            itemComboAssociations.push({comboId: result.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
+          });
+       });
+    comboCatFoodItemModel.bulkCreate(itemComboAssociations)
     return res.json({success: 1, description: "New Combo added"});
   });
 }
+
 
 // DELETE /combo/{id}
 function deleteCombo(req, res) {
@@ -137,12 +151,12 @@ function updateCombo(req, res) {
 
     var itemComboAssociations = [];
     itemsToAdd.forEach(function (item) {
-      itemComboAssociations.push({itemId: item.id, comboId: oldCombo.id});
+      itemComboAssociations.push({comboId: oldCombo.id, categoryId: item.categories.id, itemId: item.id, itemSizesId: item.sizes.id});
     });
     comboCatFoodItemModel.bulkCreate(itemComboAssociations);
 
     itemsToRemove.forEach(function (item) {
-      comboCatFoodItemModel.destroy({where: {itemId: item.id, comboId: oldCombo.id}});
+      comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: item.categories.id, itemId: item.id, itemSizesId: item.sizes.id}});
     });
 
     for (var prop in combo) {
