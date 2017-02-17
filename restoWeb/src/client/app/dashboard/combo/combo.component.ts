@@ -102,7 +102,7 @@ export class ComboComponent implements OnInit {
   }
 
   add(): void {
-    this.storeItemsInCombo();
+    this.combo.categories = this.catToFill;
 
     //calling add comboService
     this.comboService.addCombo(this.combo).subscribe(
@@ -215,18 +215,6 @@ export class ComboComponent implements OnInit {
 fillCatSelected(catin: any, catId: any): void {
   // this.fillNocat = false;
   this.categoryShowing = catin;
-}
-
-storeItemsInCombo(): void {
-  var tempCat: Category;
-
-  this.catToFill.forEach(cat => {
-    // tempCat=cat;
-    // cat.items.forEach(item => {
-    //   tempCat.items.push(item);
-    // });
-    this.combo.categories.push(cat);
-  });
 }
 
 //////////////////////////////////////////////////////////////////////////
