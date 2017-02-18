@@ -98,22 +98,22 @@ userModel.sync({force: dropTable}).then(function () {
     });
     comboTranslationModel.sync({force: dropTable});
 
-   // comboModel.hasMany(comboCatFoodItemModel, {
-   //   onDelete: 'cascade',
-   //   foreignKey: 'comboId'
-   // });
+    // comboModel.hasMany(comboCatFoodItemModel, {
+    //   onDelete: 'cascade',
+    //   foreignKey: 'comboId'
+    // });
     comboCatFoodItemModel.sync({force: dropTable}).then(function(){
-      itemModel.belongsToMany(comboModel, {
-        as: 'combos',
+      itemModel.belongsToMany(categoryModel, {
+        as: 'categories',
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
         foreignKey: "itemId"
       });
-      comboModel.belongsToMany(itemModel, {
+      categoryModel.belongsToMany(itemModel, {
         as: 'items',
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
-        foreignKey: "comboId"
+        foreignKey: "categoryId"
       });
       categoryModel.belongsToMany(comboModel, {
         as: 'combos',
@@ -126,6 +126,30 @@ userModel.sync({force: dropTable}).then(function () {
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
         foreignKey: "comboId"
+      });
+      itemModel.belongsToMany(itemSizesModel, {
+        as: 'comboItemSize',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemId"
+      });
+      itemSizesModel.belongsToMany(itemModel, {
+        as: 'comboItem',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemSizesId"
+      });
+      categoryModel.belongsToMany(itemSizesModel, {
+        as: 'comboItemSize',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "categoryId"
+      });
+      itemSizesModel.belongsToMany(categoryModel, {
+        as: 'categories',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemSizesId"
       });
     });
 

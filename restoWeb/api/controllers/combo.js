@@ -42,13 +42,13 @@ function getAllCombos(req, res) {
     include: [{
       model: comboTranslationModel,
       as: 'translations'
-    }, {
-      model: itemModel,
-      as: 'items',
-      include: [{
-        model: itemTranslationModel,
-        as: 'translations'
-      }]
+    // }, {
+    //   model: itemModel,
+    //   as: 'items',
+    //   include: [{
+    //     model: itemTranslationModel,
+    //     as: 'translations'
+    //   }]
     }]
   }).then(function (combos) {
     return res.json({combos: combos});
@@ -59,40 +59,38 @@ function getAllCombos(req, res) {
 function getCombo(req, res) {
     console.log('combo with id:');
   var id = req.swagger.params.id.value;
+  console.log(comboCatFoodItemModel.itemSizesId);
   return comboModel.findOne({
     where: {
       id: id,
       userId: req.userId
-    },
-    include: [{
-      model: comboTranslationModel,
-      as: 'translations'
+    }, include: [{
+        model: comboTranslationModel,
+        as: 'translations'
     }, {
-      model: categoryModel,
-      as: 'categories',
+        model: categoryModel,
+        as: 'categories',
         include: [{
-          model: categoryTranslationModel,
-          as: 'translations'
-        }, {
-          model: itemModel,
-          as: 'items',
+            model: categoryTranslationModel,
+            as: 'translations'
+          }, {
+            model: itemModel,
+            as: 'items',
             include: [{
-              model: itemTranslationModel,
-              as: 'translations'
-            }, {
-              model: itemSizeModel,
-              as: 'sizes',
-                include: [{
-                  model: itemSizeTranslationModel,
-                  as: 'translations'
+                model: itemTranslationModel,
+                as: 'translations'
+          }, {
+            model: itemSizeModel,
+            as: 'sizes',
+            include: [{
+                model: itemSizeTranslationModel,
+                as: 'translations'
               }]
-           }]
-        }]
+          }]
+      }]
     }]
-  }).then(function (combo) {
-    console.log(combo.dataValues);
-    //console.log(combo.categories.dataValues);
-    //console.log(combo.categories.items.dataValues);
+    }).then(function (combo) {
+    console.log(JSON.stringify(combo));
     if (combo) {
       return res.json(combo);
     } else {
