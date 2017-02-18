@@ -28,7 +28,7 @@ function setDatabase(m) {
   categoryModel = models.getCategoryModel();
   categoryTranslationModel = models.getCategoryTranslationModel();
   itemModel = models.getItemModel();
-  itemSizesModel = models.getItemSizesModel();
+  itemSizeModel = models.getItemSizesModel();
   itemSizeTranslationModel = models.getItemSizeTranslationsModel();
   itemTranslationModel = models.getItemTranslationModel();
   comboCatFoodItemModel = models.getComboCatFoodItemModel();
@@ -68,14 +68,31 @@ function getCombo(req, res) {
       model: comboTranslationModel,
       as: 'translations'
     }, {
-      model: itemModel,
-      as: 'items',
-      include: [{
-        model: itemTranslationModel,
-        as: 'translations'
-      }]
+      model: categoryModel,
+      as: 'categories',
+        include: [{
+          model: categoryTranslationModel,
+          as: 'translations'
+        }, {
+          model: itemModel,
+          as: 'items',
+            include: [{
+              model: itemTranslationModel,
+              as: 'translations'
+            }, {
+              model: itemSizeModel,
+              as: 'sizes',
+                include: [{
+                  model: itemSizeTranslationModel,
+                  as: 'translations'
+              }]
+           }]
+        }]
     }]
   }).then(function (combo) {
+    console.log(combo.dataValues);
+    //console.log(combo.categories.dataValues);
+    //console.log(combo.categories.items.dataValues);
     if (combo) {
       return res.json(combo);
     } else {
