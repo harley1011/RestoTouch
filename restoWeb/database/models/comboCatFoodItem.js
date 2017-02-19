@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      unique: "comboCatItemCompositeIndex",
+      primaryKey: true
     },
     itemId: {
       type: DataTypes.INTEGER,
