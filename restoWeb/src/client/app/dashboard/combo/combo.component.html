@@ -89,7 +89,7 @@
         <br/>
         <div class="col-md-10">
             <h5>{{ 'combo.s3subCatList' | translate }}</h5>
-            <span *ngIf="catToFill?.length == 0"> No choosen category.</span>
+            <div *ngIf="catToFill?.length == 0" class="bottomSpacing"> No choosen category.</div>
             <div class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let category of catToFill; let i = index" class="btn btn-secondary">
                 <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
