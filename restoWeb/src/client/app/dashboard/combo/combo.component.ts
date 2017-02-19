@@ -141,6 +141,9 @@ export class ComboComponent implements OnInit {
     );
   }
 
+  cancel(): void {
+    this.router.navigate(['/dashboard/combos']);
+  }
 
 ////// Handle categories item
   getCategories(): void {
@@ -243,7 +246,7 @@ export class ComboComponent implements OnInit {
   }
 
   removeAllItemsFromCategory(catin: Category): void {
-    console.warn(catin.items);
+    //console.warn(catin.items);
     catin.items.forEach(item => {
       this.items.push(item);
     });
@@ -261,7 +264,6 @@ fillCatSelected(catin: any, catId: any): void {
 * store chosen category into array
 */
  colorCategoryListForExistingCombo(): void {
-  this.catToFill = this.combo.categories;
   this.categoryService.getCategories().subscribe(
         categories => {
           this.categories = categories;
@@ -269,11 +271,13 @@ fillCatSelected(catin: any, catId: any): void {
             category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             category.items = []; // wipe existing items
           });
-
+          this.catToFill = this.combo.categories;
+          console.log(this.catToFill);
           for(var i =0; i< this.catToFill.length; i++){
               for(var j = 0; j < this.categories.length; j++ ) {
               if (this.categories[j].selectedTranslation.name===this.catToFill[i].selectedTranslation.name) {
                 //toggleCssClass();
+                //document.getElementById('j').className='btn btn-primary';// change color of the chosen category
               }
             }
           }
@@ -337,6 +341,7 @@ fillCatSelected(catin: any, catId: any): void {
           // if category is not already in the array, add to it
           if (!found) {
             this.catToFill.push(catin);
+            this.checkbox(catin);
             //this.categorySelected.push(catChoosen);
             //document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
           }
@@ -386,6 +391,10 @@ fillCatSelected(catin: any, catId: any): void {
       for(var i = 0; i < this.categories.length; i++){
         document.getElementById(i.toString()).className='btn btn-secondary';
       }
+    }
+
+    checkbox(cat:any) {
+      cat.selected = (cat.selected) ? false : true;
     }
 
 }
