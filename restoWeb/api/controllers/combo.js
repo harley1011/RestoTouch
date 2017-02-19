@@ -186,8 +186,7 @@ function updateCombo(req, res) {
       });
     });
 
-    console.warn(oldCombo);
-
+    // level 1 difference: cat
     // check first any difference in category
     var catToRemove = _.differenceBy(oldCombo.categories, combo.categories, 'id');
     var catToAdd = _.differenceBy(combo.categories, oldCombo.categories, 'id');
@@ -200,6 +199,7 @@ function updateCombo(req, res) {
       });
     });
     comboCatFoodItemModel.bulkCreate(comboCatFoodItemAssoc);
+    comboCatFoodItemAssoc = []; // clear
 
     // remove old cat from db
     catToRemove.forEach(function (cat) {
@@ -207,6 +207,28 @@ function updateCombo(req, res) {
         comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id}});
       });
     });
+
+    // level 2 difference: items
+    // adjust oldCombo object to remove not-wanted-cat and add new wanted cat so can do Item difference comparison
+    var adjustedOldComboCat = _.xor(oldCombo.categories, catToRemove);
+    adjustedOldComboCat = _.xor(adjustedOldComboCat, catToAdd);
+
+    var itemToRemove;
+    var itemToAdd;
+
+    adjustedOldComboCat.forEach(function(cat){
+      var catMatch = _.find(combo.categories, function(co) {return co.id == cat.id});
+      itemToRemove = _.differenceBy(cat.items, catMatch.items, 'id');
+      itemToAdd = _.differenceBy(catMatch.items, cat.items, 'id' );
+
+      itemToAdd.forEach(function(item){
+        comboCatFoodItemAssoc.push({comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
+      });
+      itemToRemove.forEach(function(item){
+        comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id}});
+      });
+    });
+     comboCatFoodItemModel.bulkCreate(comboCatFoodItemAssoc);
 
 
 
