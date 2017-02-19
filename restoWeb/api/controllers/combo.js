@@ -246,39 +246,39 @@ function updateCombo(req, res) {
             if(item.sizes[0].id != itemMatch.sizes[0].id){
               comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: catId, itemId: item.id, itemSizesId: item.sizes[0].id }});
               comboCatFoodItemModel.create({comboId: oldCombo.id, categoryId: catId, itemId: item.id, itemSizesId: itemMatch.sizes[0].id});
-         });
-        }
+         }
+        });
      }
 
 
 
-  //   for (var prop in combo) {
-  //     if (prop != 'translations')
-  //       oldCombo[prop] = combo[prop];
-  //   }
+    for (var prop in combo) {
+      if (prop != 'translations')
+        oldCombo[prop] = combo[prop];
+    }
 
-  //   oldCombo.translations.forEach(function (translation) {
-  //     var newTranslation = _.find(combo.translations, function (tr) {
-  //       return tr.languageCode === translation.languageCode
-  //     });
-  //     for (var prop in newTranslation) {
-  //       translation[prop] = newTranslation[prop];
-  //     }
-  //     translation.save();
-  //     _.remove(combo.translations, function (tr) {
-  //       return tr.languageCode === translation.languageCode
-  //     });
-  //   });
+    oldCombo.translations.forEach(function (translation) {
+      var newTranslation = _.find(combo.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
+      for (var prop in newTranslation) {
+        translation[prop] = newTranslation[prop];
+      }
+      translation.save();
+      _.remove(combo.translations, function (tr) {
+        return tr.languageCode === translation.languageCode
+      });
+    });
 
-  //   combo.translations.forEach(function (translation) {
-  //     translation.comboId = combo.id;
-  //   });
+    combo.translations.forEach(function (translation) {
+      translation.comboId = combo.id;
+    });
 
-  //   comboTranslationModel.bulkCreate(combo.translations);
+    comboTranslationModel.bulkCreate(combo.translations);
 
-  //   oldCombo.save().then(function (result) {
-  //     return res.json({success: 1, description: 'Combo Updated'});
-  //   });
+    oldCombo.save().then(function (result) {
+      return res.json({success: 1, description: 'Combo Updated'});
+    });
 
    });
 }
