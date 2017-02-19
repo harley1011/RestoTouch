@@ -35,6 +35,9 @@ export class ComboComponent implements OnInit {
   combos: Array<Combo>;
   fillNocat: boolean;
   selectedCatFill:false;
+  isVisibleSS: boolean = false;
+  cssClass ='btn btn-primary';
+
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
@@ -51,7 +54,6 @@ export class ComboComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         this.getCombo(params['id']);
-        console.log(this.combo);
         this.create = false;
       } else {
         //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
@@ -60,8 +62,6 @@ export class ComboComponent implements OnInit {
         this.getItems();
         this.create = true;
       }
-
-      this.getCategories();
     });
   }
 
@@ -82,14 +82,11 @@ export class ComboComponent implements OnInit {
         this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.combo.categories.forEach(function(cat){
-          cat.selectedTranslation = cat.translations[0]; // TODO : change to dynamic language
+          cat.selectedTranslation = cat.translations[0];
           cat.items.forEach(item => {
-            console.log(item.selectedTranslation);
-            item.selectedTranslation = item.translations[0]; // TODO : change to dynamic language
-            console.log(item.selectedTranslation);
+            item.selectedTranslation = item.translations[0];
           });
         });
-    this.catToFill = this.combo.categories;
     },
       error => {
         this.errorMessage = <any>error;
@@ -147,6 +144,8 @@ export class ComboComponent implements OnInit {
 
 ////// Handle categories item
   getCategories(): void {
+    console.log('from getcat: ', this.combo);
+    this.catToFill = this.combo.categories;
     this.categoryService.getCategories().subscribe(
       categories => {
         this.categories = categories;
@@ -155,6 +154,19 @@ export class ComboComponent implements OnInit {
           category.items = []; // wipe existing items
         });
         console.log(this.categories);
+        this.colorCategoryListForExistingCombo();
+        // for(var i=0; i<this.combo.categories.length; i++){
+        //     for(var j=0; j<this.categories.length; j++){
+        //     console.log(this.combo.categories[i].translations[0].name);
+        //     console.log(this.categories[j].translations[0].name);
+        //       if(this.combo.categories[i].translations[0].name === this.categories[j].translations[0].name){
+        //         this.saveCategory(this.combo.categories[i], 'j');
+        //         console.log(this.combo.categories[i]);
+        //         console.log(j);
+        //       }
+        //     }
+        //   }
+
       },
       error => {
         console.log(error);
@@ -163,6 +175,7 @@ export class ComboComponent implements OnInit {
   }
 
 	getItems(): void {
+    this.getCategories();
     this.items = [];
 
 		this.itemService.getItems().subscribe(
@@ -188,8 +201,6 @@ export class ComboComponent implements OnInit {
         for(var i=0; i< this.combo.categories.length; i++){
           for (var j=0; j< this.combo.categories[i].items.length; j++){
             for(var k=0; k<this.items.length; k++){
-              console.log(this.items[k].sizes[0].id);
-              console.log(this.combo.categories[i].items[j].sizes[0].id);
               if (this.items[k].sizes[0].id===this.combo.categories[i].items[j].sizes[0].id){
                 exists = true;
                 break;
@@ -244,48 +255,103 @@ fillCatSelected(catin: any, catId: any): void {
   this.categoryShowing = catin;
 }
 
+
+
+/*
+* store chosen category into array
+*/
+ colorCategoryListForExistingCombo(): void {
+  this.catToFill = this.combo.categories;
+  this.categoryService.getCategories().subscribe(
+        categories => {
+          this.categories = categories;
+          categories.forEach(category => {
+            category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+            category.items = []; // wipe existing items
+          });
+
+          for(var i =0; i< this.catToFill.length; i++){
+              for(var j = 0; j < this.categories.length; j++ ) {
+              if (this.categories[j].selectedTranslation.name===this.catToFill[i].selectedTranslation.name) {
+                //toggleCssClass();
+              }
+            }
+          }
+      ////////////////////////////////
+      function toggleCssClass(): void {
+      if(this.cssClass==='btn btn-primary'){
+        this.cssClass = 'btn btn-secondary';
+        this.isVisibleSS = true;
+      } else this.cssClass = 'btn btn-primary';
+      }
+      },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
 //////////////////////////////////////////////////////////////////////////
 /*
 * store chosen category into array
 */
  saveCategory(catin: any, catId: any): void {
+  this.categoryService.getCategories().subscribe(
+        categories => {
+          this.categories = categories;
+          categories.forEach(category => {
+            category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+            category.items = []; // wipe existing items
+          });
+          console.log('saveCat: ',this.combo);
+          this.catToFill = this.combo.categories;
+         /////////// TO Refactor //////////
+          var found = false;
+          var catChoosen = catin.selectedTranslation.name;
 
-      /////////// TO Refactor //////////
-      var found = false;
-      var catChoosen = catin.selectedTranslation.name;
-      // add the first category to array
-      if (this.categorySelected.length===0) {
-        this.catToFill.push(catin);
-
-        this.categorySelected.push(catChoosen);
-        document.getElementById(catId).className='btn btn-primary'; // change color of the chosen category
-        //document.getElementById('e').className='btn btn-secondary'; // reset "no category" button to no color
-        found = true;
-      }else {
-        // check if category is already in array, avoid duplicates
-        for(var i = 0; i < this.categorySelected.length; i++ ) {
-          if (catChoosen===this.categorySelected[i]) {
-
-            this.removeAllItemsFromCategory(this.catToFill[this.catToFill.indexOf(catin)]);
-            this.catToFill.splice(this.catToFill.indexOf(catin),1);
-            if(this.catToFill.length < 1) {
-                this.categoryShowing = null;
-            }
-
-            this.categorySelected.splice(i, 1); // remove chosen category from array, act like a toggle
-            document.getElementById(catId).className='btn btn-secondary'; // reset back to no color
+          // add the first category to array
+          if (this.catToFill.length===0) {
+            this.catToFill.push(catin);
+            //this.categorySelected.push(catChoosen);
+            //toggleCssClass();
+            //document.getElementById(catId).className='btn btn-primary'; // change color of the chosen category
+            //document.getElementById('e').className='btn btn-secondary'; // reset "no category" button to no color
             found = true;
-          }
-        }
-      }
+          }else {
+            // check if category is already in array, avoid duplicates
+            for(var i = 0; i < this.catToFill.length; i++ ) {
+              if (catChoosen===this.catToFill[i].selectedTranslation.name) {
+                this.removeAllItemsFromCategory(this.catToFill[i]);
+                this.catToFill.splice(i,1);
+                if(this.catToFill.length < 1) {
+                    this.categoryShowing = null;
+                }
 
-      // if category is not already in the array, add to it
-      if (!found) {
-        this.catToFill.push(catin);
-        this.categorySelected.push(catChoosen);
-        document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
-      }
+                //this.categorySelected.splice(i, 1); // remove chosen category from array, act like a toggle
+                //document.getElementById(catId).className='btn btn-secondary'; // reset back to no color
+                found = true;
+              }
+            }
+          }
+
+          // if category is not already in the array, add to it
+          if (!found) {
+            this.catToFill.push(catin);
+            //this.categorySelected.push(catChoosen);
+            //document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
+          }
       ////////////////////////////////
+      function toggleCssClass(): void {
+      if(this.cssClass==='btn btn-primary'){
+        this.cssClass = 'btn btn-secondary';
+        this.isVisibleSS = true;
+      } else this.cssClass = 'btn btn-primary';
+      }
+      },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   // nocat(): void {
@@ -321,5 +387,6 @@ fillCatSelected(catin: any, catId: any): void {
         document.getElementById(i.toString()).className='btn btn-secondary';
       }
     }
+
 }
 
