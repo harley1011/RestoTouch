@@ -180,8 +180,30 @@ export class ComboComponent implements OnInit {
               tempItem.sizes = [];
               tempItem.sizes.push(itemSize);
               this.items.push(tempItem);
+
           });
         });
+
+        let exists = false;
+        for(var i=0; i< this.combo.categories.length; i++){
+          for (var j=0; j< this.combo.categories[i].items.length; j++){
+            for(var k=0; k<this.items.length; k++){
+              console.log(this.items[k].sizes[0].id);
+              console.log(this.combo.categories[i].items[j].sizes[0].id);
+              if (this.items[k].sizes[0].id===this.combo.categories[i].items[j].sizes[0].id){
+                exists = true;
+                break;
+              }
+            }
+              if(exists){
+              exists = false;
+              this.items.splice(k,1);
+              continue;
+            }
+          }
+        }
+
+
     	},
       error =>  {
         console.log(error);
