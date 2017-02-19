@@ -28,10 +28,10 @@ export class ComboComponent implements OnInit {
   fixedPrice = false;
   priceSelected = false;
   //foodItemList: Array<string> = ['Spaghetti', 'Hamburger', 'Tiramisu', 'Espresso' ];
-  categories: Array<Category>;
+  categories: Array<Category>=[];
   categoryShowing: Category;
-  categorySelected: Array<string>;
-  catToFill: Array<Category>;
+  categorySelected: Array<string>=[];
+  catToFill: Array<Category>=[];
   combos: Array<Combo>;
   fillNocat: boolean;
   selectedCatFill:false;
@@ -42,8 +42,6 @@ export class ComboComponent implements OnInit {
               private categoryService: CategoryService,
               private router: Router,
               private itemService: ItemService) {
-    this.categorySelected =[];
-    this.catToFill = [];
     this.categoryShowing = null;
     // this.fillNocat = false;
   }
@@ -53,6 +51,7 @@ export class ComboComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         this.getCombo(params['id']);
+        console.log(this.combo);
         this.create = false;
       } else {
         //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
@@ -82,15 +81,21 @@ export class ComboComponent implements OnInit {
         this.combo = combo;
         this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        //this.combo.items.forEach(item => {
-        //  item.selectedTranslation = item.translations[0];
-        //});
-        console.warn(combo);
-      },
+        this.combo.categories.forEach(function(cat){
+          cat.selectedTranslation = cat.translations[0]; // TODO : change to dynamic language
+          cat.items.forEach(item => {
+            console.log(item.selectedTranslation);
+            item.selectedTranslation = item.translations[0]; // TODO : change to dynamic language
+            console.log(item.selectedTranslation);
+          });
+        });
+    this.catToFill = this.combo.categories;
+    },
       error => {
         this.errorMessage = <any>error;
       }
     );
+
   }
 
   addAndUpdate(): void {
@@ -149,7 +154,7 @@ export class ComboComponent implements OnInit {
           category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
           category.items = []; // wipe existing items
         });
-
+        console.log(this.categories);
       },
       error => {
         console.log(error);
