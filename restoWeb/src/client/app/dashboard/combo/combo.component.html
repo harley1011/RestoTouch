@@ -146,21 +146,18 @@
         <div class="col-md-10 bottomSpacing">
             <h5>{{ 'combo.s4subSelectType' | translate }}</h5>
             <div class="radio">
-                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(1)"> {{ 'combo.s4dollar' | translate }}</label>
-                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(2)"> {{ 'combo.s4percentage' | translate }}</label>
-                <label class="radio-inline"><input type="radio" name="radioprice" id="pricetype" (click)="priceTypeSelected(3)"> {{ 'combo.s4fixed' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(1)" value="d" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4dollar' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(2)" value="p" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4percentage' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(3)" value="f" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4fixed' | translate }}</label>
             </div>
             <hr/>
             <div *ngIf="priceSelected">
                 <label *ngIf="dollarAmount">{{ 'combo.s4dollarText' | translate }}</label>
                 <label *ngIf="percDisc">{{ 'combo.s4percentageText' | translate }}</label>
                 <label *ngIf="fixedPrice">{{ 'combo.s4fixedText' | translate }}</label>
-                <input id="priceNumber" class="form-control" name="priceNumber" placeholder="E.g.: 2">
-                <!--<input id="discount" class="form-control" name="discount"
-                placeholder="{{'combo.s4discountPlaceholder' | translate}}"
-                required
-                [(ngModel)]="combo?.selectedTranslation.discoun" #discount="ngModel"
-                [ngClass]="{'form-error': !discount.valid && !discount.pristine}">-->
+                <input type="number" id="priceNumber" class="form-control" name="discountValue" placeholder="{{'combo.s4discountPlaceholder' | translate}}" required [(ngModel)]="combo?.selectedTranslation.discountValue" #discountValue="ngModel"
+                [ngClass]="{'form-error': !discountValue.valid && !discountValue.pristine}">
+
             </div>
         </div>
       </div>

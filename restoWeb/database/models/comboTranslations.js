@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
 	name: {type: DataTypes.STRING},
     description: {type: DataTypes.STRING},
     discountValue: {type: DataTypes.FLOAT},
-    discountFlag: {type: DataTypes.CHAR}, // "legend: d=dollar amt discount, p=percentage discount, f=fixed price"
+    discountFlag: {type: DataTypes.STRING}, // "legend: d=dollar amt discount, p=percentage discount, f=fixed price"
     comboId: {
       primaryKey: true,
       type: DataTypes.INTEGER,

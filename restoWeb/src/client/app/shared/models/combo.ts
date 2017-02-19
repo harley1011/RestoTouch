@@ -17,7 +17,7 @@ export class ComboTranslations {
 		public name: string,
     public description: string,
 		public languageCode: string,
-    public discountValue: float,
-    public discountFlag: char
+    public discountValue: number,
+    public discountFlag: string
 		) { }
 }

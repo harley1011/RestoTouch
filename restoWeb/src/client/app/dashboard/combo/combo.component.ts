@@ -59,7 +59,7 @@ export class ComboComponent implements OnInit {
         this.create = false;
       } else {
         //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
-        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode);
+        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode,0,'f');
         this.combo = new Combo([translation], translation, []);
         this.getItems();
         this.create = true;
@@ -71,7 +71,7 @@ export class ComboComponent implements OnInit {
     let comboTranslation = this.combo.translations.find(translation =>
     translation.languageCode === language.languageCode);
     if (!comboTranslation) {
-      comboTranslation = new ComboTranslations('', '', language.languageCode);
+      comboTranslation = new ComboTranslations('', '', language.languageCode,0,'f');
       this.combo.translations.push(comboTranslation);
     }
     this.combo.selectedTranslation = comboTranslation;
@@ -123,7 +123,7 @@ export class ComboComponent implements OnInit {
   update(): void {
     this.comboService.updateCombo(this.combo).subscribe(
       generalResponse => {
-        //this.router.navigate(['/dashboard/combos']);
+        this.router.navigate(['/dashboard/combos']);
       },
       error => {
         this.errorMessage = <any>error;

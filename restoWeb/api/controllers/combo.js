@@ -114,7 +114,7 @@ function addCombo(req, res) {
   console.log("have u reach me?");
   var combo = req.body;
   combo.userId = req.userId;
-
+  console.log(combo);
   return comboModel.create(combo, {
     include: [{
       model: comboTranslationModel,
