@@ -16,6 +16,8 @@ export class ComboTranslations {
 	constructor(
 		public name: string,
     public description: string,
-		public languageCode: string
+		public languageCode: string,
+    public discountValue: float,
+    public discountFlag: char
 		) { }
 }

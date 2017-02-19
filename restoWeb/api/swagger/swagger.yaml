@@ -976,7 +976,7 @@ definitions:
     required:
       - name
       - languageCode
-      ##################################################
+      ################################################## Combo
   CombosResponse:
     required:
       - combos
@@ -1014,10 +1014,16 @@ definitions:
         type: string
       languageCode:
         type: string
+      discountValue:
+        type: number
+      discountFlag:
+        type: string
     required:
       - name
       - description
       - languageCode
+      - discountValue
+      - discountFlag
       ###################################################
   ItemsResponse:
     required:
