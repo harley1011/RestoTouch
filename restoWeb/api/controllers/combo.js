@@ -188,20 +188,25 @@ function updateCombo(req, res) {
 
     console.warn(oldCombo);
 
+    // check first any difference in category
     var catToRemove = _.differenceBy(oldCombo.categories, combo.categories, 'id');
     var catToAdd = _.differenceBy(combo.categories, oldCombo.categories, 'id');
 
+    // add new cat to db
     var comboCatFoodItemAssoc = [];
-      catToAdd.forEach(function (cat) {
-        cat.items.forEach(function(item){
-           comboCatFoodItemAssoc.push({comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
-        })
+    catToAdd.forEach(function (cat) {
+      cat.items.forEach(function(item){
+        comboCatFoodItemAssoc.push({comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
       });
+    });
     comboCatFoodItemModel.bulkCreate(comboCatFoodItemAssoc);
 
-  //   itemsToRemove.forEach(function (item) {
-  //     comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: item.categories.id, itemId: item.id, itemSizesId: item.sizes.id}});
-  //   });
+    // remove old cat from db
+    catToRemove.forEach(function (cat) {
+    cat.items.forEach(function(item) {
+        comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id}});
+      });
+    });
 
 
 
