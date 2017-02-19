@@ -224,29 +224,33 @@ function updateCombo(req, res) {
       itemToAdd.forEach(function(item){
         comboCatFoodItemAssoc.push({comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
       });
+       comboCatFoodItemModel.bulkCreate(comboCatFoodItemAssoc);
+       comboCatFoodItemAssoc = []; // clear
+
       itemToRemove.forEach(function(item){
         comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id}});
       });
+
+      // level 3 here
+      checkItemSize(cat.items, catMatch.items, itemToAdd, itemToRemove, cat.id);
     });
-     comboCatFoodItemModel.bulkCreate(comboCatFoodItemAssoc);
 
 
+     // level 3 difference: item sizes to be evaluates in level 2
+     function checkItemSize(oldItemObj, newItemObj, diffAddItemObj, diffRemoveItemObj, catId){
+         var adjustedOldComboItem = _.xor(oldItemObj, diffRemoveItemObj);
+         adjustedOldComboItem = _.xor(adjustedOldComboItem, diffAddItemObj);
 
-    // var itemToRemove = _.differenceBy(oldCombo.categories.items, combo.categories.items, 'id');
-    // var itemToAdd = _.differenceBy(combo.categories.items, oldCombo.categories.items, 'id');
+         adjustedOldComboItem.forEach(function(item){
+            var itemMatch = _.find(newItemObj, function(co) {return co.id == item.id});
+            if(item.sizes[0].id != itemMatch.sizes[0].id){
+              comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: catId, itemId: item.id, itemSizesId: item.sizes[0].id }});
+              comboCatFoodItemModel.create({comboId: oldCombo.id, categoryId: catId, itemId: item.id, itemSizesId: itemMatch.sizes[0].id});
+         });
+        }
+     }
 
-    // var itemSizeToRemove = _.differenceBy(oldCombo.categories.items.sizes, combo.categories.items.sizes, 'id');
-    // var itemSizeToAdd = _.differenceBy(combo.categories.items.sizes, oldCombo.categories.items.sizes, 'id');
 
-    // var itemComboAssociations = [];
-    // itemsToAdd.forEach(function (item) {
-    //   itemComboAssociations.push({comboId: oldCombo.id, categoryId: item.categories.id, itemId: item.id, itemSizesId: item.sizes.id});
-    // });
-    // comboCatFoodItemModel.bulkCreate(itemComboAssociations);
-
-  //   itemsToRemove.forEach(function (item) {
-  //     comboCatFoodItemModel.destroy({where: {comboId: oldCombo.id, categoryId: item.categories.id, itemId: item.id, itemSizesId: item.sizes.id}});
-  //   });
 
   //   for (var prop in combo) {
   //     if (prop != 'translations')
