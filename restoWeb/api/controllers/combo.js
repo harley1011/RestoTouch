@@ -42,13 +42,16 @@ function getAllCombos(req, res) {
     include: [{
       model: comboTranslationModel,
       as: 'translations'
-    // }, {
-    //   model: itemModel,
-    //   as: 'items',
-    //   include: [{
-    //     model: itemTranslationModel,
-    //     as: 'translations'
-    //   }]
+    }, {
+      model: categoryModel,
+        as: 'categories',
+        include: [{
+            model: categoryTranslationModel,
+            as: 'translations'
+          }, {
+            model: itemModel,
+            as: 'items'
+    }]
     }]
   }).then(function (combos) {
     return res.json({combos: combos});
@@ -59,15 +62,12 @@ function getAllCombos(req, res) {
 function getCombo(req, res) {
     console.log('combo with id:');
   var id = req.swagger.params.id.value;
-  console.log(comboCatFoodItemModel.itemSizesId);
+
   return comboModel.findOne({
     where: {
       id: id,
       userId: req.userId
-    }, include: [{
-        model: comboTranslationModel,
-        as: 'translations'
-    }, {
+    }, include: [ {
         model: categoryModel,
         as: 'categories',
         include: [{
@@ -87,10 +87,20 @@ function getCombo(req, res) {
                 as: 'translations'
               }]
           }]
-      }]
+      }]}, {
+        model: comboTranslationModel,
+        as: 'translations'
     }]
-    }).then(function (combo) {
-    console.log(JSON.stringify(combo));
+  }).then(function (combo) {
+    combo.categories.forEach(function(cat){
+            cat.items.forEach(function(item){
+              for(i=0; i< item.sizes.length; i++){
+                if(item.ComboCatFoodItem.itemSizesId != item.sizes[i].id){
+                  item.sizes.splice(i,1);
+                }
+             }
+      });
+    });
     if (combo) {
       return res.json(combo);
     } else {
