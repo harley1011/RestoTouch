@@ -61,8 +61,8 @@
         <div class="col-md-10 bottomSpacing">
             <h5>{{ 'combo.s2subCatList' | translate }}</h5>
             <div class="btn-group" data-toggle="buttons" role="group"><!--class="btn btn-secondary"  [className]="cssClass" [ngClass]="{'selectedStyle': isVisibleSS, 'notSelectedStyle': !isVisibleSS}"-->
-              <label *ngFor="let category of categories; let i = index" [attr.id]=i [ngClass]="{'btn-primary': isAvailable, 'btn btn-secondary': !isAvailable}">
-                <input type="checkbox" (click)="saveCategory(category, i)" [checked]="isAvailable" (change)="isAvailable = $event.target.checked"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
+              <label *ngFor="let category of categories; let i = index" [attr.id]=i [class.selected]="category === currentSelectedCat" [ngClass]="{'btn-primary': isAvailable, 'btn btn-secondary': !isAvailable}">
+                <input type="checkbox" (click)="saveCategory(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}<!--[checked]="isAvailable" (change)="isAvailable = $event.target.checked" -->
               </label>
               <!--<input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="nocat()">-->
             </div>

@@ -32,11 +32,13 @@ export class ComboComponent implements OnInit {
   categoryShowing: Category;
   categorySelected: Array<string>=[];
   catToFill: Array<Category>=[];
+  currentSelectedCat: Category;
   combos: Array<Combo>;
   fillNocat: boolean;
   selectedCatFill:false;
   isVisibleSS: boolean = false;
-  cssClass ='btn btn-primary';
+  isAvailable: boolean = false;
+  cssClass ='btn btn-secondary';
 
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
@@ -316,6 +318,7 @@ fillCatSelected(catin: any, catId: any): void {
           // add the first category to array
           if (this.catToFill.length===0) {
             this.catToFill.push(catin);
+            //this.cssClass='btn btn-primary';
             //this.categorySelected.push(catChoosen);
             //toggleCssClass();
             //document.getElementById(catId).className='btn btn-primary'; // change color of the chosen category
@@ -330,7 +333,7 @@ fillCatSelected(catin: any, catId: any): void {
                 if(this.catToFill.length < 1) {
                     this.categoryShowing = null;
                 }
-
+                //this.cssClass='btn btn-secondary';
                 //this.categorySelected.splice(i, 1); // remove chosen category from array, act like a toggle
                 //document.getElementById(catId).className='btn btn-secondary'; // reset back to no color
                 found = true;
@@ -341,9 +344,9 @@ fillCatSelected(catin: any, catId: any): void {
           // if category is not already in the array, add to it
           if (!found) {
             this.catToFill.push(catin);
-            this.checkbox(catin);
             //this.categorySelected.push(catChoosen);
             //document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
+            //this.cssClass='btn btn-primary';
           }
       ////////////////////////////////
       function toggleCssClass(): void {
