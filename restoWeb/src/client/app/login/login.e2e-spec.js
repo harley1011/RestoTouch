@@ -22,7 +22,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/home');
 
   });
-/*
+
   it("Navigate to the restaurant page", function () {
     browser.get(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
@@ -49,7 +49,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   })
-*/
+
   it("Create a valid food item", function () {
     browser.get(browser.baseUrl + 'dashboard/items');
     var addItemBtn = element(by.id('addItemBtn'));
@@ -120,6 +120,55 @@ describe("RESTOTOUCH TEST CASES", function () {
     //created menu) is present on the restaurant-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
+  });
+
+  it("Deletes a menu", function () {
+    browser.get(browser.baseUrl + 'dashboard/menus');
+    var menu = element(by.className('card'));
+    menu.click();
+    var deleteMenuBtn = element(by.id('deleteMenuBtn'));
+    deleteMenuBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+  });
+
+  it("Deletes a category", function () {
+    browser.get(browser.baseUrl + 'dashboard/categories');
+    var category = element(by.className('card'));
+    category.click();
+    var deleteCategoryBtn = element(by.id('deleteCategoryBtn'));
+    deleteCategoryBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/categories');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+  });
+
+  it("Deletes an item", function () {
+    browser.get(browser.baseUrl + 'dashboard/items');
+    var item = element(by.className('card'));
+    item.click();
+    var deleteItemBtn = element(by.id('deleteItemBtn'));
+    deleteItemBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/items');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+  });
+
+  it("Deletes a restaurant", function () {
+    browser.get(browser.baseUrl + 'dashboard/restaurants');
+    var restaurant = element(by.className('card'));
+    restaurant.click();
+    var deleteRestaurantBtn = element(by.id('deleteRestaurantBtn'));
+    deleteRestaurantBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+  });
+  
+  it("Diplay correct webpage after log out", function () {
+    browser.get(browser.baseUrl + 'dashboard/home');
+    var dropdown = element(by.className('dropdown-toggle'));
+    dropdown.click();
+    var logoutBtn = element(by.id('logout'));
+    logoutBtn.click();
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'logout');
   });
 
 });
