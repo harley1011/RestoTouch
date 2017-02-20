@@ -36,7 +36,6 @@ function setDatabase(m) {
 
 // GET /combo
 function getAllCombos(req, res) {
-  console.log('combo:');
   return comboModel.findAll({
     where: {userId: req.userId},
     include: [{
@@ -60,7 +59,6 @@ function getAllCombos(req, res) {
 
 // GET /combo/{id}
 function getCombo(req, res) {
-    console.log('combo with id:');
   var id = req.swagger.params.id.value;
 
   return comboModel.findOne({
@@ -111,26 +109,17 @@ function getCombo(req, res) {
 
 // POST /combo
 function addCombo(req, res) {
-  console.log("have u reach me?");
   var combo = req.body;
   combo.userId = req.userId;
-  console.log(combo);
   return comboModel.create(combo, {
     include: [{
       model: comboTranslationModel,
       as: 'translations'
     }]
   }).then(function (result) {
-    console.warn('result back from swagger : ', result);
     var itemComboAssociations = [];
-    // combo.items.forEach(function (item) {
-    //   itemComboAssociations.push({comboId: result.id, categoryId: '1', itemId: '1', itemSizesId: '1' });
-    // })
-    // comboCatFoodItemModel.bulkCreate(itemComboAssociations)
       combo.categories.forEach(function (cat) {
           cat.items.forEach(function(item){
-            console.log('hellloooo anyone here?');
-            console.warn(item);
             itemComboAssociations.push({comboId: result.id, categoryId: cat.id, itemId: item.id, itemSizesId: item.sizes[0].id});
           });
        });
@@ -249,8 +238,6 @@ function updateCombo(req, res) {
          }
         });
      }
-
-
 
     for (var prop in combo) {
       if (prop != 'translations')
