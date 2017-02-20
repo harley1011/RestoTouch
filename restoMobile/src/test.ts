@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
-import { ConfigMock, NavMock, PlatformMock } from './mocks';
+import { ConfigMock, NavMock, NavParamMock, PlatformMock } from './mocks';
 import { TranslateModule} from 'ng2-translate/ng2-translate';
 import { AuthHttpService } from './pages/services/auth-http.services';
 import { AuthService } from './pages/services/auth.service';
@@ -68,7 +68,7 @@ export class TestUtils {
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
-        {provide: NavParams, useClass: NavMock},
+        {provide: NavParams, useClass: NavParamMock},
         AuthService, ApiEndpointService, AuthHttpService,
         CategoryService, ItemService, MenuService, RestaurantService, LanguageService,
       ],

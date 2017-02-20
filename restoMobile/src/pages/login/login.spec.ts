@@ -71,15 +71,21 @@ describe('Pages: LoginPage', () => {
     expect(instance.translate.currentLang).toEqual('en');
   });
 
-/*
-  it('correctly switch to the correct language', () => { //TODO
+  //call the translation service with a parameter
+  it('correctly switch to the correct language', () => {
+    // Need to test the switch language function that made the call to the translation service. This is done through spyOn.
+    // This means I am testing the way the login(component) is interacting with the service.
+    // Check to make sure that has called translate.use with french and english in the correct way.
+    spyOn(instance.translate, 'use');
+
+    instance.translate.currentLang = 'en';
     instance.switchLanguage();
-    expect(instance.translate.get).toEqual('fr');
-    /!*
+    expect(instance.translate.use).toHaveBeenCalledWith('fr');
+
+    instance.translate.currentLang = 'fr';
     instance.switchLanguage();
-    expect(instance.translate.currentLang).toEqual('en');
-    *!/
+    expect(instance.translate.use).toHaveBeenCalledWith('en');
   });
-*/
+
 
 });

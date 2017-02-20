@@ -1,5 +1,3 @@
-/*
-
  import { async, ComponentFixture } from '@angular/core/testing';
  import { TestUtils } from '../../test';
  import { MenuListPage } from './menu-list';
@@ -25,7 +23,24 @@
    expect(instance).not.toBeNull();
    });
 
+   it('sets a translation for a menu', () => {
+     let mockMenu = {
+       translations: [
+         {languageCode: 'en', name: 'ENGLISH'},//identifier
+         {languageCode: 'fr', name: 'FRENCH'}
+       ],
+       selectedTranslation: null,//result of the function
+     };
+
+     instance.selectedLanguage = {languageCode: 'fr'};
+
+     expect(mockMenu.selectedTranslation).toBeNull();
+     expect(instance.setTranslationForMenu(mockMenu).selectedTranslation.name).toEqual('FRENCH');
+
+     instance.selectedLanguage = {languageCode: 'en'};
+
+     expect(instance.setTranslationForMenu(mockMenu).selectedTranslation.name).toEqual('ENGLISH');
+   });
+
  });
 
-
-*/

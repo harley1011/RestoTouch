@@ -45,13 +45,30 @@ export class NavMock {
     };
   }
 
-  public get(param: string): any { } //TODO check it out !
-  public getMenu(param: number): any { } //TODO check it out!
-
   public setRoot(): any {
     return true;
   }
 }
+
+export class NavParamMock {
+
+  public get(param: string): any {
+    if (param === 'menu') {
+      return {'id': '1'};
+    }
+
+    if (param === 'language') {
+      return 'en';
+    }
+
+    if(param === 'restaurant') {
+      return {'Menus': []};
+    };
+
+  }
+
+}
+
 
 export class PlatformMock {
   public ready(): Promise<{String}> {

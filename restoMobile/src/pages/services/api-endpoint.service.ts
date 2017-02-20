@@ -6,7 +6,7 @@ export class ApiEndpointService {
   private env = '<%= BUILD_TYPE %>';
 
   constructor() {
-    console.log(this.env);
+    //console.log(this.env);
   }
 
   getEndpoint() {
