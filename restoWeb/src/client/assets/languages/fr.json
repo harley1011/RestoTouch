@@ -150,7 +150,7 @@
       "s1text":"Entrez le nom et la description du combo qui apparaîtra sur votre menu virtuel.",
       "s2choose":"choisir",
       "s2category":"LES CATÉGORIES",
-      "s2text":"Sélectionnez les catégories du combo qui apparaîtra sur votre menu virtuel.",
+      "s2text":"Sélectionnez les catégories du combo qui apparaîtra sur votre menu virtuel. Pour désélectionner la catégorie, cliquez simplement dessus à nouveau.",
       "s2subCatList":"Liste des catégories:",
       "s3link":"lier",
       "s3foodItem":"PRODUIT ALIMENTAIRE",
