@@ -146,9 +146,9 @@
         <div class="col-md-10 bottomSpacing">
             <h5>{{ 'combo.s4subSelectType' | translate }}</h5>
             <div class="radio">
-                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(1)" value="d" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4dollar' | translate }}</label>
-                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(2)" value="p" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4percentage' | translate }}</label>
-                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected(3)" value="f" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4fixed' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('d')" value="d" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4dollar' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('p')" value="p" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4percentage' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('f')" value="f" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4fixed' | translate }}</label>
             </div>
             <hr/>
             <div *ngIf="priceSelected">

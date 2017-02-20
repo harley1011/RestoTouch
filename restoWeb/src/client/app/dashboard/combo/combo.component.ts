@@ -59,7 +59,7 @@ export class ComboComponent implements OnInit {
         this.create = false;
       } else {
         //console.warn(this.translationSelectComponent.selectedLanguage.languageCode);
-        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode,0,'f');
+        let translation = new ComboTranslations('', '', this.translationSelectComponent.selectedLanguage.languageCode,0,'');
         this.combo = new Combo([translation], translation, []);
         this.getItems();
         this.create = true;
@@ -71,7 +71,7 @@ export class ComboComponent implements OnInit {
     let comboTranslation = this.combo.translations.find(translation =>
     translation.languageCode === language.languageCode);
     if (!comboTranslation) {
-      comboTranslation = new ComboTranslations('', '', language.languageCode,0,'f');
+      comboTranslation = new ComboTranslations('', '', language.languageCode,0,'');
       this.combo.translations.push(comboTranslation);
     }
     this.combo.selectedTranslation = comboTranslation;
@@ -89,6 +89,7 @@ export class ComboComponent implements OnInit {
             item.selectedTranslation = item.translations[0];
           });
         });
+        this.priceTypeSelected(this.combo.selectedTranslation.discountFlag);
     },
       error => {
         this.errorMessage = <any>error;
@@ -373,14 +374,14 @@ fillCatSelected(catin: any, catId: any): void {
   /*
   * displaying the text depending on the price/discount type chosen
   */
-  priceTypeSelected(ptype: number): void {
+  priceTypeSelected(ptype: string): void {
       this.priceSelected = true;
       this.percDisc = false;
       this.fixedPrice = false;
       this.dollarAmount = false;
-      if(ptype===1){
+      if(ptype==='d'){
         this.dollarAmount = true;
-      } else if(ptype===2){
+      } else if(ptype==='p'){
         this.percDisc = true;
       } else {
         this.fixedPrice = true;
