@@ -29,7 +29,6 @@ export class ComboListComponent implements OnInit {
     this.comboService.getCombos().subscribe(
       combos => {
         this.combos = combos;
-        console.warn(this.combos);
         combos.forEach(combo => {
           combo.selectedTranslation = combo.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
         });
