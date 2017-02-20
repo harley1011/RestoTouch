@@ -32,13 +32,14 @@ export class ComboComponent implements OnInit {
   categoryShowing: Category;
   categorySelected: Array<string>=[];
   catToFill: Array<Category>=[];
-  currentSelectedCat: Category;
+  currentSelectedCat: string;
   combos: Array<Combo>;
   fillNocat: boolean;
   selectedCatFill:false;
   isVisibleSS: boolean = false;
   isAvailable: boolean = false;
   cssClass ='btn btn-secondary';
+  showCss: boolean = false;
 
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
@@ -259,6 +260,8 @@ export class ComboComponent implements OnInit {
 fillCatSelected(catin: any, catId: any): void {
   // this.fillNocat = false;
   this.categoryShowing = catin;
+  this.resetCategoryCssClass(this.catToFill);
+  document.getElementById(catId).className='btn btn-primary';// change color of the chosen category
 }
 
 
@@ -312,6 +315,7 @@ fillCatSelected(catin: any, catId: any): void {
           });
           console.log('saveCat: ',this.combo);
           this.catToFill = this.combo.categories;
+
          /////////// TO Refactor //////////
           var found = false;
           var catChoosen = catin.selectedTranslation.name;
@@ -391,14 +395,23 @@ fillCatSelected(catin: any, catId: any): void {
     /*
     * reset color of the category to no color
     */
-    resetCategoryCssClass(){
-      for(var i = 0; i < this.categories.length; i++){
+    resetCategoryCssClass(c: any){
+      for(var i = 0; i < c.length; i++){
         document.getElementById(i.toString()).className='btn btn-secondary';
       }
     }
 
     checkbox(cat:any) {
       cat.selected = (cat.selected) ? false : true;
+    }
+
+    getCssClass(){
+      if(this.showCss){
+        return "btn btn-primary";
+      }
+      else{
+        return "btn btn-secondary";
+      }
     }
 
 }

@@ -60,8 +60,8 @@
       <div class="row">
         <div class="col-md-10 bottomSpacing">
             <h5>{{ 'combo.s2subCatList' | translate }}</h5>
-            <div class="btn-group" data-toggle="buttons" role="group"><!--class="btn btn-secondary"  [className]="cssClass" [ngClass]="{'selectedStyle': isVisibleSS, 'notSelectedStyle': !isVisibleSS}"-->
-              <label *ngFor="let category of categories; let i = index" [attr.id]=i [class.selected]="category === currentSelectedCat" [ngClass]="{'btn-primary': isAvailable, 'btn btn-secondary': !isAvailable}">
+            <div class="btn-group" role="group"><!--class="btn btn-secondary"  [className]="cssClass" [ngClass]="{'selectedStyle': isVisibleSS, 'notSelectedStyle': !isVisibleSS}"-->
+              <label *ngFor="let category of categories; let i = index" class="btn btn-secondary">
                 <input type="checkbox" (click)="saveCategory(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}<!--[checked]="isAvailable" (change)="isAvailable = $event.target.checked" -->
               </label>
               <!--<input class="btn btn-secondary" id="e" type="reset" value="No Category" (click)="nocat()">-->
@@ -84,14 +84,14 @@
       </div>
     <!-- step content-->
 
-    <!-- SELECTED CAT ---->
+    <!-- chosen CAT ---->
       <div class="row">
         <br/>
         <div class="col-md-10">
             <h5>{{ 'combo.s3subCatList' | translate }}</h5>
             <div *ngIf="catToFill?.length == 0" class="bottomSpacing"> No choosen category.</div>
             <div class="btn-group" data-toggle="buttons" role="group">
-              <label *ngFor="let category of catToFill; let i = index" class="btn btn-secondary">
+              <label *ngFor="let category of catToFill; let i = index" [attr.id]=i class="btn btn-secondary">
                 <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
               </label>
             </div>
@@ -115,7 +115,7 @@
       </div>
 
       <div class="col-md-6">
-        <label>{{ 'combo.s3subTitleFoodInCatList' | translate }}{{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }} </label>
+        <label>{{ 'combo.s3subTitleFoodInCatList' | translate }} <span class="label label-success">{{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }}</span> </label>
         <ul class="list-group scrollable-list">
           <li *ngFor="let item of categoryShowing?.items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
             <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
