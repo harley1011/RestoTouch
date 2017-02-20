@@ -98,8 +98,6 @@ userModel.sync({force: dropTable}).then(function () {
     });
     comboTranslationModel.sync({force: dropTable});
 
-
-    comboCatFoodItemModel.sync({force: dropTable}).then(function(){
       itemModel.belongsToMany(categoryModel, {
         as: 'categories',
         through: comboCatFoodItemModel,
@@ -124,7 +122,19 @@ userModel.sync({force: dropTable}).then(function () {
         onDelete: 'cascade',
         foreignKey: "comboId"
       });
-    });
+      itemModel.belongsToMany(itemSizesModel, {
+        as: 'sizes',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemId"
+      });
+      itemSizesModel.belongsToMany(itemModel, {
+        as: 'items',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemSizesId"
+      });
+      comboCatFoodItemModel.sync({force: dropTable}).then(function(){force: dropTable});
 
   });
 
