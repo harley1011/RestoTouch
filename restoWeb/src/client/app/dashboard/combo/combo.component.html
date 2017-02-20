@@ -75,21 +75,21 @@
 
     <!-- Part of Step 3 chosen CAT ---->
       <div class="row">
-        <br/>
+        <br/><br/>
         <div class="col-md-10">
             <h5>{{ 'combo.s3subCatList' | translate }}</h5>
-            <div *ngIf="catToFill?.length == 0" class="bottomSpacing"> No choosen category.</div>
+            <div *ngIf="catToFill?.length == 0"> No choosen category.</div>
             <div class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let category of catToFill; let i = index" [attr.id]=(category.selectedTranslation.name) class="btn btn-secondary">
                 <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
               </label>
             </div>
-          <br/>
         </div>
       </div>
       <!--- EO SELECTED CAT -->
 
-    <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation" class="row bottomSpacing">
+    <div class="row bottomSpacing">
+      <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation">
       <div class="col-md-6">
         <label>{{ 'combo.s3subFoodList' | translate }}</label>
         <ul class="list-group scrollable-list">
@@ -114,6 +114,7 @@
         <div [hidden]="categoryShowing?.items.length != 0">
           <i class="fa fa-exclamation-circle"></i> {{ 'combo.s3subTitleFoodInCatListNoFood' | translate }}
         </div>
+      </div>
       </div>
     </div>
 
