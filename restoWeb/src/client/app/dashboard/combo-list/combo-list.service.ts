@@ -10,26 +10,5 @@ import { ApiEndpointService } from '../../services/api-endpoint.service';
 
 @Injectable()
 export class ComboListService {
-  /*private url = '/combos';
 
-  constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
-
-  getCombos (): Observable<Combo[]> {
-    return this.http.get(this.api.getEndpoint() + this.url)
-      .map((response) => this.extractData(response).combos)
-      .catch(this.handleError);
-  }
-
-  /////////////////////////////////////////////////////////////////////////////
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private handleError (error: any) {
-    let errMsg = (error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-      console.error(error);
-    return Observable.throw(errMsg);
-  }*/
 }

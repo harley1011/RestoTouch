@@ -7,7 +7,6 @@ export class Combo {
     public translations: Array<ComboTranslations>,
     public selectedTranslation: ComboTranslations,
     public categories: Array<Category>,
-   // public items: Array<Item>,
     public id?: number
   ) { }
 }
