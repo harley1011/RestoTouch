@@ -19,6 +19,8 @@ import {SettingsRoutes} from './settings/account-settings.routes';
 
 import {ProfileRoutes} from './profile/profile.routes';
 
+import {UnpaidOrdersRoutes} from './unpaid-orders/unpaid-orders.routes';
+
 import { NgModule } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 const dashboardRoutes: Routes = [
@@ -36,7 +38,8 @@ const dashboardRoutes: Routes = [
       .concat(MenuRoutes)
       .concat(MenuListRoutes)
       .concat(SettingsRoutes)
-      .concat(ProfileRoutes),
+      .concat(ProfileRoutes)
+      .concat(UnpaidOrdersRoutes),
     canActivate: [AuthService],
     canActivateChild: [AuthService]
   }

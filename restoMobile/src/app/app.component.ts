@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, NavController, MenuController, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
 import { Page1 } from '../pages/page1/page1';
@@ -8,9 +8,8 @@ import { MenuListPage } from '../pages/menu-list/menu-list';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
-import { Auth, User } from '@ionic/cloud-angular';
-
 
 @Component({
   templateUrl: 'app.html'
@@ -18,24 +17,31 @@ import { Auth, User } from '@ionic/cloud-angular';
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  @ViewChild('content') navController: NavController;
 
-  rootPage: any = LoginPage;
+  rootPage: any = HomePage;
+  startPage: any = LoginPage;
+  restoListPage: any = RestaurantListPage;
+  welcomePage: any = Page2;
 
   pages: Array<{title: string, component: any}>;
+  usePage: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform,
               public authService: AuthService) {
     this.initializeApp();
 
+
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 },
-      { title: 'Menu List Page', component: MenuListPage },
-      { title: 'Welcome Page', component: WelcomePage},
-      { title: 'Settings', component: SettingsPage},
-      { title: 'Restaurant List', component: RestaurantListPage },
+
+//      { title: 'Page One', component: Page1 },
+//      { title: 'Page Two', component: Page2 },
+//      { title: 'Welcome Page', component: WelcomePage},
+//      { title: 'Settings', component: SettingsPage},
+//      { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
+//      { title: 'Home', component: HomePage }
     ];
 
   }
@@ -46,7 +52,12 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.authService.setMainNavController(this.navController);
+//        this.nav.setRoot(LoginPage);
+        //this.loadedResto = navParams.get('loadedResto');
+
     });
+
   }
 
   openPage(page) {

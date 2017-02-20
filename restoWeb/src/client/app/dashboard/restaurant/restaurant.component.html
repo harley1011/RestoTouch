@@ -411,7 +411,7 @@
           <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red">{{
             'restaurant.deleteButton' | translate}}
           </button>
-          <button *ngIf="create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.createButtonTopbar' |
+          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.createButtonTopbar' |
             translate}}
           </button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'restaurant.cancelButtonTopbar'

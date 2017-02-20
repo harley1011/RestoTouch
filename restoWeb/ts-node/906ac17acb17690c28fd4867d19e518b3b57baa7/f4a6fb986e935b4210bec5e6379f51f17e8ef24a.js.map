@@ -1,0 +1,1 @@
+{"version":3,"file":"/Users/Samer/Desktop/RestoTouch/restoWeb/tools/utils/project.utils.ts","sources":["/Users/Samer/Desktop/RestoTouch/restoWeb/tools/utils/project.utils.ts"],"names":[],"mappings":";;;;AAGA,iBAAc,uBAAuB,CAAC,EAAA","sourcesContent":["/**\n * This barrel file provides the exports for the project specific utilities.\n */\nexport * from './project/sample_util';\n"]}

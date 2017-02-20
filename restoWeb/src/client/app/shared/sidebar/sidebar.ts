@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
 	moduleId: module.id,
@@ -7,11 +8,13 @@ import {TranslateService} from 'ng2-translate';
 	templateUrl: 'sidebar.html'
 })
 
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
 	isActive = false;
 	showMenu: string = '';
+	isEmployee: boolean;
 
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService,
+    			private authService: AuthService) {
         // this language will be used as a fallback when a translation isn't found in the current language
         translate.setDefaultLang('en');
         }
@@ -19,6 +22,10 @@ export class SidebarComponent {
 	eventCalled() {
 		this.isActive = !this.isActive;
 	}
+
+	ngOnInit() {
+    	this.isEmployee = this.authService.loggedInUser.isEmployee;
+  	}
 	addExpandClass(element: any) {
 		if (element === this.showMenu) {
 			this.showMenu = '0';

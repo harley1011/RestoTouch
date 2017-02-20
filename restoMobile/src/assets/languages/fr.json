@@ -8,6 +8,11 @@
   },
 
   "selectResto": {
-    "title": "Liste de vos Restaurants"
+    "title": "Vos Restaurants"
+  },
+
+  "welcome": {
+    "welcomeTitle": "Bienvenue à",
+    "poweredBottom": "Propulsé par "
   }
 }

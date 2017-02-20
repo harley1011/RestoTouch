@@ -4,20 +4,23 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!--<ion-menu [content]="content">-->
+    <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{ 'selectResto.title' | translate }}</ion-title>
-  </ion-navbar>
+      <ion-navbar>
+        <ion-title>{{ 'selectResto.title' | translate }}</ion-title>
+      </ion-navbar>
 
-</ion-header>
+    </ion-header>
 
 
-<ion-content padding>
-<ion-list>
-    <button ion-item *ngFor="let restaurant of restaurants" (click)="itemTapped($event, restaurant)">
-      <h2>{{restaurant.selectedTranslation ? restaurant.selectedTranslation.name : "No translation"}}</h2>
-      <p>{{restaurant.address}}</p>
-    </button>
-  </ion-list>
-</ion-content>
+    <ion-content padding>
+    <ion-list>
+        <button ion-item *ngFor="let restaurant of restaurants" (click)="itemTapped($event, restaurant)">
+          <h1>{{restaurant.selectedTranslation ? restaurant.selectedTranslation.name : "No translation"}}</h1>
+          <p>{{restaurant.address}}</p>
+        </button>
+      </ion-list>
+    </ion-content>
+<!--</ion-menu>-->
+

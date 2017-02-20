@@ -59,7 +59,6 @@ export class ProfileComponent {
 		this.editPass = false;
 		this.hideMessageSuccess = true;
 		this.passwordAlert = false;
-		//Could maybe be improved.
 		this.profileService.getProfile().subscribe(user => {
 			this.user = user;
 		});

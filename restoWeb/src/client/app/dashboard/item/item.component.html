@@ -60,7 +60,7 @@
                   </div>
                 </td>
                 <td>
-                  <button class="fa fa-plus-circle icon-add icon-align" [disabled]="!item.newSize.selectedTranslation.name"
+                  <button id="addSizeBtn" class="fa fa-plus-circle icon-add icon-align" [disabled]="!item.newSize.selectedTranslation.name"
                           (click)="addSize()"></button>
                 </td>
               </tr>
@@ -201,7 +201,7 @@
                     </div>
                   </td>
                   <td>
-                    <button class="fa fa-plus-circle icon-add icon-align" type="button"
+                    <button id="confirmIngredientGroupBtn" class="fa fa-plus-circle icon-add icon-align" type="button"
                             [disabled]="!newIngredientGroup.newIngredient.selectedTranslation.name"
                             (click)="addIngredient(newIngredientGroup, newIngredientGroup.newIngredient)"></button>
                   </td>
@@ -211,7 +211,7 @@
             </div>
           </div>
           <div class="col-sm-12 add-ingredient-button">
-            <button class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
+            <button id="addIngredientGroupBtn" class="btn btn-success btn-green" (click)="addIngredientGroup()" type="button">Add Ingredient Group
             </button>
           </div>
         </div>
@@ -219,7 +219,7 @@
       </div>
       <div class="row">
         <div class="manage-button">
-          <button type="submit" class="btn btn-success btn-green"
+          <button id="createItemBtn" type="submit" class="btn btn-success btn-green"
                   [disabled]="!itemForm.form.valid">{{ create? ('foodItem.createButtonTopbar'
             | translate) : ('foodItem.saveButton' | translate)}}
           </button>

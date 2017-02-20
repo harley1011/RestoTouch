@@ -1,3 +1,17 @@
 page-menu-list {
-
+    font-family: "Montserrat";
+    
+    button.item-md {
+        background-color: transparent;
+        color: #fff;
+        
+        h1 {
+            text-transform: uppercase;
+            font-size: 22px;
+            font-family: 'OpenSans Condensed';
+            font-weight: 700;   
+            letter-spacing: 2px;
+            padding-left: 4px;
+        }
+    }
 }
