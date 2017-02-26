@@ -53,6 +53,8 @@ export class NavMock {
 export class NavParamMock {
 
   public get(param: string): any {
+
+    //mocking ionic codes
     if (param === 'menu') {
       return {'id': '1'};
     }
@@ -63,7 +65,12 @@ export class NavParamMock {
 
     if(param === 'restaurant') {
       return {'Menus': []};
-    };
+    }
+
+    if(param === 'item') {
+      return {'translations': [{'name': 'Oreo English', 'description': 'Oreo English Lang', 'languageCode': 'en'},
+                               {'name': 'Oreo French', 'description': 'Oreo French Lang', 'languageCode': 'fr'} ]};
+    }
 
   }
 

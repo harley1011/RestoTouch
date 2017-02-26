@@ -1,4 +1,4 @@
-/* import { async, ComponentFixture } from '@angular/core/testing';
+ import { async, ComponentFixture } from '@angular/core/testing';
  import { TestUtils } from '../../test';
  import { RestaurantListPage } from './restaurant-list';
 
@@ -23,7 +23,7 @@
    expect(instance).not.toBeNull();
    });
 
- });*/
+ });
 
 
 

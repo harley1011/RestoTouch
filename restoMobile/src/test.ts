@@ -58,7 +58,7 @@ export class TestUtils {
       });
   }
 
-  public static configureIonicTestingModule(components: Array<any>): typeof TestBed {
+  public static configureIonicTestingModule(components: Array<any>): typeof TestBed { //TODO somewhere i have to add the code of services mock backend stuff
     return TestBed.configureTestingModule({
       declarations: [
         ...components,
