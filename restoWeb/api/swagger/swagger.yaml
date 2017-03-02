@@ -80,12 +80,18 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       parameters:
-        - name: order
-          description: item properties
-          in: body
-          required: true
-          schema:
-            $ref: "#/definitions/Item"
+      - name: imageName
+        in: query
+        description: name of image
+        required: true
+        type: string
+        format: string
+      - name: imageType
+        in: query
+        description: type of image
+        required: true
+        type: string
+        format: string
   /item:
      # binds a127 app logic to a route
     x-swagger-router-controller: item
