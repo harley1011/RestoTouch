@@ -101,6 +101,10 @@ function notifyNewOrder(restaurantId, order) {
   client.publish('restaurantNewOrder' + restaurantId, JSON.stringify(order));
 }
 
+function payForOrder(req, res) {
+
+}
+
 function retrieveRestaurantOrders(req, res) {
   var restaurantId = extractRestaurantId(req);
   var restaurantKey = 'restaurantOrders:' + restaurantId;
