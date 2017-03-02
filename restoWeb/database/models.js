@@ -24,6 +24,9 @@ var disabledMenuItemCategoryModel = sequelize.import('./models/disabledMenuItemC
 var itemSizesTranslationsModel = sequelize.import('./models/itemSizeTranslations.js');
 var ingredientGroupTranslationModel = sequelize.import('./models/ingredientGroupTranslation.js');
 var ingredientTranslationModel = sequelize.import('./models/ingredientTranslation.js');
+var orderModel = sequelize.import('./models/orders.js');
+var orderedItemIngredientModel = sequelize.import('./models/orderedItemIngredients.js');
+var orderedItemsModel = sequelize.import('./models/orderedItems.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -180,12 +183,27 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'ingredientGroupId'
     });
     ingredientModel.sync({force: dropTable});
+
     ingredientModel.hasMany(ingredientTranslationModel, {
       as: 'translations',
       onDelete: 'cascade',
       foreignKey: 'ingredientId'
     });
+
     ingredientTranslationModel.sync({force: dropTable});
+
+
+    restaurantModel.hasMany(orderModel, {as: 'orders', onDelete: 'cascade', foreignKey: 'restaurantId'});
+    orderModel.hasMany(orderedItemsModel, {onDelete: 'cascade', foreignKey: 'orderId'});
+    itemModel.hasMany(orderedItemsModel, {onDelete: 'cascade', foreignKey: 'itemId'});
+    orderModel.sync({force: dropTable}).then(function () {
+      orderedItemsModel.sync({force: dropTable});
+    });
+
+
+
+
+
 
   });
 
@@ -286,4 +304,8 @@ exports.getIngredientTranslationModel = function () {
 
 exports.getIngredientGroupTranslationModel = function () {
   return ingredientGroupTranslationModel;
+}
+
+exports.getOrdersModel = function () {
+  return orderModel;
 }
