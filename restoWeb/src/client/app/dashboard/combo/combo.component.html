@@ -93,7 +93,7 @@
       <div class="col-md-6">
         <label>{{ 'combo.s3subFoodList' | translate }}</label>
         <ul class="list-group scrollable-list">
-          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
+          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}}: $ {{item.sizes[0]?.price}})
             <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                 (click)="addItemToCategory(item)"></i>
           </li>
