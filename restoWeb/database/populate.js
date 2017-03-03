@@ -15,6 +15,18 @@ var users = [
         "name": "English",
         "languageCode": "en"
       }]
+  }, {
+    "firstName": "David",
+    "lastName": "Bastien",
+    "email": "david.bastien5@gmail.com",
+    "password": passwordData.passwordHash,
+    "salt": passwordData.salt,
+    "emailVerified": true,
+    "supportedLanguages": [
+      {
+        "name": "English",
+        "languageCode": "en"
+      }]
   }];
 // },
 //
@@ -580,5 +592,3 @@ setTimeout(function () {
   }
 
 }, 5000)
-
-
