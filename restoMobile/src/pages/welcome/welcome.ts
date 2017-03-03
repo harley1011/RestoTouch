@@ -45,7 +45,8 @@ export class WelcomePage {
     this.selectedLanguage = lang;
     this.navCtrl.push(MenuPage, {
       language: this.selectedLanguage,
-      menu: this.menuService.selectedMenu
+      menu: this.menuService.selectedMenu,
+      restaurant: this.selectedRestaurant
     });
   }
 

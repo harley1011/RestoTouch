@@ -23,6 +23,7 @@ import { WelcomePage } from '../welcome/welcome';
 export class MenuPage {
   selectedMenu: any;
   selectedLanguage: any;
+  selectedRestaurant: any;
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
@@ -36,6 +37,7 @@ export class MenuPage {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
+    this.selectedRestaurant = navParams.get('restaurant');
     this.categories = [];
     this.total = "0.00";
 
@@ -191,7 +193,7 @@ export class MenuPage {
   usePayPal(): void {
     var self = this;
     PayPal.init({
-      "PayPalEnvironmentProduction": "YOUR_PRODUCTION_CLIENT_ID",
+      "PayPalEnvironmentProduction": this.selectedRestaurant.paypalId,
       "PayPalEnvironmentSandbox": "AaSdrzWXMJWXl_fxul1Q6KstQTlUgEfs7gmJ2qwrAPscdTUleVbZTEwj7NZIpZYYSy0xDzPCC4_zLgn3"
     }).then(() => {
       PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
