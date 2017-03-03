@@ -170,7 +170,29 @@ userModel.sync({force: dropTable}).then(function () {
     });
 
     itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
-    ingredientGroupModel.sync({force: dropTable});
+    ingredientGroupModel.sync({force: dropTable}).then(function () {
+
+      ingredientModel.sync({force: dropTable}).then(function () {
+
+        restaurantModel.hasMany(orderModel, {as: 'orders', onDelete: 'cascade', foreignKey: 'restaurantId'});
+        orderModel.hasMany(orderedItemsModel, {as: 'orderedItems', onDelete: 'cascade', foreignKey: 'orderId'});
+        itemModel.hasMany(orderedItemsModel, { as: 'orderedItems', onDelete: 'cascade', foreignKey: 'itemId'});
+        orderedItemsModel.belongsTo(itemModel, {as: 'item', onDelete: 'cascade', foreignKey: 'itemId'});
+        orderedItemsModel.belongsTo(itemSizesModel, {as: 'size', onDelete: 'cascade', foreignKey: 'itemSizeId'});
+        orderedItemsModel.belongsTo(orderModel, {as: 'order', onDelete: 'cascade', foreignKey: 'orderId'});
+
+        setTimeout(function () {
+          orderModel.sync({force: dropTable}).then(function () {
+            orderedItemsModel.sync({force: dropTable}).then(function () {
+              orderedItemIngredientModel.belongsTo(orderedItemsModel, {as: 'orderedItem', onDelete: 'cascade', foreignKey: 'orderedItemId'});
+              orderedItemIngredientModel.belongsTo(ingredientModel, {as: 'selectedIngredient', onDelete: 'cascade', foreignKey: 'ingredientId'});
+            });
+          });
+        }, 1000)
+
+
+      });
+    });
     ingredientGroupModel.hasMany(ingredientGroupTranslationModel, {
       as: 'translations',
       onDelete: 'cascade',
@@ -182,7 +204,7 @@ userModel.sync({force: dropTable}).then(function () {
       onDelete: 'cascade',
       foreignKey: 'ingredientGroupId'
     });
-    ingredientModel.sync({force: dropTable});
+
 
     ingredientModel.hasMany(ingredientTranslationModel, {
       as: 'translations',
@@ -191,17 +213,6 @@ userModel.sync({force: dropTable}).then(function () {
     });
 
     ingredientTranslationModel.sync({force: dropTable});
-
-
-    restaurantModel.hasMany(orderModel, {as: 'orders', onDelete: 'cascade', foreignKey: 'restaurantId'});
-    orderModel.hasMany(orderedItemsModel, {onDelete: 'cascade', foreignKey: 'orderId'});
-    itemModel.hasMany(orderedItemsModel, {onDelete: 'cascade', foreignKey: 'itemId'});
-    orderModel.sync({force: dropTable}).then(function () {
-      orderedItemsModel.sync({force: dropTable});
-    });
-
-
-
 
 
 
@@ -308,4 +319,12 @@ exports.getIngredientGroupTranslationModel = function () {
 
 exports.getOrdersModel = function () {
   return orderModel;
+}
+
+exports.getOrderedItemsModel = function () {
+  return orderedItemsModel;
+}
+
+exports.getOrderedItemIngredientModel = function () {
+  return orderedItemIngredientModel;
 }
