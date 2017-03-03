@@ -4,6 +4,7 @@ import {OrderService} from '../../services/order.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Order} from '../../shared/models/order';
 import {Language} from './../../shared/models/language';
+
 @Component({
   moduleId: module.id,
   selector: 'order-cmp',
@@ -21,7 +22,23 @@ export class OrderComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         orderService.retrieveCompletedOrder(params['id']).subscribe(order => {
-          this.order = order.order;
+          let orderWithGroupedItems= new Order([],order.order.total, order.order.id);
+
+          orderWithGroupedItems.total = order.order.total;
+
+          order.order.orderedItems.forEach((orderedItem: any) => {
+
+            let foundOrder = orderWithGroupedItems.orderedItems.find(correctOrderedItem => correctOrderedItem.item.id == orderedItem.id);
+
+            if (!foundOrder) {
+              orderedItem.sizes = [];
+              orderWithGroupedItems.orderedItems.push(orderedItem);
+              foundOrder = orderedItem;
+
+            }
+            foundOrder.sizes.push({size:orderedItem.size, selectedIngredients: null});
+          })
+          this.order = orderWithGroupedItems;
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         })
       }
@@ -32,8 +49,9 @@ export class OrderComponent implements OnInit {
   }
 
   onSelectLanguage(language: Language) {
-    this.order.orderedItems.forEach(orderedItems => {
-      orderedItems.item.selectedTranslation = orderedItems.item.translations.find(translation => translation.languageCode === language.languageCode);
+    this.order.orderedItems.forEach(orderedItem => {
+      orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === language.languageCode);
+      orderedItem.sizes.forEach(container => { container.size.selectedTranslation = container.size.translations.find(translation => translation.languageCode === language.languageCode)});
     });
   }
 
