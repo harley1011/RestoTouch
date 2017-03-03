@@ -8,7 +8,10 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       type: DataTypes.INTEGER,
       unique: 'restaurantTrCompositeIndex'
-    }
+    },
+    kitCashModeFlag: {type: DataTypes.STRING} // Legend : KCO-> Kitchen & Cashier Mode Post,
+                                              //          KCE-> Kitchen & cashier mode Pre ,
+                                              //          CNK-> Cashier mode only no kitchen
 	});
 };
 

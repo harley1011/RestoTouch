@@ -13,6 +13,7 @@ export class Restaurant {
               public Menus: Menu[],
               public payments: Payment[],
               public businessHours: BusinessHour[],
+              public kitCashModeFlag: string,
               public id?: number) {
   }
 }
