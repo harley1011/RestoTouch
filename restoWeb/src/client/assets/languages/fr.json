@@ -65,6 +65,8 @@
     "sousTitleRestoSetting":"Toutes les champs peuvent être modifiées dans une autre langue.",
     "geninfoTitle": "Information Générale",
     "paymethTitle": "Modes de paiement",
+    "paypalTitle": "Compte Paypal",
+    "accountID": "ID du Compte",
     "openhourTitle": "Heures d'ouverture",
     "langTitle": "Langues",
     "menuTitle": "Menu",

@@ -27,7 +27,7 @@ var ingredientTranslationModel = sequelize.import('./models/ingredientTranslatio
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
-var dropTable = false;
+var dropTable = true;
 
 userModel.sync({force: dropTable}).then(function () {
 

@@ -42,6 +42,16 @@
           <label><input type="checkbox" name="payment{{i}}" [(ngModel)]="payment.used"> {{payment.name}}</label>
         </div>
       </div>
+      <div id="basic-info" class="col-md-12">
+        <h4>{{ 'restaurant.paypalTitle' | translate}}</h4>
+
+        <div class="form-group">
+          <label>{{ 'restaurant.accountID' | translate}}</label>
+          <input id="paypalId" class="form-control" name="paypalId"
+                 [(ngModel)]="restaurant.paypalId" name="paypalId" #paypalId="ngModel"
+                 [ngClass]="{'form-error': !paypalId.valid && !paypalId.pristine}">
+        </div>
+      </div>
       <div id="business-hours" class="edit-section col-md-12">
         <h4>{{ 'restaurant.openhourTitle' | translate}}</h4>
 
