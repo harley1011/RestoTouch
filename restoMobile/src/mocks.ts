@@ -67,9 +67,13 @@ export class NavParamMock {
       return {'Menus': []};
     }
 
-    if(param === 'item') {
-      return {'translations': [{'name': 'Oreo English', 'description': 'Oreo English Lang', 'languageCode': 'en'},
-                               {'name': 'Oreo French', 'description': 'Oreo French Lang', 'languageCode': 'fr'} ]};
+    // if(param === 'item') {
+    //   return {'translations': [{'name': 'Oreo English', 'description': 'Oreo English Lang', 'languageCode': 'en'},
+    //                            {'name': 'Oreo French', 'description': 'Oreo French Lang', 'languageCode': 'fr'} ]};
+    // }
+
+    if (param === 'item') {
+      return {translations: {}};
     }
 
   }

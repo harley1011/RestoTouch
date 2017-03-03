@@ -25,7 +25,7 @@ export class MenuListPage {
     this.selectedRestaurant.Menus.map(this.setTranslationForMenu);
   }
 
-  setTranslationForMenu(menu) {
+  setTranslationForMenu(menu) {//TODO check by replacing this.selectedRestaurant.Menus
     menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
     return menu;
   }

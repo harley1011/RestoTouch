@@ -26,8 +26,8 @@ export class WelcomePage {
     translate.setDefaultLang('en');
 
     this.selectedRestaurant = navParams.get('item');
-    this.languages = languageService.languages();
-    for (let availLang of this.selectedRestaurant.translations){// TODO the error started here
+    this.languages = languageService.languages();//TODO the error coming from here (supported http service call, language error: solved by doing languageMock)
+    for (let availLang of this.selectedRestaurant.translations){
       let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
       this.supportedLanguages.push(lang);
     }

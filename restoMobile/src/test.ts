@@ -22,6 +22,11 @@ import { ItemService } from './pages/services/item.service';
 import { MenuService } from './pages/services/menu.service';
 import { RestaurantService } from './pages/services/restaurant.service';
 import { LanguageService } from './pages/services/language.service';
+import { MenuServiceMock } from './pages/services/menu.mock';
+import { LanguageServiceMock } from './pages/services/language.mock';
+
+// import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
+// import { MockBackend } from '@angular/http/testing';
 
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -69,8 +74,17 @@ export class TestUtils {
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
         {provide: NavParams, useClass: NavParamMock},
+        {provide: MenuService, useClass: MenuServiceMock},
+        {provide: LanguageService, useClass: LanguageServiceMock},
+         // {
+         //   provide: Http,
+         //   useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {
+         //     return new Http(backend, defaultOptions);
+         //   },
+         //   deps: [MockBackend, BaseRequestOptions]
+         // },
         AuthService, ApiEndpointService, AuthHttpService,
-        CategoryService, ItemService, MenuService, RestaurantService, LanguageService,
+        CategoryService, ItemService, RestaurantService,
       ],
       imports: [
         TranslateModule.forRoot(),

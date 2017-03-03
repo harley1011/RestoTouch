@@ -1,4 +1,4 @@
-/* //TODO network error is here
+ //TODO network error is here
 import { async, ComponentFixture } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { WelcomePage } from './welcome';
@@ -25,5 +25,5 @@ describe('Pages: WelcomePage', () => {
   });
 
 });
-*/
+
 
