@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import {OrderService} from '../../services/order.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {Order} from '../../shared/models/order';
 import {Language} from '../../shared/models/language';
 import {TranslateService} from 'ng2-translate';
-import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 
 
 @Component({
@@ -24,8 +23,7 @@ export class OrderListComponent implements OnInit {
 
   searchOptions = ['Id', 'Total', 'Paid Date']
 
-  constructor(private router: Router,
-              private translate: TranslateService,
+  constructor(private translate: TranslateService,
               private orderService: OrderService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');

@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
+import { RestaurantService } from './services/restaurant.service';
 import { ImageUploadService } from './services/image-upload.service';
 import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 import { LanguageService } from './services/language.service';
@@ -40,7 +41,7 @@ import {DatePipe} from "@angular/common";
 		TranslateModule
 	],
 	declarations: [AppComponent],
-	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, DatePipe, {
+	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, DatePipe, RestaurantService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],
