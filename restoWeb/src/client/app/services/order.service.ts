@@ -36,6 +36,12 @@ export class OrderService {
       .catch(this.handleError);
   }
 
+  retrieveCompletedOrder (id: number): Observable<any> {
+    return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrder/' + id)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || { };

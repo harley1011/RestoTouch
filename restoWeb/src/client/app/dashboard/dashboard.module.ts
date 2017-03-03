@@ -20,6 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './profile/profile.module';
 import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
 import {OrderListModule} from './order-list/order-list.module';
+import {OrderModule} from './order/order.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +41,8 @@ import {OrderListModule} from './order-list/order-list.module';
     TranslateModule,
     ProfileModule,
     UnpaidOrdersModule,
-    OrderListModule
+    OrderListModule,
+    OrderModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]

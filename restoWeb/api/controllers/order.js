@@ -156,8 +156,8 @@ function payForOrder(req, res) {
 }
 
 function retrieveCompletedRestaurantOrder(req, res) {
-  var orderId = req.body.orderId;
-  orderModel.findAll({where: {id: orderId}, include: [{
+  var orderId = req.swagger.params.orderId.value;
+  orderModel.find({where: {id: orderId}, include: [{
     model: orderedItemsModel,
     as: 'orderedItems',
     include: [{
@@ -176,6 +176,7 @@ function retrieveCompletedRestaurantOrder(req, res) {
       }]
     }]
   }]}).then(function (order) {
+    return res.json({order: order});
 
   });
 }

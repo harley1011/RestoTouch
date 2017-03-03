@@ -6,7 +6,7 @@ import {Language} from '../../shared/models/language';
 import {Restaurant} from '../../shared/models/restaurant';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
-
+import {Router} from '@angular/router';
 @Component({
   moduleId: module.id,
   selector: 'order-list-cmp',
@@ -32,6 +32,7 @@ export class OrderListComponent implements OnInit {
 
   constructor(private translate: TranslateService,
               private orderService: OrderService,
+              private router: Router,
               private restaurantService: RestaurantService) {
     translate.setDefaultLang('en');
 
@@ -68,7 +69,7 @@ export class OrderListComponent implements OnInit {
   }
 
   showOrderDetail(order: Order): void {
-    console.log(order);
+    this.router.navigate(['/dashboard/order', order.id]);
   }
 
   onSelectLanguage(language: Language) {
