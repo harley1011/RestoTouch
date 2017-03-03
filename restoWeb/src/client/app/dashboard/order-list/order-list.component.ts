@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {OrderService} from '../../services/order.service';
-import {DataTable} from "angular2-datatable";
 import {Order} from '../../shared/models/order';
 import {Language} from '../../shared/models/language';
 import {TranslateService} from 'ng2-translate';
@@ -13,9 +12,12 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 })
 
 export class OrderListComponent implements OnInit {
+  filterQuery = "";
+  rowsOnPage = 10;
+  sortBy = "id";
+  sortOrder = "asc";
   orders: Order[];
   isEmployee: boolean;
-
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
