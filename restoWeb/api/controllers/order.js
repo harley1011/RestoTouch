@@ -115,7 +115,6 @@ function payForOrder(req, res) {
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
     var order = result.removedOrder;
-
     var orderedItems = [];
     order.orderedItems.forEach(function (orderedItem) {
       orderedItem.sizes.forEach(function (sizeContainer) {
@@ -127,16 +126,15 @@ function payForOrder(req, res) {
           });
         });
         orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
-
       });
     });
 
     return orderModel.create({total: order.total, restaurantId: 1, orderedItems: orderedItems},
       {
-        include: [{model: orderedItemsModel, as: 'orderedItems'}, {
+        include: [{model: orderedItemsModel, as: 'orderedItems', include: [{
           model: orderedItemIngredientModel,
           as: 'orderedItemIngredients'
-      }
+        }]},
     ]}).then(function (createdOrder) {
     return res.json({success: 1});
   });
