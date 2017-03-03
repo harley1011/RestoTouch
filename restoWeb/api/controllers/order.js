@@ -12,8 +12,9 @@ var orderedItemsModel;
 var itemModel;
 var orderedItemIngredientModel;
 var restaurantModel;
-
-
+var itemTranslationModel;
+var itemSizeTranslationModel;
+var itemSizeModel;
 var redlock = new Redlock(
   // you should have one client for each redis node
   // in your cluster
@@ -41,7 +42,8 @@ module.exports = {
   closeRedis: closeRedis,
   removeRestaurantsOrder: removeRestaurantsOrder,
   payForOrder: payForOrder,
-  retrieveCompletedOrders: retrieveCompletedRestaurantOrders
+  retrieveCompletedOrders: retrieveCompletedRestaurantOrders,
+  retrieveCompletedOrder: retrieveCompletedRestaurantOrder
 };
 
 function setDatabase(m) {
@@ -51,6 +53,9 @@ function setDatabase(m) {
   itemModel = models.getItemModel();
   orderedItemIngredientModel = models.getOrderedItemIngredientModel();
   restaurantModel = models.getRestaurantModel();
+  itemTranslationModel = models.getItemTranslationModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
+  itemSizeModel = models.getItemSizesModel();
 }
 
 redlock.on('clientError', function (err) {
@@ -148,6 +153,31 @@ function payForOrder(req, res) {
 
     }
   )
+}
+
+function retrieveCompletedRestaurantOrder(req, res) {
+  var orderId = req.body.orderId;
+  orderModel.findAll({where: {id: orderId}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (order) {
+
+  });
 }
 
 function retrieveCompletedRestaurantOrders(req, res) {

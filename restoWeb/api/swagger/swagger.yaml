@@ -51,12 +51,33 @@ paths:
           in: path
           required: true
       operationId: retrieveCompletedOrders
-      description: Retrieves Completed restaurants orders
+      description: Retrieves completed restaurants orders
       responses:
         "200":
           description: Success
           schema:
             $ref: "#/definitions/OrdersResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /retrieveCompletedOrder/{orderId}:
+    x-swagger-router-controller: order
+    get:
+      # used as the method name of the controller
+      parameters:
+        - name: orderId
+          type: number
+          in: path
+          required: true
+      operationId: retrieveCompletedOrder
+      description: Retrieves a completed restaurants order
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Order"
         # responses may fall through to errors
         default:
           description: Error
