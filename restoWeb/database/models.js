@@ -186,6 +186,8 @@ userModel.sync({force: dropTable}).then(function () {
             orderedItemsModel.sync({force: dropTable}).then(function () {
               orderedItemIngredientModel.belongsTo(orderedItemsModel, {as: 'orderedItem', onDelete: 'cascade', foreignKey: 'orderedItemId'});
               orderedItemIngredientModel.belongsTo(ingredientModel, {as: 'selectedIngredient', onDelete: 'cascade', foreignKey: 'ingredientId'});
+
+              orderedItemsModel.hasMany(orderedItemIngredientModel, {as: 'orderedItemIngredients', onDelete: 'cascade', foreignKey: 'orderedItemId'});
             });
           });
         }, 1000)

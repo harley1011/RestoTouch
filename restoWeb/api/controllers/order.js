@@ -10,7 +10,7 @@ var models = require("../../database/models");
 var orderModel;
 var orderedItemsModel;
 var itemModel;
-
+var orderedItemIngredientModel;
 
 
 var redlock = new Redlock(
@@ -47,6 +47,7 @@ function setDatabase(m) {
   orderModel = models.getOrdersModel();
   orderedItemsModel = models.getOrderedItemsModel();
   itemModel = models.getItemModel();
+  orderedItemIngredientModel = models.getOrderedItemIngredientModel();
 }
 
 redlock.on('clientError', function (err) {
@@ -115,23 +116,34 @@ function payForOrder(req, res) {
   return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
     var order = result.removedOrder;
 
-    return orderModel.create({total: order.total, restaurantId: 1}).then(function (createdOrder) {
-      order.orderedItems.forEach(function (orderedItem) {
-        orderedItem.sizes.forEach(function (sizeContainer) {
-          orderedItemsModel.create({itemId: orderedItem.item.id, orderId: createdOrder.id, itemSizeId: sizeContainer.size.id}).then(function (result) {
-            console.log(result);
-          }, function (error) {
-            console.log(error);
+    var orderedItems = [];
+    order.orderedItems.forEach(function (orderedItem) {
+      orderedItem.sizes.forEach(function (sizeContainer) {
+        var selectedIngredients = [];
+        sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+          selectedIngredients.push({
+            ingredientId: ingredientContainer.ingredient.id,
+            quantity: ingredientContainer.ingredient.quantity
           });
         });
+        orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+
       });
-      return res.json({success: 1});
-    }, function (error) {
-      console.log(error);
-    })
+    });
+
+    return orderModel.create({total: order.total, restaurantId: 1, orderedItems: orderedItems},
+      {
+        include: [{model: orderedItemsModel, as: 'orderedItems'}, {
+          model: orderedItemIngredientModel,
+          as: 'orderedItemIngredients'
+      }
+    ]}).then(function (createdOrder) {
+    return res.json({success: 1});
+  });
 
 
-  })
+}
+)
 
 
 }
