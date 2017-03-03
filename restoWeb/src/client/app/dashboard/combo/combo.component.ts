@@ -85,6 +85,7 @@ export class ComboComponent implements OnInit {
           });
         });
         this.priceTypeSelected(this.combo.selectedTranslation.discountFlag);
+        console.warn("get combo ", this.combo);
     },
       error => {
         this.errorMessage = <any>error;
@@ -96,6 +97,7 @@ export class ComboComponent implements OnInit {
   * function for create/save button
   */
   addAndUpdate(): void {
+    console.warn("before adding ", this.combo);
     if (this.create) {
       this.add();
     } else {
