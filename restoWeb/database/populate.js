@@ -56,29 +56,43 @@ var users = [
 //   emailVerified: true
 // }
 
-
-var menus = [{name: 'breakfast1 Menu'}, {name: 'dinner1 Menu'}];
-var categories = [{
+var drinkCategory = {
   "translations": [
     {
       "name": "Drinks",
       "languageCode": "en"
     }
-  ],
-  "items": [
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    }]
-}];
+  ]
+};
 
-var restaurantsLangs = [{name: 'McDonald'}, {name: 'BurgerKing'}, {name: 'Rubens'}, {name: 'Damas'}];
-var restaurantsTrans = [{name: 'McDonald', description: 'Ordering burgers'}, {
-  name: 'BurgerKing',
-  description: 'Ordering burgers'
-}, {name: 'Rubens', description: 'Famous Steak'}, {name: 'Damas', description: 'Fresh food'}];
+var mealCategory = {
+  "translations": [
+    {
+      "name": "Meals",
+      "languageCode": "en"
+    }
+  ]
+};
+
+var sideCategory = {
+  "translations": [
+    {
+      "name": "Sides",
+      "languageCode": "en"
+    }
+  ]
+};
+
+
+var mainMenu = {
+  "translations": [
+    {
+      "name": "General Menu",
+      "languageCode": "en"
+    }
+  ]
+};
+
 var restaurants = [
   {
     "address": "Burger Street",
@@ -214,7 +228,109 @@ var restaurants = [
 
   }
 ];
-var items = [{
+
+var commonSizes = [
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Small"
+      }
+    ],
+    "price": 2
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Medium"
+      }
+    ],
+    "price": 2.50
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Large"
+      }
+    ],
+    "price": 3
+  }
+]
+var drinkItems = [{
+  "translations": [
+    {
+      "languageCode": "en",
+      "name": "Pepsi",
+      "description": "A classic refreshing soda"
+    }
+  ],
+  "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
+  "sizes": commonSizes
+},
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Coke",
+        "description": "A classic refreshing soda"
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
+    "sizes": commonSizes
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Sprite",
+        "description": "A classic refreshing soda"
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/65c5fba3-7c39-44cf-8e85-b93e0047d8ff",
+    "sizes": commonSizes
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Water",
+        "description": "A classic refreshing soda"
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/b1b71c27-f271-44d9-9dd5-6e983fec1c2a",
+    "sizes": commonSizes
+  }
+
+];
+
+
+var sideItems = [{
+  "translations": [
+    {
+      "languageCode": "en",
+      "name": "Fries",
+      "description": "Deep fried taters"
+    }
+  ],
+  "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/a4ae8968-38c0-4c1b-84c4-73bad88ccb4f",
+  "sizes": commonSizes
+},
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Chicken Wings",
+        "description": "Some delicious chicken"
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/635050d6-d03a-4799-a729-76c41db1a80d",
+    "sizes": commonSizes
+  }
+]
+
+var mealItems = [{
   "translations": [
     {
       "languageCode": "en",
@@ -223,8 +339,103 @@ var items = [{
     }
   ],
   "categories": [],
-  "ingredientGroups": [],
-  "imageUrl": "",
+  "ingredientGroups": [
+    {
+      "maxNumberOfIngredients": 1,
+      "minNumberOfIngredients": 1,
+      "orderPriority": 1,
+      "ingredients": [{
+        "addByDefault": true,
+        "price": 0,
+        "allowQuantity": 1,
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "White Bread"
+          }]
+      },
+        {
+          "addByDefault": false,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Brown Bread"
+            }]
+        },
+        {
+          "addByDefault": false,
+          "price": .50,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Sesame Bread"
+            }]
+        }
+      ],
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Bread"
+        }]
+
+    },
+    {
+      "maxNumberOfIngredients": 3,
+      "minNumberOfIngredients": 1,
+      "orderPriority": 2,
+      "ingredients": [{
+        "addByDefault": true,
+        "price": 0,
+        "allowQuantity": 1,
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Lettuce"
+          }]
+      },
+        {
+          "addByDefault": false,
+          "price": 1,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Bacon"
+            }]
+        },
+        {
+          "addByDefault": false,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Ketchup"
+            }]
+        },
+        {
+          "addByDefault": false,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Mustard"
+            }]
+        }
+      ],
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Toppings"
+        }]
+
+    }
+  ],
+  "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/fb12e1a2-3efb-4b71-ba44-d8f527f97592",
   "sizes": [
     {
       "translations": [
@@ -236,93 +447,14 @@ var items = [{
       "price": 2
     }
   ]
-}, {
-  "translations": [
-    {
-      "languageCode": "en",
-      "name": "Soda",
-      "description": "A sugary drink"
-    }
-  ],
-  "categories": [],
-  "ingredientGroups": [],
-  "imageUrl": "",
-  "sizes": [
-    {
-      "translations": [
-        {
-          "languageCode": "en",
-          "name": "Small"
-        }
-      ],
-      "price": 2
-    },
-    {
-      "translations": [
-        {
-          "languageCode": "en",
-          "name": "Medium"
-        }
-      ],
-      "price": 3
-    },
-    {
-      "translations": [
-        {
-          "languageCode": "en",
-          "name": "Large"
-        }
-      ],
-      "price": 4.50
-    },
-  ]
-},
-  {
-    "translations": [
-      {
-        "languageCode": "en",
-        "name": "Fries",
-        "description": "Deep fried taters"
-      }
-    ],
-    "categories": [],
-    "ingredientGroups": [],
-    "imageUrl": "",
-    "sizes": [
-      {
-        "translations": [
-          {
-            "languageCode": "en",
-            "name": "Small"
-          }
-        ],
-        "price": 1
-      },
-      {
-        "translations": [
-          {
-            "languageCode": "en",
-            "name": "Medium"
-          }
-        ],
-        "price": 2
-      },
-      {
-        "translations": [
-          {
-            "languageCode": "en",
-            "name": "Large"
-          }
-        ],
-        "price": 3.50
-      },
-    ]
-  }];
+}
+];
 
 
 // Let the db tables get created
 setTimeout(function () {
   var menuModel = model.getMenuModel();
+  var menuTranslationsModel = model.getMenuTranslationsModel();
   var userModel = model.getUserModel();
   var categoryModel = model.getCategoryModel();
   var restaurantsLanguagesModel = model.getRestaurantsLanguageModel();
@@ -373,65 +505,79 @@ setTimeout(function () {
             model: paymentsModel,
             as: 'payments'
           }], defaults: restaurant
-        }).then(function () {
+        }).then(function (createdRestaurant) {
 
 
-          var createdItem = [];
-          items.forEach(function (item) {
-            item.userId = user.id;
-            itemModel.create(item, {
-              include: [{
-                model: itemSizeModel,
-                as: 'sizes',
-                include: [{
-                  model: itemSizeTranslationModel,
-                  as: 'translations'
-                }]
-              }, {
-                model: itemTranslationModel,
-                as: 'translations'
-              }, {
-                model: ingredientGroupModel,
-                as: 'ingredientGroups',
-                include: [{
-                  model: ingredientModel,
-                  as: 'ingredients',
-                  include: [{
-                    model: ingredientTranslationModel,
-                    as: 'translations'
-                  }]
-                }, {
-                  model: ingredientGroupTranslationModel,
-                  as: 'translations'
-                }]
-              }]
-            }).then(function (result) {
-              createdItem.push(result);
+          mainMenu.userId = user.id;
+          menuModel.create(mainMenu, {
+            include: [{
+              model: menuTranslationsModel,
+              as: 'translations'
+            }]
+          }).then(function (createdMenu) {
+            createdRestaurant[0].addMenu(createdMenu);
 
-            });
+            createCategoryAndThenItems(drinkCategory, createdMenu, drinkItems, user.id);
+
+            createCategoryAndThenItems(mealCategory, createdMenu, mealItems, user.id);
+
+            createCategoryAndThenItems(sideCategory, createdMenu, sideItems, user.id);
           });
-
-
-          setTimeout(function () {
-            categories.forEach(function (category) {
-              categoryModel.create(category, {
-                include: [{
-                  model: categoryTranslationModel,
-                  as: 'translations'
-                }]
-              }).then(function (result) {
-
-              })
-
-            });
-
-          }, 5000)
-
         });
       });
     });
   });
 
+
+  function createCategoryAndThenItems(category, createdMenu, items, userId) {
+    category.userId = userId;
+    categoryModel.create(category, {
+      include: [{
+        model: categoryTranslationModel,
+        as: 'translations'
+      }]
+    }).then(function (createdCategory) {
+      createdMenu.addCategory(createdCategory);
+      items.forEach(function (item) {
+        createItem(item, userId).then(function (createdItem) {
+          createdCategory.addItem(createdItem);
+
+        })
+      })
+
+    });
+  }
+
+  function createItem(item, userId) {
+    item.userId = userId;
+    return itemModel.create(item, {
+      include: [{
+        model: itemSizeModel,
+        as: 'sizes',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: itemTranslationModel,
+        as: 'translations'
+      }, {
+        model: ingredientGroupModel,
+        as: 'ingredientGroups',
+        include: [{
+          model: ingredientModel,
+          as: 'ingredients',
+          include: [{
+            model: ingredientTranslationModel,
+            as: 'translations'
+          }]
+        }, {
+          model: ingredientGroupTranslationModel,
+          as: 'translations'
+        }]
+      }]
+    });
+  }
 
 }, 5000)
 
