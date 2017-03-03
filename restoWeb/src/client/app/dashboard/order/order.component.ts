@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 import {OrderService} from '../../services/order.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Order} from '../../shared/models/order';
 import {Language} from './../../shared/models/language';
 
@@ -17,7 +17,8 @@ export class OrderComponent implements OnInit {
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private orderService: OrderService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router ) {
 
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
@@ -46,6 +47,10 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  viewItem(id: number): void {
+    this.router.navigate(['/dashboard/item', id]);
   }
 
   onSelectLanguage(language: Language) {

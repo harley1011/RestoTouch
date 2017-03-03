@@ -19,7 +19,7 @@
       <tbody>
       <template ngFor let-orderedItem [ngForOf]="order.orderedItems">
         <tr>
-          <td>{{orderedItem.item.selectedTranslation.name}}</td>
+          <td><a href="javascript:;" (click)="viewItem(orderedItem.item.id)">{{orderedItem.item.selectedTranslation.name}}</a> </td>
           <td>{{orderedItem.sizes[0].size.selectedTranslation.name}}</td>
           <td>{{orderedItem.sizes[0].size.price | currency:'CAD':true}}</td>
         </tr>
