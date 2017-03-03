@@ -19,7 +19,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './profile/profile.module';
 import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
-
+import {OrderListModule} from './order-list/order-list.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +39,8 @@ import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
     ItemModule,
     TranslateModule,
     ProfileModule,
-    UnpaidOrdersModule
+    UnpaidOrdersModule,
+    OrderListModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]
