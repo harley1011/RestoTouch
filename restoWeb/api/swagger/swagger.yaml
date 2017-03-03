@@ -1073,6 +1073,8 @@ definitions:
         type: string
       languageCode:
         type: string
+      kitCashModeFlag:
+        type: string
     required:
       - name
       - description
