@@ -30,8 +30,8 @@ export class OrderService {
       .catch(this.handleError);
   }
 
-  retrieveCompletedOrders (): Observable<any> {
-    return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrders')
+  retrieveCompletedOrders (id: number): Observable<any> {
+    return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrders/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }

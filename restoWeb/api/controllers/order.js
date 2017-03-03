@@ -151,13 +151,8 @@ function payForOrder(req, res) {
 }
 
 function retrieveCompletedRestaurantOrders(req, res) {
-  return orderModel.findAll({
-    include: [{
-      model: restaurantModel,
-      as: 'restaurant',
-      where: {userId: req.userId}
-    }]
-  }).then(function (orders) {
+  var restaurantId = extractRestaurantId(req);
+  return orderModel.findAll({where: {restaurantId: restaurantId}}).then(function (orders) {
     return res.json({success: 1, orders: orders});
   })
 }
