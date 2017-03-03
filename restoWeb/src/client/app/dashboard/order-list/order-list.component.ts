@@ -5,6 +5,8 @@ import {Order} from '../../shared/models/order';
 import {Language} from '../../shared/models/language';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
+
+
 @Component({
   moduleId: module.id,
   selector: 'order-list-cmp',
@@ -18,9 +20,9 @@ export class OrderListComponent implements OnInit {
   sortOrder = "asc";
   orders: Order[];
   isEmployee: boolean;
+  selectedSearchOption = 'Id';
 
-  @ViewChild(TranslationSelectComponent)
-  private translationSelectComponent: TranslationSelectComponent;
+  searchOptions = ['Id', 'Total', 'Paid Date']
 
   constructor(private router: Router,
               private translate: TranslateService,
@@ -36,8 +38,8 @@ export class OrderListComponent implements OnInit {
   getRestaurants(): void {
   }
 
-  onSelectLanguage(language: Language) {
-
+  onSelectLanguage(searchOption: string) {
+    console.log(searchOption);
   }
 
   ngOnInit(): void {

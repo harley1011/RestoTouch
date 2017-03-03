@@ -18,6 +18,7 @@ import { LanguageService } from './services/language.service';
 import { OrderService } from './services/order.service';
 import { OrderNotifierService } from './services/order-notifier.service';
 import {DataTableModule} from "angular2-datatable";
+import {DatePipe} from "@angular/common";
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -39,12 +40,11 @@ import {DataTableModule} from "angular2-datatable";
 		TranslateModule
 	],
 	declarations: [AppComponent],
-	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, {
+	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, DatePipe, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],
 	bootstrap: [AppComponent]
-
 })
 
 export class AppModule { }

@@ -547,8 +547,8 @@ setTimeout(function () {
                   orderedItems.push({itemId: itemToAdd.id, itemSizeId: sizeToAdd.id})
 
                 }
-
-                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant[0].id}, {
+                var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant[0].id, createdAt: paidDate}, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,
@@ -559,7 +559,7 @@ setTimeout(function () {
                 });
               }
 
-            }, 4000)
+            }, 2000)
           });
         });
       });

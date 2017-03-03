@@ -6,7 +6,7 @@
       <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
         <option [ngValue]="5">5</option>
         <option [ngValue]="10">10</option>
-        <option [ngValue]="15">15</option>
+        <option [ngValue]="30">30</option>
       </select>
     </div>
     <div class="col-xs-4">
@@ -19,7 +19,7 @@
             <option ngValue="id">Id</option>
             <option ngValue="total">Total</option>
             <option ngValue="restaurant">Restaurant</option>
-            <option ngValue="paidDate">Paid Date</option>
+            <option ngValue="createdAt">Paid Date</option>
           </select>
         </div>
       </div>
@@ -38,9 +38,7 @@
 
 <div class="manage-list-container">
   <div class="panel panel-default">
-    <div class="panel-heading">User information</div>
-
-    <table class="table table-striped" [mfData]="orders | dataFilter : filterQuery" #mf="mfDataTable"
+    <table class="table table-striped" [mfData]="orders | dataFilter: filterQuery:selectedSearchOption" #mf="mfDataTable"
            [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
       <thead>
       <tr>
@@ -54,12 +52,23 @@
           <mfDefaultSorter by="restaurant">Restaurant</mfDefaultSorter>
         </th>
         <th style="width: 20%">
-          <mfDefaultSorter by="restaurant">Paid On</mfDefaultSorter>
+          <mfDefaultSorter by="createdAt">Paid On</mfDefaultSorter>
         </th>
       </tr>
       <tr>
         <th colspan="5">
-          Filter by name:
+          Search by
+
+          <span class="dropdown nav-item" dropdown>
+            <a id="single-button" class="nav-link dropdown-toggle text-primary" href="javascript:;" dropdownToggle>
+              {{selectedSearchOption}} <span class="caret"></span>
+            </a>
+            <ul dropdownMenu role="menu" aria-labelledby="single-button">
+              <li *ngFor="let searchOption of searchOptions" role="menuitem"><a class="dropdown-item" href="javascript:;"
+                                                                                 (click)="selectedSearchOption = searchOption;">{{searchOption}}</a></li>
+            </ul>
+            </span>
+
           <input class="form-control" [(ngModel)]="filterQuery"/>
         </th>
       </tr>
@@ -67,15 +76,15 @@
       <tbody>
       <tr *ngFor="let order of mf.data">
         <td>{{order.id}}</td>
-        <td>{{order.total}}</td>
+        <td>{{order.total | currency:'CAD':true}}</td>
         <td>{{order.restaurant.id}}</td>
-        <td>{{order.createdAt}}</td>
+        <td>{{order.createdAt | date:'short'}}</td>
       </tr>
       </tbody>
       <tfoot>
       <tr>
         <td colspan="5">
-          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,30]"></mfBootstrapPaginator>
         </td>
       </tr>
       </tfoot>
