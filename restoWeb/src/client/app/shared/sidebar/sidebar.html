@@ -9,6 +9,7 @@
     <a routerLink="/dashboard/restaurants" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.restoSidebar' | translate }}
     </a>
+    <div *ngIf="!isEmployee">
     <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.menuSidebar' | translate }}
     </a>
@@ -39,6 +40,7 @@
     <a class="list-group-item">
       {{ 'dashboard.socialSidebar' | translate }}
     </a>
+    </div>
 
 
     <!--<a [routerLink]="['chart']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->

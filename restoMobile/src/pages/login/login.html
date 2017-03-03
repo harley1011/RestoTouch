@@ -6,10 +6,14 @@
 -->
 
 <ion-content>
-  <button ion-button clear (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
-  <h1 text-center id="loginHeader">{{ 'login.titleHeader' | translate }}</h1>
-  <form (ngSubmit)="onSubmit()">
-    <ion-list>
+
+  <button ion-button clear class="language-btn" (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
+    <div class="logo-container">
+        <img src="../../assets/img/logo2.png" />
+    </div>
+    
+    <form (ngSubmit)="onSubmit()">
+    <ion-list class="login">
       <ion-item>
         <ion-label stacked>{{ 'login.emailHolderFieldForm' | translate }}</ion-label>
         <ion-input id="userEmail" type="email" [(ngModel)]="user.email" name="email"></ion-input>
@@ -21,8 +25,16 @@
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button round block id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
-      <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+
+        <ion-label stacked>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
+    </div>
+
+   <div class="login-list" text-center>
+        </div>
+   <div text-center>
+    <button class="login-btn" ion-button block round outline color="light" id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
+    <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     </div>
   </form>
 

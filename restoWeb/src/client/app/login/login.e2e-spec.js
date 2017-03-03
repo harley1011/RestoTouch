@@ -79,7 +79,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     createItemBtn.click();
 
     //Verify that user gets redirected to correct page, and that an element (the 
-    //created food item) is present on the restaurant-list page.
+    //created food item) is present on the item-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/items');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });
@@ -98,7 +98,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     createCategoryBtn.click();
 
     //Verify that user gets redirected to correct page, and that an element (the 
-    //created category) is present on the restaurant-list page.
+    //created category) is present on the category-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/categories');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });
@@ -117,7 +117,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     createMenuBtn.click();
 
     //Verify that user gets redirected to correct page, and that an element (the 
-    //created menu) is present on the restaurant-list page.
+    //created menu) is present on the menu-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
   });

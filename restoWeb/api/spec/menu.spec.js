@@ -12,21 +12,21 @@ describe("The Menu API", function() {
   //Override models in menu so that we don't actually insert into the DB and we mock the database operations
   menu.setDatabase(mocks);
 
-  it("should create a valid menu", function (done) {
-    var req = {
-      body: {
-        "name": "Menu 1",
-        "supportedLanguages": [{"languageCode":"en","name":"English","menuId":2}],
-        "translations": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","menuId":2}]
-      }
-    }
-
-    menu.saveMenu(req, res).then(function (result) {
-      expect(res.obj.success).toBe(1);
-      expect(res.obj.description).toBe("Menu Added");
-      done();
-    })
-  })
+  // it("should create a valid menu", function (done) {
+  //   var req = {
+  //     body: {
+  //       "name": "Menu 1",
+  //       "supportedLanguages": [{"languageCode":"en","name":"English","menuId":2}],
+  //       "translations": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","menuId":2}]
+  //     }
+  //   }
+  //
+  //   menu.saveMenu(req, res).then(function (result) {
+  //     expect(res.obj.success).toBe(1);
+  //     expect(res.obj.description).toBe("Menu Added");
+  //     done();
+  //   })
+  // })
 
 /*
   it("should update a menu", function (done) {

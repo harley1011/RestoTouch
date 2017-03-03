@@ -75,6 +75,13 @@
 	                 [(ngModel)]="user.passwordConfirm" name="password" #passwordConfirm="ngModel"
 	                 [ngClass]="{'form-error': !passwordConfirm.valid && !passwordConfirm.pristine}">
 	        </div>
+          <div class="form-group">
+            <h5>{{ 'profile.employeePassword' | translate }}</h5>
+                <input type="password" id="employeePassword" class="form-control" name="employeePassword"
+                   required 
+                   [(ngModel)]="user.employeePassword" #employeePassword="ngModel"
+                   [ngClass]="{'form-error': !employeePassword.valid && !employeePassword.pristine}">
+          </div>
     	</form>
     </div>
 <div>

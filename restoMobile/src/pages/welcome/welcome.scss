@@ -1,3 +1,105 @@
 page-welcome {
-	
+    font-family: "Montserrat";
+    
+     ion-content {
+        background-image: url('../../assets/img/food-bg-3px.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+        
+        color: #fff !important;
+    }
+    
+     .scroll-content {
+        background-color: rgba(0, 0, 0, 0.2);   
+    }
+    
+    .titleResto{
+        margin-top: 15vh;
+        margin-bottom: 10%;
+        text-align:center;
+        position: relative;
+        min-height: 70vh;
+    }
+
+    .restoFont{
+        font-size: 350%;
+        font-weight: bolder;
+        margin-top:0;
+    }
+
+    .welcomeFont{
+        font-size: 175%;
+        margin-bottom:0;
+    }
+
+    .addressFont{
+        font-size: 100%;
+    }
+
+    .languageBar{
+//        background-color: $colors(danger);
+        margin:-20px -20px 0 -20px;
+        height:50px;
+    }
+
+    .language-btn {
+        color: #fff;
+        float: right;
+    }
+
+    .language-btn:hover {
+        color: #fff;
+        background-color: transparent !important;
+    }
+
+    .language-btn:active {
+        color: #387ef5;
+        background-color: transparent !important;
+    }
+
+    .buttonList{
+        display: list-item;
+        width: 150px;
+        margin: 20px auto;
+    }
+
+    .top{
+        visibility: hidden;
+        opacity: 0;
+        background-color:#101a65;
+        color: white;
+        height: 0px;
+         margin:-35px -20px -20px -20px;
+        padding: 35px 20px 0px 20px;
+        -webkit-transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
+        -moz-transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
+        transition: height 300ms linear, opacity 300ms linear, visibility 500ms linear;
+    }
+
+    .top.show{
+        visibility: visible;
+        opacity: 1;
+        height:200px;
+    }
+
+    #bottom{
+        color: #387ef5;
+        font-size: 90%;
+        position:absolute;
+        top: 70vh;
+        text-align:center;
+        left: 0;
+        right:0;
+        margin: auto;
+    }
+
+    #imgLogo{
+        vertical-align: middle;
+        /* resize logo to 75% */
+        width: 85px;
+        height: 26px;
+    }
 }

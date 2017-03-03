@@ -15,6 +15,8 @@ import { ApiEndpointService } from './services/api-endpoint.service';
 import { ImageUploadService } from './services/image-upload.service';
 import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 import { LanguageService } from './services/language.service';
+import { OrderService } from './services/order.service';
+import { OrderNotifierService } from './services/order-notifier.service';
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -35,7 +37,7 @@ import { LanguageService } from './services/language.service';
 		TranslateModule
 	],
 	declarations: [AppComponent],
-	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, {
+	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],

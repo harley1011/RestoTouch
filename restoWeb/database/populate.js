@@ -61,7 +61,7 @@ var menus = [{name: 'breakfast1 Menu'}, {name: 'dinner1 Menu'}];
 var categories = [{
   "translations": [
     {
-      "name": "Lunch",
+      "name": "Drinks",
       "languageCode": "en"
     }
   ],
