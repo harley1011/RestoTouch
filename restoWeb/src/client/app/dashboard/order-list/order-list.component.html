@@ -51,7 +51,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let order of mf.data">
-        <td>{{order.id}}</td>
+        <td><a href="javascript:;" (click)="showOrderDetail(order)">{{order.id}}</a></td>
         <td>{{order.total | currency:'CAD':true}}</td>
         <td>{{order.createdAt | date:'short'}}</td>
       </tr>

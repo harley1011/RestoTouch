@@ -67,6 +67,10 @@ export class OrderListComponent implements OnInit {
     this.getRestaurants();
   }
 
+  showOrderDetail(order: Order): void {
+    console.log(order);
+  }
+
   onSelectLanguage(language: Language) {
     this.restaurants.forEach(restaurant => {
       restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === language.languageCode);

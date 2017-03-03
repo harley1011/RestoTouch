@@ -20,6 +20,7 @@ import {ProfileRoutes} from './profile/profile.routes';
 
 import {UnpaidOrdersRoutes} from './unpaid-orders/unpaid-orders.routes';
 import {OrdersRoutes} from './order-list/order-list.routes';
+import {OrderRoutes} from './order/order.routes';
 
 import { NgModule } from '@angular/core';
 import {AuthService} from '../services/auth.service';
@@ -38,7 +39,8 @@ const dashboardRoutes: Routes = [
       .concat(SettingsRoutes)
       .concat(ProfileRoutes)
       .concat(UnpaidOrdersRoutes)
-      .concat(OrdersRoutes),
+      .concat(OrdersRoutes)
+      .concat(OrderRoutes),
     canActivate: [AuthService],
     canActivateChild: [AuthService]
   }
