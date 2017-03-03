@@ -41,7 +41,7 @@ module.exports = {
   closeRedis: closeRedis,
   removeRestaurantsOrder: removeRestaurantsOrder,
   payForOrder: payForOrder,
-  retrieveCompletedRestaurantOrders: retrieveCompletedRestaurantOrders
+  retrieveCompletedOrders: retrieveCompletedRestaurantOrders
 };
 
 function setDatabase(m) {
