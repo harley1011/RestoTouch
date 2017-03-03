@@ -542,10 +542,14 @@ setTimeout(function () {
 
                   // Pick different items
                   var itemToAdd = itemTypeArray[i % itemTypeArray.length];
-                  var sizeToAdd = itemToAdd.sizes[i % itemToAdd.sizes.length];
-                  orderTotal += sizeToAdd.price;
-                  orderedItems.push({itemId: itemToAdd.id, itemSizeId: sizeToAdd.id})
 
+                  // Add multiple sizes a few times
+                  var sizesToAddNumber = Math.random() * 5;
+                  for(var k = 0; k < sizesToAddNumber; k++) {
+                    var sizeToAdd = itemToAdd.sizes[parseInt((Math.random() * 10 + 1)) % itemToAdd.sizes.length];
+                    orderTotal += sizeToAdd.price;
+                    orderedItems.push({itemId: itemToAdd.id, itemSizeId: sizeToAdd.id})
+                  }
                 }
                 var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
                 orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant[0].id, createdAt: paidDate}, {

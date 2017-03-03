@@ -28,7 +28,7 @@ export class OrderComponent implements OnInit {
 
           order.order.orderedItems.forEach((orderedItem: any) => {
 
-            let foundOrder = orderWithGroupedItems.orderedItems.find(correctOrderedItem => correctOrderedItem.item.id == orderedItem.id);
+            let foundOrder = orderWithGroupedItems.orderedItems.find(correctOrderedItem => correctOrderedItem.item.id == orderedItem.item.id);
 
             if (!foundOrder) {
               orderedItem.sizes = [];

@@ -27,7 +27,7 @@
           <td>{{orderedItem.sizes[0].size.price | currency:'CAD':true}}</td>
         </tr>
 
-        <template [ngIf]="orderedItem.sizes > 1">
+        <template ngIf="orderedItem.sizes > 1">
           <tr *ngFor="let sizeContainer of orderedItem.sizes | slice: 1">
             <td></td>
             <td>{{sizeContainer.size.selectedTranslation.name}}</td>
