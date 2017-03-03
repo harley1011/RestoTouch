@@ -26,7 +26,6 @@ export class OrderListComponent implements OnInit {
 
   searchOptions = ['Id', 'Total', 'Paid Date'];
 
-
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
@@ -57,6 +56,12 @@ export class OrderListComponent implements OnInit {
     );
   }
 
+  onChangeRestaurant(): void {
+    this.orderService.retrieveCompletedOrders(this.selectedRestaurant.id).subscribe(ordersResponse => {
+      this.orders = ordersResponse.orders;
+    });
+
+  }
 
   ngOnInit(): void {
     this.getRestaurants();

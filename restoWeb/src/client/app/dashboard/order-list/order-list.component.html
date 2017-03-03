@@ -9,9 +9,9 @@
   <div class="panel panel-default">
 
 
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <label class="label-control">Show Orders for restaurant </label>
-      <select class="form-control input-sm" [(ngModel)]="selectedRestaurant">
+      <select class="form-control input-sm" [(ngModel)]="selectedRestaurant" (change)="onChangeRestaurant()">
         <option *ngFor="let restaurant of restaurants" [ngValue]="restaurant">{{restaurant.selectedTranslation.name}}</option>
       </select>
     </div>
