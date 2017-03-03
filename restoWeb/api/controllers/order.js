@@ -158,7 +158,7 @@ function retrieveCompletedRestaurantOrders(req, res) {
       where: {userId: req.userId}
     }]
   }).then(function (orders) {
-    return res.json({success, orders: orders});
+    return res.json({success: 1, orders: orders});
   })
 }
 

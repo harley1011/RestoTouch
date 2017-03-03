@@ -25,12 +25,16 @@ export class OrderService {
   }
 
   retrieveOrders (id: number): Observable<any> {
-    return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
+    return this.http.get(this.api.getEndpoint()+ '/retrieveOrders/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-
+  retrieveCompletedOrders (): Observable<any> {
+    return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrders')
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
 
   private extractData(res: Response) {
     let body = res.json();
@@ -38,8 +42,6 @@ export class OrderService {
   }
 
   private handleError (error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead

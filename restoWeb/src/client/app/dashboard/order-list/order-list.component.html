@@ -10,6 +10,31 @@
 
 <div class="manage-list-container">
   <div class="row">
+    <table class="table table-striped" [mfData]="orders" #mf="mfDataTable" [mfRowsOnPage]="10">
+      <thead>
+      <tr>
+        <th style="width: 20%">
+          <mfDefaultSorter by="name" style="color: black;">Id</mfDefaultSorter>
+        </th>
+        <th style="width: 80%">
+          <mfDefaultSorter by="email">Total</mfDefaultSorter>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of mf.data">
+        <td>{{order.id}}</td>
+        <td>{{order.total}}</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
 
   </div>
 </div>

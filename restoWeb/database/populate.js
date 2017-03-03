@@ -548,7 +548,7 @@ setTimeout(function () {
 
                 }
 
-                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: restaurant.id}, {
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant[0].id}, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,

@@ -17,6 +17,7 @@ import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-transl
 import { LanguageService } from './services/language.service';
 import { OrderService } from './services/order.service';
 import { OrderNotifierService } from './services/order-notifier.service';
+import {DataTableModule} from "angular2-datatable";
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -26,6 +27,7 @@ import { OrderNotifierService } from './services/order-notifier.service';
 		LogoutModule,
 		SignupModule,
 		DashboardModule,
+    DataTableModule,
 		SharedModule.forRoot(),
 		TranslateModule.forRoot({
             provide: TranslateLoader,

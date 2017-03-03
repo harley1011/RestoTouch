@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-
+import {OrderService} from '../../services/order.service';
+import {DataTable} from "angular2-datatable";
 import {Order} from '../../shared/models/order';
 import {Language} from '../../shared/models/language';
 import {TranslateService} from 'ng2-translate';
@@ -22,9 +22,13 @@ export class OrderListComponent implements OnInit {
 
   constructor(private router: Router,
               private translate: TranslateService,
-              private authService: AuthService) {
+              private orderService: OrderService) {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
+    orderService.retrieveCompletedOrders().subscribe(ordersResponse => {
+      console.log(ordersResponse);
+      this.orders = ordersResponse.orders;
+    });
   }
 
   getRestaurants(): void {
@@ -36,6 +40,5 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRestaurants();
-    this.isEmployee = this.authService.loggedInUser.isEmployee;
   }
 }
