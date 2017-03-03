@@ -55,7 +55,7 @@ export class RestaurantComponent implements OnInit {
     let restaurantTranslation = this.restaurant.translations.find(translation =>
     translation.languageCode === language.languageCode);
     if (!restaurantTranslation) {
-      restaurantTranslation = new RestaurantTranslations('', '', language.languageCode);
+      restaurantTranslation = new RestaurantTranslations('', '', language.languageCode, '');
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
@@ -138,7 +138,7 @@ export class RestaurantComponent implements OnInit {
       if (this.create) {
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         //this.removeRestaurantsSupportedLanguagesFromLanguage();
-        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode, '');
 
         let businessHours = [
           new BusinessHour(0, 0, '9:00', '21:00', false),
