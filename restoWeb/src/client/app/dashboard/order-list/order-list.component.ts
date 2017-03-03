@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 
-import {Restaurant} from '../../shared/models/restaurant';
+import {Order} from '../../shared/models/order';
 import {Language} from '../../shared/models/language';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -13,8 +13,7 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 })
 
 export class OrderListComponent implements OnInit {
-  numOfRestaurants: number;
-  restaurants: Restaurant[];
+  orders: Order[];
   isEmployee: boolean;
 
 
@@ -32,26 +31,11 @@ export class OrderListComponent implements OnInit {
   }
 
   onSelectLanguage(language: Language) {
-    this.restaurants.forEach(restaurant => {
-      restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === language.languageCode);
-    });
+
   }
 
   ngOnInit(): void {
     this.getRestaurants();
     this.isEmployee = this.authService.loggedInUser.isEmployee;
-  }
-
-  add(): void {
-    this.router.navigate(['/dashboard/restaurant']);
-  }
-
-  modify(restaurant: Restaurant): void {
-    if(this.authService.loggedInUser.isEmployee) {
-      this.router.navigate(['/dashboard/unpaidOrders', restaurant.id]);
-    }
-    else {
-      this.router.navigate(['/dashboard/restaurant', restaurant.id]);
-    }
   }
 }
