@@ -5,12 +5,9 @@
     <hr>
   </div>
   <div *ngIf="order && translationSelectComponent.selectedLanguage" class="manage-list-container">
-
     <p>Id: {{order.id}}</p>
     <p>Total: {{order.total | currency:'CAD':true}}</p>
     <p>Paid Date: {{order.createdAt | date:'full'}}</p>
-
-
     <table class="table table-striped">
       <thead>
       <tr>

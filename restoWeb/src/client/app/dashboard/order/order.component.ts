@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 import {OrderService} from '../../services/order.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
 import {Order} from '../../shared/models/order';
 import {Language} from './../../shared/models/language';
 
