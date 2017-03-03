@@ -11,6 +11,7 @@ var orderModel;
 var orderedItemsModel;
 var itemModel;
 var orderedItemIngredientModel;
+var restaurantModel;
 
 
 var redlock = new Redlock(
@@ -39,7 +40,8 @@ module.exports = {
   removeAllRestaurantsOrders: removeAllOrders,
   closeRedis: closeRedis,
   removeRestaurantsOrder: removeRestaurantsOrder,
-  payForOrder: payForOrder
+  payForOrder: payForOrder,
+  retrieveCompletedRestaurantOrders: retrieveCompletedRestaurantOrders
 };
 
 function setDatabase(m) {
@@ -48,6 +50,7 @@ function setDatabase(m) {
   orderedItemsModel = models.getOrderedItemsModel();
   itemModel = models.getItemModel();
   orderedItemIngredientModel = models.getOrderedItemIngredientModel();
+  restaurantModel = models.getRestaurantModel();
 }
 
 redlock.on('clientError', function (err) {
@@ -114,36 +117,49 @@ function payForOrder(req, res) {
   var restaurantId = extractRestaurantId(req);
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
-    var order = result.removedOrder;
-    var orderedItems = [];
-    order.orderedItems.forEach(function (orderedItem) {
-      orderedItem.sizes.forEach(function (sizeContainer) {
-        var selectedIngredients = [];
-        sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
-          selectedIngredients.push({
-            ingredientId: ingredientContainer.ingredient.id,
-            quantity: ingredientContainer.ingredient.quantity
+      var order = result.removedOrder;
+      var orderedItems = [];
+      order.orderedItems.forEach(function (orderedItem) {
+        orderedItem.sizes.forEach(function (sizeContainer) {
+          var selectedIngredients = [];
+          sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+            selectedIngredients.push({
+              ingredientId: ingredientContainer.ingredient.id,
+              quantity: ingredientContainer.ingredient.quantity
+            });
           });
+          orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
         });
-        orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
       });
-    });
 
-    return orderModel.create({total: order.total, restaurantId: 1, orderedItems: orderedItems},
-      {
-        include: [{model: orderedItemsModel, as: 'orderedItems', include: [{
-          model: orderedItemIngredientModel,
-          as: 'orderedItemIngredients'
-        }]},
-    ]}).then(function (createdOrder) {
-    return res.json({success: 1});
-  });
+      return orderModel.create({total: order.total, restaurantId: restaurantId, orderedItems: orderedItems},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          },
+          ]
+        }).then(function (createdOrder) {
+        return res.json({success: 1});
+      });
 
 
+    }
+  )
 }
-)
 
-
+function retrieveCompletedRestaurantOrders(req, res) {
+  return orderModel.findAll({
+    include: [{
+      model: restaurantModel,
+      as: 'restaurant',
+      where: {userId: req.userId}
+    }]
+  }).then(function (orders) {
+    return res.json({success, orders: orders});
+  })
 }
 
 function retrieveRestaurantOrders(req, res) {

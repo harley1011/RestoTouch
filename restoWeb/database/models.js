@@ -176,6 +176,7 @@ userModel.sync({force: dropTable}).then(function () {
 
         restaurantModel.hasMany(orderModel, {as: 'orders', onDelete: 'cascade', foreignKey: 'restaurantId'});
         orderModel.hasMany(orderedItemsModel, {as: 'orderedItems', onDelete: 'cascade', foreignKey: 'orderId'});
+        orderModel.belongsTo(restaurantModel, {as: 'restaurant', onDelete: 'cascade', foreignKey: 'restaurantId'});
         itemModel.hasMany(orderedItemsModel, { as: 'orderedItems', onDelete: 'cascade', foreignKey: 'itemId'});
         orderedItemsModel.belongsTo(itemModel, {as: 'item', onDelete: 'cascade', foreignKey: 'itemId'});
         orderedItemsModel.belongsTo(itemSizesModel, {as: 'size', onDelete: 'cascade', foreignKey: 'itemSizeId'});
