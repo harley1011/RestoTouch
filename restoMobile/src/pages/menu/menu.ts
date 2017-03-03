@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { PayPal, PayPalPayment, PayPalConfiguration } from "ionic-native";
 import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
 import { Size } from '../shared/models/size';
@@ -177,8 +178,39 @@ export class MenuPage {
   }
 
   order(): void {
-    this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-      this.navCtrl.setRoot(WelcomePage);
+    var payFirst = true;
+    if (payFirst) {
+      this.usePayPal();
+    } else {
+      this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+        this.navCtrl.setRoot(WelcomePage);
+      });
+    }
+  }
+
+  usePayPal(): void {
+    var self = this;
+    PayPal.init({
+      "PayPalEnvironmentProduction": "YOUR_PRODUCTION_CLIENT_ID",
+      "PayPalEnvironmentSandbox": "AaSdrzWXMJWXl_fxul1Q6KstQTlUgEfs7gmJ2qwrAPscdTUleVbZTEwj7NZIpZYYSy0xDzPCC4_zLgn3"
+    }).then(() => {
+      PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
+        () => {
+          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Description', 'sale');
+          PayPal.renderSinglePaymentUI(payment).then(
+            () => {
+              self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
+                self.navCtrl.setRoot(WelcomePage);
+              });
+            }, () => {
+
+            }
+          );
+        }, () => {
+
+        });
+    }, () => {
+
     });
   }
 }
