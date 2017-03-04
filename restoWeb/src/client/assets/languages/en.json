@@ -59,6 +59,7 @@
 
   "restaurant":{
     "titleManage":"Manage Restaurants",
+    "employeeTitle": "Select a restaurant to view its orders",
     "sousTitleManage":"You can select any restaurant below to make changes",
     "addRestoButton":"+ Add Restaurant",
     "titleCreate": "Create a Restaurant",

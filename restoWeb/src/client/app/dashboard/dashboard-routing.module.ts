@@ -19,6 +19,7 @@ import {SettingsRoutes} from './settings/account-settings.routes';
 import {ProfileRoutes} from './profile/profile.routes';
 
 import {UnpaidOrdersRoutes} from './unpaid-orders/unpaid-orders.routes';
+import {KitchenCashierSelectRoutes} from './kitchen-cashier-select/kitchen-cashier-select.routes';
 
 import { NgModule } from '@angular/core';
 import {AuthService} from '../services/auth.service';
@@ -36,7 +37,8 @@ const dashboardRoutes: Routes = [
       .concat(MenuListRoutes)
       .concat(SettingsRoutes)
       .concat(ProfileRoutes)
-      .concat(UnpaidOrdersRoutes),
+      .concat(UnpaidOrdersRoutes)
+      .concat(KitchenCashierSelectRoutes),
     canActivate: [AuthService],
     canActivateChild: [AuthService]
   }

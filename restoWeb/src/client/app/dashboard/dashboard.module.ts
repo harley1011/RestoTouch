@@ -19,6 +19,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './profile/profile.module';
 import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
+import {KitchenCashierSelectModule} from './kitchen-cashier-select/kitchen-cashier-select.module';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
     ItemModule,
     TranslateModule,
     ProfileModule,
-    UnpaidOrdersModule
+    UnpaidOrdersModule,
+    KitchenCashierSelectModule,
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]
