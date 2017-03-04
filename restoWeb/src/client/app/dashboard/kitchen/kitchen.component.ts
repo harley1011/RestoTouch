@@ -4,12 +4,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'kitchen-cashier-select-cmp',
-  templateUrl: 'kitchen-cashier-select.component.html',
+  selector: 'kitchen-cmp',
+  templateUrl: 'kitchen.component.html',
   providers: []
 })
 
-export class KitchenCashierSelectComponent implements OnInit {
+export class KitchenComponent implements OnInit {
 
 	id: number;
 
@@ -26,12 +26,4 @@ export class KitchenCashierSelectComponent implements OnInit {
         }
     });
 	}
-
-	kitchenSelect(): void {
-      this.router.navigate(['/dashboard/kitchen', this.id]);
-  	}
-
-  	cashierSelect(): void {
-      this.router.navigate(['/dashboard/unpaidOrders', this.id]);
-  	}
 }

@@ -20,6 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './profile/profile.module';
 import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
 import {KitchenCashierSelectModule} from './kitchen-cashier-select/kitchen-cashier-select.module';
+import {KitchenModule} from './kitchen/kitchen.module';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {KitchenCashierSelectModule} from './kitchen-cashier-select/kitchen-cashi
     ProfileModule,
     UnpaidOrdersModule,
     KitchenCashierSelectModule,
+    KitchenModule,
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]
