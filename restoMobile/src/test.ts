@@ -24,6 +24,7 @@ import { RestaurantService } from './pages/services/restaurant.service';
 import { LanguageService } from './pages/services/language.service';
 import { MenuServiceMock } from './pages/services/menu.mock';
 import { LanguageServiceMock } from './pages/services/language.mock';
+import { OrderService } from './pages/services/order.service';
 
 // import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 // import { MockBackend } from '@angular/http/testing';
@@ -84,7 +85,7 @@ export class TestUtils {
          //   deps: [MockBackend, BaseRequestOptions]
          // },
         AuthService, ApiEndpointService, AuthHttpService,
-        CategoryService, ItemService, RestaurantService,
+        CategoryService, ItemService, RestaurantService, OrderService
       ],
       imports: [
         TranslateModule.forRoot(),
