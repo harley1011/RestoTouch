@@ -27,10 +27,13 @@ var ingredientTranslationModel = sequelize.import('./models/ingredientTranslatio
 var orderModel = sequelize.import('./models/orders.js');
 var orderedItemIngredientModel = sequelize.import('./models/orderedItemIngredients.js');
 var orderedItemsModel = sequelize.import('./models/orderedItems.js');
+var comboModel = sequelize.import('./models/combos.js');
+var comboTranslationModel = sequelize.import('./models/comboTranslations');
+var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
-var dropTable = false;
+var dropTable = true;
 
 userModel.sync({force: dropTable}).then(function () {
 
@@ -85,6 +88,48 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'categoryId'
     });
     categoryTranslationModel.sync({force: dropTable});
+
+  });
+
+comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
+  comboModel.sync({force: dropTable}).then(function () {
+
+    comboModel.hasMany(comboTranslationModel, {
+      as: 'translations',
+      onDelete: 'cascade',
+      foreignKey: 'comboId'
+    });
+    comboTranslationModel.sync({force: dropTable});
+
+
+    comboCatFoodItemModel.sync({force: dropTable}).then(function(){
+      itemModel.belongsToMany(categoryModel, {
+        as: 'categories',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "itemId"
+      });
+      categoryModel.belongsToMany(itemModel, {
+        as: 'items',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "categoryId",
+        constraints: false
+      });
+      categoryModel.belongsToMany(comboModel, {
+        as: 'combos',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "categoryId",
+      });
+      comboModel.belongsToMany(categoryModel, {
+        as: 'categories',
+        through: comboCatFoodItemModel,
+        onDelete: 'cascade',
+        foreignKey: "comboId",
+        constraints: false
+      });
+    });
 
   });
 
@@ -243,6 +288,18 @@ exports.getCategoryModel = function () {
 exports.getCategoryTranslationModel = function () {
   return categoryTranslationModel;
 }
+
+exports.getComboModel = function () {
+  return comboModel;
+};
+
+exports.getComboTranslationModel = function () {
+  return comboTranslationModel;
+};
+
+exports.getComboCatFoodItemModel= function(){
+  return comboCatFoodItemModel;
+};
 
 exports.getMenuModel = function () {
   return menuModel;
