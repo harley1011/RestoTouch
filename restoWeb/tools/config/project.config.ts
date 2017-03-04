@@ -63,7 +63,6 @@ export class ProjectConfig extends SeedConfig {
           defaultExtension: 'js'
         }
       },
-
       {
         name: 'socket.io-client',
         path: 'node_modules/socket.io-client/dist',
@@ -71,6 +70,14 @@ export class ProjectConfig extends SeedConfig {
           main: 'socket.io.min.js',
           defaultExtension: 'js'
         }
+      },
+      {
+        name: 'angular2-datatable',
+        path: 'node_modules/angular2-datatable/index',
+      },
+      {
+        name: 'lodash',
+        path: 'node_modules/lodash/lodash',
       }
     ];
     this.addPackagesBundles(additionalPackages);

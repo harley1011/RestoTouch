@@ -6,9 +6,15 @@ var Redlock = require('redlock');
 var uuid = require('node-uuid');
 var ttl = 1000;
 var _ = require('lodash');
-
-//var orderNotifier = require('orderNotifier.js');
-
+var models = require("../../database/models");
+var orderModel;
+var orderedItemsModel;
+var itemModel;
+var orderedItemIngredientModel;
+var restaurantModel;
+var itemTranslationModel;
+var itemSizeTranslationModel;
+var itemSizeModel;
 var redlock = new Redlock(
   // you should have one client for each redis node
   // in your cluster
@@ -27,20 +33,31 @@ var redlock = new Redlock(
   }
 );
 
-setDatabase();
+setDatabase(models);
 
 module.exports = {
   placeOrder: placeOrder,
   retrieveOrders: retrieveRestaurantOrders,
   removeAllRestaurantsOrders: removeAllOrders,
   closeRedis: closeRedis,
-  removeRestaurantsOrder: removeRestaurantsOrder
+  removeRestaurantsOrder: removeRestaurantsOrder,
+  payForOrder: payForOrder,
+  retrieveCompletedOrders: retrieveCompletedRestaurantOrders,
+  retrieveCompletedOrder: retrieveCompletedRestaurantOrder
 };
 
-function setDatabase() {
-
-  //models = m;
+function setDatabase(m) {
+  models = m;
+  orderModel = models.getOrdersModel();
+  orderedItemsModel = models.getOrderedItemsModel();
+  itemModel = models.getItemModel();
+  orderedItemIngredientModel = models.getOrderedItemIngredientModel();
+  restaurantModel = models.getRestaurantModel();
+  itemTranslationModel = models.getItemTranslationModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
+  itemSizeModel = models.getItemSizesModel();
 }
+
 redlock.on('clientError', function (err) {
   console.error('A redis error has occurred:', err);
 });
@@ -101,6 +118,76 @@ function notifyNewOrder(restaurantId, order) {
   client.publish('restaurantNewOrder' + restaurantId, JSON.stringify(order));
 }
 
+function payForOrder(req, res) {
+  var restaurantId = extractRestaurantId(req);
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
+      var order = result.removedOrder;
+      var orderedItems = [];
+      order.orderedItems.forEach(function (orderedItem) {
+        orderedItem.sizes.forEach(function (sizeContainer) {
+          var selectedIngredients = [];
+          sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+            selectedIngredients.push({
+              ingredientId: ingredientContainer.ingredient.id,
+              quantity: ingredientContainer.ingredient.quantity
+            });
+          });
+          orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+        });
+      });
+
+      return orderModel.create({total: order.total, restaurantId: restaurantId, orderedItems: orderedItems},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          },
+          ]
+        }).then(function (createdOrder) {
+        return res.json({success: 1});
+      });
+
+
+    }
+  )
+}
+
+function retrieveCompletedRestaurantOrder(req, res) {
+  var orderId = req.swagger.params.orderId.value;
+  orderModel.find({where: {id: orderId}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (order) {
+    return res.json({order: order});
+
+  });
+}
+
+function retrieveCompletedRestaurantOrders(req, res) {
+  var restaurantId = extractRestaurantId(req);
+  return orderModel.findAll({where: {restaurantId: restaurantId}}).then(function (orders) {
+    return res.json({success: 1, orders: orders});
+  })
+}
+
 function retrieveRestaurantOrders(req, res) {
   var restaurantId = extractRestaurantId(req);
   var restaurantKey = 'restaurantOrders:' + restaurantId;
@@ -120,52 +207,56 @@ function retrieveRestaurantOrders(req, res) {
   });
 }
 
-function removeRestaurantsOrder(req, res) {
-  var restaurantId = extractRestaurantId(req);
-  var restaurantKey = 'restaurantOrders:' + restaurantId;
+function removeRestaurantOrderFromCache(restaurantKey, orderId) {
   return new promise(function (fulfill, reject) {
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
       client.get(restaurantKey, function (err, reply) {
         if (reply) {
           var restaurantOrders = JSON.parse(reply);
           var removed = _.remove(restaurantOrders, function (n) {
-            return n.id == req.body.orderId;
+            return n.id == orderId;
           });
 
           if (removed.length == 0) {
             unlock(lock);
-            fulfill();
-            return res.json({
+            fulfill({
               success: 0,
               description: "Order not removed because it doesn't exist in the restaurants orders"
             });
-          }
 
+          }
           client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
             if (reply == "OK") {
-              res.json({success: 1, description: "Order removed from restaurants order"});
               unlock(lock);
-              fulfill();
+              fulfill({success: 1, description: "Order removed from restaurants order", removedOrder: removed[0]});
             }
             else {
-              res.json({success: 0, description: "Order failed to store, removed would be persisted"});
               unlock(lock);
-              reject();
+              reject({success: 0, description: "Order failed to store, removed would be persisted"});
             }
           });
         }
         else {
-          res.json({
+
+          unlock(lock);
+          fulfill({
             success: 0,
             description: "Order not removed because it doesn't exist in the restaurants orders"
-          })
-          unlock(lock);
-          fulfill();
+          });
         }
       });
     });
   });
 }
+
+function removeRestaurantsOrder(req, res) {
+  var restaurantId = extractRestaurantId(req);
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
+    return res.json({success: result.success, description: result.description});
+  });
+}
+
 
 function extractRestaurantId(req) {
   return req.body ? req.body.restaurantId ? req.body.restaurantId : req.swagger.params.restaurantId.value : req.swagger.params.restaurantId.value;
