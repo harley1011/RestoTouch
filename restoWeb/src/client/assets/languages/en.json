@@ -241,6 +241,10 @@
     "employeePassword": "Employee Password"
   },
 
+  "orders": {
+    "titleManage": "Orders"
+  },
+
   "unpaidOrders": {
     "title": "Unpaid Orders"
   }

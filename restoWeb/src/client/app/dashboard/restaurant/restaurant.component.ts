@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
-import {RestaurantService} from './restaurant.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -15,8 +15,7 @@ import {TranslateService} from 'ng2-translate';
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
-  templateUrl: 'restaurant.component.html',
-  providers: [RestaurantService]
+  templateUrl: 'restaurant.component.html'
 })
 
 export class RestaurantComponent implements OnInit {

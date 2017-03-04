@@ -41,7 +41,50 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Order"
-  /retrieveOrders{restaurantId}:
+  /retrieveCompletedOrders/{restaurantId}:
+    x-swagger-router-controller: order
+    get:
+      # used as the method name of the controller
+      parameters:
+        - name: restaurantId
+          type: number
+          in: path
+          required: true
+      operationId: retrieveCompletedOrders
+      description: Retrieves completed restaurants orders
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/OrdersResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /retrieveCompletedOrder/{orderId}:
+    x-swagger-router-controller: order
+    get:
+      # used as the method name of the controller
+      parameters:
+        - name: orderId
+          type: number
+          in: path
+          required: true
+      operationId: retrieveCompletedOrder
+      description: Retrieves a completed restaurants order
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Order"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /retrieveOrders/{restaurantId}:
     x-swagger-router-controller: order
     get:
       # used as the method name of the controller
@@ -56,7 +99,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/PlaceOrderResponse"
+            $ref: "#/definitions/OrdersResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -1004,6 +1047,14 @@ definitions:
     required:
       - success
       - description
+  OrdersResponse:
+    required:
+      - orders
+    properties:
+      orders:
+        type: array
+        items:
+          "$ref": "#/definitions/Order"
   CategoriesResponse:
     required:
       - categories
@@ -1097,6 +1148,8 @@ definitions:
           "$ref": "#/definitions/Item"
   Order:
     properties:
+      total:
+        type: number
       orderedItems:
         type: array
         items:

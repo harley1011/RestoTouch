@@ -4,7 +4,7 @@ import {AuthService} from '../../services/auth.service';
 
 import {Restaurant} from '../../shared/models/restaurant';
 import {Language} from '../../shared/models/language';
-import {RestaurantService} from '../restaurant/restaurant.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 @Component({

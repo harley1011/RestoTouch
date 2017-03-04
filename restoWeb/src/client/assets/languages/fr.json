@@ -239,6 +239,10 @@
     "employeePassword": "Mot de passe d'employé"
   },
 
+  "orders": {
+    "titleManage": "List de commandes"
+  },
+
   "unpaidOrders": {
     "title": "Liste de commandes non-payées"
   }
