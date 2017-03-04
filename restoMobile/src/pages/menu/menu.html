@@ -4,7 +4,27 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content>ion-button 
+    <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        <button ion-button class="btnCat">Food</button>
+        
+        <button ion-button class="btnCat" *ngFor="let category of categories">
+                {{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}
+            </button>
+    </ion-scroll>
   <ion-list *ngIf="selectedMenu && menu && menu.categories && categories">
     <ion-item *ngFor="let category of categories">
       <h1>{{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}</h1>
