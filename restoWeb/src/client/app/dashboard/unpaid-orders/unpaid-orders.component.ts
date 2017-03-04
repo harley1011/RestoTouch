@@ -37,7 +37,7 @@ export class UnpaidOrdersComponent implements OnInit {
             this.order = JSON.parse(order);
             console.log(this.order);
             this.order.orderedItems.forEach(orderedItem => {
-              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+                orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });
             this.orders.push(this.order);
           });
@@ -66,6 +66,10 @@ export class UnpaidOrdersComponent implements OnInit {
 
   paid(order: Order) {
     let i = this.orders.indexOf(order);
+    order.paid = true;
+    order.restaurantId = this.id;
+    //console.log(order);
+    this.orderService.placeOrder(order);
     this.orders.splice(i, 1);
   }
 }

@@ -66,5 +66,5 @@ export class KitchenComponent implements OnInit {
       });
     });
   }
-    
+
 }

@@ -6,18 +6,20 @@
   </div>
   <div class="manage-list-container">
     <div class="row">
-      <div *ngFor="let order of orders" class="col-sm-3">
-        <div class="card card-primary card-inverse">
-          <div class="card-block">
-            <h4 class="card-title">Order: {{order.id}}</h4>
-            <button class="btn btn-success" (click)="paid(order)">Paid</button>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
-            {{orderedItem.item.selectedTranslation ? orderedItem.item.selectedTranslation.name : "No Translation"}}</li>
-          </ul>
-          <div class="card-block">
-            <h6 class="card-title">Total: {{order.total}}$</h6>
+      <div *ngFor="let order of orders">
+        <div *ngIf="order.paid === false" class="col-sm-3">
+          <div class="card card-primary card-inverse">
+            <div class="card-block">
+              <h4 class="card-title">Order: {{order.id}}</h4>
+              <button class="btn btn-success" (click)="paid(order)">Paid</button>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
+              {{orderedItem.item.selectedTranslation ? orderedItem.item.selectedTranslation.name : "No Translation"}}</li>
+            </ul>
+            <div class="card-block">
+              <h6 class="card-title">Total: {{order.total}}$</h6>
+            </div>
           </div>
         </div>
       </div>
