@@ -25,7 +25,7 @@ export class MenuPage {
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
-  currentOrder = new Order([], 0);
+  currentOrder = new Order([], 0, false);
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
