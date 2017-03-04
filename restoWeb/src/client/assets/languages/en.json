@@ -196,6 +196,10 @@
 
   "unpaidOrders": {
     "title": "Unpaid Orders"
+  },
+
+  "kitchen": {
+    "title": "Orders to Prepare"
   }
 
 }

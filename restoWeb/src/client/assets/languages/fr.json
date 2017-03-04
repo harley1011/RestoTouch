@@ -194,6 +194,9 @@
 
   "unpaidOrders": {
     "title": "Liste de commandes non-payées"
-  }
+  },
 
+  "kitchen": {
+    "title": "Commandes à préparer"
+  }
 }
