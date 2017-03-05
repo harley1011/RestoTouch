@@ -52,7 +52,7 @@
     "protractor": "4.0.13",
     "protractor-jasmine2-screenshot-reporter": "0.3.2",
     "ts-node": "1.2.1",
-    "typescript": "2.0.10"
+    "typescript": "^2.2.1"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
