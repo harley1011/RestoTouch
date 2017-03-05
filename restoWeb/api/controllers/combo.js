@@ -38,19 +38,29 @@ function setDatabase(m) {
 function getAllCombos(req, res) {
   return comboModel.findAll({
     where: {userId: req.userId},
-    include: [{
-      model: comboTranslationModel,
-      as: 'translations'
-    }, {
-      model: categoryModel,
-        as: 'categories',
+  include: [ {
+        model: categoryModel,
+        as: 'comboCategories',
         include: [{
             model: categoryTranslationModel,
             as: 'translations'
           }, {
             model: itemModel,
-            as: 'items'
-    }]
+            as: 'items',
+            include: [{
+                model: itemTranslationModel,
+                as: 'translations'
+            }, {
+              model: itemSizeModel,
+              as: 'sizes',
+              include: [{
+                  model: itemSizeTranslationModel,
+                  as: 'translations'
+                }]
+            }]
+      }]}, {
+        model: comboTranslationModel,
+        as: 'translations'
     }]
   }).then(function (combos) {
     return res.json({combos: combos});
@@ -64,10 +74,10 @@ function getCombo(req, res) {
   return comboModel.findOne({
     where: {
       id: id,
-      userId: req.userId
-    }, include: [ {
+      userId: req.userId },
+  include: [ {
         model: categoryModel,
-        as: 'categories',
+        as: 'comboCategories',
         include: [{
             model: categoryTranslationModel,
             as: 'translations'
@@ -77,20 +87,22 @@ function getCombo(req, res) {
             include: [{
                 model: itemTranslationModel,
                 as: 'translations'
-          }, {
-            model: itemSizeModel,
-            as: 'sizes',
-            include: [{
-                model: itemSizeTranslationModel,
-                as: 'translations'
-              }]
-          }]
+            }, {
+                model: itemSizeModel,
+                as: 'sizes',
+                include: [{
+                    model: itemSizeTranslationModel,
+                    as: 'translations'
+                }]
+            }]
       }]}, {
         model: comboTranslationModel,
         as: 'translations'
     }]
   }).then(function (combo) {
-    combo.categories.forEach(function(cat){
+    console.warn(combo);
+    console.warn(combo.comboCategories)
+    combo.comboCategories.forEach(function(cat){
             cat.items.forEach(function(item){
               for(i=0; i< item.sizes.length; i++){
                 if(item.ComboCatFoodItem.itemSizesId != item.sizes[i].id){
@@ -109,6 +121,7 @@ function getCombo(req, res) {
 
 // POST /combo
 function addCombo(req, res) {
+  console.log("have you reach me?");
   var combo = req.body;
   combo.userId = req.userId;
   return comboModel.create(combo, {
