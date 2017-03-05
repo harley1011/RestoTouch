@@ -138,7 +138,7 @@ comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
         constraints:false
       });
       categoryModel.belongsToMany(itemModel, {
-        as: 'items',
+        as: 'comboItems',
         through: comboCatFoodItemModel,
         onDelete: 'cascade',
         foreignKey: "categoryId",

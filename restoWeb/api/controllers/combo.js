@@ -46,7 +46,7 @@ function getAllCombos(req, res) {
             as: 'translations'
           }, {
             model: itemModel,
-            as: 'items',
+            as: 'comboItems',
             include: [{
                 model: itemTranslationModel,
                 as: 'translations'
@@ -83,7 +83,7 @@ function getCombo(req, res) {
             as: 'translations'
           }, {
             model: itemModel,
-            as: 'items',
+            as: 'comboItems',
             include: [{
                 model: itemTranslationModel,
                 as: 'translations'
@@ -103,7 +103,7 @@ function getCombo(req, res) {
     console.warn(combo);
     console.warn(combo.comboCategories)
     combo.comboCategories.forEach(function(cat){
-            cat.items.forEach(function(item){
+            cat.comboItems.forEach(function(item){
               for(i=0; i< item.sizes.length; i++){
                 if(item.ComboCatFoodItem.itemSizesId != item.sizes[i].id){
                   item.sizes.splice(i,1);
@@ -165,7 +165,7 @@ function updateCombo(req, res) {
       userId: req.userId
     }, include: [ {
         model: categoryModel,
-        as: 'categories',
+        as: 'comboCategories',
         include: [{
             model: itemModel,
             as: 'items',
@@ -178,7 +178,7 @@ function updateCombo(req, res) {
         as: 'translations'
     }]
   }).then(function (oldCombo) {
-    oldCombo.categories.forEach(function(cat){
+    oldCombo.comboCategories.forEach(function(cat){
             cat.items.forEach(function(item){
               for(i=0; i< item.sizes.length; i++){
                 if(item.ComboCatFoodItem.itemSizesId != item.sizes[i].id){
@@ -190,8 +190,8 @@ function updateCombo(req, res) {
 
     // level 1 difference: cat
     // check first any difference in category
-    var catToRemove = _.differenceBy(oldCombo.categories, combo.categories, 'id');
-    var catToAdd = _.differenceBy(combo.categories, oldCombo.categories, 'id');
+    var catToRemove = _.differenceBy(oldCombo.comboCategories, combo.categories, 'id');
+    var catToAdd = _.differenceBy(combo.categories, oldCombo.comboCategories, 'id');
 
     // add new cat to db
     var comboCatFoodItemAssoc = [];
@@ -212,7 +212,7 @@ function updateCombo(req, res) {
 
     // level 2 difference: items
     // adjust oldCombo object to remove not-wanted-cat and add new wanted cat so can do Item difference comparison
-    var adjustedOldComboCat = _.xor(oldCombo.categories, catToRemove);
+    var adjustedOldComboCat = _.xor(oldCombo.comboCategories, catToRemove);
     adjustedOldComboCat = _.xor(adjustedOldComboCat, catToAdd);
 
     var itemToRemove;

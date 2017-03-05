@@ -7,7 +7,7 @@ export class Category {
     public translations: Array<CategoryTranslations>,
     public selectedTranslation: CategoryTranslations,
     public items: Array<Item>,
-//public comboItems: Array<Item>,
+    public comboItems: Array<Item>,
     public MenuCategory?: MenuCategory,
     public id?: number
   ) { }

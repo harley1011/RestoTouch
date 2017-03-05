@@ -77,6 +77,9 @@ export class ComboComponent implements OnInit {
       combo => {
         this.combo = combo;
         this.combo.categories = this.combo.comboCategories;
+        for(var i=0; i<this.combo.comboCategories.length; i++){
+            this.combo.categories[i].items = this.combo.comboCategories[i].comboItems;
+        }
         this.getItems();
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.combo.categories.forEach(function(cat){
