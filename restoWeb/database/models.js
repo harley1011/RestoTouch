@@ -24,6 +24,9 @@ var disabledMenuItemCategoryModel = sequelize.import('./models/disabledMenuItemC
 var itemSizesTranslationsModel = sequelize.import('./models/itemSizeTranslations.js');
 var ingredientGroupTranslationModel = sequelize.import('./models/ingredientGroupTranslation.js');
 var ingredientTranslationModel = sequelize.import('./models/ingredientTranslation.js');
+var orderModel = sequelize.import('./models/orders.js');
+var orderedItemIngredientModel = sequelize.import('./models/orderedItemIngredients.js');
+var orderedItemsModel = sequelize.import('./models/orderedItems.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -167,7 +170,32 @@ userModel.sync({force: dropTable}).then(function () {
     });
 
     itemModel.hasMany(ingredientGroupModel, {as: 'ingredientGroups', onDelete: 'cascade', foreignKey: 'itemId'});
-    ingredientGroupModel.sync({force: dropTable});
+    ingredientGroupModel.sync({force: dropTable}).then(function () {
+
+      ingredientModel.sync({force: dropTable}).then(function () {
+
+        restaurantModel.hasMany(orderModel, {as: 'orders', onDelete: 'cascade', foreignKey: 'restaurantId'});
+        orderModel.hasMany(orderedItemsModel, {as: 'orderedItems', onDelete: 'cascade', foreignKey: 'orderId'});
+        orderModel.belongsTo(restaurantModel, {as: 'restaurant', onDelete: 'cascade', foreignKey: 'restaurantId'});
+        itemModel.hasMany(orderedItemsModel, { as: 'orderedItems', onDelete: 'cascade', foreignKey: 'itemId'});
+        orderedItemsModel.belongsTo(itemModel, {as: 'item', onDelete: 'cascade', foreignKey: 'itemId'});
+        orderedItemsModel.belongsTo(itemSizesModel, {as: 'size', onDelete: 'cascade', foreignKey: 'itemSizeId'});
+        orderedItemsModel.belongsTo(orderModel, {as: 'order', onDelete: 'cascade', foreignKey: 'orderId'});
+
+        setTimeout(function () {
+          orderModel.sync({force: dropTable}).then(function () {
+            orderedItemsModel.sync({force: dropTable}).then(function () {
+              orderedItemIngredientModel.belongsTo(orderedItemsModel, {as: 'orderedItem', onDelete: 'cascade', foreignKey: 'orderedItemId'});
+              orderedItemIngredientModel.belongsTo(ingredientModel, {as: 'selectedIngredient', onDelete: 'cascade', foreignKey: 'ingredientId'});
+
+              orderedItemsModel.hasMany(orderedItemIngredientModel, {as: 'orderedItemIngredients', onDelete: 'cascade', foreignKey: 'orderedItemId'});
+            });
+          });
+        }, 1000)
+
+
+      });
+    });
     ingredientGroupModel.hasMany(ingredientGroupTranslationModel, {
       as: 'translations',
       onDelete: 'cascade',
@@ -179,13 +207,17 @@ userModel.sync({force: dropTable}).then(function () {
       onDelete: 'cascade',
       foreignKey: 'ingredientGroupId'
     });
-    ingredientModel.sync({force: dropTable});
+
+
     ingredientModel.hasMany(ingredientTranslationModel, {
       as: 'translations',
       onDelete: 'cascade',
       foreignKey: 'ingredientId'
     });
+
     ingredientTranslationModel.sync({force: dropTable});
+
+
 
   });
 
@@ -286,4 +318,16 @@ exports.getIngredientTranslationModel = function () {
 
 exports.getIngredientGroupTranslationModel = function () {
   return ingredientGroupTranslationModel;
+}
+
+exports.getOrdersModel = function () {
+  return orderModel;
+}
+
+exports.getOrderedItemsModel = function () {
+  return orderedItemsModel;
+}
+
+exports.getOrderedItemIngredientModel = function () {
+  return orderedItemIngredientModel;
 }

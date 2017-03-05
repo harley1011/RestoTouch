@@ -12,6 +12,8 @@ import  {ApiEndpointService} from '../services/api-endpoint.service';
 export class MenuService {
     private url = '/menu';
 
+    public selectedMenu: Menu;
+
     constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
     getMenu (menuId: number): Observable<Menu> {
@@ -51,6 +53,8 @@ export class MenuService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+
 
     private extractData(res: Response) {
         let body = res.json();

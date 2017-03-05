@@ -1,57 +1,47 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { MenuPage } from '../menu/menu';
-import { WelcomePage } from '../welcome/welcome';
-import { Menu } from '../shared/models/menu';
-import { Language } from '../shared/models/language';
-import { MenuService } from '../services/menu.service';
+import {Component} from '@angular/core';
+import {NavController, NavParams, MenuController} from 'ionic-angular';
+import {WelcomePage} from '../welcome/welcome';
+import {Menu} from '../shared/models/menu';
+import {Language} from '../shared/models/language';
+import {MenuService} from '../services/menu.service';
 import {TranslateService} from 'ng2-translate';
-import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
-import { Restaurant } from '../shared/models/restaurant';
-import { RestaurantService } from '../services/restaurant.service';
-import { AuthService } from '../services/auth.service';
+import {Restaurant} from '../shared/models/restaurant';
+import {AuthService} from '../services/auth.service';
 
 @Component({
-    selector: 'page-menu-list',
-    templateUrl: 'menu-list.html'
+  selector: 'page-menu-list',
+  templateUrl: 'menu-list.html'
 })
 
 export class MenuListPage {
-    selectedMenu: any;
-    selectedRestaurant: any;
-    selectedLanguage: Language = new Language('en','selectedLanguage','',0);
+  selectedMenu: any;
+  selectedRestaurant: any;
+  selectedLanguage: Language = new Language('en', 'selectedLanguage', '', 0);
 
 
-    numOfMenus: number;
-    menus: Menu[];
-    restaurant: Restaurant;
-    menusInRestaurant: boolean[];
+  numOfMenus: number;
+  menus: Menu[];
+  restaurant: Restaurant;
+  menusInRestaurant: boolean[];
 
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                public menuService: MenuService,
-                private translate: TranslateService,
-                public menuCtrl: MenuController,
-                public authService: AuthService) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public menuService: MenuService,
+              private translate: TranslateService,
+              public menuCtrl: MenuController,
+              public authService: AuthService) {
 
-         translate.setDefaultLang('en');
-        this.selectedRestaurant = navParams.get('item');
-//        this.selectedMenu = navParams.get('menu');
-//        this.selectedLanguage = this.translate.currentLang;
-//        this.selectedRestaurant.Menus.forEach( menu => {
-//          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+    translate.setDefaultLang('en');
+    this.selectedRestaurant = navParams.get('item');
+  }
 
-//        })
-    }
-
- ionViewDidLoad() {
+  ionViewDidLoad() {
     this.getMenus();
   }
 
-getMenus(): void {
+  getMenus(): void {
     this.restaurant = this.selectedRestaurant;
     this.menuService.getMenus().subscribe(
-
       menus => {
         menus.forEach(menu => {
           menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
@@ -72,7 +62,7 @@ getMenus(): void {
             if (this.menus[i].id === this.restaurant.Menus[j].id) {
               this.menusInRestaurant[i] = true;
               this.numOfMenus++;
-               console.log(this.restaurant.Menus[j]);
+              console.log(this.restaurant.Menus[j]);
 
               break;
             }
@@ -86,15 +76,11 @@ getMenus(): void {
   }
 
 
-    menuTapped(menu){
-//        this.navCtrl.push(MenuPage, {
-//            menu: menu,
-//            language: this.selectedLanguage
-//        });
-        this.authService.mainNavController.push(WelcomePage, {
-            item: menu,
-            restaurant: this.restaurant
-        });
-        this.menuCtrl.toggle('right');
-    }
+  menuTapped(menu) {
+    this.menuService.selectedMenu = menu;
+    this.authService.mainNavController.push(WelcomePage, {
+      restaurant: this.restaurant
+    });
+    this.menuCtrl.toggle('right');
+  }
 }

@@ -15,16 +15,12 @@ import { LoginPage } from '../login/login';
 export class HomePage {
 @ViewChild(Nav) nav: Nav;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public menuCtrl: MenuController) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-//    this.nav.setRoot(LoginPage);
     this.menuCtrl.toggle('right');
-//    this.menuCtrl.enable(false, 'ownerMenu');
-//    this.menuCtrl.enable(true, 'ownerMenu2');
   }
 
 }
