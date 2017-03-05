@@ -32,7 +32,6 @@ export class ComboListComponent implements OnInit {
         combos.forEach(combo => {
           combo.selectedTranslation = combo.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
         });
-        console.warn(this.combos);
       },
       error => {
         console.log(error);

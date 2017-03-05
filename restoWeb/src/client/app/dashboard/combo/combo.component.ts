@@ -89,7 +89,6 @@ export class ComboComponent implements OnInit {
           });
         });
         this.priceTypeSelected(this.combo.selectedTranslation.discountFlag);
-        console.warn("get combo ", this.combo);
     },
       error => {
         this.errorMessage = <any>error;
@@ -101,10 +100,13 @@ export class ComboComponent implements OnInit {
   * function for create/save button
   */
   addAndUpdate(): void {
-    console.warn("before adding ", this.combo);
     if (this.create) {
       this.add();
     } else {
+      this.combo.comboCategories = this.combo.categories;
+      for(var i=0; i<this.combo.comboCategories.length; i++){
+         this.combo.categories[i].items = this.combo.comboCategories[i].comboItems;
+      }
       this.update();
     }
   }
