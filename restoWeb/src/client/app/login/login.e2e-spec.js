@@ -44,7 +44,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var createRestoBtn = element(by.id('createRestoBtn'));
     createRestoBtn.click();
 
-    //Verify that user gets redirected to correct page, and that an element (the 
+    //Verify that user gets redirected to correct page, and that an element (the
     //created restaurant) is present on the restaurant-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
@@ -78,7 +78,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var createItemBtn = element(by.id('createItemBtn'));
     createItemBtn.click();
 
-    //Verify that user gets redirected to correct page, and that an element (the 
+    //Verify that user gets redirected to correct page, and that an element (the
     //created food item) is present on the item-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/items');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
@@ -97,7 +97,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var createCategoryBtn = element(by.id('createCategoryBtn'));
     createCategoryBtn.click();
 
-    //Verify that user gets redirected to correct page, and that an element (the 
+    //Verify that user gets redirected to correct page, and that an element (the
     //created category) is present on the category-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/categories');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
@@ -116,7 +116,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var createMenuBtn = element(by.id('createMenuBtn'));
     createMenuBtn.click();
 
-    //Verify that user gets redirected to correct page, and that an element (the 
+    //Verify that user gets redirected to correct page, and that an element (the
     //created menu) is present on the menu-list page.
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/menus');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(true);
@@ -161,7 +161,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
   });
-  
+
   it("Diplay correct webpage after log out", function () {
     browser.get(browser.baseUrl + 'dashboard/home');
     var dropdown = element(by.className('dropdown-toggle'));
@@ -169,6 +169,20 @@ describe("RESTOTOUCH TEST CASES", function () {
     var logoutBtn = element(by.id('logout'));
     logoutBtn.click();
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'logout');
+  });
+
+  it("Login as a cashier mode", function () {
+    browser.get('http://localhost:5555/');
+    element(by.id("email")).sendKeys("samer@gmail.com");
+    element(by.id("password")).sendKeys("password");
+
+    var isEmployee = element(by.id('isEmployee'));
+    isEmployee.click();
+
+    var loginBtn = element(by.className('loginBtn'));
+    loginBtn.click();
+
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurants');
   });
 
 });
