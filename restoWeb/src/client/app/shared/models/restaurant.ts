@@ -13,6 +13,7 @@ export class Restaurant {
               public Menus: Menu[],
               public payments: Payment[],
               public businessHours: BusinessHour[],
+              public kitCashModeFlag: string,
               public id?: number) {
   }
 }
@@ -21,7 +22,6 @@ export class RestaurantTranslations {
 
   constructor(public name: string,
               public description: string,
-              public languageCode: string,
-              public kitCashModeFlag: string,) {
+              public languageCode: string) {
   }
 }

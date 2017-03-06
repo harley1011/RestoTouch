@@ -1,0 +1,39 @@
+<div class="manage-content">
+  <div class="manage-header">
+    <h2>Order</h2>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <hr>
+  </div>
+  <div *ngIf="order && translationSelectComponent.selectedLanguage" class="manage-list-container">
+    <p>Id: {{order.id}}</p>
+    <p>Total: {{order.total | currency:'CAD':true}}</p>
+    <p>Paid Date: {{order.createdAt | date:'full'}}</p>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Size</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template ngFor let-orderedItem [ngForOf]="order.orderedItems">
+        <tr>
+          <td><a href="javascript:;" (click)="viewItem(orderedItem.item.id)">{{orderedItem.item.selectedTranslation.name}}</a> </td>
+          <td>{{orderedItem.sizes[0].size.selectedTranslation.name}}</td>
+          <td>{{orderedItem.sizes[0].size.price | currency:'CAD':true}}</td>
+        </tr>
+
+        <template ngIf="orderedItem.sizes > 1">
+          <tr *ngFor="let sizeContainer of orderedItem.sizes | slice: 1">
+            <td></td>
+            <td>{{sizeContainer.size.selectedTranslation.name}}</td>
+            <td>{{sizeContainer.size.price | currency:'CAD':true}}</td>
+          </tr>
+        </template>
+      </template>
+
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
-
-import { Restaurant } from '../../shared/models/restaurant';
+import { Category } from '../../shared/models/category';
+import { Item } from '../../shared/models/items';
+import { Combo } from '../../shared/models/combo';
 import { GeneralResponse }  from '../../shared/general.response';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { AuthHttpService } from '../../services/auth-http.services';
 import { Observable } from 'rxjs/Observable';
-import  {ApiEndpointService} from '../../services/api-endpoint.service';
+import { ApiEndpointService } from '../../services/api-endpoint.service';
 
 @Injectable()
-export class RestaurantService {
-  private url = '/restaurant';
+export class ComboService {
+  private url = '/combo';
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  getRestaurant (id: number): Observable<Restaurant> {
+  getCombos (): Observable<Combo[]> {
+    return this.http.get(this.api.getEndpoint() + this.url)
+      .map((response) => this.extractData(response).combos)
+      .catch(this.handleError);
+  }
+
+  getCombo (id: number): Observable<Combo> {
     return this.http.get(this.api.getEndpoint() + this.url + '/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  getRestaurants (): Observable<Restaurant[]> {
-    return this.http.get(this.api.getEndpoint() + this.url)
-      .map((response) => this.extractData(response).restaurants)
-      .catch(this.handleError);
-  }
-
-  addRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
-    let body = JSON.stringify(restaurant);
+  addCombo (combo: Combo): Observable<GeneralResponse> {
+    let body = JSON.stringify(combo);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -36,21 +37,22 @@ export class RestaurantService {
       .catch(this.handleError);
   }
 
-  updateRestaurant (restaurant: Restaurant): Observable<GeneralResponse> {
-    let body = JSON.stringify(restaurant);
+updateCombo (combo: Combo): Observable<GeneralResponse> {
+    let body = JSON.stringify(combo);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.put(this.api.getEndpoint() + this.url + '/' + restaurant.id, body, options)
+    return this.http.put(this.api.getEndpoint() + this.url + '/' + combo.id, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteRestaurant (restaurant: Restaurant): Observable<Restaurant> {
-    return this.http.delete(this.api.getEndpoint() + this.url + '/' + restaurant.id)
+  deleteCombo (combo: Combo): Observable<Combo> {
+    return this.http.delete(this.api.getEndpoint() + this.url + '/' + combo.id)
       .map(this.extractData)
       .catch(this.handleError);
   }
+
 
   private extractData(res: Response) {
     let body = res.json();

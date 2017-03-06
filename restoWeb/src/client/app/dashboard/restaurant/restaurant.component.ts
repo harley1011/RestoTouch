@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
-import {RestaurantService} from './restaurant.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -15,8 +15,7 @@ import {TranslateService} from 'ng2-translate';
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
-  templateUrl: 'restaurant.component.html',
-  providers: [RestaurantService]
+  templateUrl: 'restaurant.component.html'
 })
 
 export class RestaurantComponent implements OnInit {
@@ -55,7 +54,7 @@ export class RestaurantComponent implements OnInit {
     let restaurantTranslation = this.restaurant.translations.find(translation =>
     translation.languageCode === language.languageCode);
     if (!restaurantTranslation) {
-      restaurantTranslation = new RestaurantTranslations('', '', language.languageCode, '');
+      restaurantTranslation = new RestaurantTranslations('', '', language.languageCode);
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
@@ -138,7 +137,7 @@ export class RestaurantComponent implements OnInit {
       if (this.create) {
         this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
         //this.removeRestaurantsSupportedLanguagesFromLanguage();
-        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode, '');
+        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
 
         let businessHours = [
           new BusinessHour(0, 0, '9:00', '21:00', false),
@@ -168,7 +167,8 @@ export class RestaurantComponent implements OnInit {
           [translation],
           translation, [],
           payments,
-          businessHours
+          businessHours,
+          ''
         );
       }
     });

@@ -2,7 +2,7 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { RestaurantService } from './restaurant.service';
+import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant, RestaurantTranslations } from '../../shared/models/restaurant';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
