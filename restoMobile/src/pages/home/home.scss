@@ -19,8 +19,10 @@ page-home {
         width: 36%;
         margin-top: 20vh;
         margin-left: 15vw;
+        // right: 15%;
         padding: 30px 15px;
         font-family: "Maven Pro";
+        // position: absolute;
 
         ion-card-header {
             text-transform: uppercase;
@@ -49,6 +51,7 @@ page-home {
         position: absolute;
         margin-top: 25vh;
         left: 51.5vw;
+        // right: 13.3%;
     }
 
 }
