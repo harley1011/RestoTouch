@@ -11,8 +11,11 @@ page-menu {
       width: 150px;
       font-family: Maven Pro;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 16px;
       letter-spacing: 1px;
+      white-space: normal;
+      line-height: 23px;
+      text-transform: uppercase;
 
     }
 
@@ -22,6 +25,22 @@ page-menu {
       font-weight: 700;
       letter-spacing: 1px;
       color: #424242;
+    }
+
+    .food-item {
+        // width: 50%;
+        font-family: 'Montserrat';
+
+        .food-item-image {
+          max-width: 70%;
+        }
+
+        .food-item-content {
+          text-transform: uppercase;
+          letter-spacing: 1px;
+
+        }
+
     }
 }
 
