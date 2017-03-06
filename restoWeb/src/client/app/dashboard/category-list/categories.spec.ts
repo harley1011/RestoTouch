@@ -47,7 +47,7 @@ export function main() {
     it('should add category', () => {
       var mockTranslation = new CategoryTranslations('', '');
       var mockMenuCategory = new MenuCategory(1,2,1);
-      var mockCategory = new Category([],mockTranslation,[], mockMenuCategory, 1);
+      var mockCategory = new Category([],mockTranslation,[],[],mockMenuCategory,1);
 
       initialResponse = categoryService.addCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -69,7 +69,7 @@ export function main() {
     it('should update a category', () => {
       var mockTranslation = new CategoryTranslations('', '');
       var mockMenuCategory = new MenuCategory(2,3,2);
-      var mockCategory = new Category([],mockTranslation,[], mockMenuCategory, 2);
+      var mockCategory = new Category([],mockTranslation,[],[],mockMenuCategory,2);
 
       initialResponse = categoryService.updateCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -90,7 +90,8 @@ export function main() {
 
     it('should delete a category', () => {
       var mockTranslation = new CategoryTranslations('', '');
-      var mockCategory = new Category([], mockTranslation ,[]);
+      var mockMenuCategory = new MenuCategory(1,2,1);
+      var mockCategory = new Category([],mockTranslation,[],[],mockMenuCategory,1);
 
       initialResponse = categoryService.deleteCategory(mockCategory);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
