@@ -2,12 +2,26 @@ page-menu {
 
     .mini-menu {
     height: 100px;
-    background-color: #999;
+    background-color: #ececec;
 }
 
     .btnCat {
-        margin: 10px;
+      margin: 8px 10px;
+      height: 80px;
+      width: 150px;
+      font-family: Maven Pro;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 1px;
 
+    }
+
+    .category-title {
+      font-family: 'Maven Pro';
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #424242;
     }
 }
 
