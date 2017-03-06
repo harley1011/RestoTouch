@@ -21,6 +21,10 @@
       {{ 'dashboard.foodItemSidebar' | translate }}
     </a>
 
+    <a routerLink="/dashboard/combos" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      {{ 'dashboard.comboItemSidebar' | translate }}
+    </a>
+
     <!-- order-->
     <a  routerLink="/dashboard/orders" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.orderSidebar' | translate }}

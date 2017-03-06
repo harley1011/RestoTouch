@@ -370,7 +370,6 @@ export class SeedConfig {
       'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
       'ng2-translate': 'node_modules/ng2-translate/bundles/ng2-translate.umd.js',
-
       'app/*': '/app/*',
       // For test config
       'dist/dev/*': '/base/dist/dev/*',
