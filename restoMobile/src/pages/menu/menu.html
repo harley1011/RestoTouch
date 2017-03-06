@@ -6,8 +6,8 @@
 
 <ion-content>
     <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-        <button ion-button class="btnCat" color="danger" (click)="changeGroup('all', null)">All Categories</button>
-        <button ion-button class="btnCat" color="danger" *ngFor="let category of categories" (click)="changeGroup('one', category)">
+        <button ion-button class="btnCat" [ngClass]="{'btnCat-selected': showAllCategories }" color="danger" (click)="changeGroup('all', null)">All Categories</button>
+        <button ion-button class="btnCat" color="danger" *ngFor="let category of categories" (click)="changeGroup('one', category)" [ngClass]="{'btnCat-selected': currentCategory == category && !showAllCategories }">
                 {{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}
             </button>
     </ion-scroll>
@@ -17,71 +17,52 @@
           <h1 class="category-title">{{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}</h1>
           <ion-list class="flex-container" no-lines>
             <ion-item class="flex-item" *ngFor="let item of category.items">
-              <div class="row food-item">
-                <div class="row" text-center>
-                  <img class="food-item-image"[src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/simple-utensil.png'"/>
-                </div>
-                <div class="row food-item-content" text-center>
-                  <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
+              <div class="row food-item flex-container">
+                <div class="row image-flex" text-center>
+                  <img class="food-item-image" [src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/simple-utensil.png'"/>
+                  <div class="row food-item-content" text-center>
+                    <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
 
-                    <ion-list no-lines>
-                      <ion-item *ngFor="let size of item.sizes">
-                        <p>{{size.size.name}} </p>
-                        <p item-right>${{size.size.price.toFixed(2)}}</p>
-                        <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
-                        <button ion-button item-right [disabled]="size.count == 0" (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
-                        <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
-                      </ion-item>
-                    </ion-list>
+                      <ion-list no-lines>
+                        <ion-item *ngFor="let size of item.sizes">
+                          <p>small</p>
+                          <!-- <p>{{size.size.name}} </p> -->
+                          <p item-right>${{size.size.price.toFixed(2)}}</p>
+                          <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
+                          <button ion-button item-right [disabled]="size.count == 0" (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
+                          <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
+                        </ion-item>
+                      </ion-list>
+                  </div>
                 </div>
               </div>
-              <!-- <ion-item class="flex-container">
-                <ion-item class="image-flex">
-                  <ion-thumbnail class="item-image" item-left>
-                    <img [src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/resto-default.png'"/>
-                  </ion-thumbnail>
-                </ion-item>
-                <ion-item class="item-sizes">
-                  <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
-                  <ion-list no-lines>
-                    <ion-item *ngFor="let size of item.sizes">
-                      <p>{{size.size.name}} </p>
-                      <p item-right>${{size.size.price.toFixed(2)}}</p>
-                      <button ion-button item-right (click)="addOrder(category, item, size)" color="default" outline>+</button>
-                      <button ion-button item-right [disabled]="size.count == 0" (click)="removeOrder(category, item, size)" color="danger" outline>-</button>
-                      <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
-                    </ion-item>
-                  </ion-list>
-                </ion-item>
-              </ion-item> -->
             </ion-item>
           </ion-list>
         </ion-item>
       </ion-list>
     </div>
-    <div *ngIf="!showAllCategories">
+    <div *ngIf="!showAllCategories" padding>
       <h1 class="category-title">{{currentCategory.category.selectedTranslation ? currentCategory.category.selectedTranslation.name : "No translation"}}</h1>
       <ion-list class="flex-container" no-lines>
         <ion-item class="flex-item" *ngFor="let item of currentCategory.items">
-          <ion-item class="flex-container">
-            <ion-item class="image-flex">
-              <ion-thumbnail class="item-image" item-left>
-                <img [src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/resto-default.png'"/>
-              </ion-thumbnail>
-            </ion-item>
-            <ion-item class="item-sizes">
-              <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
-              <ion-list no-lines>
-                <ion-item *ngFor="let size of item.sizes">
-                  <p>{{size.size.selectedTranslation ? size.size.selectedTranslation.name : "No Translation"}}</p>
-                  <p item-right>${{size.size.price.toFixed(2)}}</p>
-                  <button ion-button item-right (click)="addOrder(currentCategory, item, size)" color="default" outline>+</button>
-                  <button ion-button item-right [disabled]="size.count == 0" (click)="removeOrder(currentCategory, item, size)" color="danger" outline>-</button>
-                  <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
-                </ion-item>
-              </ion-list>
-            </ion-item>
-          </ion-item>
+          <div class="row food-item flex-container">
+            <div class="row image-flex" text-center>
+              <img class="food-item-image" [src]="item.item.imageUrl != '' ? item.item.imageUrl : 'assets/img/simple-utensil.png'"/>
+              <div class="row food-item-content" text-center>
+                <h2>{{item.item.selectedTranslation ? item.item.selectedTranslation.name : "No Translation"}}</h2>
+
+                  <ion-list no-lines>
+                    <ion-item *ngFor="let size of item.sizes">
+                      <p>{{size.size.selectedTranslation ? size.size.selectedTranslation.name : "No Translation"}}</p>
+                      <p item-right>${{size.size.price.toFixed(2)}}</p>
+                      <button ion-button item-right (click)="addOrder(currentCategory, item, size)" color="default" outline>+</button>
+                      <button ion-button item-right [disabled]="size.count == 0" (click)="removeOrder(currentCategory, item, size)" color="danger" outline>-</button>
+                      <ion-badge item-right [color]="size.count > 0 ? 'default' : 'light'">{{size.count}}</ion-badge>
+                    </ion-item>
+                  </ion-list>
+              </div>
+            </div>
+          </div>
         </ion-item>
       </ion-list>
     </div>

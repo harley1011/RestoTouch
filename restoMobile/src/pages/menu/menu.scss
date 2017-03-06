@@ -17,6 +17,21 @@ page-menu {
       line-height: 23px;
       text-transform: uppercase;
 
+      background: transparent;
+      border: 2px solid #e74c3c;
+      color: #e74c3c;
+      border-radius: 6px;
+
+    }
+
+    .btnCat-selected {
+      background: color($colors, danger);
+      // border: 2px solid #e74c3c;
+      color: #FFF;
+    }
+
+    .btnCat:hover {
+      color: #FFF;
     }
 
     .category-title {
@@ -30,6 +45,10 @@ page-menu {
     .food-item {
         // width: 50%;
         font-family: 'Montserrat';
+
+        div.image-flex {
+            max-width: 400px;
+        }
 
         .food-item-image {
           max-width: 70%;
