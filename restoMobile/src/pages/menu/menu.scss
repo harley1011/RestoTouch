@@ -1,9 +1,18 @@
 page-menu {
 
+    ion-title.title {
+      font-family: 'Maven pro';
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 26px;
+
+    }
+
     .mini-menu {
-    height: 100px;
-    background-color: #ececec;
-}
+        height: 100px;
+        background-color: #ececec;
+    }
 
     .btnCat {
       margin: 8px 10px;
