@@ -229,11 +229,8 @@ export class MenuPage {
     changeGroup(name: string, category: Category): void {
      if(name == 'all') {
         this.showAllCategories = true;
-        console.log("viewing all categories");
       } else {
           this.showAllCategories = false;
-          console.log("viewing ONLY one category");
-          console.log(category);
           this.currentCategory = category;
           this.currentCategory.items = category.items;
       }

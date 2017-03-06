@@ -68,6 +68,11 @@ export class MenuListPage {
             }
           }
         }
+
+        this.selectedRestaurant = this.restaurant;
+        this.selectedRestaurant.Menus.forEach(menu => {
+          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
+        });
       },
       error => {
         console.log(error);
