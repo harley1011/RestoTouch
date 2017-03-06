@@ -1352,6 +1352,8 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Payment"
+      kitCashModeFlag:
+        type: string
     required:
       - address
   MenuListResponse:

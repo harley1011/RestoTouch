@@ -120,7 +120,8 @@ var restaurants = [
       {
         "name": "Burger King",
         "description": "Burgersss",
-        "languageCode": "en"
+        "languageCode": "en",
+        "kitCashModeFlag": "kco"
       }
     ],
     "Menus": [],
