@@ -1,0 +1,165 @@
+<div class="manage-content">
+  <div class="manage-header">
+    <h2>{{ combo?.id ? ('combo.titleEdit' | translate) : ('combo.titleCreate' | translate) }}
+    </h2>
+    <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <hr>
+  </div>
+
+  <div *ngIf="combo" class="comContentContainer">
+    <div class="row textAlignment">
+            {{ combo?.id ? ('combo.intro2' | translate) : ('combo.intro1' | translate) }}
+    </div>
+    <div class="row">
+        <!-- step title: define combo -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>{{ 'combo.s1define' | translate }}</h6>
+            <h3>{{ 'combo.s1combo' | translate }}</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            {{ 'combo.s1text' | translate }}
+        </div>
+    </div>
+    <form (ngSubmit)="addAndUpdate()" id="comboForm" role="form">
+      <div class="form-group bottomSpacing">
+        <label>{{ 'combo.comboName' | translate }}</label>
+        <input id="name" class="form-control" name="name"
+          placeholder="{{ 'combo.comboNameFieldHolder' | translate }}" required
+          [(ngModel)]="combo?.selectedTranslation.name" #name="ngModel"
+          [ngClass]="{'form-error': !name.valid && !name.pristine}">
+        <label>{{ 'combo.comboDescription' | translate }}</label>
+        <input id="description" rows="3" class="form-control" name="description"
+          placeholder="{{ 'combo.comboDescriptionFieldHolder' | translate }}" required
+            [(ngModel)]="combo?.selectedTranslation.description">
+      </div>
+
+     <!-- step header : choose category-->
+      <div class="row">
+        <!-- step title -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>{{ 'combo.s2choose' | translate }}</h6>
+            <h3>{{ 'combo.s2category' | translate }}</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+            {{ 'combo.s2text' | translate }}
+        </div>
+      </div>
+    <!-- step content-->
+      <div class="row">
+        <div class="col-md-10 bottomSpacing">
+            <h5>{{ 'combo.s2subCatList' | translate }}</h5>
+            <div class="btn-group" data-toggle="buttons" role="group">
+              <label *ngFor="let category of categories; let i = index" [attr.id]=i class="btn btn-secondary">
+                <input type="checkbox" (click)="saveCategory(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
+              </label>
+            </div>
+        </div>
+      </div>
+
+
+     <!-- step header : link food item -->
+      <div class="row">
+        <!-- step title -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>{{ 'combo.s3link' | translate }}</h6>
+            <h3>{{ 'combo.s3foodItem' | translate }}</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+             {{ 'combo.s3text' | translate }}
+        </div>
+      </div>
+    <!-- step content-->
+
+    <!-- Part of Step 3 chosen CAT ---->
+      <div class="row">
+        <br/><br/>
+        <div class="col-md-10">
+            <h5>{{ 'combo.s3subCatList' | translate }}</h5>
+            <div *ngIf="catToFill?.length == 0"> No choosen category.</div>
+            <div class="btn-group" data-toggle="buttons" role="group">
+              <label *ngFor="let category of catToFill; let i = index" [attr.id]=(category.selectedTranslation.name) class="btn btn-secondary">
+                <input type="checkbox" (click)="fillCatSelected(category, i)"> {{ category.selectedTranslation ? category.selectedTranslation.name : "No translation" }}
+              </label>
+            </div>
+        </div>
+      </div>
+      <!--- EO SELECTED CAT -->
+
+    <div class="row bottomSpacing">
+      <div *ngIf="items && catToFill?.length > 0 && categoryShowing?.selectedTranslation">
+      <div class="col-md-6">
+        <label>{{ 'combo.s3subFoodList' | translate }}</label>
+        <ul class="list-group scrollable-list">
+          <li *ngFor="let item of items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}}: $ {{item.sizes[0]?.price}})
+            <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
+                (click)="addItemToCategory(item)"></i>
+          </li>
+        </ul>
+        <div [hidden]="items.length != 0">
+          <i class="fa fa-exclamation-circle"></i> {{ 'combo.s3subFoodListNoFood' | translate }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label>{{ 'combo.s3subTitleFoodInCatList' | translate }} <span class="label label-success">{{ categoryShowing.selectedTranslation ? categoryShowing.selectedTranslation.name : "No translation" }}</span> </label>
+        <ul class="list-group scrollable-list">
+          <li *ngFor="let item of categoryShowing?.items" class="list-group-item"> {{item.selectedTranslation?.name}} ({{item.sizes[0]?.translations[0]?.name}})
+            <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                (click)="removeItemFromCategory(item)"></i>
+          </li>
+        </ul>
+        <div [hidden]="categoryShowing?.items.length != 0">
+          <i class="fa fa-exclamation-circle"></i> {{ 'combo.s3subTitleFoodInCatListNoFood' | translate }}
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+     <!-- step header : determine pricing -->
+      <div class="row">
+        <!-- step title -->
+        <div class="col-md-3 comStepTitleCell">
+            <h6>{{ 'combo.s4determine' | translate }}</h6>
+            <h3>{{ 'combo.s4pricing' | translate }}</h3>
+        </div>
+        <!-- step description -->
+        <div class="col-md-7 comStepDescriptionCell">
+             {{ 'combo.s4text' | translate }}
+        </div>
+      </div>
+    <!-- step content-->
+      <div class="row">
+        <div class="col-md-10 bottomSpacing">
+            <h5>{{ 'combo.s4subSelectType' | translate }}</h5>
+            <div class="radio">
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('d')" value="d" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4dollar' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('p')" value="p" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4percentage' | translate }}</label>
+                <label class="radio-inline"><input type="radio" name="discountFlag" id="pricetype" (click)="priceTypeSelected('f')" value="f" [(ngModel)]="combo?.selectedTranslation.discountFlag"> {{ 'combo.s4fixed' | translate }}</label>
+            </div>
+            <hr/>
+            <div *ngIf="priceSelected">
+                <label *ngIf="dollarAmount">{{ 'combo.s4dollarText' | translate }}</label>
+                <label *ngIf="percDisc">{{ 'combo.s4percentageText' | translate }}</label>
+                <label *ngIf="fixedPrice">{{ 'combo.s4fixedText' | translate }}</label>
+                <input type="number" id="priceNumber" class="form-control" name="discountValue" placeholder="{{'combo.s4discountPlaceholder' | translate}}" required [(ngModel)]="combo?.selectedTranslation.discountValue" #discountValue="ngModel"
+                [ngClass]="{'form-error': !discountValue.valid && !discountValue.pristine}">
+
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="manage-button">
+          <button *ngIf="!create" class="btn btn-success btn-green" type="submit">{{'combo.saveButton' | translate}}</button>
+          <button *ngIf="!create" type="button" (click)="delete()" class="btn btn-danger btn-red" >{{'combo.deleteButton' | translate}}</button>
+          <button *ngIf="create" class="btn btn-success btn-green" type="submit">{{'combo.createButtonTopbar' | translate}}</button>
+          <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{'combo.cancelButtonTopbar' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
