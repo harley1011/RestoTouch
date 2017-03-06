@@ -1,0 +1,46 @@
+.comContentContainer{
+    padding: 150px 30px 0;
+    position: absolute;
+    background-color: #f3f3f3;
+    width: 84.5%;
+}
+
+.textAlignment{
+    padding: 2%;
+    margin-bottom: 3%;
+}
+
+.bottomSpacing{
+    margin-bottom: 8%;
+    margin-top: 4%;
+}
+
+.comStepTitleCell{
+    border-top: 25px solid black;
+    padding-top: 5px;
+    margin-top:2%;
+}
+
+.comStepDescriptionCell{
+    padding-top: 30px;
+    padding-left:10px;
+}
+
+.comCatDiv{
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 2px;
+    text-align: center;
+    margin: 3px;
+}
+
+.comCatButton{
+    display: inline;
+    margin: 3px;
+}
+
+.border{
+    border:1px solid red;
+}
+

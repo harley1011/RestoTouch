@@ -120,7 +120,8 @@ var restaurants = [
       {
         "name": "Burger King",
         "description": "Burgersss",
-        "languageCode": "en"
+        "languageCode": "en",
+        "kitCashModeFlag": "kco"
       }
     ],
     "Menus": [],
@@ -509,8 +510,7 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.findOrCreate({
-          where: {address: restaurant.address}, include: [{
+        restaurantModel.create({address: restaurant.address, include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
@@ -533,7 +533,7 @@ setTimeout(function () {
               as: 'translations'
             }]
           }).then(function (createdMenu) {
-            createdRestaurant[0].addMenu(createdMenu);
+            createdRestaurant.addMenu(createdMenu);
 
             createCategoryAndThenItems(drinkCategory, createdMenu, drinkItems, user.id, 'drinks');
 
@@ -564,7 +564,7 @@ setTimeout(function () {
                   }
                 }
                 var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
-                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant[0].id, createdAt: paidDate}, {
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant.id, createdAt: paidDate}, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,
@@ -637,3 +637,5 @@ setTimeout(function () {
   }
 
 }, 5000)
+
+

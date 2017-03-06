@@ -84,7 +84,7 @@ export class CategoryComponent implements OnInit {
         this.create = false;
       } else {
         let translation = new CategoryTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
-        this.category = new Category([translation], translation, []);
+        this.category = new Category([translation], translation, [], []);
         this.getItems();
         this.create = true;
       }

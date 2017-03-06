@@ -167,7 +167,8 @@ export class RestaurantComponent implements OnInit {
           [translation],
           translation, [],
           payments,
-          businessHours
+          businessHours,
+          ''
         );
       }
     });

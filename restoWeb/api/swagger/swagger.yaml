@@ -343,7 +343,113 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
+            
+   # -----------------------------------------/// Combo ///
+  /combo:
+     # binds a127 app logic to a route
+    x-swagger-router-controller: combo
+    get:
+      # used as the method name of the controller
+      operationId: getAllCombos
+      description: Returns the list of combos
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CombosResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      operationId: addCombo
+      description: Add a combo
+      parameters:
+        - name: combo
+          description: combo properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Combo"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /combo/{id}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: combo
+    get:
+      description: Returns a specific combo
+      # used as the method name of the controller
+      operationId: getCombo
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/Combo"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      description: Updates a combo
+      # used as the method name of the controller
+      operationId: updateCombo
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+        - name: combo
+          description: Combo properties
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Combo"
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      description: Deletes a combo
+      # used as the method name of the controller
+      operationId: deleteCombo
+      parameters:
+        - name: id
+          type: number
+          in: path
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   # -----------------------------------------/// Restaurant ///
   /restaurant:
     # binds a127 app logic to a route
@@ -983,6 +1089,55 @@ definitions:
     required:
       - name
       - languageCode
+      ################################################## Combo
+  CombosResponse:
+    required:
+      - combos
+    properties:
+      # Array of combo
+      combos:
+        type: array
+        items:
+          "$ref": "#/definitions/Combo"
+  Combo:
+    type: object
+    properties:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/ComboTranslations"
+      categories:
+        type: array
+        items:
+          "$ref": "#/definitions/Category"
+#      items:
+#        type: array
+#        items:
+#          "$ref": "#/definitions/Item"
+  ComboTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      languageCode:
+        type: string
+      discountValue:
+        type: number
+      discountFlag:
+        type: string
+    required:
+      - name
+      - description
+      - languageCode
+      - discountValue
+      - discountFlag
+      ###################################################
   ItemsResponse:
     required:
       - items
@@ -1197,6 +1352,8 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Payment"
+      kitCashModeFlag:
+        type: string
     required:
       - address
   MenuListResponse:
