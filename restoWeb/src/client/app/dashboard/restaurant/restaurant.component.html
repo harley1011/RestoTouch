@@ -357,7 +357,7 @@
           <div class="col col-md-5">
             <label>{{ 'restaurant.langTitle' | translate}}</label>
             <ul class="list-group">
-              <li *ngFor="let language of supportedLanguages" class="list-group-item"> {{language.name}}<i
+              <li *ngFor="let language of restaurant.supportedLanguages" class="list-group-item"> {{language.name}}<i
                 class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i>
               </li>
             </ul>
@@ -379,6 +379,7 @@
           </div>
         </div>
       </div>
+
       <div id="resto-menu" *ngIf="!create" class="edit-section col-md-12">
         <h4>{{ 'restaurant.menuTitle' | translate}}</h4>
         <div class="row">
@@ -411,6 +412,28 @@
                 </div>
         -->
       </div>
+
+<!--KITCHEN CASHIER MODE OPTION SECTION-->
+      <div id="basic-info" class="col-md-9">
+        <h4>{{ 'restaurant.kitCashModeTitle' | translate}}</h4>
+        <div class="card card-outline-warning mb-3 text-center">
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                  <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
+                  <p><span class="label label-primary">{{ 'restaurant.kitCashModeOpt1' | translate}}</span> {{ 'restaurant.kitCashModeDetails1' | translate}}</p>
+                  <p><span class="label label-success">{{ 'restaurant.kitCashModeOpt2' | translate}}</span> {{ 'restaurant.kitCashModeDetails2' | translate}}</p>
+                  <p><span class="label label-warning">{{ 'restaurant.kitCashModeOpt3' | translate}}</span> {{ 'restaurant.kitCashModeDetails3' | translate}}</p>
+              </blockquote>
+            </div>
+        </div>
+        <div class="radio form-group">
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="kco" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="kce" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt2' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
+       </div>
+       <br/><br/>
+      </div>
+
 
       <div class="row">
 

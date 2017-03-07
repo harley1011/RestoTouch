@@ -8,6 +8,7 @@ var menuTranslationsModel;
 var itemModel;
 var itemTranslationModel;
 var itemSizeModel;
+var itemSizesTranslationsModel;
 var ingredientGroupModel;
 var ingredientModel;
 var ingredientTranslationModel;
@@ -38,6 +39,7 @@ function setDatabase(m) {
   itemModel = models.getItemModel();
   itemTranslationModel = models.getItemTranslationModel();
   itemSizeModel = models.getItemSizesModel();
+  itemSizesTranslationsModel = models.getItemSizeTranslationsModel();
   ingredientGroupModel = models.getIngredientGroupModel();
   ingredientModel = models.getIngredientModel();
   ingredientGroupTranslationModel = models.getIngredientGroupTranslationModel();
@@ -117,9 +119,13 @@ function getMenu(req, res) {
         include: [{
           model: itemTranslationModel,
           as: 'translations'
-        },{
+        }, {
           model: itemSizeModel,//TODO this is where i added it
-          as: 'sizes'
+          as: 'sizes',
+          include: [{
+            model: itemSizesTranslationsModel,
+            as: 'translations'
+          }]
         }, {
           model: ingredientGroupModel,
           as: 'ingredientGroups',

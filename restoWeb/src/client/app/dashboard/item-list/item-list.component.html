@@ -10,12 +10,11 @@
   </div>
   <div class="form-container">
     <div class="row">
-      <div class="col-sm-3" *ngFor="let item of items">
-        <div (click)="modify(item)" style="max-width:300px;" class="card">
+      <div class="col-sm-3 col-md-2 col-lg-2" style="max-width:300px;" *ngFor="let item of items">
+        <div (click)="modify(item)"  class="card">
           <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl"/>
           <div class="card-block">
-            <h4 class="card-title">{{ item.selectedTranslation ? item.selectedTranslation.name : "No translation" }} </h4>
-            <p class="card-text"> {{ item.selectedTranslation ? item.selectedTranslation.description : "No translation" }}</p>
+            <h4 class="card-title text-center">{{ item.selectedTranslation ? item.selectedTranslation.name : "No translation" }} </h4>
           </div>
         </div>
       </div>

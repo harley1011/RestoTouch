@@ -66,6 +66,11 @@ export class MenuPage {
               category.items.splice(i--, 1);
             } else {
               item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              var size: Size;
+              for (var j = 0; j < item.sizes.length; j++) {
+                size = item.sizes[j];
+                size.selectedTranslation = size.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              }
             }
           }
         });
@@ -121,6 +126,8 @@ export class MenuPage {
 
     let ingredient: any;
     this.currentOrder.total -= orderableSize.size.price;
+    if (foundSize.selectedIngredients == null) return;
+
     for (var i = 0; i < foundSize.selectedIngredients.ingredients.length; i++) {
       ingredient = foundSize.selectedIngredients.ingredients[i];
       this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);

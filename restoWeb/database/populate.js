@@ -1,7 +1,8 @@
 var model = require('./models');
 var passwordHasher = require("../api/helpers/passwordHash.js");
 var passwordData = passwordHasher.saltHashPassword('password');
-
+var _ = require('lodash');
+var promise = require('promise');
 var users = [
   {
     "firstName": "Harley",
@@ -14,6 +15,9 @@ var users = [
       {
         "name": "English",
         "languageCode": "en"
+      }, {
+        "name": "French",
+        "languageCode": "fr"
       }]
   }, {
     "firstName": "David",
@@ -108,6 +112,7 @@ var mainMenu = {
 var restaurants = [
   {
     "address": "Burger Street",
+    "kitCashModeFlag": "cnk",
     "supportedLanguages": [
       {
         "languageCode": "en",
@@ -119,7 +124,8 @@ var restaurants = [
       {
         "name": "Burger King",
         "description": "Burgersss",
-        "languageCode": "en"
+        "languageCode": "en",
+        "kitCashModeFlag": "kco"
       }
     ],
     "Menus": [],
@@ -287,9 +293,14 @@ var drinkItems = [{
         "languageCode": "en",
         "name": "Coke",
         "description": "A classic refreshing soda"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Coke",
+        "description": "Une soude rafraîchissante classique"
       }
     ],
-    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/c6ce062f-9a2c-43ce-926c-7e293d043e92",
     "sizes": commonSizes
   },
   {
@@ -462,6 +473,8 @@ var mealItems = [{
 }
 ];
 
+var createdItemInstances = {};
+
 
 // Let the db tables get created
 setTimeout(function () {
@@ -486,6 +499,9 @@ setTimeout(function () {
   var ingredientTranslationModel = model.getIngredientTranslationModel();
   var ingredientGroupTranslationModel = model.getIngredientGroupTranslationModel();
   var categoryTranslationModel = model.getCategoryTranslationModel();
+  var orderModel = model.getOrdersModel();
+  var orderedItemsModel = model.getOrderedItemsModel();
+  var orderedItemIngredientModel = model.getOrderedItemIngredientModel();
 
   users.forEach(function (user) {
 
@@ -503,8 +519,7 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.findOrCreate({
-          where: {address: restaurant.address}, include: [{
+        restaurantModel.create(restaurant, {include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
@@ -527,13 +542,49 @@ setTimeout(function () {
               as: 'translations'
             }]
           }).then(function (createdMenu) {
-            createdRestaurant[0].addMenu(createdMenu);
+            createdRestaurant.addMenu(createdMenu);
 
-            createCategoryAndThenItems(drinkCategory, createdMenu, drinkItems, user.id);
+            createCategoryAndThenItems(drinkCategory, createdMenu, drinkItems, user.id, 'drinks');
 
-            createCategoryAndThenItems(mealCategory, createdMenu, mealItems, user.id);
+            createCategoryAndThenItems(mealCategory, createdMenu, mealItems, user.id, 'meals');
 
-            createCategoryAndThenItems(sideCategory, createdMenu, sideItems, user.id);
+            createCategoryAndThenItems(sideCategory, createdMenu, sideItems, user.id, 'sides');
+
+            //Wait 4 seconds for all the instances to be created, it's possible it might take longer
+            setTimeout(function () {
+
+              for (var i = 0; i < 100; i++) {
+
+                var orderedItems = [];
+                var orderTotal = 0;
+
+                for (var prop in createdItemInstances) {
+                  var itemTypeArray = createdItemInstances[prop];
+
+                  // Pick different items
+                  var itemToAdd = itemTypeArray[i % itemTypeArray.length];
+
+                  // Add multiple sizes a few times
+                  var sizesToAddNumber = Math.random() * 5;
+                  for(var k = 0; k < sizesToAddNumber; k++) {
+                    var sizeToAdd = itemToAdd.sizes[parseInt((Math.random() * 10 + 1)) % itemToAdd.sizes.length];
+                    orderTotal += sizeToAdd.price;
+                    orderedItems.push({itemId: itemToAdd.id, itemSizeId: sizeToAdd.id})
+                  }
+                }
+                var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant.id, createdAt: paidDate}, {
+                  include: [{
+                    model: orderedItemsModel, as: 'orderedItems', include: [{
+                      model: orderedItemIngredientModel,
+                      as: 'orderedItemIngredients'
+                    }]
+                  },
+                  ]
+                });
+              }
+
+            }, 2000)
           });
         });
       });
@@ -541,9 +592,9 @@ setTimeout(function () {
   });
 
 
-  function createCategoryAndThenItems(category, createdMenu, items, userId) {
+  function createCategoryAndThenItems(category, createdMenu, items, userId, addInstanceToArrayField) {
     category.userId = userId;
-    categoryModel.create(category, {
+    return categoryModel.create(category, {
       include: [{
         model: categoryTranslationModel,
         as: 'translations'
@@ -553,7 +604,10 @@ setTimeout(function () {
       items.forEach(function (item) {
         createItem(item, userId).then(function (createdItem) {
           createdCategory.addItem(createdItem);
-
+          if (!_.has(createdItemInstances, addInstanceToArrayField)) {
+            createdItemInstances[addInstanceToArrayField] = [];
+          }
+          createdItemInstances[addInstanceToArrayField].push(createdItem);
         })
       })
 
@@ -592,3 +646,5 @@ setTimeout(function () {
   }
 
 }, 5000)
+
+

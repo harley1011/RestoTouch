@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
-import {RestaurantService} from './restaurant.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {LanguageService} from '../../services/language.service';
 import {Language} from '../../shared/models/language';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
@@ -15,8 +15,7 @@ import {TranslateService} from 'ng2-translate';
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
-  templateUrl: 'restaurant.component.html',
-  providers: [RestaurantService]
+  templateUrl: 'restaurant.component.html'
 })
 
 export class RestaurantComponent implements OnInit {
@@ -24,7 +23,7 @@ export class RestaurantComponent implements OnInit {
   restaurant: Restaurant;
   errorMessage: string;
   hideManageLanguage = false;
-  supportedLanguages: Array<Language> = [];
+
   languages: Array<Language>;
   selectedLanguage: string;
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
@@ -43,12 +42,12 @@ export class RestaurantComponent implements OnInit {
   }
 
   addLanguage() {
-    let language = this.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
+    let language = this.restaurant.supportedLanguages.find(language => language.languageCode === this.selectedLanguage);
     if (language) {
       return;
     }
     language = this.languages.find(language => language.languageCode === this.selectedLanguage);
-    this.supportedLanguages.push(language);
+    this.restaurant.supportedLanguages.push(language);
   }
 
   onSelectLanguage(language: Language) {
@@ -62,12 +61,12 @@ export class RestaurantComponent implements OnInit {
   }
 
   removeLanguage(language: Language) {
-    if (this.supportedLanguages.length <= 1) {
+    if (this.restaurant.supportedLanguages.length <= 1) {
       //todo: error message
       console.log('At least one supported language is required');
     }
-    let i = this.supportedLanguages.indexOf(language);
-    this.supportedLanguages.splice(i, 1);
+    let i = this.restaurant.supportedLanguages.indexOf(language);
+    this.restaurant.supportedLanguages.splice(i, 1);
     let removedTranslation = this.restaurant.translations.find(translation =>
     translation.languageCode === language.languageCode);
     let j = this.restaurant.translations.indexOf(removedTranslation);
@@ -82,7 +81,6 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.getRestaurant(id).subscribe(
       restaurant => {
         this.restaurant = restaurant;
-        this.supportedLanguages = restaurant.supportedLanguages;
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
@@ -114,12 +112,12 @@ export class RestaurantComponent implements OnInit {
   }
 
   checkIfInSupportedLanguages(language: Language): boolean {
-    let result = this.supportedLanguages.indexOf(this.supportedLanguages.find(languageToRemove => languageToRemove.languageCode === language.languageCode))? true : false;
+    let result = this.restaurant.supportedLanguages.indexOf(this.restaurant.supportedLanguages.find(languageToRemove => languageToRemove.languageCode === language.languageCode))? true : false;
     return result;
   }
 
   removeRestaurantsSupportedLanguagesFromLanguage(): void {
-    this.supportedLanguages.forEach(language => {
+    this.restaurant.supportedLanguages.forEach(language => {
         this.languages.splice(this.languages.indexOf(this.languages.find(languageToRemove => languageToRemove.languageCode === language.languageCode)), 1);
       });
   }
@@ -136,9 +134,7 @@ export class RestaurantComponent implements OnInit {
       });
 
       if (this.create) {
-        this.supportedLanguages.push(this.languages.find(language => language.languageCode === 'en'));
-        //this.removeRestaurantsSupportedLanguagesFromLanguage();
-        let translation = new RestaurantTranslations('', '', this.supportedLanguages[0].languageCode);
+        let translation = new RestaurantTranslations('', '', this.languages.find(language => language.languageCode === 'en').languageCode);
 
         let businessHours = [
           new BusinessHour(0, 0, '9:00', '21:00', false),
@@ -164,7 +160,7 @@ export class RestaurantComponent implements OnInit {
         ];
 
         this.restaurant = new Restaurant('',
-          this.supportedLanguages,
+          [this.languages.find(language => language.languageCode === 'en')],
           [translation],
           translation, [],
           payments,

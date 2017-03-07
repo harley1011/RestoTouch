@@ -14,6 +14,7 @@ export class Restaurant {
               public payments: Payment[],
               public businessHours: BusinessHour[],
               public paypalId: string,
+              public kitCashModeFlag: string,
               public id?: number) {
   }
 }

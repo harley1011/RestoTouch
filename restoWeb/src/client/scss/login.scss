@@ -38,6 +38,13 @@
 	text-align:right;
 	padding: 10px 40px 0 0;
 	color:white;
+
+  a {
+    color: white;
+  }
+  a:hover{
+    color:red;
+  }
 }
 
 .loginPageContent{
@@ -86,15 +93,8 @@
 	color: rgb(200,200,200);
 }
 
-a {
-	color: white;
-}
 
-a:hover{
-	color:red;
-}
-
-select{ 
+select{
     background-color: transparent;
     border: none;
 }
