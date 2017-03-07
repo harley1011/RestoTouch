@@ -34,7 +34,7 @@ export class WelcomePage {
     } else {
       this.selectedRestaurant = navParams.get('restaurant');
     }
-    this.languages = languageService.languages();//TODO the error coming from here (supported http service call, language error: solved by doing languageMock)
+    this.languages = languageService.languages();
     for (let availLang of this.selectedRestaurant.translations) {
       let lang = this.languages.find(language => language.languageCode === availLang.languageCode);
       this.supportedLanguages.push(lang);

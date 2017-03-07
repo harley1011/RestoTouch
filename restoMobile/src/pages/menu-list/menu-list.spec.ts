@@ -22,7 +22,7 @@
    expect(fixture).not.toBeNull();
    expect(instance).not.toBeNull();
    });
-  /*
+
    it('sets a translation for a menu', () => {
      let mockMenu = {
        translations: [
@@ -32,15 +32,16 @@
        selectedTranslation: null,//result of the function
      };
 
-     instance.selectedLanguage = {languageCode: 'fr'};
+     instance.translate = {};
+     instance.translate.currentLang = 'fr';
 
      expect(mockMenu.selectedTranslation).toBeNull();
      expect(instance.setTranslationForMenu(mockMenu).selectedTranslation.name).toEqual('FRENCH');
 
-     instance.selectedLanguage = {languageCode: 'en'};
+     instance.translate.currentLang = 'en';
 
      expect(instance.setTranslationForMenu(mockMenu).selectedTranslation.name).toEqual('ENGLISH');
    });
-*/
+
  });
 

@@ -62,9 +62,9 @@ export class NavParamMock {
     if (param === 'language') {
       return 'en';
     }
-
+    //fixed the error of initialisation for menu-list.spec and ingredient groups.spec
     if(param === 'restaurant') {
-      return {'Menus': []};
+      return {'Menus': [], 'translations': []};
     }
 
     // if(param === 'item') {
@@ -72,8 +72,24 @@ export class NavParamMock {
     //                            {'name': 'Oreo French', 'description': 'Oreo French Lang', 'languageCode': 'fr'} ]};
     // }
 
+    //needed for fixing welcome.spec.ts initialisation
+    if (param === 'ingredientGroupIndex') {
+      return 0;
+    }
+
     if (param === 'item') {
-      return {translations: {}};
+      return {
+        translations: {},
+        ingredientGroups: [
+          {
+            translations: [],
+            ingredients: []
+          }
+        ]
+      };
+    }
+    if (param === 'total') {
+      return 20.00;
     }
 
   }

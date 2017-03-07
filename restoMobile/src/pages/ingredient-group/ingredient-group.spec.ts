@@ -1,5 +1,5 @@
-/*
-import { async, ComponentFixture } from '@angular/core/testing';
+
+  import { async, ComponentFixture } from '@angular/core/testing';
  import { TestUtils } from '../../test';
  import { IngredientGroupPage } from './ingredient-group';
 
@@ -26,4 +26,4 @@ import { async, ComponentFixture } from '@angular/core/testing';
 
  });
 
-*/
+
