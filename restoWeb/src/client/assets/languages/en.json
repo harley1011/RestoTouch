@@ -252,7 +252,10 @@
     "titleManage": "Orders",
     "total": "Total",
     "paidOn": "Paid On",
-    "subTitle": "Show Orders for restaurant"
+    "subTitle": "Show Orders for restaurant",
+    "itemName": "Item name",
+    "price": "Price",
+    "size": "Size"
 
   },
 
