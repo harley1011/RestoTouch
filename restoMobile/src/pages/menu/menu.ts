@@ -63,6 +63,11 @@ export class MenuPage {
               category.items.splice(i--, 1);
             } else {
               item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              var size: Size;
+              for (var j = 0; j < item.sizes.length; j++) {
+                size = item.sizes[j];
+                size.selectedTranslation = size.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              }
             }
           }
         });
