@@ -7,7 +7,7 @@
   <div *ngIf="order && translationSelectComponent.selectedLanguage" class="manage-list-container">
     <p>Id: {{order.id}}</p>
     <p>{{ 'orders.total' | translate}}: {{order.total | currency:'CAD':true}}</p>
-    <p>{{ 'orders.paidOn' | translate}}: {{order.createdAt | date:'full'}}</p>
+    <p>{{ 'orders.paidOn' | translate}}: {{order.createdAt | date:'fullDate'}}</p>
     <table class="table table-striped">
       <thead>
       <tr>
