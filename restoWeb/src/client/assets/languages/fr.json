@@ -250,6 +250,13 @@
     "titleManage": "List de commandes"
   },
 
+  "orders": {
+    "titleManage": "Commandes",
+    "total": "Total",
+    "paidOn": "Payé sur",
+    "subTitle": "Afficher les commandes pour le restaurant"
+  },
+
   "unpaidOrders": {
     "title": "Liste de commandes non-payées"
   }

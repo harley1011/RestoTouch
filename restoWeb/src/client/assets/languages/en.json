@@ -249,7 +249,11 @@
   },
 
   "orders": {
-    "titleManage": "Orders"
+    "titleManage": "Orders",
+    "total": "Total",
+    "paidOn": "Paid On",
+    "subTitle": "Show Orders for restaurant"
+
   },
 
   "unpaidOrders": {
