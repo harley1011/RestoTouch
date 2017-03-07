@@ -510,7 +510,7 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.create({address: restaurant.address, include: [{
+        restaurantModel.create({address: restaurant.address, userId: user.id, include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
