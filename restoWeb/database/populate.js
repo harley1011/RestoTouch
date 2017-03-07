@@ -292,7 +292,7 @@ var drinkItems = [{
         "description": "A classic refreshing soda"
       }
     ],
-    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/c6ce062f-9a2c-43ce-926c-7e293d043e92",
     "sizes": commonSizes
   },
   {
