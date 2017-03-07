@@ -123,6 +123,8 @@ export class MenuPage {
 
     let ingredient: any;
     this.currentOrder.total -= orderableSize.size.price;
+    if (foundSize.selectedIngredients == null) return;
+
     for (var i = 0; i < foundSize.selectedIngredients.ingredients.length; i++) {
       ingredient = foundSize.selectedIngredients.ingredients[i];
       this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);
