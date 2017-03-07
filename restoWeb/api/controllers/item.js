@@ -54,8 +54,7 @@ function getAll(req, res) {
     }, {
       model: categoryModel,
       as: 'categories'
-    }],
-    //order: ['name']
+    }]
   }).then(function (items) {
     return res.json({items: items});
   });

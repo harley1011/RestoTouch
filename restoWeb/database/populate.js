@@ -15,6 +15,9 @@ var users = [
       {
         "name": "English",
         "languageCode": "en"
+      }, {
+        "name": "French",
+        "languageCode": "fr"
       }]
   }, {
     "firstName": "David",
@@ -290,6 +293,11 @@ var drinkItems = [{
         "languageCode": "en",
         "name": "Coke",
         "description": "A classic refreshing soda"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Coke",
+        "description": "Une soude rafraîchissante classique"
       }
     ],
     "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/c6ce062f-9a2c-43ce-926c-7e293d043e92",
