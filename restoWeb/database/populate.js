@@ -109,6 +109,7 @@ var mainMenu = {
 var restaurants = [
   {
     "address": "Burger Street",
+    "kitCashModeFlag": "cnk",
     "supportedLanguages": [
       {
         "languageCode": "en",
@@ -510,7 +511,7 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.create({address: restaurant.address, userId: user.id, include: [{
+        restaurantModel.create(restaurant, {include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
