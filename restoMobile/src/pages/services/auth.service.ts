@@ -1,6 +1,6 @@
 // Observable Version
 import {Injectable}     from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
 import {User} from '../shared/models/user';
@@ -36,14 +36,10 @@ export class AuthService {
     }
 
     return false;
-
   }
 
-//  canActivateChild() {
-//    return this.canActivate();
-//  }
 
-  setMainNavController( navController: NavController) {
+  setMainNavController(navController: NavController) {
     this.mainNavController = navController;
   }
 
@@ -80,7 +76,7 @@ export class AuthService {
       .catch(this.handleError);
   }
 
-  extractData(res: Response) : User {
+  extractData(res: Response): User {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));

@@ -1,12 +1,7 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { Nav, NavController, MenuController, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, NavController, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-import { MenuListPage } from '../pages/menu-list/menu-list';
-import { WelcomePage } from '../pages/welcome/welcome';
-import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
@@ -22,26 +17,13 @@ export class MyApp {
   rootPage: any = HomePage;
   startPage: any = LoginPage;
   restoListPage: any = RestaurantListPage;
-  welcomePage: any = Page2;
-
   pages: Array<{title: string, component: any}>;
-  usePage: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform,
               public authService: AuthService) {
     this.initializeApp();
-
-
-    // used for an example of ngFor and navigation
     this.pages = [
-
-//      { title: 'Page One', component: Page1 },
-//      { title: 'Page Two', component: Page2 },
-//      { title: 'Welcome Page', component: WelcomePage},
-//      { title: 'Settings', component: SettingsPage},
-//      { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
-//      { title: 'Home', component: HomePage }
     ];
 
   }
@@ -53,9 +35,6 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
       this.authService.setMainNavController(this.navController);
-//        this.nav.setRoot(LoginPage);
-        //this.loadedResto = navParams.get('loadedResto');
-
     });
 
   }
