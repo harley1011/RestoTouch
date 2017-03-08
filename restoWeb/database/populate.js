@@ -113,6 +113,7 @@ var restaurants = [
   {
     "address": "Burger Street",
     "kitCashModeFlag": "cnk",
+    "paypalId": "2322323kjh",
     "supportedLanguages": [
       {
         "languageCode": "en",
