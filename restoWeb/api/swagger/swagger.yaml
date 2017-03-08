@@ -1154,6 +1154,8 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/OrderedItem"
+      paymentId:
+        type: string
   OrderedItem:
     required:
       - item

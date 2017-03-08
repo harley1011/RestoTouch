@@ -27,7 +27,7 @@ export class MenuPage {
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
-  currentOrder = new Order([], 0);
+  currentOrder = new Order([], 0, '');
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -207,7 +207,8 @@ export class MenuPage {
         () => {
           let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Description', 'sale');
           PayPal.renderSinglePaymentUI(payment).then(
-            () => {
+            (response) => {
+              self.currentOrder.paymentId = response.response.id;
               self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
                 self.navCtrl.setRoot(WelcomePage);
               });
