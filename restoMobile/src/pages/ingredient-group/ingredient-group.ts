@@ -69,8 +69,7 @@ export class IngredientGroupPage implements OnInit {
     if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
-    console.log("test");
-    console.log(this.currentIngredientGroup);
+
   }
 
   previousIngredientGroup(): void {
@@ -203,9 +202,21 @@ export class IngredientGroupPage implements OnInit {
     }
   }
 
-  changeGroup(ingredientGroup: IngredientGroup): void {
+  changeGroup(index: number, ingredientGroup: IngredientGroup): void {
 
       this.currentIngredientGroup = ingredientGroup;
+      this.ingredientGroup = ingredientGroup;
       console.log(this.currentIngredientGroup);
+      this.jumpToIngredientGroup(index);
+  }
+
+  jumpToIngredientGroup(index: number): void {
+    this.ingredientGroupIndex = index - 1;
+
+    if (index >= this.item.ingredientGroups.length) {
+      this.doneIngredientOrder();
+    } else {
+      this.nextIngredientOrder();
+    }
   }
 }
