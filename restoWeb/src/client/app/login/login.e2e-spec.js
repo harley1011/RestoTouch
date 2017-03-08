@@ -40,7 +40,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     //addRestoBtn.click();
 
     //Enter restaurant information
-    browser.get(browser.baseUrl + 'dashboard/restaurant')
+    browser.get(browser.baseUrl + 'dashboard/restaurant');
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'dashboard/restaurant');
     element(by.id("name")).sendKeys("restoName");
     element(by.id("description")).sendKeys("Restaurant description");
