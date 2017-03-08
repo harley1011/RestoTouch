@@ -15,6 +15,7 @@ import { MenuService } from '../services/menu.service';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-menu',
@@ -36,7 +37,8 @@ export class MenuPage {
               private categoryService: CategoryService,
               private orderService: OrderService,
               private itemService: ItemService,
-              private menuService: MenuService) {
+              private menuService: MenuService,
+              private platform: Platform) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
@@ -192,7 +194,7 @@ export class MenuPage {
 
   order(): void {
     var payFirst = true;
-    if (payFirst) {
+    if (payFirst && this.platform.is('cordova')) {
       this.usePayPal();
     } else {
       this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
