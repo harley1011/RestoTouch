@@ -20,14 +20,14 @@
 
 <ion-content>
   <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-      <button ion-button class="btnCat" [ngClass]="{'btnCat-selected': showAllCategories }" color="danger" (click)="changeGroup('all', null)">All Categories</button>
-      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups" (click)="changeGroup('one', category)" [ngClass]="{'btnCat-selected': currentCategory == category && !showAllCategories }">
+      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups" (click)="changeGroup(inGroup)" [ngClass]="{'btnCat-selected': currentIngredientGroup == inGroup }">
               {{inGroup.selectedTranslation ? inGroup.selectedTranslation.name : "No translation"}}
           </button>
   </ion-scroll>
   <ion-item *ngIf="ingredientGroup">
-    <h1>Choose your {{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}} </h1>
-    <h2>{{ingredientGroup.minNumberOfIngredients}} to {{ingredientGroup.maxNumberOfIngredients}}</h2>
+    <h1 class="ingredientGroup-name">Choose your {{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}} </h1>
+    <h2 class="ingredientGroup-subtitle">You can select a maximum of {{ingredientGroup.maxNumberOfIngredients}} ingredients</h2>
+    <!-- <h2>{{ingredientGroup.minNumberOfIngredients}} to {{ingredientGroup.maxNumberOfIngredients}}</h2> -->
   </ion-item>
   <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
     <ion-item *ngFor="let orderableIngredient of orderableIngredients; let i = index">

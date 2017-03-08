@@ -23,4 +23,31 @@ page-ingredient-group {
       border-radius: 6px;
 
     }
+
+    .btnCat-selected {
+      background: color($colors, danger);
+      // border: 2px solid #e74c3c;
+      color: #FFF;
+    }
+
+    .btnCat:hover {
+      background: color($colors, danger);
+      color: #FFF;
+    }
+
+    .ingredientGroup-name {
+      font-family: 'OpenSans Condensed';
+      font-size: 44px;
+      text-transform: uppercase;
+
+    }
+
+    .ingredientGroup-subtitle {
+      font-family: 'OpenSans Condensed';
+      font-size: 21px;
+      letter-spacing: 1px;
+      margin-left: 5px;
+
+    }
+
 }
