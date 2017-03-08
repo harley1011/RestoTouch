@@ -5,19 +5,11 @@ import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../shared/translation-select/translation-select.component';
 import { WelcomePage } from '../welcome/welcome';
-import { HomePage } from '../home/home';
 import { MenuListPage } from '../menu-list/menu-list';
 import { Page2 } from '../page2/page2';
-import { StatusBar, Splashscreen } from 'ionic-native';
-import { MyApp } from '../../app/app.component';
 
 import { AuthService } from '../services/auth.service';
-/*
-  Generated class for the RestaurantList page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-restaurant-list',
   templateUrl: 'restaurant-list.html',
@@ -34,10 +26,6 @@ export class RestaurantListPage {
 
     numOfRestaurants: number;
     restaurants: Restaurant[];
-
-
-//@ViewChild(TranslationSelectComponent)
-//  private translationSelectComponent: TranslationSelectComponent;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -58,7 +46,6 @@ export class RestaurantListPage {
         this.restaurantListService.getRestaurants().subscribe(
           restaurants => {
             restaurants.forEach(restaurant => {
-//              restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             restaurant.selectedTranslation = restaurant.translations.find(translation => translation.languageCode === 'en');
             });
             this.restaurants = restaurants;
@@ -75,7 +62,5 @@ export class RestaurantListPage {
     this.navCtrl.push(MenuListPage, {
       item: restaurant
     });
-//    this.menuCtrl.enable(false, 'ownerMenu');
-//    this.menuCtrl.toggle('right');
   }
 }

@@ -24,6 +24,7 @@ export class OrderComponent implements OnInit {
       if (params['id']) {
         orderService.retrieveCompletedOrder(params['id']).subscribe(order => {
           let orderWithGroupedItems= new Order([],order.order.total, order.order.id);
+          orderWithGroupedItems.createdAt = order.order.createdAt;
 
           orderWithGroupedItems.total = order.order.total;
 

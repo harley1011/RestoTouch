@@ -1336,6 +1336,8 @@ definitions:
     properties:
       address:
         type: string
+      paypalId:
+        type: string
       supportedLanguages:
         type: array
         items:

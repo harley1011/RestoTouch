@@ -6,14 +6,14 @@
   </div>
   <div *ngIf="order && translationSelectComponent.selectedLanguage" class="manage-list-container">
     <p>Id: {{order.id}}</p>
-    <p>Total: {{order.total | currency:'CAD':true}}</p>
-    <p>Paid Date: {{order.createdAt | date:'full'}}</p>
+    <p>{{ 'orders.total' | translate}}: {{order.total | currency:'CAD':true}}</p>
+    <p>{{ 'orders.paidOn' | translate}}: {{order.createdAt | date:'fullDate'}}</p>
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Item Name</th>
-        <th>Size</th>
-        <th>Price</th>
+        <th>{{ 'orders.itemName' | translate}}</th>
+        <th>{{ 'orders.size' | translate}}</th>
+        <th>{{ 'orders.price' | translate}}</th>
       </tr>
       </thead>
       <tbody>

@@ -66,6 +66,8 @@
     "sousTitleRestoSetting":"Toutes les champs peuvent être modifiées dans une autre langue.",
     "geninfoTitle": "Information Générale",
     "paymethTitle": "Modes de paiement",
+    "paypalTitle": "Compte Paypal",
+    "accountID": "ID du Compte",
     "openhourTitle": "Heures d'ouverture",
     "langTitle": "Langues",
     "menuTitle": "Menu",
@@ -246,8 +248,15 @@
     "employeePassword": "Mot de passe d'employé"
   },
 
+
   "orders": {
-    "titleManage": "List de commandes"
+    "titleManage": "Commandes",
+    "total": "Total",
+    "paidOn": "Payé sur",
+    "subTitle": "Afficher les commandes pour le restaurant",
+    "itemName": "Nom de l'article",
+    "price": "prix",
+    "size": "Taille"
   },
 
   "unpaidOrders": {

@@ -31,9 +31,6 @@ export class IngredientGroupPage implements OnInit {
 
     this.ingredientGroup = this.item.ingredientGroups[this.ingredientGroupIndex];
     this.ingredientGroup.selectedTranslation = this.ingredientGroup.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
-    /*this.ingredientGroup.ingredients.forEach(ingredient => {
-      ingredient.selectedTranslation = ingredient.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
-    });*/
 
     this.complexOrderCallback = this.navParams.get('callback');
     this.selectedIngredients = this.navParams.get('ingredients');

@@ -15,6 +15,9 @@ var users = [
       {
         "name": "English",
         "languageCode": "en"
+      }, {
+        "name": "French",
+        "languageCode": "fr"
       }]
   }, {
     "firstName": "David",
@@ -109,6 +112,7 @@ var mainMenu = {
 var restaurants = [
   {
     "address": "Burger Street",
+    "kitCashModeFlag": "cnk",
     "supportedLanguages": [
       {
         "languageCode": "en",
@@ -289,9 +293,14 @@ var drinkItems = [{
         "languageCode": "en",
         "name": "Coke",
         "description": "A classic refreshing soda"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Coke",
+        "description": "Une soude rafraîchissante classique"
       }
     ],
-    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/c6ce062f-9a2c-43ce-926c-7e293d043e92",
     "sizes": commonSizes
   },
   {
@@ -461,7 +470,106 @@ var mealItems = [{
       "price": 2
     }
   ]
-}
+},
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Hot Dog",
+        "description": "Hot Dogs"
+      }
+    ],
+    "categories": [],
+    "ingredientGroups": [
+      {
+        "maxNumberOfIngredients": 1,
+        "minNumberOfIngredients": 1,
+        "orderPriority": 1,
+        "ingredients": [{
+          "addByDefault": true,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "White Bun"
+            }]
+        },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Brown Bun"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": .50,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Sesame Bun"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Bread"
+          }]
+
+      },
+      {
+        "maxNumberOfIngredients": 3,
+        "minNumberOfIngredients": 1,
+        "orderPriority": 2,
+        "ingredients": [
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Ketchup"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Mustard"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Toppings"
+          }]
+
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/63cc3c4f-291f-48e7-b42c-7219634bfa98",
+    "sizes": [
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Regular"
+          }
+        ],
+        "price": 2
+      }
+    ]
+  }
 ];
 
 var createdItemInstances = {};
@@ -510,7 +618,7 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.create({address: restaurant.address, include: [{
+        restaurantModel.create(restaurant, {include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
