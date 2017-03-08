@@ -36,8 +36,8 @@ var users = [
    lastName: 'chan',
    email: 'hilary@restotouch.com',
    phoneNumber: '514 514 4444',
-   password: passwordSimpleData.passwordHash,
-   salt: passwordSimpleData.salt,
+   password: passwordData.passwordHash,
+   salt: passwordData.salt,
    emailVerified: true
  }];
 // },
