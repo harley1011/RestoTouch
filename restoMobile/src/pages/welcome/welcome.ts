@@ -28,6 +28,7 @@ export class WelcomePage {
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang('en');
 
+
     if (this.restaurantService.selectedRestaurant) {
       this.selectedRestaurant = this.restaurantService.selectedRestaurant;
     } else {
@@ -70,8 +71,9 @@ export class WelcomePage {
     this.translate.use(this.selectedLanguage.languageCode);
   }
 
+    // toggle btwn french and english for app language
   switchLanguage() {
-    if (this.translate.currentLang === 'en') {
+    if(this.translate.currentLang === 'en') {
       this.translate.use('fr');
     }
     else

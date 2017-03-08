@@ -7,7 +7,6 @@ export class ApiEndpointService {
   public apiEndpoint = 'https://resto-touch-.herokuapp.com';
 
   constructor() {
-
   }
 
   getEndpoint() {
