@@ -27,7 +27,8 @@ export class MenuPage {
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
-  currentOrder = new Order([], 0);
+
+  currentOrder = new Order([], 0, '');
   showAllCategories: boolean;
   currentCategory: Category;
 
@@ -208,9 +209,10 @@ export class MenuPage {
     }).then(() => {
       PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
         () => {
-          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Description', 'sale');
+          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Pay Order', 'sale');
           PayPal.renderSinglePaymentUI(payment).then(
-            () => {
+            (response) => {
+              self.currentOrder.paymentId = response.response.id;
               self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
                 self.navCtrl.setRoot(WelcomePage);
               });

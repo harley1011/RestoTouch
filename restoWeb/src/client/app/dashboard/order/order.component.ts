@@ -23,7 +23,7 @@ export class OrderComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       if (params['id']) {
         orderService.retrieveCompletedOrder(params['id']).subscribe(order => {
-          let orderWithGroupedItems= new Order([],order.order.total, order.order.id);
+          let orderWithGroupedItems= new Order([],order.order.total, '', order.order.id);
           orderWithGroupedItems.createdAt = order.order.createdAt;
 
           orderWithGroupedItems.total = order.order.total;
@@ -62,4 +62,3 @@ export class OrderComponent implements OnInit {
   }
 
 }
-
