@@ -33,26 +33,11 @@
     <ion-item class="ingredient-item" *ngFor="let orderableIngredient of orderableIngredients; let i = index">
       <ion-label>{{orderableIngredient.ingredient.translations[0].name}} ${{orderableIngredient.ingredient.price.toFixed(2)}}</ion-label>
       <ion-checkbox *ngIf="orderableIngredient.ingredient.allowQuantity == 1" [checked]="orderableIngredient.amount > 0" [disabled]="orderableIngredient.disabled" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
-        <button ion-button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" (click)="addIngredient(orderableIngredient)" >
-          Add<ion-icon name="ios-add-circle"></ion-icon></button>
-        <ion-badge item-right *ngIf="orderableIngredient.ingredient.allowQuantity > 1">{{orderableIngredient.amount}}</ion-badge>
-        <button ion-button icon-only *ngIf="orderableIngredient.ingredient.allowQuantity > 1"(click)="removeIngredient(orderableIngredient, false)" >
-          <ion-icon name="ios-remove-circle"></ion-icon>
-        </button>
-
-
-
-
-    </ion-item>
-   <!-- <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
-    <ion-item class="ingredient-item" *ngFor="let orderableIngredient of orderableIngredients; let i = index">
-      <ion-label>{{orderableIngredient.ingredient.translations[0].name}} ${{orderableIngredient.ingredient.price.toFixed(2)}}</ion-label>
-      <ion-checkbox *ngIf="orderableIngredient.ingredient.allowQuantity == 1" [checked]="orderableIngredient.amount > 0" [disabled]="orderableIngredient.disabled" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
       <!-- <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" [disabled]="orderableIngredient.amount == 0" (click)="removeIngredient(orderableIngredient, false)" ion-button item-right clear><ion-icon name="remove-circle"></ion-icon></button> -->
-      <!-- <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1"  (click)="removeIngredient(orderableIngredient, false)" ion-button item-right clear>Remove<ion-icon name="ion-minus-circled"></ion-icon></button> -->
-      <!-- <p *ngIf="orderableIngredient.ingredient.allowQuantity > 1" item-right>{{orderableIngredient.amount}}</p> -->
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1"  (click)="removeIngredient(orderableIngredient, false)" ion-button item-right clear>Remove<ion-icon name="ion-minus-circled"></ion-icon></button>
+      <p *ngIf="orderableIngredient.ingredient.allowQuantity > 1" item-right>{{orderableIngredient.amount}}</p>
       <!-- <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" [disabled]="orderableIngredient.disabled || orderableIngredient.amount == orderableIngredient.ingredient.allowQuantity" (click)="addIngredient(orderableIngredient)" ion-button item-right clear><ion-icon name="add-circle"></ion-icon></button> -->
-      <!-- <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" (click)="addIngredient(orderableIngredient)" ion-button item-right clear>Add<ion-icon name="add-circle"></ion-icon></button> -->
-    <!-- </ion-item> -->
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" (click)="addIngredient(orderableIngredient)" ion-button item-right clear>Add<ion-icon name="add-circle"></ion-icon></button>
+    </ion-item>
   </ion-list>
 </ion-content>
