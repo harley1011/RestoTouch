@@ -180,8 +180,8 @@ describe("RESTOTOUCH TEST CASES", function () {
 
   it("Login as a cashier mode", function () {
     browser.get('http://localhost:5555/');
-    element(by.id("email")).sendKeys("samer@gmail.com");
-    element(by.id("password")).sendKeys("password");
+    element(by.id("email")).sendKeys("test@gmail.com");
+    element(by.id("password")).sendKeys("test");
 
     var isEmployee = element(by.id('isEmployee'));
     isEmployee.click();
