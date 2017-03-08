@@ -15,6 +15,7 @@ import { MenuService } from '../services/menu.service';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-menu',
@@ -27,19 +28,24 @@ export class MenuPage {
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
-  currentOrder = new Order([], 0);
+
+  currentOrder = new Order([], 0, '');
+  showAllCategories: boolean;
+  currentCategory: Category;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
               private orderService: OrderService,
               private itemService: ItemService,
-              private menuService: MenuService) {
+              private menuService: MenuService,
+              private platform: Platform) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
     this.selectedRestaurant = navParams.get('restaurant');
     this.categories = [];
     this.total = "0.00";
+    this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
   }
@@ -188,7 +194,7 @@ export class MenuPage {
 
   order(): void {
     var payFirst = true;
-    if (payFirst) {
+    if (payFirst && this.platform.is('cordova')) {
       this.usePayPal();
     } else {
       this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
@@ -205,9 +211,10 @@ export class MenuPage {
     }).then(() => {
       PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
         () => {
-          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Description', 'sale');
+          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Pay Order', 'sale');
           PayPal.renderSinglePaymentUI(payment).then(
-            () => {
+            (response) => {
+              self.currentOrder.paymentId = response.response.id;
               self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
                 self.navCtrl.setRoot(WelcomePage);
               });
@@ -222,6 +229,16 @@ export class MenuPage {
 
     });
   }
+
+    changeGroup(name: string, category: Category): void {
+     if(name == 'all') {
+        this.showAllCategories = true;
+      } else {
+          this.showAllCategories = false;
+          this.currentCategory = category;
+          this.currentCategory.items = category.items;
+      }
+    }
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {

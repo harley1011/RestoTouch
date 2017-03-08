@@ -19,7 +19,7 @@
 		<br/>
 
 		<!-- button list of available languages -->
-		<ion-list>      
+		<ion-list>
 			<button class="buttonList" ion-button round *ngFor="let language of supportedLanguages" color="danger" (click)="continueTapped($event, language)">
 			{{ language.name }}
 			</button>
@@ -27,10 +27,8 @@
 
 		<!-- hidden a tap gesture on the logo, when tap on it, slider show. Just for testing. to be removed (tap)-->
 		<div id="bottom" color="danger">
-			{{ 'welcome.poweredBottom' | translate }} <img id="imgLogo" src="../assets/img/logo2.png" (tap)="tapEvent($event)">
+			{{ 'welcome.poweredBottom' | translate }} <img id="imgLogo" src="assets/img/logo2.png" (tap)="tapEvent($event)">
 		</div>
 
 	</div>
 </ion-content>
-
-

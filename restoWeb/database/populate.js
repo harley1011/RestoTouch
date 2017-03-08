@@ -31,7 +31,15 @@ var users = [
         "name": "English",
         "languageCode": "en"
       }]
-  }];
+  }, {
+   firstName: 'hilary',
+   lastName: 'chan',
+   email: 'hilary@restotouch.com',
+   phoneNumber: '514 514 4444',
+   password: passwordData.passwordHash,
+   salt: passwordData.salt,
+   emailVerified: true
+ }];
 // },
 //
 // {
@@ -113,6 +121,7 @@ var restaurants = [
   {
     "address": "Burger Street",
     "kitCashModeFlag": "cnk",
+    "paypalId": "2322323kjh",
     "supportedLanguages": [
       {
         "languageCode": "en",
