@@ -205,7 +205,7 @@ export class MenuPage {
     }).then(() => {
       PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
         () => {
-          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Description', 'sale');
+          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Pay Order', 'sale');
           PayPal.renderSinglePaymentUI(payment).then(
             (response) => {
               self.currentOrder.paymentId = response.response.id;
