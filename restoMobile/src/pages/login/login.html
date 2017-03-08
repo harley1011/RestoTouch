@@ -9,9 +9,9 @@
 
   <button ion-button clear class="language-btn" (click)="switchLanguage()">{{ 'login.languageSelector' | translate }}</button>
     <div class="logo-container">
-        <img src="../../assets/img/logo2.png" />
+        <img src="assets/img/logo2.png" />
     </div>
-    
+
     <form (ngSubmit)="onSubmit()">
     <ion-list class="login">
       <ion-item>
@@ -24,16 +24,10 @@
         <ion-input id="userPassword" type="password" [(ngModel)]="user.password" name="password"></ion-input>
       </ion-item>
     </ion-list>
-    <div padding>
 
-        <ion-label stacked>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" name="password"></ion-input>
-    </div>
 
    <div class="login-list" text-center>
-        </div>
-   <div text-center>
-    <button class="login-btn" ion-button block round outline color="light" id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
+    <button class="login-btn" ion-button block round color="success" id="loginButton" type="submit">{{ 'login.logButton' | translate }}</button>
     <div [hidden]="!errorMessage" class="alert alert-danger">{{errorMessage}}</div>
     </div>
   </form>

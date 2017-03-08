@@ -21,6 +21,7 @@ export class IngredientGroupPage implements OnInit {
   ingredientCount: number;
   total: number;
   totalStr: string;
+  currentIngredientGroup: IngredientGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
@@ -66,6 +67,7 @@ export class IngredientGroupPage implements OnInit {
     if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
+
   }
 
   previousIngredientGroup(): void {
@@ -195,6 +197,24 @@ export class IngredientGroupPage implements OnInit {
       if (otherOrderableIngredient.amount != 1 || otherOrderableIngredient.ingredient.allowQuantity != 1) {
         otherOrderableIngredient.disabled = true;
       }
+    }
+  }
+
+  changeGroup(index: number, ingredientGroup: IngredientGroup): void {
+
+      this.currentIngredientGroup = ingredientGroup;
+      this.ingredientGroup = ingredientGroup;
+      console.log(this.currentIngredientGroup);
+      this.jumpToIngredientGroup(index);
+  }
+
+  jumpToIngredientGroup(index: number): void {
+    this.ingredientGroupIndex = index - 1;
+
+    if (index >= this.item.ingredientGroups.length) {
+      this.doneIngredientOrder();
+    } else {
+      this.nextIngredientOrder();
     }
   }
 }

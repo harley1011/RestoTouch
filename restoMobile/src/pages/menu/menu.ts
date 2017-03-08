@@ -27,7 +27,10 @@ export class MenuPage {
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
+
   currentOrder = new Order([], 0, '');
+  showAllCategories: boolean;
+  currentCategory: Category;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
@@ -40,6 +43,7 @@ export class MenuPage {
     this.selectedRestaurant = navParams.get('restaurant');
     this.categories = [];
     this.total = "0.00";
+    this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
   }
@@ -223,6 +227,16 @@ export class MenuPage {
 
     });
   }
+
+    changeGroup(name: string, category: Category): void {
+     if(name == 'all') {
+        this.showAllCategories = true;
+      } else {
+          this.showAllCategories = false;
+          this.currentCategory = category;
+          this.currentCategory.items = category.items;
+      }
+    }
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {

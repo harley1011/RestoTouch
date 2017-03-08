@@ -31,7 +31,15 @@ var users = [
         "name": "English",
         "languageCode": "en"
       }]
-  }];
+  }, {
+   firstName: 'hilary',
+   lastName: 'chan',
+   email: 'hilary@restotouch.com',
+   phoneNumber: '514 514 4444',
+   password: passwordSimpleData.passwordHash,
+   salt: passwordSimpleData.salt,
+   emailVerified: true
+ }];
 // },
 //
 // {
