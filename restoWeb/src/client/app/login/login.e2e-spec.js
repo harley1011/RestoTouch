@@ -26,10 +26,9 @@ describe("RESTOTOUCH TEST CASES", function () {
   it("Navigate to the restaurant page", function () {
     browser.get(browser.baseUrl + 'dashboard/restaurants');
     expect(browser.baseUrl + 'dashboard/restaurants').toEqual( browser.baseUrl + 'dashboard/restaurants');
-    //expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
+    expect(browser.isElementPresent(element(by.className('card-block')))).toBe(false);
   });
 
-  //TODO - to fix
   it("Create a valid restaurant", function () {
     //This no longer works because the btn is in an *ngIf Div.
     //Found a fix for Angular 1 only, will investigate for Angular 2.
