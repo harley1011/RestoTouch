@@ -40,8 +40,6 @@ export class IngredientGroupPage implements OnInit {
     this.totalStr = this.total.toFixed(2);
 
     this.initOrderableIngredients();
-    console.log("welcome to complex item");
-    console.log(this.item);
   }
 
   initOrderableIngredients(): void {
