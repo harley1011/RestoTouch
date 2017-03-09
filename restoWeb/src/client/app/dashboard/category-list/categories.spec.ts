@@ -7,7 +7,7 @@ import { CategoryService } from '../category/category.service';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
-import {MenuCategory} from "../../shared/models/menu-category";
+import {MenuCategory} from '../../shared/models/menu-category';
 
 export function main() {
   describe('Category Service', () => {

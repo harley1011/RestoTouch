@@ -1,15 +1,15 @@
-import * as _ from "lodash";
-import {Pipe, PipeTransform} from "@angular/core";
-import {DatePipe} from "@angular/common";
+import * as _ from 'lodash';
+import {Pipe, PipeTransform} from '@angular/core';
+import {DatePipe} from '@angular/common';
 @Pipe({
-  name: "dataFilter"
+  name: 'dataFilter'
 })
 export class DataFilterPipe implements PipeTransform {
 
   constructor(private datePipe: DatePipe) {}
   transform(array: any[], query: any, searchBy: string): any {
 
-    if (searchBy == "Paid Date") {
+    if (searchBy === 'Paid Date') {
       return _.filter(array, row=>this.datePipe.transform(row.createdAt, 'short').indexOf(query) > -1);
     }
 

@@ -6,6 +6,7 @@ import {Language} from '../../shared/models/language';
 import {Restaurant} from '../../shared/models/restaurant';
 import {TranslateService} from 'ng2-translate';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
+
 import {Router} from '@angular/router';
 @Component({
   moduleId: module.id,
@@ -14,10 +15,10 @@ import {Router} from '@angular/router';
 })
 
 export class OrderListComponent implements OnInit {
-  filterQuery = "";
+  filterQuery = '';
   rowsOnPage = 10;
-  sortBy = "id";
-  sortOrder = "asc";
+  sortBy = 'id';
+  sortOrder = 'asc';
   orders: Order[];
   isEmployee: boolean;
   selectedSearchOption = 'Id';

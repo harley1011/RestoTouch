@@ -39,8 +39,7 @@ export class ProfileComponent {
 		if(this.editPass && (this.user.password !== this.user.passwordConfirm)) {
 			this.passwordAlert = true;
 		}
-		else if(this.user.firstName === '' || this.user.lastName === '' || this.user.email === '') {}
-		else {
+		else if(this.user.firstName !== '' && this.user.lastName !== '' && this.user.email !== ''){
 			this.passwordAlert = false;
 			this.profileService.saveProfile(this.user).subscribe(
       		generalResponse => {
