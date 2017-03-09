@@ -27,7 +27,8 @@
   "exclude": [
     "node_modules",
     "dist",
-    "src"
+    "src",
+    "**/*.spec.js"
   ],
   "compileOnSave": false
 }

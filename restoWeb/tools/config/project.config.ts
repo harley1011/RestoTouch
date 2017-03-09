@@ -73,11 +73,11 @@ export class ProjectConfig extends SeedConfig {
       },
       {
         name: 'angular2-datatable',
-        path: 'node_modules/angular2-datatable/index',
+        path: 'node_modules/angular2-datatable/index.js',
       },
       {
         name: 'lodash',
-        path: 'node_modules/lodash/lodash',
+        path: 'node_modules/lodash/lodash.js',
       }
     ];
     this.addPackagesBundles(additionalPackages);

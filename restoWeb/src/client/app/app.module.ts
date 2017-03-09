@@ -18,8 +18,8 @@ import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-transl
 import { LanguageService } from './services/language.service';
 import { OrderService } from './services/order.service';
 import { OrderNotifierService } from './services/order-notifier.service';
-import {DataTableModule} from "angular2-datatable";
-import {DatePipe} from "@angular/common";
+import {DataTableModule} from 'angular2-datatable';
+import {DatePipe} from '@angular/common';
 @NgModule({
 	imports: [
 		BrowserModule,

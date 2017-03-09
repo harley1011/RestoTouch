@@ -67,7 +67,7 @@ export function main() {
     });
 
     it('should add an order', () => {
-      var mockOrder = new Order([], 10, 1, '1');
+      var mockOrder = new Order([], 10, '1');
 
       initialResponse = orderService.placeOrder(mockOrder);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
