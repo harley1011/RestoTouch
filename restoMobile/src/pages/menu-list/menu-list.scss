@@ -1,3 +1,29 @@
 page-menu-list {
+    font-family: "Montserrat";
 
+    button.item-md, button.item {
+        background-color: transparent;
+        color: #fff;
+
+        h1 {
+            text-transform: uppercase;
+            font-size: 22px;
+            font-family: 'OpenSans Condensed';
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding-left: 4px;
+        }
+    }
+
+    button.item:first-child {
+      border-top: none !important;
+    }
+
+    button.item:last-child {
+      border-bottom: none !important;
+    }
+}
+
+page-menu-list.ion-page > ion-content {
+  background-color: #47474a !important;
 }

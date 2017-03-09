@@ -1,16 +1,10 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, NavController, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { AuthService } from '../pages/services/auth.service';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-import { MenuListPage } from '../pages/menu-list/menu-list';
-import { WelcomePage } from '../pages/welcome/welcome';
-import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
-import { Auth, User } from '@ionic/cloud-angular';
-
 
 @Component({
   templateUrl: 'app.html'
@@ -18,23 +12,17 @@ import { Auth, User } from '@ionic/cloud-angular';
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  @ViewChild('content') navController: NavController;
 
-  rootPage: any = LoginPage;
-
+  rootPage: any = HomePage;
+  startPage: any = LoginPage;
+  restoListPage: any = RestaurantListPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform,
               public authService: AuthService) {
     this.initializeApp();
-
-    // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 },
-      { title: 'Menu List Page', component: MenuListPage },
-      { title: 'Welcome Page', component: WelcomePage},
-      { title: 'Settings', component: SettingsPage},
-      { title: 'Restaurant List', component: RestaurantListPage },
       { title: 'Login', component: LoginPage }
     ];
 
@@ -46,7 +34,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.authService.setMainNavController(this.navController);
     });
+
   }
 
   openPage(page) {

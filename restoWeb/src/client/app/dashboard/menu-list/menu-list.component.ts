@@ -6,7 +6,7 @@ import {Language} from '../../shared/models/language';
 import {MenuService} from '../menu/menu.service';
 
 import {Restaurant} from '../../shared/models/restaurant';
-import {RestaurantService} from '../restaurant/restaurant.service';
+import {RestaurantService} from '../../services/restaurant.service';
 import {MenuListService} from './menu-list.service';
 import {TranslationSelectComponent} from '../../shared/translation-select/translation-select.component';
 @Component({

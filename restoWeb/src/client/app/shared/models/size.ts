@@ -7,7 +7,7 @@ export class Size extends Translation {
     obj.translations.forEach((t: SizeTranslations) => {
       translation.push(SizeTranslations.fromJson(t));
     });
-    return new Size(translation, null, 0);
+    return new Size(translation, null, obj.price);
   }
 
   constructor(public translations: Array<SizeTranslations>,

@@ -26,9 +26,10 @@ $font-path: "../assets/fonts";
 $colors: (
   primary:    #387ef5,
   secondary:  #32db64,
-  danger:     #f53d3d,
+  danger:     #e74c3c,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  success:    #2ecc71
 );
 
 
@@ -68,7 +69,6 @@ $colors: (
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
 
-@import "ionicons";
 
 
 // Fonts
@@ -76,3 +76,42 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../assets/fonts/MavenPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Maven Pro';
+    src: url('../assets/fonts/MavenPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../assets/fonts/Montserrat-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'OpenSans Condensed';
+    src: url('../assets/fonts/OpenSans-CondBold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'OpenSans Condensed';
+    src: url('../assets/fonts/OpenSans-CondLight.ttf') format('truetype');
+    font-weight: light;
+}
+
+@font-face {
+    font-family: 'Ubuntu Condensed';
+    src: url('../assets/fonts/UbuntuCondensed-Regular.ttf') format('truetype');
+}

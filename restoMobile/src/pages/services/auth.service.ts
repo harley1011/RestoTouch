@@ -1,5 +1,6 @@
 // Observable Version
 import {Injectable}     from '@angular/core';
+import {NavController} from 'ionic-angular';
 import {Http, Response} from '@angular/http';
 import {Headers, RequestOptions} from '@angular/http';
 import {User} from '../shared/models/user';
@@ -14,6 +15,7 @@ import 'rxjs/Rx';
 export class AuthService {
 
   public loggedInUser: User;
+  public mainNavController: NavController;
 
   constructor(private http: Http, private api: ApiEndpointService) {
     var data = localStorage.getItem('user');
@@ -34,12 +36,12 @@ export class AuthService {
     }
 
     return false;
-
   }
 
-//  canActivateChild() {
-//    return this.canActivate();
-//  }
+
+  setMainNavController(navController: NavController) {
+    this.mainNavController = navController;
+  }
 
   isLoggedIn(): boolean {
     if (this.loggedInUser) {
@@ -74,7 +76,7 @@ export class AuthService {
       .catch(this.handleError);
   }
 
-  extractData(res: Response) : User {
+  extractData(res: Response): User {
     let body = res.json();
     localStorage.setItem('authToken', body.accessToken);
     localStorage.setItem('user', JSON.stringify(body.user));

@@ -2,7 +2,7 @@ import { ReflectiveInjector } from '@angular/core';
 import { BaseRequestOptions, ConnectionBackend, Http, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 
-import { RestaurantService } from './restaurant.service';
+import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant, RestaurantTranslations } from '../../shared/models/restaurant';
 import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
@@ -65,9 +65,7 @@ export function main() {
 
     it('should add a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
-      var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], [], 1
-      );
+      var mockRestaurant = new Restaurant('',[],[],mockTranslation,[],[],[],'',1);
 
       initialResponse = restaurantService.addRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -88,8 +86,7 @@ export function main() {
 
     it('should update a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
-      var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], [], 1);
+      var mockRestaurant = new Restaurant('',[],[],mockTranslation,[],[],[],'',1);
 
       initialResponse = restaurantService.updateRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +
@@ -110,8 +107,7 @@ export function main() {
 
     it('should delete a restaurant', () => {
       var mockTranslation = new RestaurantTranslations('','','');
-      var mockRestaurant = new Restaurant('',
-        [], [], mockTranslation, [], [], [], 1);
+      var mockRestaurant = new Restaurant('',[],[],mockTranslation,[],[],[],'',1);
 
       initialResponse = restaurantService.deleteRestaurant(mockRestaurant);
       connection.mockRespond(new Response(new ResponseOptions({ body: '{"success"' +

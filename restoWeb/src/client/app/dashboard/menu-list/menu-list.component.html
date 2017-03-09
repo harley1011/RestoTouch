@@ -4,8 +4,7 @@
     <h2 *ngIf="!restaurant">{{ 'menu.titleManage' | translate }}</h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <div class="manage-button">
-      <button *ngIf="!restaurant" (click)="add()" class="btn btn-success btn-green">{{ 'menu.addmenuButtonManage' |
-        translate }}
+      <button *ngIf="!restaurant" id="addMenuBtn" (click)="add()" class="btn btn-success btn-green">{{ 'menu.addmenuButtonManage' | translate }}
       </button>
       <button *ngIf="restaurant" (click)="updateRestaurantMenu()" class="btn btn-success btn-green">{{
         'menu.confirmButtonManage' | translate }}
@@ -27,7 +26,6 @@
           <h6 style="margin:0">{{ 'menu.categoryCard' | translate }} <span class="label label-default"> {{ menu.categories.length }} </span></h6>
         </div>
       </div>
-
     </div>
   </div>
 

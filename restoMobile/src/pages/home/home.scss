@@ -1,0 +1,57 @@
+page-home {
+
+  ion-content {
+        background-image: url('../assets/img/food-bg-blur.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+
+        color: #fff !important;
+    }
+     .scroll-content {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    #side-menu-desc {
+        background-color: rgba(255,255,255,0.5);
+        width: 36%;
+        margin-top: 20vh;
+        // margin-left: 15vw;
+        right: 15%;
+        padding: 30px 15px;
+        font-family: "Maven Pro";
+        position: absolute;
+
+        ion-card-header {
+            text-transform: uppercase;
+            font-size: 22px;
+            font-weight: 600;
+            white-space: normal;
+        }
+
+        ion-card-content {
+            font-size: 18px;
+            color: #666;
+        }
+
+        img.tutorial-img {
+            width: 180px;
+            margin: 0 auto;
+        }
+    }
+
+    .arrow-right {
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 25px solid rgba(255,255,255,0.4);
+        position: absolute;
+        margin-top: 25vh;
+        // left: 51.5vw;
+        right: 13.3%;
+    }
+
+}

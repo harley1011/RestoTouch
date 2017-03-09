@@ -5,6 +5,8 @@ import {RestaurantListModule} from './restaurant-list/restaurant-list.module';
 import {RestaurantModule} from './restaurant/restaurant.module';
 import {CategoryListModule} from './category-list/category-list.module';
 import {CategoryModule} from './category/category.module';
+import {ComboListModule} from './combo-list/combo-list.module';
+import {ComboModule} from './combo/combo.module';
 import {MenuListModule} from './menu-list/menu-list.module';
 import {MenuModule} from './menu/menu.module';
 import {ItemListModule} from './item-list/item-list.module';
@@ -18,7 +20,9 @@ import {TopNavComponent, SidebarComponent} from '../shared/index';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import {FormsModule} from '@angular/forms';
 import {ProfileModule} from './profile/profile.module';
-
+import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
+import {OrderListModule} from './order-list/order-list.module';
+import {OrderModule} from './order/order.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -29,6 +33,8 @@ import {ProfileModule} from './profile/profile.module';
     RestaurantModule,
     CategoryListModule,
     CategoryModule,
+    ComboListModule,
+    ComboModule,
     MenuListModule,
     SettingsModule,
     MenuModule,
@@ -37,7 +43,10 @@ import {ProfileModule} from './profile/profile.module';
     DashboardRoutingModule,
     ItemModule,
     TranslateModule,
-    ProfileModule
+    ProfileModule,
+    UnpaidOrdersModule,
+    OrderListModule,
+    OrderModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]

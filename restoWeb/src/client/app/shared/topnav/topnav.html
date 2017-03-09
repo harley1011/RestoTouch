@@ -107,12 +107,14 @@
 
             <li class="dropdown nav-item" dropdown>
                 <a href="javascript:;" id="single-button" class="nav-link dropdown-toggle" dropdownToggle >
-                     {{user.firstName}} {{user.lastName}} <b class="caret"></b>
+                     {{user.firstName}} {{user.lastName}} <div *ngIf="user.isEmployee">({{ 'dashboard.cashierMode' | translate }})</div> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="single-button">
-                    <li>
-                        <a class="dropdown-item" routerLink="/dashboard/profile" href="javascript:;"><i class="fa fa-fw fa-user"></i> {{ 'dashboard.profileTopnav' | translate }}</a>
-                    </li>
+                    <div *ngIf="!user.isEmployee">
+                        <li>
+                            <a class="dropdown-item" routerLink="/dashboard/profile" href="javascript:;"><i class="fa fa-fw fa-user"></i> {{ 'dashboard.profileTopnav' | translate }}</a>
+                        </li>
+                    </div>
                     <!--<li>-->
                         <!--<a class="dropdown-item" href="javascript:;"><i class="fa fa-fw fa-envelope"></i> Inbox</a>-->
                     <!--</li>-->
@@ -121,7 +123,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a class="dropdown-item" routerLink="/logout">
+                        <a class="dropdown-item" id="logout" routerLink="/logout">
                             <i class="fa fa-fw fa-power-off"></i> {{ 'dashboard.logoutTopnav' | translate }}
                         </a>
                     </li>

@@ -9,6 +9,7 @@
     <a routerLink="/dashboard/restaurants" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.restoSidebar' | translate }}
     </a>
+    <div *ngIf="!isEmployee">
     <a routerLink="/dashboard/menus" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.menuSidebar' | translate }}
     </a>
@@ -20,14 +21,18 @@
       {{ 'dashboard.foodItemSidebar' | translate }}
     </a>
 
+    <a routerLink="/dashboard/combos" [routerLinkActive]="['router-link-active']" class="list-group-item">
+      {{ 'dashboard.comboItemSidebar' | translate }}
+    </a>
+
     <!-- order-->
-    <a class="list-group-item">
+    <a  routerLink="/dashboard/orders" [routerLinkActive]="['router-link-active']" class="list-group-item">
       {{ 'dashboard.orderSidebar' | translate }}
     </a>
 
     <!-- statistic -->
     <a class="list-group-item">
-      {{ 'dashboard.statSidebar' | translate }}  
+      {{ 'dashboard.statSidebar' | translate }}
     </a>
 
     <!-- cashier mode -->
@@ -39,6 +44,7 @@
     <a class="list-group-item">
       {{ 'dashboard.socialSidebar' | translate }}
     </a>
+    </div>
 
 
     <!--<a [routerLink]="['chart']" [routerLinkActive]="['router-link-active']" class="list-group-item">-->

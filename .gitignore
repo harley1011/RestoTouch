@@ -1,7 +1,5 @@
 *.DS_Store
 
-.idea/RestoTouch.iml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
+.idea
 npm-debug.log
+node_modules/

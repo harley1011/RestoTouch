@@ -62,6 +62,22 @@ export class ProjectConfig extends SeedConfig {
           main: 'moment.js',
           defaultExtension: 'js'
         }
+      },
+      {
+        name: 'socket.io-client',
+        path: 'node_modules/socket.io-client/dist',
+        packageMeta: {
+          main: 'socket.io.min.js',
+          defaultExtension: 'js'
+        }
+      },
+      {
+        name: 'angular2-datatable',
+        path: 'node_modules/angular2-datatable/index.js',
+      },
+      {
+        name: 'lodash',
+        path: 'node_modules/lodash/lodash.js',
       }
     ];
     this.addPackagesBundles(additionalPackages);

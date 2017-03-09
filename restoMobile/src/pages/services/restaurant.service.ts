@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-
 import { Restaurant } from '../shared/models/restaurant';
 import { GeneralResponse }  from '../shared/general.response';
-
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { AuthHttpService } from './auth-http.services';
 import { Observable } from 'rxjs/Observable';
@@ -11,6 +9,8 @@ import  {ApiEndpointService} from './api-endpoint.service';
 @Injectable()
 export class RestaurantService {
   private url = '/restaurant';
+
+  public selectedRestaurant: Restaurant;
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 

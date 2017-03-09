@@ -1,10 +1,13 @@
-import { OrderIngredients } from './order-ingredients';
+import { SelectedIngredients } from './selected-ingredients';
+import { Item } from './items';
+import { Size } from './size';
 
 export class Order {
   constructor (
-    public itemId: number,
-    public sizeId: number,
-    public ingredients: Array<OrderIngredients>,
-    public id?: number
+    public orderedItems: Array<{item: Item, sizes: Array<{size: Size, selectedIngredients: SelectedIngredients}>}>,
+    public total: number,
+    public paymentId: string,
+    public id?: number,
+    public restaurantId?: number
   ) { }
 }

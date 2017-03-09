@@ -33,7 +33,8 @@ describe("The Restaurant API", function() {
         "suClose": "9:00",
         "supportedLanguages": [{"languageCode":"en","name":"English","restaurantId":2}],
         "Menus":[],
-        "selectedTranslation": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","restaurantId":2}]
+        "selectedTranslation": [{"languageCode":"en","language":null,"name":"ENname","description":"ENDesc","restaurantId":2}],
+        "kitCashModeFlag": "kco"
       }
     }
 
