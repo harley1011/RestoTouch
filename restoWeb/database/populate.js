@@ -9,7 +9,9 @@ var users = [
     "lastName": "McPhee",
     "email": "harley.1011@gmail.com",
     "password": passwordData.passwordHash,
+    "employeePassword": passwordData.passwordHash,
     "salt": passwordData.salt,
+    "employeeSalt": passwordData.salt,
     "emailVerified": true,
     "supportedLanguages": [
       {
@@ -681,7 +683,7 @@ setTimeout(function () {
                   }
                 }
                 var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
-                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant.id, createdAt: paidDate}, {
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant.id, paymentId: "", createdAt: paidDate}, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,
