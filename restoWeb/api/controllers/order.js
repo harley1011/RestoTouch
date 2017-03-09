@@ -3,7 +3,7 @@ var redis = require('redis');
 var client = redis.createClient("redis://rediscloud:6wPtT2Oi8rVx458z@redis-19567.c8.us-east-1-3.ec2.cloud.redislabs.com:19567", {no_ready_check: false});
 var promise = require('promise');
 var Redlock = require('redlock');
-var uuid = require('node-uuid');
+var uuid = require('uuid/v1');
 var ttl = 1000;
 var _ = require('lodash');
 var models = require("../../database/models");
@@ -68,7 +68,7 @@ function placeOrder(req, res) {
     var restaurantId = order.restaurantId;
     var restaurantOrders = [];
     var restaurantKey = 'restaurantOrders:' + restaurantId;
-    var uuidGen = uuid.v4();
+    var uuidGen = uuid();
     order.id = uuidGen;
 
     redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {

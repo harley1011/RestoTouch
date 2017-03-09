@@ -1,6 +1,6 @@
 var aws = require('aws-sdk');
 var S3_BUCKET = 'resto-item-images';
-var uuid = require('node-uuid');
+var uuid = require('uuid/v1');
 var itemModel;
 var _ = require('lodash');
 var models = require("../../database/models");
@@ -30,7 +30,7 @@ function getS3UploadImageKey(req, res) {
   var s3 = new aws.S3();
   var fileName = req.query['imageName'];
   var fileType = req.query['imageType'];
-  var uuidGen = uuid.v4();
+  var uuidGen = uuid();
   var s3Params = {
     Bucket: S3_BUCKET,
     Key: uuidGen,

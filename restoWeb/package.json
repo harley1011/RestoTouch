@@ -150,7 +150,7 @@
     "ng2-bootstrap": "^1.1.17",
     "ng2-img-cropper": "^0.7.1",
     "ng2-translate": "^5.0.0",
-    "node-uuid": "^1.4.7",
+    "uuid": "^3.0.1",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
     "promise": "^7.1.1",
