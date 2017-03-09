@@ -14,7 +14,7 @@ export class DataFilterPipe implements PipeTransform {
     }
 
     if (query) {
-      return _.filter(array, row=>row.id == query);
+      return _.filter(array, row=>row.id === query);
     }
 
     return array;

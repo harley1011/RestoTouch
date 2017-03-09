@@ -11,7 +11,7 @@ import {Language} from './../../shared/models/language';
   templateUrl: 'order.component.html'
 })
 
-export class OrderComponent implements OnInit {
+export class OrderComponent  {
   order: Order;
 
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit {
 
           order.order.orderedItems.forEach((orderedItem: any) => {
 
-            let foundOrder = orderWithGroupedItems.orderedItems.find(correctOrderedItem => correctOrderedItem.item.id == orderedItem.item.id);
+            let foundOrder = orderWithGroupedItems.orderedItems.find(correctOrderedItem => correctOrderedItem.item.id === orderedItem.item.id);
 
             if (!foundOrder) {
               orderedItem.sizes = [];
@@ -39,15 +39,12 @@ export class OrderComponent implements OnInit {
 
             }
             foundOrder.sizes.push({size:orderedItem.size, selectedIngredients: null});
-          })
+          });
           this.order = orderWithGroupedItems;
           this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        })
+        });
       }
     });
-  }
-
-  ngOnInit(): void {
   }
 
   viewItem(id: number): void {
@@ -57,7 +54,7 @@ export class OrderComponent implements OnInit {
   onSelectLanguage(language: Language) {
     this.order.orderedItems.forEach(orderedItem => {
       orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === language.languageCode);
-      orderedItem.sizes.forEach(container => { container.size.selectedTranslation = container.size.translations.find(translation => translation.languageCode === language.languageCode)});
+      orderedItem.sizes.forEach(container => { container.size.selectedTranslation = container.size.translations.find(translation => translation.languageCode === language.languageCode);});
     });
   }
 
