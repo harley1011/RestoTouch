@@ -427,13 +427,31 @@
             </div>
         </div>
         <div class="radio form-group">
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="kco" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="kce" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt2' | translate}}</label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="pricetype" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kco" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kce" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt2' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
        </div>
        <br/><br/>
       </div>
 
+<!--ORDER NOTIFICATION TYPE-->
+      <div id="basic-info" class="col-md-9">
+        <h4>{{'restaurant.orderNotiTitle' | translate}}</h4>
+        <div class="card card-outline-warning mb-3 text-center">
+            <div class="card-block">
+              <blockquote class="card-blockquote">
+                  <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
+                  <p>fergfregk</p>
+              </blockquote>
+            </div>
+        </div>
+        <div class="radio form-group">
+             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="kco" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt1' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="kce" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt2' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="cnk" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt3' | translate}}</label>
+       </div>
+       <br/><br/>
+      </div>
 
       <div class="row">
 
