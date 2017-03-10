@@ -12,6 +12,7 @@ import { IngredientGroup } from '../shared/models/ingredient-group';
 export class FoodListPage implements OnInit {
   selectedLanguage: any;
   order: Order;
+  foodList: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
@@ -19,11 +20,22 @@ export class FoodListPage implements OnInit {
     this.selectedLanguage = this.navParams.get('language');
     this.order = this.navParams.get('order');
 
-    this.initOrder();
+    this.initFoodList();
   }
 
-  initOrder(): void {
+  initFoodList(): void {
+    this.foodList = [];
 
+    console.log(this.order);
+    var self = this;
+    this.order.orderedItems.forEach(orderedItem => {
+      orderedItem.sizes.forEach(size => {
+        self.foodList.push({
+          item: orderedItem.item,
+          size: size
+        });
+      });
+    });
   }
 
   cancel(): void {

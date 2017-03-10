@@ -11,5 +11,12 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item id="food-item" *ngFor="let food of foodList">
+      <p id="food-item-name">{{food.item.selectedTranslation.name}} ({{food.size.size.selectedTranslation.name}})</p>
+      <div *ngIf="food.size.selectedIngredients">
+        <p *ngFor="let ingredient of food.size.selectedIngredients.ingredients">- {{ingredient.ingredient.translations[0].name}}</p>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
