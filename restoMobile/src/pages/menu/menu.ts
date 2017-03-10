@@ -210,9 +210,18 @@ export class MenuPage {
   }
 
   orderList(): void {
+    var orderListCallback = function (order: Order) {
+      return new Promise((resolve, reject) => {
+        console.log(order);
+
+        resolve();
+      });
+    }
+
     this.navCtrl.push(FoodListPage, {
       order: this.currentOrder,
       language: this.selectedLanguage,
+      callback: orderListCallback
     }, {
       animate: true,
       animation: "md-transition",

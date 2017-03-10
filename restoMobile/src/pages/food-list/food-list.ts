@@ -13,12 +13,14 @@ export class FoodListPage implements OnInit {
   selectedLanguage: any;
   order: Order;
   foodList: Array<any>;
+  foodListCallback: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ngOnInit(): void {
     this.selectedLanguage = this.navParams.get('language');
     this.order = this.navParams.get('order');
+    this.foodListCallback = this.navParams.get('callback');
 
     this.initFoodList();
   }
@@ -26,7 +28,6 @@ export class FoodListPage implements OnInit {
   initFoodList(): void {
     this.foodList = [];
 
-    console.log(this.order);
     var self = this;
     this.order.orderedItems.forEach(orderedItem => {
       orderedItem.sizes.forEach(size => {
@@ -39,10 +40,12 @@ export class FoodListPage implements OnInit {
   }
 
   cancel(): void {
-    this.navCtrl.pop({
-      animate: true,
-      animation: "md-transition",
-      direction: 'back'
+    this.foodListCallback(this.order).then(() => {
+      this.navCtrl.pop({
+        animate: true,
+        animation: "md-transition",
+        direction: 'back'
+      });
     });
   }
 }
