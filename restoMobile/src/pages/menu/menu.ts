@@ -77,6 +77,12 @@ export class MenuPage {
                 size = item.sizes[j];
                 size.selectedTranslation = size.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
               }
+
+              var group: IngredientGroup;
+              for (var j = 0; j < item.ingredientGroups.length; j++) {
+                group = item.ingredientGroups[j];
+                group.selectedTranslation = group.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              }
             }
           }
         });
