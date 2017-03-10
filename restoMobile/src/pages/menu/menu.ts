@@ -127,13 +127,23 @@ export class MenuPage {
     orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
     let foundSize: any;
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
-    for (var i = 0; i < foundItem.sizes.length; i++) {
-      foundSize = foundItem.sizes[i];
-      if (orderableSize.size.id === foundSize.size.id) {
-        foundItem.sizes.splice(i, 1);
-        break;
+    let foundItem: any;
+    for (var i = 0; i < this.currentOrder.orderedItems.length; i++) {
+      foundItem = this.currentOrder.orderedItems[i];
+      if (foundItem.item.id != orderableItem.item.id) continue;
+
+      for (var j = 0; j < foundItem.sizes.length; j++) {
+        foundSize = foundItem.sizes[j];
+        if (orderableSize.size.id === foundSize.size.id) {
+          foundItem.sizes.splice(j, 1);
+          break;
+        }
       }
+
+      if (foundItem.sizes.length == 0) {
+        this.currentOrder.orderedItems.splice(i, 1);
+      }
+      break;
     }
 
     let ingredient: any;
