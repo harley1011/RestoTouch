@@ -12,6 +12,7 @@ import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
+import { FoodListPage } from '../food-list/food-list';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
@@ -201,6 +202,17 @@ export class MenuPage {
       callback: getComplexOrder,
       ingredients: new SelectedIngredients([]),
       total: 0
+    }, {
+      animate: true,
+      animation: "md-transition",
+      direction: "forward"
+    });
+  }
+
+  orderList(): void {
+    this.navCtrl.push(FoodListPage, {
+      order: this.currentOrder,
+      language: this.selectedLanguage,
     }, {
       animate: true,
       animation: "md-transition",
