@@ -106,6 +106,11 @@ export class IngredientGroupPage implements OnInit {
       orderableIngredient = new OrderableIngredient(ingredient, false, 0);
       this.orderableIngredients.push(orderableIngredient);
     }
+
+    // check if need to disable
+    if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
+      this.disableIngredients();
+    }
   }
 
   previousIngredientGroup(): void {
