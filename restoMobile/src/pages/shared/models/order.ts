@@ -11,6 +11,17 @@ export class Order {
     public restaurantId?: number
   ) { }
 
+  addOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients, ingredientPrice: number): void {
+    let foundItem = this.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
+    if (foundItem) {
+      foundItem.sizes.push({size: size, selectedIngredients: selectedIngredients});
+    } else {
+      this.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
+    }
+
+    this.total += size.price + ingredientPrice;
+  }
+
   removeFromOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients): void {
     let orderedItem: any;
     let orderedSize: any;

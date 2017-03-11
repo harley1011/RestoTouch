@@ -133,17 +133,7 @@ export class MenuPage {
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-    if (foundItem) {
-      foundItem.sizes.push({size: size, selectedIngredients: null});
-    } else {
-      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: null}]});
-    }
-
-    this.currentOrder.total += size.price;
+    this.currentOrder.addOrder(orderableItem.item, orderableSize.size, null, 0);
   }
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
@@ -152,7 +142,9 @@ export class MenuPage {
       return new Promise((resolve, reject) => {
         orderableSize.count++;
 
-        var item = orderableItem.item;
+        self.currentOrder.addOrder(orderableItem.item, orderableSize.size, selectedIngredients, price);
+
+        /*var item = orderableItem.item;
         var size = orderableSize.size;
 
         let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
@@ -162,7 +154,7 @@ export class MenuPage {
           self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
         }
 
-        self.currentOrder.total += size.price + price;
+        self.currentOrder.total += size.price + price;*/
 
         resolve();
       });
