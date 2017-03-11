@@ -210,9 +210,25 @@ export class MenuPage {
   }
 
   orderList(): void {
-    var orderListCallback = function (order: Order) {
+    var self = this;
+    var orderListCallback = function (order: Order, removeList: Array<any>) {
       return new Promise((resolve, reject) => {
-        console.log(order);
+        self.currentOrder = order
+
+        let orderableSize: OrderableSize;
+        self.categories.forEach(orderableCategory => {
+          orderableCategory.items.forEach(orderableItem => {
+            removeList.forEach(removedItem => {
+              if (removedItem.item.id === orderableItem.item.id) {
+                orderableItem.sizes.forEach(orderableSize => {
+                  if (orderableSize.size.id === removedItem.size.id) {
+                    orderableSize.count--;
+                  }
+                });
+              }
+            });
+          });
+        });
 
         resolve();
       });
