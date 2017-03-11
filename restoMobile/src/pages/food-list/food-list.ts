@@ -3,7 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Order } from '../shared/models/order';
 import { Item } from '../shared/models/items';
 import { Size } from '../shared/models/size';
+import { SelectedIngredients } from '../shared/models/selected-ingredients';
 import { IngredientGroup } from '../shared/models/ingredient-group';
+import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 
 @Component({
   selector: 'page-food-list',
@@ -41,13 +43,47 @@ export class FoodListPage implements OnInit {
     });
   }
 
+  modify(item: Item, size: any): void {
+    var oldPrice = 0;
+    if (size.selectedIngredients != null) {
+      let ingredient: any;
+      for (var i = 0; i < size.selectedIngredients.ingredients.length; i++) {
+        ingredient = size.selectedIngredients.ingredients[i];
+        oldPrice += ingredient.quantity * ingredient.ingredient.price;
+      }
+    }
+
+    var self = this;
+    var getComplexOrder = function(selectedIngredients: SelectedIngredients, price: number) {
+      return new Promise((resolve, reject) => {
+        self.order.modifyOrder(oldPrice, price);
+
+        resolve();
+      });
+    };
+
+    this.navCtrl.push(IngredientGroupPage, {
+      item: item,
+      ingredientGroupIndex: 0,
+      language: this.selectedLanguage,
+      callback: getComplexOrder,
+      ingredients: size.selectedIngredients,
+      modify: true,
+      total: oldPrice
+    }, {
+      animate: true,
+      animation: "md-transition",
+      direction: "forward"
+    });
+  }
+
   remove(item: Item, size: any): void {
     this.removeList.push({
       item: item,
       size: size.size
     });
     this.removeFromList(item, size);
-    this.order.removeFromOrder(item, size.size, size.selectedIngredients);
+    this.order.removeOrder(item, size.size, size.selectedIngredients);
 
     if (this.foodList.length == 0) this.back();
   }

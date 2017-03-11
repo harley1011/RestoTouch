@@ -127,7 +127,7 @@ export class MenuPage {
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
-    this.currentOrder.removeFromOrder(orderableItem.item, orderableSize.size, null);
+    this.currentOrder.removeOrder(orderableItem.item, orderableSize.size, null);
   }
 
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
@@ -144,18 +144,6 @@ export class MenuPage {
 
         self.currentOrder.addOrder(orderableItem.item, orderableSize.size, selectedIngredients, price);
 
-        /*var item = orderableItem.item;
-        var size = orderableSize.size;
-
-        let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-        if (foundItem) {
-          foundItem.sizes.push({size: size, selectedIngredients: selectedIngredients});
-        } else {
-          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
-        }
-
-        self.currentOrder.total += size.price + price;*/
-
         resolve();
       });
     };
@@ -166,6 +154,7 @@ export class MenuPage {
       language: this.selectedLanguage,
       callback: getComplexOrder,
       ingredients: new SelectedIngredients([]),
+      modify: false,
       total: 0
     }, {
       animate: true,

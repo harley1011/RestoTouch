@@ -22,7 +22,11 @@ export class Order {
     this.total += size.price + ingredientPrice;
   }
 
-  removeFromOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients): void {
+  modifyOrder(oldPrice: number, newPrice: number): void {
+    this.total += (newPrice - oldPrice);
+  }
+
+  removeOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients): void {
     let orderedItem: any;
     let orderedSize: any;
     for (var i = 0; i < this.orderedItems.length; i++) {
