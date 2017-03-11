@@ -17,9 +17,8 @@
       <div *ngIf="food.size.selectedIngredients">
         <p *ngFor="let ingredient of food.size.selectedIngredients.ingredients">- {{ingredient.ingredient.translations[0].name}}</p>
       </div>
-      <button ion-button color="danger" (click)="remove(food.item, food.size)" outline item-right>
-        Remove
-      </button>
+      <button *ngIf="food.size.selectedIngredients" ion-button color="default" (click)="modify(food.item, food.size)" outline item-right>Modify</button>
+      <button ion-button color="danger" (click)="remove(food.item, food.size)" outline item-right>Remove</button>
     </ion-item>
   </ion-list>
 </ion-content>

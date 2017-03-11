@@ -47,7 +47,7 @@ export class FoodListPage implements OnInit {
       size: size.size
     });
     this.removeFromList(item, size);
-    this.removeFromOrder(item, size);
+    this.order.removeFromOrder(item, size.size, size.selectedIngredients);
 
     if (this.foodList.length == 0) this.back();
   }
@@ -61,38 +61,6 @@ export class FoodListPage implements OnInit {
           this.foodList.splice(i, 1);
           break;
       }
-    }
-  }
-
-  removeFromOrder(item: Item, size: any): void {
-    let orderedItem: any;
-    let orderedSize: any;
-    for (var i = 0; i < this.order.orderedItems.length; i++) {
-      orderedItem = this.order.orderedItems[i];
-      if (orderedItem.item != item) continue;
-
-      for (var j = 0; j < orderedItem.sizes.length; j++) {
-        orderedSize = orderedItem.sizes[j];
-        if (size.size.id === orderedSize.size.id && (size.selectedIngredients == null ||
-          size.selectedIngredients === orderedSize.selectedIngredients)) {
-          orderedItem.sizes.splice(j, 1);
-          break;
-        }
-      }
-
-      if (orderedItem.sizes.length == 0) {
-        this.order.orderedItems.splice(i, 1);
-      }
-      break;
-    }
-
-    this.order.total -= orderedSize.size.price;
-    if (orderedSize.selectedIngredients == null) return;
-
-    let ingredient: any;
-    for (var i = 0; i < orderedSize.selectedIngredients.ingredients.length; i++) {
-      ingredient = orderedSize.selectedIngredients.ingredients[i];
-      this.order.total -= (ingredient.quantity * ingredient.ingredient.price);
     }
   }
 
