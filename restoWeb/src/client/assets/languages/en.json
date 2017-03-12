@@ -102,6 +102,7 @@
     "kitCashModeOpt2":"Kitchen and Cashier Mode (Pre) ",
     "kitCashModeOpt3":"Cashier Mode Only",
     "orderNotiTitle":"Order Notification type",
+    "orderNotiDetail":"..",
     "orderNotiOpt1":"By Number",
     "orderNotiOpt2":"By Name",
     "orderNotiOpt3":"By Table Number",
