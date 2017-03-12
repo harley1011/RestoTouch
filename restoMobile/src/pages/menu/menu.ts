@@ -12,6 +12,7 @@ import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
+import { FoodListPage } from '../food-list/food-list';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
@@ -126,40 +127,13 @@ export class MenuPage {
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
-    let foundSize: any;
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
-    for (var i = 0; i < foundItem.sizes.length; i++) {
-      foundSize = foundItem.sizes[i];
-      if (orderableSize.size.id === foundSize.size.id) {
-        foundItem.sizes.splice(i, 1);
-        break;
-      }
-    }
-
-    let ingredient: any;
-    this.currentOrder.total -= orderableSize.size.price;
-    if (foundSize.selectedIngredients == null) return;
-
-    for (var i = 0; i < foundSize.selectedIngredients.ingredients.length; i++) {
-      ingredient = foundSize.selectedIngredients.ingredients[i];
-      this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);
-    }
+    this.currentOrder.removeOrder(orderableItem.item, orderableSize.size, null);
   }
 
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-    if (foundItem) {
-      foundItem.sizes.push({size: size, selectedIngredients: null});
-    } else {
-      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: null}]});
-    }
-
-    this.currentOrder.total += size.price;
+    this.currentOrder.addOrder(orderableItem.item, orderableSize.size, null, 0);
   }
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
@@ -168,17 +142,7 @@ export class MenuPage {
       return new Promise((resolve, reject) => {
         orderableSize.count++;
 
-        var item = orderableItem.item;
-        var size = orderableSize.size;
-
-        let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-        if (foundItem) {
-          foundItem.sizes.push({size: size, selectedIngredients: selectedIngredients});
-        } else {
-          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
-        }
-
-        self.currentOrder.total += size.price + price;
+        self.currentOrder.addOrder(orderableItem.item, orderableSize.size, selectedIngredients, price);
 
         resolve();
       });
@@ -190,7 +154,44 @@ export class MenuPage {
       language: this.selectedLanguage,
       callback: getComplexOrder,
       ingredients: new SelectedIngredients([]),
+      modify: false,
       total: 0
+    }, {
+      animate: true,
+      animation: "md-transition",
+      direction: "forward"
+    });
+  }
+
+  orderList(): void {
+    var self = this;
+    var orderListCallback = function (order: Order, removeList: Array<any>) {
+      return new Promise((resolve, reject) => {
+        self.currentOrder = order
+
+        let orderableSize: OrderableSize;
+        self.categories.forEach(orderableCategory => {
+          orderableCategory.items.forEach(orderableItem => {
+            removeList.forEach(removedItem => {
+              if (removedItem.item.id === orderableItem.item.id) {
+                orderableItem.sizes.forEach(orderableSize => {
+                  if (orderableSize.size.id === removedItem.size.id) {
+                    orderableSize.count--;
+                  }
+                });
+              }
+            });
+          });
+        });
+
+        resolve();
+      });
+    }
+
+    this.navCtrl.push(FoodListPage, {
+      order: this.currentOrder,
+      language: this.selectedLanguage,
+      callback: orderListCallback
     }, {
       animate: true,
       animation: "md-transition",
