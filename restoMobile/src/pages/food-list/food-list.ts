@@ -35,9 +35,18 @@ export class FoodListPage implements OnInit {
     var self = this;
     this.order.orderedItems.forEach(orderedItem => {
       orderedItem.sizes.forEach(size => {
+        var price = size.size.price;
+        if (size.selectedIngredients != null) {
+          let ingredient: any;
+          for (var i = 0; i < size.selectedIngredients.ingredients.length; i++) {
+            ingredient = size.selectedIngredients.ingredients[i];
+            price += ingredient.quantity * ingredient.ingredient.price;
+          }
+        }
         self.foodList.push({
           item: orderedItem.item,
-          size: size
+          size: size,
+          price: price
         });
       });
     });
