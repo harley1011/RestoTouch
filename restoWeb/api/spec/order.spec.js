@@ -7,6 +7,8 @@ describe("The Order API", function () {
 
   var req = {};
 
+
+
   var restaurantReq = {
     body: {
       restaurantId: 100100
@@ -38,6 +40,30 @@ describe("The Order API", function () {
       });
     });
   });
+
+  // it("should place, retrieve an order and then pay for it", function (done) {
+  //   setTimeout(function () {
+  //     order.placeOrder(req, res).then(function () {
+  //       // expect(res.obj.success).toBe(1);
+  //       // expect(res.obj.description).toBe("Order stored");
+  //       // expect(res.obj.orderId).toBeDefined();
+  //       var generatedId = res.obj.orderId;
+  //       var retReq = {body: {
+  //         restaurantId: req.body.order.restaurantId,
+  //         orderId: generatedId
+  //       }}
+  //       order.retrieveOrders(retReq, res).then(function (result) {
+  //         var orders = res.obj.orders;
+  //         // expect(generatedId).toBe(orders[0].id);
+  //         order.payForOrder(retReq, res).then(function (result) {
+  //           //expect(res.obj.success).toBe(1);
+  //           done();
+  //         });
+  //       });
+  //     });
+  //   }, 1000);
+  //
+  // });
 
   it("should retrieve a empty array with no orders", function (done) {
     order.retrieveOrders({body: {
@@ -173,9 +199,9 @@ describe("The Order API", function () {
     }, res);
   });
 
-  afterAll(function () {
-
-    order.closeRedis();
-  });
+  // afterAll(function () {
+  //
+  //   order.closeRedis();
+  // });
 })
 ;

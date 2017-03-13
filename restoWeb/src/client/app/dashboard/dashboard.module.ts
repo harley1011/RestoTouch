@@ -5,6 +5,8 @@ import {RestaurantListModule} from './restaurant-list/restaurant-list.module';
 import {RestaurantModule} from './restaurant/restaurant.module';
 import {CategoryListModule} from './category-list/category-list.module';
 import {CategoryModule} from './category/category.module';
+import {ComboListModule} from './combo-list/combo-list.module';
+import {ComboModule} from './combo/combo.module';
 import {MenuListModule} from './menu-list/menu-list.module';
 import {MenuModule} from './menu/menu.module';
 import {ItemListModule} from './item-list/item-list.module';
@@ -21,7 +23,8 @@ import {ProfileModule} from './profile/profile.module';
 import {UnpaidOrdersModule} from './unpaid-orders/unpaid-orders.module';
 import {KitchenCashierSelectModule} from './kitchen-cashier-select/kitchen-cashier-select.module';
 import {KitchenModule} from './kitchen/kitchen.module';
-
+import {OrderListModule} from './order-list/order-list.module';
+import {OrderModule} from './order/order.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -32,6 +35,8 @@ import {KitchenModule} from './kitchen/kitchen.module';
     RestaurantModule,
     CategoryListModule,
     CategoryModule,
+    ComboListModule,
+    ComboModule,
     MenuListModule,
     SettingsModule,
     MenuModule,
@@ -44,6 +49,8 @@ import {KitchenModule} from './kitchen/kitchen.module';
     UnpaidOrdersModule,
     KitchenCashierSelectModule,
     KitchenModule,
+    OrderListModule,
+    OrderModule
   ],
   declarations: [DashboardComponent, TopNavComponent, SidebarComponent],
   exports: [DashboardComponent, TopNavComponent, SidebarComponent]

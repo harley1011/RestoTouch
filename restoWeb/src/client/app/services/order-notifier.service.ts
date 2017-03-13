@@ -32,6 +32,6 @@ export class OrderNotifierService {
   }
 
   disconnectFromOrderNotifier(id: number) {
-    this.socket.emit('orderUnsubscribe', {restaurantId: id, token: this.authService.loginToken()})
+    this.socket.emit('orderUnsubscribe', {restaurantId: id, token: this.authService.loginToken()});
   }
 }

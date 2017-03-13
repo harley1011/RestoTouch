@@ -1,11 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
 import { MenuListPage } from '../pages/menu-list/menu-list';
-import { MenuPage } from "../pages/menu/menu";
-import { IngredientGroupPage } from "../pages/ingredient-group/ingredient-group";
+import { MenuPage } from '../pages/menu/menu';
+import { FoodListPage } from '../pages/food-list/food-list';
+import { IngredientGroupPage } from '../pages/ingredient-group/ingredient-group';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RestaurantListPage } from '../pages/restaurant-list/restaurant-list';
@@ -31,10 +30,9 @@ export function createTranslateLoader(http: Http) {
 @NgModule({
   declarations: [
     MyApp,
-    Page1,
-    Page2,
     MenuListPage,
     MenuPage,
+    FoodListPage,
     IngredientGroupPage,
     WelcomePage,
     SettingsPage,
@@ -54,10 +52,9 @@ export function createTranslateLoader(http: Http) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
-    Page2,
     MenuListPage,
     MenuPage,
+    FoodListPage,
     IngredientGroupPage,
     WelcomePage,
     SettingsPage,

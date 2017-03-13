@@ -167,18 +167,18 @@ function login(req, res) {
   });
 }
 
-//GET /profile 
-//(returns the user object) 
+//GET /profile
+//(returns the user object)
 function getProfile(req, res) {
   return userModel.findOne({
     where: {id: req.userId},
-  }).then(function (user) {
+    attributes: ['firstName', 'lastName', 'email']}).then(function (user) {
     return res.json(user);
   })
 }
 
 //PUT /profile
-//modifies user profile information 
+//modifies user profile information
 function saveProfile(req, res) {
   var user = req.body;
   return userModel.findOne({

@@ -82,7 +82,7 @@ export function main() {
     it('should add a Menu', () => {
 
       var mockTranslation = new MenuTranslations('', '');
-      var mockMenu = new Menu([], [], mockTranslation, 1);
+      var mockMenu = new Menu([], mockTranslation,[],[],1);
 
       initialResponse = menuService.addMenu(mockMenu);
 
@@ -104,7 +104,7 @@ export function main() {
     it('should update a Menu', () => {
 
       var mockTranslation = new MenuTranslations('', '');
-      var mockMenu = new Menu([], [], mockTranslation, 1);
+      var mockMenu = new Menu([], mockTranslation,[],[],1);
 
       initialResponse = menuService.updateMenu(mockMenu);
 
@@ -126,7 +126,7 @@ export function main() {
     it('should delete a Menu', () => {
 
       var mockTranslation = new MenuTranslations('', '');
-      var mockMenu = new Menu([], [], mockTranslation, 1);
+      var mockMenu = new Menu([], mockTranslation,[],[],1);
 
       initialResponse = menuService.deleteMenu(mockMenu);
       connection.mockRespond(new Response(new ResponseOptions({body: '{"success": 1, "description": "Menu Deleted"}'})));
@@ -145,5 +145,3 @@ export function main() {
     });
   });
 }
-
-

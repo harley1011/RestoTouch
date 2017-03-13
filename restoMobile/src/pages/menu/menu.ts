@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { PayPal, PayPalPayment, PayPalConfiguration } from "ionic-native";
 import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
 import { Size } from '../shared/models/size';
@@ -11,9 +12,11 @@ import { Menu } from '../shared/models/menu';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { MenuService } from '../services/menu.service';
+import { FoodListPage } from '../food-list/food-list';
 import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-menu',
@@ -22,21 +25,28 @@ import { WelcomePage } from '../welcome/welcome';
 export class MenuPage {
   selectedMenu: any;
   selectedLanguage: any;
+  selectedRestaurant: any;
   menu: Menu;
   categories: Array<OrderableCategory>;
   total: string;
-  currentOrder = new Order([], 0, false);
+
+  currentOrder = new Order([], 0, false, '');
+  showAllCategories: boolean;
+  currentCategory: Category;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private categoryService: CategoryService,
               private orderService: OrderService,
               private itemService: ItemService,
-              private menuService: MenuService) {
+              private menuService: MenuService,
+              private platform: Platform) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
+    this.selectedRestaurant = navParams.get('restaurant');
     this.categories = [];
     this.total = "0.00";
+    this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
   }
@@ -63,6 +73,17 @@ export class MenuPage {
               category.items.splice(i--, 1);
             } else {
               item.selectedTranslation = item.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              var size: Size;
+              for (var j = 0; j < item.sizes.length; j++) {
+                size = item.sizes[j];
+                size.selectedTranslation = size.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              }
+
+              var group: IngredientGroup;
+              for (var j = 0; j < item.ingredientGroups.length; j++) {
+                group = item.ingredientGroups[j];
+                group.selectedTranslation = group.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
+              }
             }
           }
         });
@@ -106,38 +127,13 @@ export class MenuPage {
   removeOrder(orderableCategory: OrderableCategory, orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count = orderableSize.count > 0 ? orderableSize.count - 1 : 0;
 
-    let foundSize: any;
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == orderableItem.item.id);
-    for (var i = 0; i < foundItem.sizes.length; i++) {
-      foundSize = foundItem.sizes[i];
-      if (orderableSize.size.id === foundSize.size.id) {
-        foundItem.sizes.splice(i, 1);
-        break;
-      }
-    }
-
-    let ingredient: any;
-    this.currentOrder.total -= orderableSize.size.price;
-    for (var i = 0; i < foundSize.selectedIngredients.ingredients.length; i++) {
-      ingredient = foundSize.selectedIngredients.ingredients[i];
-      this.currentOrder.total -= (ingredient.quantity * ingredient.ingredient.price);
-    }
+    this.currentOrder.removeOrder(orderableItem.item, orderableSize.size, null);
   }
 
   addSimpleOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
     orderableSize.count++;
 
-    var item = orderableItem.item;
-    var size = orderableSize.size;
-
-    let foundItem = this.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-    if (foundItem) {
-      foundItem.sizes.push({size: size, selectedIngredients: null});
-    } else {
-      this.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: null}]});
-    }
-
-    this.currentOrder.total += size.price;
+    this.currentOrder.addOrder(orderableItem.item, orderableSize.size, null, 0);
   }
 
   addComplexOrder(orderableItem: OrderableItem, orderableSize: OrderableSize): void {
@@ -146,17 +142,7 @@ export class MenuPage {
       return new Promise((resolve, reject) => {
         orderableSize.count++;
 
-        var item = orderableItem.item;
-        var size = orderableSize.size;
-
-        let foundItem = self.currentOrder.orderedItems.find((currentItem: any) => currentItem.item.id == item.id);
-        if (foundItem) {
-          foundItem.sizes.push({size: size, selectedIngredients: selectedIngredients});
-        } else {
-          self.currentOrder.orderedItems.push({item: item, sizes: [{size: size, selectedIngredients: selectedIngredients}]});
-        }
-
-        self.currentOrder.total += size.price + price;
+        self.currentOrder.addOrder(orderableItem.item, orderableSize.size, selectedIngredients, price);
 
         resolve();
       });
@@ -168,6 +154,7 @@ export class MenuPage {
       language: this.selectedLanguage,
       callback: getComplexOrder,
       ingredients: new SelectedIngredients([]),
+      modify: false,
       total: 0
     }, {
       animate: true,
@@ -176,11 +163,89 @@ export class MenuPage {
     });
   }
 
-  order(): void {
-    this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-      this.navCtrl.setRoot(WelcomePage);
+  orderList(): void {
+    var self = this;
+    var orderListCallback = function (order: Order, removeList: Array<any>) {
+      return new Promise((resolve, reject) => {
+        self.currentOrder = order
+
+        let orderableSize: OrderableSize;
+        self.categories.forEach(orderableCategory => {
+          orderableCategory.items.forEach(orderableItem => {
+            removeList.forEach(removedItem => {
+              if (removedItem.item.id === orderableItem.item.id) {
+                orderableItem.sizes.forEach(orderableSize => {
+                  if (orderableSize.size.id === removedItem.size.id) {
+                    orderableSize.count--;
+                  }
+                });
+              }
+            });
+          });
+        });
+
+        resolve();
+      });
+    }
+
+    this.navCtrl.push(FoodListPage, {
+      order: this.currentOrder,
+      language: this.selectedLanguage,
+      callback: orderListCallback
+    }, {
+      animate: true,
+      animation: "md-transition",
+      direction: "forward"
     });
   }
+
+  order(): void {
+    var payFirst = true;
+    if (payFirst && this.platform.is('cordova')) {
+      this.usePayPal();
+    } else {
+      this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+        this.navCtrl.setRoot(WelcomePage);
+      });
+    }
+  }
+
+  usePayPal(): void {
+    var self = this;
+    PayPal.init({
+      "PayPalEnvironmentProduction": this.selectedRestaurant.paypalId,
+      "PayPalEnvironmentSandbox": "AaSdrzWXMJWXl_fxul1Q6KstQTlUgEfs7gmJ2qwrAPscdTUleVbZTEwj7NZIpZYYSy0xDzPCC4_zLgn3"
+    }).then(() => {
+      PayPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({})).then(
+        () => {
+          let payment = new PayPalPayment(self.currentOrder.total.toString(), 'CAD', 'Pay Order', 'sale');
+          PayPal.renderSinglePaymentUI(payment).then(
+            (response) => {
+              self.currentOrder.paymentId = response.response.id;
+              self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
+                self.navCtrl.setRoot(WelcomePage);
+              });
+            }, () => {
+
+            }
+          );
+        }, () => {
+
+        });
+    }, () => {
+
+    });
+  }
+
+    changeGroup(name: string, category: Category): void {
+     if(name == 'all') {
+        this.showAllCategories = true;
+      } else {
+          this.showAllCategories = false;
+          this.currentCategory = category;
+          this.currentCategory.items = category.items;
+      }
+    }
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {

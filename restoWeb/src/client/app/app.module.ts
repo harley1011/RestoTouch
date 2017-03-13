@@ -12,11 +12,14 @@ import { SharedModule } from './shared/shared.module';
 import { AuthService} from './services/auth.service';
 import { AuthHttpService } from './services/auth-http.services';
 import { ApiEndpointService } from './services/api-endpoint.service';
+import { RestaurantService } from './services/restaurant.service';
 import { ImageUploadService } from './services/image-upload.service';
 import {TranslateModule, TranslateLoader,TranslateStaticLoader} from 'ng2-translate';
 import { LanguageService } from './services/language.service';
 import { OrderService } from './services/order.service';
 import { OrderNotifierService } from './services/order-notifier.service';
+import {DataTableModule} from 'angular2-datatable';
+import {DatePipe} from '@angular/common';
 @NgModule({
 	imports: [
 		BrowserModule,
@@ -26,6 +29,7 @@ import { OrderNotifierService } from './services/order-notifier.service';
 		LogoutModule,
 		SignupModule,
 		DashboardModule,
+    DataTableModule,
 		SharedModule.forRoot(),
 		TranslateModule.forRoot({
             provide: TranslateLoader,
@@ -37,12 +41,11 @@ import { OrderNotifierService } from './services/order-notifier.service';
 		TranslateModule
 	],
 	declarations: [AppComponent],
-	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, {
+	providers: [LanguageService, AuthService, ApiEndpointService, AuthHttpService, ImageUploadService, OrderService, OrderNotifierService, DatePipe, RestaurantService, {
 	provide: APP_BASE_HREF,
 	useValue: '<%= APP_BASE %>'
 	}],
 	bootstrap: [AppComponent]
-
 })
 
 export class AppModule { }

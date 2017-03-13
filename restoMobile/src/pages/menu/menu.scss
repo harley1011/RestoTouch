@@ -1,5 +1,76 @@
 page-menu {
 
+    ion-title.title {
+      font-family: 'Maven pro';
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 26px;
+
+    }
+
+    .mini-menu {
+        height: 100px;
+        background-color: #ececec;
+    }
+
+    .btnCat {
+      margin: 8px 10px;
+      height: 80px;
+      width: 150px;
+      font-family: Maven Pro;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 1px;
+      white-space: normal;
+      line-height: 23px;
+      text-transform: uppercase;
+
+      background: transparent;
+      border: 2px solid #e74c3c;
+      color: #e74c3c;
+      border-radius: 6px;
+
+    }
+
+    .btnCat-selected {
+      background: color($colors, danger);
+      // border: 2px solid #e74c3c;
+      color: #FFF;
+    }
+
+    .btnCat:hover {
+      background: color($colors, danger);
+      color: #FFF;
+    }
+
+    .category-title {
+      font-family: 'Maven Pro';
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #424242;
+    }
+
+    .food-item {
+        // width: 50%;
+        font-family: 'Montserrat';
+
+        div.image-flex {
+            max-width: 400px;
+        }
+
+        .food-item-image {
+          max-width: 70%;
+        }
+
+        .food-item-content {
+          text-transform: uppercase;
+          letter-spacing: 1px;
+
+        }
+
+    }
 }
 
 .flex-container {
@@ -36,4 +107,16 @@ page-menu {
 .item-sizes {
   flex-basis: 300px;
   flex-grow: 2;
+}
+
+ion-scroll {
+    white-space: nowrap;
+}
+
+#order-list-btn {
+  background-color: #e74c3c;
+  color: #ffffff;
+  font-family: "Maven Pro";
+  font-weight: bold;
+  text-align: center;
 }

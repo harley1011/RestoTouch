@@ -43,9 +43,10 @@ export class MenuListPage {
     this.restaurant = this.selectedRestaurant;
     this.menuService.getMenus().subscribe(
       menus => {
-        menus.forEach(menu => {
-          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
-        });
+        menus.forEach(menu => menu = this.setTranslationForMenu(menu));
+        //menus.forEach(menu => {
+        //menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
+        //});
 
         this.menus = menus;
         this.numOfMenus = this.menus.length;
@@ -68,6 +69,11 @@ export class MenuListPage {
             }
           }
         }
+
+        this.selectedRestaurant = this.restaurant;
+        this.selectedRestaurant.Menus.forEach(menu => {
+          menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
+        });
       },
       error => {
         console.log(error);
@@ -75,6 +81,10 @@ export class MenuListPage {
     );
   }
 
+  setTranslationForMenu(menu) {
+    menu.selectedTranslation = menu.translations.find(translation => translation.languageCode == this.translate.currentLang);
+    return menu;
+  }
 
   menuTapped(menu) {
     this.menuService.selectedMenu = menu;

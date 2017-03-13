@@ -12,55 +12,53 @@ import {AuthService} from '../../services/auth.service';
 })
 
 export class ProfileComponent {
-	user = new User('', '');
-	editing: boolean = false;
-	editPass: boolean = false;
-	hideMessageSuccess: boolean = true;
-	passwordAlert: boolean = false;
+  user = new User('', '');
+  editing: boolean = false;
+  editPass: boolean = false;
+  hideMessageSuccess: boolean = true;
+  passwordAlert: boolean = false;
 
-	constructor(private profileService: ProfileService,
-				private router: Router,
-				private authService: AuthService) {
-		profileService.getProfile().subscribe(user => {
-			this.user = user;
-		});
-	}
+  constructor(private profileService: ProfileService,
+              private router: Router,
+              private authService: AuthService) {
+    profileService.getProfile().subscribe(user => {
+      this.user = user;
+    });
+  }
 
-	edit() {
-		this.editing = !this.editing;
-		this.hideMessageSuccess = true;
-	}
+  edit() {
+    this.editing = !this.editing;
+    this.hideMessageSuccess = true;
+  }
 
-	editPassword() {
-		this.editPass = !this.editPass;
-	}
+  editPassword() {
+    this.editPass = !this.editPass;
+  }
 
-	save() {
-		if(this.editPass && (this.user.password !== this.user.passwordConfirm)) {
-			this.passwordAlert = true;
-		}
-		else if(this.user.firstName === '' || this.user.lastName === '' || this.user.email === '') {}
-		else {
-			this.passwordAlert = false;
-			this.profileService.saveProfile(this.user).subscribe(
-      		generalResponse => {
-        		this.router.navigate(['/dashboard/profile']);
-	      	});
-	      	this.editing = false;
-	      	this.editPass = false;
-	      	this.hideMessageSuccess = false;
-	      	this.authService.loggedInUser.firstName = this.user.firstName;
-	      	this.authService.loggedInUser.lastName = this.user.lastName;
-		}
-	}
+  save() {
+    if (this.editPass && (this.user.password !== this.user.passwordConfirm)) {
+      this.passwordAlert = true;
+    } else if (this.user.firstName !== '' && this.user.lastName !== '' && this.user.email !== '') {
+      this.passwordAlert = false;
+      this.profileService.saveProfile(this.user).subscribe(
+        generalResponse => {
+          this.router.navigate(['/dashboard/profile']);
+        });
+      this.editing = false;
+      this.editPass = false;
+      this.hideMessageSuccess = false;
+      this.authService.loggedInUser.firstName = this.user.firstName;
+      this.authService.loggedInUser.lastName = this.user.lastName;
+    }
+  }
 
-	cancel() {
-		this.editing = false;
-		this.editPass = false;
-		this.hideMessageSuccess = true;
-		this.passwordAlert = false;
-		this.profileService.getProfile().subscribe(user => {
-			this.user = user;
-		});
-	}
+  cancel() {
+    this.editing = false;
+    this.editPass = false;
+    this.hideMessageSuccess = true;
+    this.passwordAlert = false;
+    this.profileService.getProfile().subscribe(user => {
+      this.user = user;
+    });
+  }
 }
