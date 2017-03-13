@@ -45,7 +45,7 @@ const dashboardRoutes: Routes = [
       .concat(ProfileRoutes)
       .concat(UnpaidOrdersRoutes)
       .concat(KitchenCashierSelectRoutes)
-      .concat(KitchenRoutes),
+      .concat(KitchenRoutes)
       .concat(OrdersRoutes)
       .concat(OrderRoutes),
     canActivate: [AuthService],

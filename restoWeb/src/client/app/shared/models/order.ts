@@ -9,7 +9,7 @@ export class Order {
     public paid: boolean,
     public paymentId: string,
     public id?: number,
-    public restaurantId?: number
+    public restaurantId?: number,
     public createdAt?: Date
   ) { }
 }
