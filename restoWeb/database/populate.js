@@ -27,21 +27,15 @@ var users = [
     "email": "david.bastien5@gmail.com",
     "password": passwordData.passwordHash,
     "salt": passwordData.salt,
+    "employeePassword": passwordData.passwordHash,
+    "employeeSalt": passwordData.salt,
     "emailVerified": true,
     "supportedLanguages": [
       {
         "name": "English",
         "languageCode": "en"
       }]
-  }, {
-   firstName: 'hilary',
-   lastName: 'chan',
-   email: 'hilary@restotouch.com',
-   phoneNumber: '514 514 4444',
-   password: passwordData.passwordHash,
-   salt: passwordData.salt,
-   emailVerified: true
- }];
+  }];
 // },
 //
 // {
