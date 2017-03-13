@@ -12,19 +12,20 @@ describe("Login Page::", () => {
     browser.get('http://localhost:8100/');
   });
 
-  it('should have a title', () => {
+
+    it('should have a title', () => {
     expect(browser.getTitle()).toEqual('Ionic App');
     console.log(browser.getTitle());
   });
-
+  /*
   it('should have a login title', () => {
    let loginTitle = element(by.id('loginHeader'));
     expect(loginTitle.getAttribute('textContent')).toEqual('Hello');
   });
 
-  /*  it('should translate', () => {
+  /!*  it('should translate', () => {
    expect('test').toEqual('test');
-   });*/
+   });*!/
 
    it('should able to login', () => {
    browser.sleep(1000);
@@ -35,6 +36,7 @@ describe("Login Page::", () => {
    //browser.sleep(10000);
    //browser.waitForAngular();
    });
+   */
 
 });
 
