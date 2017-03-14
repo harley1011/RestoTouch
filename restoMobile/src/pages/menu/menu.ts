@@ -30,7 +30,7 @@ export class MenuPage {
   categories: Array<OrderableCategory>;
   total: string;
 
-  currentOrder = new Order([], 0, false, '');
+  currentOrder = new Order([], 0, 'notPaid', '');
   showAllCategories: boolean;
   currentCategory: Category;
 

@@ -1148,12 +1148,14 @@ definitions:
           "$ref": "#/definitions/Item"
   Order:
     properties:
-      total:
-        type: number
       orderedItems:
         type: array
         items:
           "$ref": "#/definitions/OrderedItem"
+      total:
+        type: number
+      status:
+        type: string
       paymentId:
         type: string
   OrderedItem:

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 
 import { GeneralResponse }  from '../shared/general.response';
+import { Order } from '../shared/models/order';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { AuthHttpService } from './auth-http.services';

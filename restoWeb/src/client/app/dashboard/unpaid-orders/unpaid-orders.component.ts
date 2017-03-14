@@ -41,17 +41,17 @@ export class UnpaidOrdersComponent implements OnInit {
             });
             this.orders.push(this.order);
           });
-          /* Not working, formatting of returned orders isn't matching the order model
+          /*Not working, formatting of returned orders isn't matching the order model
 
-          this.orderService.retrieveOrders(this.id).subscribe((orders: any) => {
-            console.log(orders);
+          this.orderService.retrieveOrders(this.id).subscribe(o => {
+            console.log(o);
             //this.orders = JSON.parse(orders);
-            
-            this.order.orderedItems.forEach(orderedItem => {
+            //this.orders = orders;
+            this.orders.orderedItems.forEach(orderedItem => {
               orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });
-          })
-          */
+            
+          })*/
         }
     });
   }
@@ -66,10 +66,10 @@ export class UnpaidOrdersComponent implements OnInit {
 
   paid(order: Order) {
     let i = this.orders.indexOf(order);
-    order.paid = true;
-    order.restaurantId = this.id;
+    //order.paid = true;
+    //order.restaurantId = this.id;
     //console.log(order);
-    this.orderService.placeOrder(order);
+    //this.orderService.placeOrder(order);
     this.orders.splice(i, 1);
   }
 }
