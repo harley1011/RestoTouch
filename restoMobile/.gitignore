@@ -16,7 +16,15 @@ npm-debug.log*
 .sass-cache/
 .tmp/
 .versions/
-coverage/
+
+coverage/src
+coverage/base.css
+coverage/coverage.lcov
+coverage/prettify.css
+coverage/prettify.js
+coverage/sort-arrow-sprite.png
+coverage/sorter.js
+
 dist/
 node_modules/
 tmp/
