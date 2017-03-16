@@ -1172,12 +1172,9 @@ definitions:
   OrderSize:
     required:
       - size
-      - quantity
     properties:
       size:
           "$ref": "#/definitions/ItemSize"
-      quantity:
-          type: number
   Item:
     type: object
     properties:
@@ -1234,12 +1231,9 @@ definitions:
   ItemSize:
     type: object
     properties:
-      name:
-        type: string
       price:
         type: number
     required:
-      - name
       - price
   ItemTranslations:
     type: object
