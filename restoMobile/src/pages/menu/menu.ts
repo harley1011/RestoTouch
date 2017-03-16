@@ -202,15 +202,22 @@ export class MenuPage {
   }
 
   order(): void {
+    // if flag == name
     this.presentPrompt();
-    // var payFirst = true;
-    // if (payFirst && this.platform.is('cordova')) {
-    //   this.usePayPal();
-    // } else {
-    //   this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-    //     this.navCtrl.setRoot(WelcomePage);
-    //   });
-    // }
+    console.warn(this.currentOrder);
+    // else, sendOrder
+
+  }
+
+  sendOrder(): void{
+    var payFirst = true;
+    if (payFirst && this.platform.is('cordova')) {
+      this.usePayPal();
+    } else {
+      this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+        this.navCtrl.setRoot(WelcomePage);
+      });
+    }
   }
 
   usePayPal(): void {
@@ -251,8 +258,9 @@ export class MenuPage {
     }
 
   presentPrompt() {
+  var self=this;
   let alert = this.alertCtrl.create({
-    title: 'Please enter your name',
+    title: 'Please enter your name for your order',
     inputs: [
       {
         name: 'name',
@@ -269,15 +277,18 @@ export class MenuPage {
         }
       },
       {
-        text: 'Login',
-        /*handler: data => {
-          if (User.isValid(data.username, data.password)) {
-            // logged in!
+        text: 'Submit',
+        handler: data => {
+          if (data.name) {
+            self.currentOrder.notifyOrderDetail = data.name;
+            this.sendOrder();
+            console.log('not empty');
           } else {
             // invalid login
+            console.log('empty');
             return false;
           }
-        }*/
+        }
       }
     ]
   });
