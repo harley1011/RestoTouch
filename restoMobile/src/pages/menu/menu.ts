@@ -17,6 +17,7 @@ import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
 import { Platform } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-menu',
@@ -39,7 +40,8 @@ export class MenuPage {
               private orderService: OrderService,
               private itemService: ItemService,
               private menuService: MenuService,
-              private platform: Platform) {
+              private platform: Platform,
+              private alertCtrl: AlertController) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
@@ -200,14 +202,15 @@ export class MenuPage {
   }
 
   order(): void {
-    var payFirst = true;
-    if (payFirst && this.platform.is('cordova')) {
-      this.usePayPal();
-    } else {
-      this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-        this.navCtrl.setRoot(WelcomePage);
-      });
-    }
+    this.presentPrompt();
+    // var payFirst = true;
+    // if (payFirst && this.platform.is('cordova')) {
+    //   this.usePayPal();
+    // } else {
+    //   this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
+    //     this.navCtrl.setRoot(WelcomePage);
+    //   });
+    // }
   }
 
   usePayPal(): void {
@@ -246,6 +249,40 @@ export class MenuPage {
           this.currentCategory.items = category.items;
       }
     }
+
+  presentPrompt() {
+  let alert = this.alertCtrl.create({
+    title: 'Please enter your name',
+    inputs: [
+      {
+        name: 'name',
+        placeholder: 'Name',
+        type: 'string'
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: data => {
+          console.log('Cancel clicked');
+        }
+      },
+      {
+        text: 'Login',
+        /*handler: data => {
+          if (User.isValid(data.username, data.password)) {
+            // logged in!
+          } else {
+            // invalid login
+            return false;
+          }
+        }*/
+      }
+    ]
+  });
+  alert.present();
+}
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {
