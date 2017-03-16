@@ -202,11 +202,11 @@ export class MenuPage {
   }
 
   order(): void {
-    // if flag == name
-    this.presentPrompt();
-    console.warn(this.currentOrder);
-    // else, sendOrder
-
+    // if the notification flag is "na" i.e by name then it will prompt user to enter its name
+    if(this.selectedRestaurant.orderNotiFlag=="na"){
+      this.presentPrompt();
+    } else // if notification is not set to na, order will be sent without prompting user's name
+     this.sendOrder();
   }
 
   sendOrder(): void{
@@ -260,7 +260,7 @@ export class MenuPage {
   presentPrompt() {
   var self=this;
   let alert = this.alertCtrl.create({
-    title: 'Please enter your name for your order',
+    title: 'Please enter your name for your order:',
     inputs: [
       {
         name: 'name',
@@ -282,10 +282,8 @@ export class MenuPage {
           if (data.name) {
             self.currentOrder.notifyOrderDetail = data.name;
             this.sendOrder();
-            console.log('not empty');
           } else {
-            // invalid login
-            console.log('empty');
+            // name cannot be empty, prompt will not close until valid entry
             return false;
           }
         }
