@@ -25,9 +25,9 @@ export class OrderService {
       .catch(this.handleError);
   }
 
-  retrieveOrders (id: number): Observable<any> {
+  retrieveOrders (id: number): Observable<Order[]> {
     return this.http.get(this.api.getEndpoint()+ '/retrieveOrders/' + id)
-      .map(this.extractData)
+      .map((response) => this.extractData(response).orders)
       .catch(this.handleError);
   }
 

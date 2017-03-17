@@ -43,10 +43,11 @@ export class UnpaidOrdersComponent implements OnInit {
           });
           //Not working, formatting of returned orders isn't matching the order model
 
-          this.orderService.retrieveOrders(this.id).subscribe(o => {
-            console.log(o);
-            /*this.orders = JSON.parse(orders);
+          this.orderService.retrieveOrders(this.id).subscribe(orders => {
+            console.log(orders);
+            this.orders = orders;
             //this.orders = orders;
+            /*
             this.orders.orderedItems.forEach(orderedItem => {
               orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });*/
