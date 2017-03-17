@@ -7,7 +7,7 @@
   <div class="manage-list-container">
     <div class="row">
       <div *ngFor="let order of orders">
-      	<div *ngIf="order.paid === true" class="col-sm-3">
+      	<div *ngIf="order.status === 'paid'" class="col-sm-3">
 	        <div class="card card-primary card-inverse">
 	          <div class="card-block">
 	            <h4 class="card-title">Order: {{order.id}}</h4>
@@ -19,7 +19,7 @@
 	          </ul>
 	          <div class="card-block">
 	            <h6 class="card-title">Total: {{order.total}}$</h6>
-	            <h6 class="card-title">Paid Status: {{order.paid}}</h6>            
+	            <h6 class="card-title">Status: {{order.status}}</h6>            
 	          </div>
 	        </div>
 	    </div>

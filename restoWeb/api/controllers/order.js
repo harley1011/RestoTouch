@@ -149,6 +149,40 @@ function payForOrder(req, res) {
           },
           ]
         }).then(function (createdOrder) {
+          var restaurantOrders = [];
+
+          redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
+            var internalPromise = new promise(function (internalFulfill, reject) {
+              client.get(restaurantKey, function (err, reply) {
+                if (reply) {
+                  restaurantOrders = JSON.parse(reply);
+                  unlock(lock);
+                  internalFulfill(restaurantOrders);
+                }
+                else {
+                  unlock(lock);
+                  internalFulfill([]);
+                }
+              });
+            });
+
+            internalPromise.then(function (restaurantOrders) {
+              restaurantOrders.push(order);
+              client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
+                if (reply == "OK") {
+                  unlock(lock);
+                  //res.json({success: 1, description: "Order stored", orderId: order.id});
+                  //fulfill(order.id);
+                  notifyNewOrder(restaurantId, order);
+                }
+                else {
+                  //res.json({success: 1, description: "Order failed to store"});
+                  unlock(lock);
+                  reject();
+                }
+              });
+            });
+          });
         return res.json({success: 1, description: "Order paid"});
       });
 

@@ -75,6 +75,5 @@ export class UnpaidOrdersComponent implements OnInit {
       error => {
           this.errorMessage = <any> error;
      });
-
   }
 }

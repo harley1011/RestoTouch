@@ -15,8 +15,8 @@ export class OrderService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  placeOrder (order: any): Observable<GeneralResponse> {
-    let body = JSON.stringify(order);
+  placeOrder (order: Order): Observable<GeneralResponse> {
+    let body = JSON.stringify({order});
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
