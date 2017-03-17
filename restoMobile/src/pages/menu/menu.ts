@@ -51,6 +51,9 @@ export class MenuPage {
     this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
+    // if order notification flag is set "ta" i.e table number, set notifyOrderDetail
+    if (this.selectedRestaurant.orderNotiFlag=="ta")
+      this.currentOrder.notifyOrderDetail = "Table: "+this.orderService.notifyOrderDetail;
   }
 
   isItemDisabled(targetItem, category): boolean {
@@ -292,40 +295,40 @@ export class MenuPage {
 
     // prompt alert for order notification by name
     presentPrompt() {
-    var self=this;
-    let alert = this.alertCtrl.create({
-      title: 'Please enter your name for your order:',
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Name',
-          type: 'string'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
+      var self=this;
+      let alert = this.alertCtrl.create({
+        title: 'Please enter your name for your order:',
+        inputs: [
+          {
+            name: 'name',
+            placeholder: 'Name',
+            type: 'string'
           }
-        },
-        {
-          text: 'Submit',
-          handler: data => {
-            if (data.name) {
-              self.currentOrder.notifyOrderDetail = data.name;
-              this.sendOrder();
-            } else {
-              // name cannot be empty, prompt will not close until valid entry
-              return false;
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Submit',
+            handler: data => {
+              if (data.name) {
+                self.currentOrder.notifyOrderDetail = data.name;
+                this.sendOrder();
+              } else {
+                // name cannot be empty, prompt will not close until valid entry
+                return false;
+              }
             }
           }
-        }
-      ]
-    });
-    alert.present();
-  }
+        ]
+      });
+      alert.present();
+    }
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {
