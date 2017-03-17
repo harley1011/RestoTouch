@@ -14,5 +14,17 @@
   "welcome": {
     "welcomeTitle": "Bienvenue à",
     "poweredBottom": "Propulsé par "
+  },
+
+    "orderNoti": {
+    "byTableTitle": "Veuillez entrer le numéro de la table désigné pour cet appareil:",
+    "byTablePlaceholder":"Numéro de la table",
+    "byNameTile":"Veuillez saisir votre prénom pour votre commande: ",
+    "byNamePlaceholder":"Prénom",
+    "byNumberTitle":"Confirmation de commande",
+    "byNumberSubtitle":"Veuillez prendre note de votre numéro de commande: ",
+    "byNumberButton":"Ok! Fermer",
+    "submitButton":"Soumettre",
+    "cancelButton":"Annuler"
   }
 }
