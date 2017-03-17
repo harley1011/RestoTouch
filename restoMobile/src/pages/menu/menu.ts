@@ -51,6 +51,11 @@ export class MenuPage {
     this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
+
+    // if order notification is by number, must set a number first
+    if(this.selectedRestaurant.orderNotiFlag=="nu"){
+      this.currentOrder.notifyOrderDetail = this.generateOrderNumber();
+    }
   }
 
   isItemDisabled(targetItem, category): boolean {
@@ -234,7 +239,8 @@ export class MenuPage {
             (response) => {
               self.currentOrder.paymentId = response.response.id;
               self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
-                self.navCtrl.setRoot(WelcomePage);
+                //self.navCtrl.setRoot(WelcomePage);
+                this.endOrder();
               });
             }, () => {
 
@@ -273,7 +279,6 @@ export class MenuPage {
     // basic alert for order notification by number
     presentAlert() {
       var self = this;
-      self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
       let alert = this.alertCtrl.create({
         title: 'Order Confirmation',
         subTitle: 'Please take note of your order number: ' + self.currentOrder.notifyOrderDetail,
