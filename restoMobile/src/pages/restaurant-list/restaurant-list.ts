@@ -78,25 +78,32 @@ export class RestaurantListPage {
   }
 
   presentPrompt(restaurant) {
+    var text;
+    this.translate.get('orderNoti').subscribe(
+      value => {
+        // value is our translated string from json files
+        text = value;
+      }
+    )
     let alert = this.alertCtrl.create({
-       title: 'Please enter the table number for this designated device: ',
+       title: text.byTableTitle,
        inputs: [
          {
           name: 'tableNumber',
-          placeholder: 'Table number',
+          placeholder: text.byTablePlaceholder,
           type: 'string'
          }
         ],
        buttons: [
          {
-          text: 'Cancel',
+          text: text.cancelButton,
           role: 'cancel',
           handler: data => {
              console.log('Cancel clicked');
           }
         },
         {
-          text: 'Submit',
+          text: text.submitButton,
           handler: data => {
             if (data.tableNumber) {
               this.orderServices.notifyOrderDetail = data.tableNumber;
