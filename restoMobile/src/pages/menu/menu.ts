@@ -278,11 +278,18 @@ export class MenuPage {
 
     // basic alert for order notification by number
     presentAlert() {
+      var text;
+      this.translate.get('orderNoti').subscribe(
+        value => {
+          // value is our translated string from json files
+          text = value;
+        }
+      )
       var self = this;
       let alert = this.alertCtrl.create({
-        title: 'Order Confirmation',
-        subTitle: 'Please take note of your order number: ' + self.currentOrder.notifyOrderDetail,
-        buttons: ['Ok! Close']
+        title: text.byNumberTitle,
+        subTitle: text.byNumberSubtitle + self.currentOrder.notifyOrderDetail,
+        buttons: [text.byNumberButton]
         });
       alert.present();
     }
