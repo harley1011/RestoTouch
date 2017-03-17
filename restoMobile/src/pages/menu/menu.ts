@@ -306,24 +306,24 @@ export class MenuPage {
     )
       var self=this;
       let alert = this.alertCtrl.create({
-        title: 'Please enter your name for your order:',
+        title: text.byNameTile,
         inputs: [
           {
             name: 'name',
-            placeholder: 'Name',
+            placeholder: text.byNamePlaceholder,
             type: 'string'
           }
         ],
         buttons: [
           {
-            text: 'Cancel',
+            text: text.cancelButton,
             role: 'cancel',
             handler: data => {
               console.log('Cancel clicked');
             }
           },
           {
-            text: 'Submit',
+            text: text.submitButton,
             handler: data => {
               if (data.name) {
                 self.currentOrder.notifyOrderDetail = data.name;
