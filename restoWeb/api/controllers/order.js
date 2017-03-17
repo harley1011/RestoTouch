@@ -119,25 +119,27 @@ function notifyNewOrder(restaurantId, order) {
 }
 
 function payForOrder(req, res) {
-  var restaurantId = extractRestaurantId(req);
+  //var restaurantId = extractRestaurantId(req);
+  var restaurantId = req.body.restaurantId;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
-  return removeRestaurantOrderFromCache(restaurantKey, req.body.orderId).then(function (result) {
+  return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
       var order = result.removedOrder;
+      order.status = req.body.status;
       var orderedItems = [];
       order.orderedItems.forEach(function (orderedItem) {
         orderedItem.sizes.forEach(function (sizeContainer) {
-          var selectedIngredients = [];
+          /*var selectedIngredients = [];
           sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
             selectedIngredients.push({
               ingredientId: ingredientContainer.ingredient.id,
               quantity: ingredientContainer.ingredient.quantity
             });
-          });
+          });*/
           orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
         });
       });
 
-      return orderModel.create({total: order.total, restaurantId: restaurantId, orderedItems: orderedItems},
+      return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems},
         {
           include: [{
             model: orderedItemsModel, as: 'orderedItems', include: [{
@@ -147,7 +149,7 @@ function payForOrder(req, res) {
           },
           ]
         }).then(function (createdOrder) {
-        return res.json({success: 1});
+        return res.json({success: 1, description: "Order paid"});
       });
 
 

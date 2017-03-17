@@ -19,6 +19,7 @@ export class UnpaidOrdersComponent implements OnInit {
 	orders: Array<Order> = [];
   order: Order;
   id: number;
+  errorMessage: string;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -67,10 +68,13 @@ export class UnpaidOrdersComponent implements OnInit {
 
   paid(order: Order) {
     let i = this.orders.indexOf(order);
-    //order.paid = true;
-    //order.restaurantId = this.id;
-    //console.log(order);
-    //this.orderService.placeOrder(order);
     this.orders.splice(i, 1);
+    order.status = 'paid';
+    this.orderService.payForOrder(order).subscribe(generalResponse => {
+          },
+      error => {
+          this.errorMessage = <any> error;
+     });
+
   }
 }

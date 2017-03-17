@@ -41,6 +41,30 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Order"
+  /payForOrder:
+    x-swagger-router-controller: order
+    post:
+      # used as the method name of the controller
+      operationId: payForOrder
+      description: Places an order in database with paid status 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - name: order
+          description: order properties
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/Order"
+
   /retrieveCompletedOrders/{restaurantId}:
     x-swagger-router-controller: order
     get:
@@ -1157,7 +1181,7 @@ definitions:
       status:
         type: string
       paymentId:
-        type: string
+        type: [string, "null"]
   OrderedItem:
     required:
       - item
