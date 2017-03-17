@@ -215,7 +215,8 @@ export class MenuPage {
       this.usePayPal();
     } else {
       this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-        this.navCtrl.setRoot(WelcomePage);
+        //this.navCtrl.setRoot(WelcomePage);
+        this.endOrder();
       });
     }
   }
@@ -247,6 +248,18 @@ export class MenuPage {
     });
   }
 
+  endOrder(): void{
+    var self = this;
+    // if the notification flag is "nu" i.e by number then it will show the order number to the user
+    if(this.selectedRestaurant.orderNotiFlag=="nu"){
+      this.presentAlert();
+      self.navCtrl.setRoot(WelcomePage);
+    } else // if notification is not set to na, order will be sent without prompting user's name
+      self.navCtrl.setRoot(WelcomePage);
+  }
+
+
+
     changeGroup(name: string, category: Category): void {
      if(name == 'all') {
         this.showAllCategories = true;
@@ -257,41 +270,62 @@ export class MenuPage {
       }
     }
 
-  presentPrompt() {
-  var self=this;
-  let alert = this.alertCtrl.create({
-    title: 'Please enter your name for your order:',
-    inputs: [
-      {
-        name: 'name',
-        placeholder: 'Name',
-        type: 'string'
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: data => {
-          console.log('Cancel clicked');
+    // basic alert for order notification by number
+    presentAlert() {
+      var self = this;
+      self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
+      let alert = this.alertCtrl.create({
+        title: 'Order Confirmation',
+        subTitle: 'Please take note of your order number: ' + self.currentOrder.notifyOrderDetail,
+        buttons: ['Ok! Close']
+        });
+      alert.present();
+    }
+
+    // generated order number for order notfication by number
+    // generation is based on time which will minimized number collision
+    generateOrderNumber() {
+      var date = new Date();
+      return date.getSeconds()+""+date.getMilliseconds();
+    }
+
+
+    // prompt alert for order notification by name
+    presentPrompt() {
+    var self=this;
+    let alert = this.alertCtrl.create({
+      title: 'Please enter your name for your order:',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name',
+          type: 'string'
         }
-      },
-      {
-        text: 'Submit',
-        handler: data => {
-          if (data.name) {
-            self.currentOrder.notifyOrderDetail = data.name;
-            this.sendOrder();
-          } else {
-            // name cannot be empty, prompt will not close until valid entry
-            return false;
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Submit',
+          handler: data => {
+            if (data.name) {
+              self.currentOrder.notifyOrderDetail = data.name;
+              this.sendOrder();
+            } else {
+              // name cannot be empty, prompt will not close until valid entry
+              return false;
+            }
           }
         }
-      }
-    ]
-  });
-  alert.present();
-}
+      ]
+    });
+    alert.present();
+  }
 }
 
 function compareIngredientGroup (group1: IngredientGroup, group2: IngredientGroup) {
