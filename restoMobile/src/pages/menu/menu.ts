@@ -18,6 +18,7 @@ import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
 import { Platform } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   selector: 'page-menu',
@@ -41,7 +42,8 @@ export class MenuPage {
               private itemService: ItemService,
               private menuService: MenuService,
               private platform: Platform,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private translate: TranslateService) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
@@ -295,6 +297,13 @@ export class MenuPage {
 
     // prompt alert for order notification by name
     presentPrompt() {
+    var text;
+    this.translate.get('orderNoti').subscribe(
+      value => {
+        // value is our translated string from json files
+        text = value;
+      }
+    )
       var self=this;
       let alert = this.alertCtrl.create({
         title: 'Please enter your name for your order:',
