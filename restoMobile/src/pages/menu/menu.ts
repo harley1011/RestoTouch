@@ -51,11 +51,6 @@ export class MenuPage {
     this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
-
-    // if order notification is by number, must set a number first
-    if(this.selectedRestaurant.orderNotiFlag=="nu"){
-      this.currentOrder.notifyOrderDetail = this.generateOrderNumber();
-    }
   }
 
   isItemDisabled(targetItem, category): boolean {
@@ -210,8 +205,10 @@ export class MenuPage {
     // if the notification flag is "na" i.e by name then it will prompt user to enter its name
     if(this.selectedRestaurant.orderNotiFlag=="na"){
       this.presentPrompt();
-    } else // if notification is not set to na, order will be sent without prompting user's name
+    } else { // if notification is not set to na, order will be sent without prompting user's name
+     this.endOrder(); // this is for the notification is "nu" i.e by number
      this.sendOrder();
+    }
   }
 
   sendOrder(): void{
@@ -220,8 +217,7 @@ export class MenuPage {
       this.usePayPal();
     } else {
       this.orderService.placeOrder(this.currentOrder).subscribe(response=> {
-        //this.navCtrl.setRoot(WelcomePage);
-        this.endOrder();
+        this.navCtrl.setRoot(WelcomePage);
       });
     }
   }
@@ -239,8 +235,7 @@ export class MenuPage {
             (response) => {
               self.currentOrder.paymentId = response.response.id;
               self.orderService.placeOrder(self.currentOrder).subscribe(response=> {
-                //self.navCtrl.setRoot(WelcomePage);
-                this.endOrder();
+                self.navCtrl.setRoot(WelcomePage);
               });
             }, () => {
 
@@ -254,14 +249,14 @@ export class MenuPage {
     });
   }
 
+
   endOrder(): void{
     var self = this;
     // if the notification flag is "nu" i.e by number then it will show the order number to the user
     if(this.selectedRestaurant.orderNotiFlag=="nu"){
+      self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
       this.presentAlert();
-      self.navCtrl.setRoot(WelcomePage);
-    } else // if notification is not set to na, order will be sent without prompting user's name
-      self.navCtrl.setRoot(WelcomePage);
+    }
   }
 
 
