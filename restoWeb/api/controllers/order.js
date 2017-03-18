@@ -121,7 +121,6 @@ function notifyNewOrder(restaurantId, order) {
 function payForOrder(req, res) {
   //var restaurantId = extractRestaurantId(req);
   var restoMode = req.swagger.params.restoMode.value;
-  console.log(restoMode);
   var restaurantId = req.body.restaurantId;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
@@ -130,13 +129,17 @@ function payForOrder(req, res) {
       var orderedItems = [];
       order.orderedItems.forEach(function (orderedItem) {
         orderedItem.sizes.forEach(function (sizeContainer) {
-          /*var selectedIngredients = [];
-          sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
-            selectedIngredients.push({
-              ingredientId: ingredientContainer.ingredient.id,
-              quantity: ingredientContainer.ingredient.quantity
+          var selectedIngredients = [];
+          if(sizeContainer.selectedIngredients) {
+            console.log("in ingredients loop");
+            sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+              selectedIngredients.push({
+                ingredientId: ingredientContainer.ingredient.id,
+                //quantity: ingredientContainer.ingredient.quantity
+              });
             });
-          });*/
+          }
+
           orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
         });
       });
@@ -153,7 +156,6 @@ function payForOrder(req, res) {
         }).then(function (createdOrder) {
 
           if(restoMode === 'kce') {
-            console.log('kce confirmed');
             var restaurantOrders = [];
             redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
               var internalPromise = new promise(function (internalFulfill, reject) {

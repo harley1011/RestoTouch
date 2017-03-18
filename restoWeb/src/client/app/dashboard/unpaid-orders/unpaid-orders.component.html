@@ -2,6 +2,11 @@
   <div class="manage-header">
     <h2>{{ 'unpaidOrders.title' | translate }}</h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
+    <div class="row">
+      <div class="manage-button">
+        <button class="btn btn-default btn-normal" (click)="itemVisible()" >Toggle item visibility</button>
+      </div>
+    </div>
     <hr>
   </div>
   <div class="manage-list-container">
@@ -13,7 +18,7 @@
               <h4 class="card-title">Order: {{order.id}}</h4>
               <button class="btn btn-success" (click)="paid(order)">Paid</button>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul [hidden] = "!itemsVisible" class="list-group list-group-flush">
               <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
               {{orderedItem.item.selectedTranslation ? orderedItem.item.selectedTranslation.name : "No Translation"}}</li>
             </ul>
