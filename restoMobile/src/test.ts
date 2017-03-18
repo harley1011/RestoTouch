@@ -11,7 +11,7 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
+import { App, Config, Form, IonicModule, Keyboard, DomController, GestureController, MenuController, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { ConfigMock, NavMock, NavParamMock, PlatformMock } from './mocks';
 import { TranslateModule} from 'ng2-translate/ng2-translate';
 import { AuthHttpService } from './pages/services/auth-http.services';
@@ -70,7 +70,7 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, GestureController, MenuController,
+        App, Form, Keyboard, DomController, GestureController, MenuController, AlertController
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
@@ -106,4 +106,5 @@ export class TestUtils {
       el.dispatchEvent(evObj);
     }
   }
+
 }
