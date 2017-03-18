@@ -41,7 +41,7 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Order"
-  /payForOrder:
+  /payForOrder/{restoMode}:
     x-swagger-router-controller: order
     post:
       # used as the method name of the controller
@@ -64,6 +64,11 @@ paths:
           required: false
           schema:
             $ref: "#/definitions/Order"
+        - name: restoMode
+          type: string
+          description: restaurant mode
+          in: path
+          required: true
 
   /retrieveCompletedOrders/{restaurantId}:
     x-swagger-router-controller: order

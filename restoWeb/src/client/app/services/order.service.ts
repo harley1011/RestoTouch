@@ -31,11 +31,11 @@ export class OrderService {
       .catch(this.handleError);
   }
 
-  payForOrder (order: Order): Observable<GeneralResponse> {
+  payForOrder (restoMode: string, order: Order): Observable<GeneralResponse> {
     let body = JSON.stringify(order);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.api.getEndpoint() + '/payForOrder', body, options)
+    return this.http.post(this.api.getEndpoint() + '/payForOrder/' + restoMode, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

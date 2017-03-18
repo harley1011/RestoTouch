@@ -120,6 +120,8 @@ function notifyNewOrder(restaurantId, order) {
 
 function payForOrder(req, res) {
   //var restaurantId = extractRestaurantId(req);
+  var restoMode = req.swagger.params.restoMode.value;
+  console.log(restoMode);
   var restaurantId = req.body.restaurantId;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
@@ -149,44 +151,46 @@ function payForOrder(req, res) {
           },
           ]
         }).then(function (createdOrder) {
-          var restaurantOrders = [];
 
-          redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
-            var internalPromise = new promise(function (internalFulfill, reject) {
-              client.get(restaurantKey, function (err, reply) {
-                if (reply) {
-                  restaurantOrders = JSON.parse(reply);
-                  unlock(lock);
-                  internalFulfill(restaurantOrders);
-                }
-                else {
-                  unlock(lock);
-                  internalFulfill([]);
-                }
+          if(restoMode === 'kce') {
+            console.log('kce confirmed');
+            var restaurantOrders = [];
+            redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
+              var internalPromise = new promise(function (internalFulfill, reject) {
+                client.get(restaurantKey, function (err, reply) {
+                  if (reply) {
+                    restaurantOrders = JSON.parse(reply);
+                    unlock(lock);
+                    internalFulfill(restaurantOrders);
+                  }
+                  else {
+                    unlock(lock);
+                    internalFulfill([]);
+                  }
+                });
+              });
+
+              internalPromise.then(function (restaurantOrders) {
+                restaurantOrders.push(order);
+                client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
+                  if (reply == "OK") {
+                    unlock(lock);
+                    //res.json({success: 1, description: "Order stored", orderId: order.id});
+                    //fulfill(order.id);
+                    notifyNewOrder(restaurantId, order);
+                  }
+                  else {
+                    //res.json({success: 1, description: "Order failed to store"});
+                    unlock(lock);
+                    reject();
+                  }
+                });
               });
             });
+          }
 
-            internalPromise.then(function (restaurantOrders) {
-              restaurantOrders.push(order);
-              client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
-                if (reply == "OK") {
-                  unlock(lock);
-                  //res.json({success: 1, description: "Order stored", orderId: order.id});
-                  //fulfill(order.id);
-                  notifyNewOrder(restaurantId, order);
-                }
-                else {
-                  //res.json({success: 1, description: "Order failed to store"});
-                  unlock(lock);
-                  reject();
-                }
-              });
-            });
-          });
         return res.json({success: 1, description: "Order paid"});
       });
-
-
     }
   )
 }
