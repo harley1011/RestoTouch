@@ -25,7 +25,7 @@ describe('Pages: MenuPage', () => {
     expect(instance).not.toBeNull();
   });
 
-  // testing condition branches of method order()
+  // test condition branches of method order()
   // pass if condition
   it('should call method "presentPrompt" for "na" notification', () => {
     spyOn(instance, 'presentPrompt');
@@ -45,6 +45,20 @@ describe('Pages: MenuPage', () => {
     expect(instance.presentPrompt).not.toHaveBeenCalled();
     expect(instance.notifyAtEndOrder).toHaveBeenCalled();
     expect(instance.sendOrder).toHaveBeenCalled();
+  });
+
+  // test condition branches of method notifyAtEndOrder()
+  it('it shoud call "presentAlert" method for "nu" notification', () => {
+    spyOn(instance, 'presentAlert');
+    instance.selectedRestaurant.orderNotiFlag = "nu";
+    instance.notifyAtEndOrder();
+    expect(instance.presentAlert).toHaveBeenCalled();
+  });
+  it('it NOT shoud call presentAlert method for other notification not "nu"', () => {
+    spyOn(instance, 'presentAlert');
+    instance.selectedRestaurant.orderNotiFlag = "ta";
+    instance.notifyAtEndOrder();
+    expect(instance.presentAlert).not.toHaveBeenCalled();
   });
 
 });
