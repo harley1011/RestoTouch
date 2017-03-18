@@ -44,17 +44,13 @@ export class KitchenComponent implements OnInit {
             });
             this.orders.push(this.order);
           });
-          /* Not working, formatting of returned orders isn't matching the order model
 
-          this.orderService.retrieveOrders(this.id).subscribe((orders: any) => {
-            console.log(orders);
-            //this.orders = JSON.parse(orders);
-            
-            this.order.orderedItems.forEach(orderedItem => {
-              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-            });
-          })
-          */
+
+           //Get previously cached orders
+           this.orderService.retrieveOrders(this.id).subscribe(orders => {
+           this.orders = orders;
+           });
+
         }
     });
   }
