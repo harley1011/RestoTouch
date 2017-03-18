@@ -70,7 +70,7 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, GestureController, MenuController, AlertController
+        App, Form, Keyboard, DomController, GestureController, MenuController, AlertController,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
