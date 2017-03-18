@@ -48,19 +48,23 @@ describe('Pages: MenuPage', () => {
   });
 
   // test condition branches of method notifyAtEndOrder()
-  it('it shoud call "presentAlert" method for "nu" notification', () => {
+  it('should call "presentAlert" method for "nu" notification', () => {
     spyOn(instance, 'presentAlert');
     instance.selectedRestaurant.orderNotiFlag = "nu";
     instance.notifyAtEndOrder();
     expect(instance.presentAlert).toHaveBeenCalled();
   });
-  it('it NOT shoud call presentAlert method for other notification not "nu"', () => {
+  it('should NOT call presentAlert method for other notifications not "nu"', () => {
     spyOn(instance, 'presentAlert');
     instance.selectedRestaurant.orderNotiFlag = "ta";
     instance.notifyAtEndOrder();
     expect(instance.presentAlert).not.toHaveBeenCalled();
   });
 
+  // test method generateOrderNumber()
+  it('should return a number as a string', () => {
+    expect(instance.generateOrderNumber()).toEqual(jasmine.any(String));
+  });
 });
 
 

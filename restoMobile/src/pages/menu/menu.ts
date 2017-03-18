@@ -277,6 +277,7 @@ export class MenuPage {
 
     // basic alert for order notification by number
     presentAlert() {
+       // for ng2-translate, get text from translation from json files
       var text;
       this.translate.get('orderNoti').subscribe(
         value => {
@@ -303,6 +304,7 @@ export class MenuPage {
 
     // prompt alert for order notification by name
     presentPrompt() {
+    // for ng2-translate, get text from translation from json files
     var text;
     this.translate.get('orderNoti').subscribe(
       value => {
