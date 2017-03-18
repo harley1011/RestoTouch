@@ -62,11 +62,29 @@ export class KitchenComponent implements OnInit {
   }
 
   onSelectLanguage(language: Language) {
+    //A
     this.orders.forEach(order => {
+      //B
       order.orderedItems.forEach(orderedItem => {
         orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === language.languageCode);
+        //C
+        orderedItem.item.ingredientGroups.forEach(ingredientGroup => {
+          //1
+          ingredientGroup.selectedTranslation = ingredientGroup.translations.find(translation => translation.languageCode === language.languageCode);
+          //2
+          ingredientGroup.ingredients.forEach(ingredient => {
+            ingredient.selectedTranslation = ingredient.translations.find(translation => translation.languageCode === language.languageCode);
+          })
+        })
+        //B
+        orderedItem.sizes.forEach( size => {
+          size.size.selectedTranslation = size.size.translations.find(translation => translation.languageCode === language.languageCode);
+        })
+
       });
     });
   }
+
+
 
 }
