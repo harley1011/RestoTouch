@@ -5,6 +5,7 @@ import { TranslateService } from 'ng2-translate';
 import { OrderService } from '../../services/order.service';
 import { OrderNotifierService } from '../../services/order-notifier.service';
 import { Order } from '../../shared/models/order';
+import { RestaurantService } from '../../services/restaurant.service';
 
 import { TranslationSelectComponent } from '../../shared/translation-select/translation-select.component';
 import { Language } from './../../shared/models/language';
@@ -21,12 +22,14 @@ export class KitchenComponent implements OnInit {
   orders: Array<Order> = [];
   order: Order;
   id: number;
+  restoMode: string;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
 	constructor(private orderService: OrderService,
               private orderNotifierService: OrderNotifierService,
+              private restaurantService: RestaurantService,
 				      private route: ActivatedRoute,
 				      private translate: TranslateService) {
 
@@ -36,6 +39,9 @@ export class KitchenComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
         if (params['id']) {
           this.id = params['id'];
+          this.restaurantService.getRestaurant(this.id).subscribe( restaurant => {
+            this.restoMode = restaurant.kitCashModeFlag;
+          })
           this.orderNotifierService.connectToOrderNotifier(this.id).subscribe((order: any) => {
             this.order = JSON.parse(order);
             console.log(this.order);
