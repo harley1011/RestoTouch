@@ -24,6 +24,7 @@ export class UnpaidOrdersComponent implements OnInit {
   order: Order;
   restoMode: string;
   id: number;
+  itemsVisible: boolean = true;
   errorMessage: string;
 
   @ViewChild(TranslationSelectComponent)
@@ -83,5 +84,9 @@ export class UnpaidOrdersComponent implements OnInit {
       error => {
           this.errorMessage = <any> error;
      });
+  }
+
+  itemVisible() {
+    this.itemsVisible = !this.itemsVisible;
   }
 }
