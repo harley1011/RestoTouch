@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { App, Nav, NavController, NavParams, MenuController, Platform} from 'ionic-angular';
+import { App, Nav, NavController, NavParams, MenuController, Platform, AlertController} from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
@@ -9,7 +9,6 @@ import { MenuListPage } from '../menu-list/menu-list';
 import { Page2 } from '../page2/page2';
 
 import { AuthService } from '../services/auth.service';
-import { AlertController } from 'ionic-angular';
 import { OrderService } from '../services/order.service';
 
 

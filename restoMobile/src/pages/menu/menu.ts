@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { PayPal, PayPalPayment, PayPalConfiguration } from "ionic-native";
 import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
@@ -17,7 +17,6 @@ import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
 import { Platform } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
 import {TranslateService} from 'ng2-translate';
 
 @Component({
@@ -211,7 +210,7 @@ export class MenuPage {
     if(this.selectedRestaurant.orderNotiFlag=="na"){
       this.presentPrompt();
     } else { // if notification is not set to na, order will be sent without prompting user's name
-     this.endOrder(); // this is for the notification is "nu" i.e by number
+     this.notifyAtEndOrder(); // this is for the notification is "nu" i.e by number
      this.sendOrder();
     }
   }
@@ -255,14 +254,14 @@ export class MenuPage {
   }
 
 
-  endOrder(): void{
-    var self = this;
-    // if the notification flag is "nu" i.e by number then it will show the order number to the user
-    if(this.selectedRestaurant.orderNotiFlag=="nu"){
-      self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
-      this.presentAlert();
+    notifyAtEndOrder(): void{
+      var self = this;
+      // if the notification flag is "nu" i.e by number then it will show the order number to the user
+      if(this.selectedRestaurant.orderNotiFlag=="nu"){
+        self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
+        this.presentAlert();
+      }
     }
-  }
 
 
 
