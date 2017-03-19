@@ -18,6 +18,7 @@ export class IngredientGroupPage implements OnInit {
   complexOrderCallback: any;
   orderableIngredients: Array<OrderableIngredient>;
   selectedIngredients: SelectedIngredients;
+  modify: boolean;
   ingredientCount: number;
   total: number;
   totalStr: string;
@@ -35,6 +36,7 @@ export class IngredientGroupPage implements OnInit {
 
     this.complexOrderCallback = this.navParams.get('callback');
     this.selectedIngredients = this.navParams.get('ingredients');
+    this.modify = this.navParams.get('modify');
     this.ingredientCount = 0;
     this.total = this.navParams.get('total');
     this.totalStr = this.total.toFixed(2);
@@ -43,6 +45,14 @@ export class IngredientGroupPage implements OnInit {
   }
 
   initOrderableIngredients(): void {
+    if (!this.modify) {
+      this.newOrderableIngredients();
+    } else {
+      this.modifyOrderableIngredients();
+    }
+  }
+
+  newOrderableIngredients(): void {
     this.orderableIngredients = [];
 
     let ingredient: Ingredient;
@@ -67,7 +77,40 @@ export class IngredientGroupPage implements OnInit {
     if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
       this.disableIngredients();
     }
+  }
 
+  modifyOrderableIngredients(): void {
+    this.orderableIngredients = [];
+
+    let ingredient: Ingredient;
+    let selectedIngredient: any;
+    let orderableIngredient: OrderableIngredient;
+    for (var i = 0; i < this.ingredientGroup.ingredients.length; i++) {
+      ingredient = this.ingredientGroup.ingredients[i];
+      selectedIngredient = null;
+      for (var j = 0; j < this.selectedIngredients.ingredients.length; j++) {
+        selectedIngredient = this.selectedIngredients.ingredients[j];
+        if (selectedIngredient.ingredient.id != ingredient.id) {
+          selectedIngredient = null;
+          continue;
+        }
+
+        orderableIngredient = new OrderableIngredient(ingredient, false, 1);
+        this.ingredientCount++;
+        this.orderableIngredients.push(orderableIngredient);
+        break;
+      }
+
+      if (selectedIngredient != null) continue;
+
+      orderableIngredient = new OrderableIngredient(ingredient, false, 0);
+      this.orderableIngredients.push(orderableIngredient);
+    }
+
+    // check if need to disable
+    if (this.ingredientGroup.maxNumberOfIngredients == this.ingredientCount) {
+      this.disableIngredients();
+    }
   }
 
   previousIngredientGroup(): void {
@@ -105,6 +148,7 @@ export class IngredientGroupPage implements OnInit {
       language: this.selectedLanguage,
       callback: this.complexOrderCallback,
       ingredients: this.selectedIngredients,
+      modify: this.modify,
       total: this.total
     }, {
       animate: true,
