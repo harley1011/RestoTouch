@@ -88,8 +88,17 @@ export class NavParamMock {
         ]
       };
     }
+
     if (param === 'total') {
       return 20.00;
+    }
+
+    if (param === 'order') {
+      return {
+        orderedItems: [],
+        total: 0,
+        paymentId: ''
+      }
     }
 
   }

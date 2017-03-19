@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+      <ion-buttons start>
+        <button (click)="back()" ion-button icon-left clear>
+          <ion-icon name="arrow-back"></ion-icon>
+          Back
+        </button>
+      </ion-buttons>
+      <ion-title>Order Food Items</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item id="food-item" *ngFor="let food of foodList">
+      <p id="food-item-name">{{food.item.selectedTranslation.name}} ({{food.size.size.selectedTranslation.name}}) - ${{food.price.toFixed(2)}}</p>
+      <div *ngIf="food.size.selectedIngredients">
+        <p *ngFor="let ingredient of food.size.selectedIngredients.ingredients">- {{ingredient.ingredient.translations[0].name}}</p>
+      </div>
+      <button *ngIf="food.size.selectedIngredients" ion-button color="default" (click)="modify(food.item, food.size)" outline item-right>Modify</button>
+      <button ion-button color="danger" (click)="remove(food.item, food.size)" outline item-right>Remove</button>
+    </ion-item>
+  </ion-list>
+</ion-content>
