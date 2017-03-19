@@ -43,7 +43,7 @@ export class UnpaidOrdersComponent implements OnInit {
           this.id = params['id'];
           this.restaurantService.getRestaurant(this.id).subscribe( restaurant => {
             this.restoMode = restaurant.kitCashModeFlag;
-          })
+          });
           this.orderNotifierService.connectToOrderNotifier(this.id).subscribe((order: any) => {
             this.order = JSON.parse(order);
             console.log(this.order);
@@ -59,9 +59,9 @@ export class UnpaidOrdersComponent implements OnInit {
             this.orders = orders;
             /*
             this.orders.orderedItems.forEach(orderedItem => {
-              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+             orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });*/
-            
+
           })
         }
     });
