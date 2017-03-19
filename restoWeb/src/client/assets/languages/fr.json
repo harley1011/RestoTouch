@@ -59,6 +59,7 @@
 
   "restaurant":{
     "titleManage":"Gestion des restaurants",
+    "employeeTitle": "Sélectionner un restaurant pour visionner ses commandes",
     "sousTitleManage":"Sélectionner le restaurant que vous désirez faire des changements",
     "addRestoButton":"+ Ajouter un Restaurant",
     "titleCreate": "Création d'un restaurant",
@@ -261,6 +262,9 @@
 
   "unpaidOrders": {
     "title": "Liste de commandes non-payées"
-  }
+  },
 
+  "kitchen": {
+    "title": "Commandes à préparer"
+  }
 }
