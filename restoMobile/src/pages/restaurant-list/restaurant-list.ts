@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { App, Nav, NavController, NavParams, MenuController, Platform} from 'ionic-angular';
+import { App, Nav, NavController, NavParams, MenuController, Platform, AlertController} from 'ionic-angular';
 import { Restaurant } from '../shared/models/restaurant';
 import { RestaurantService } from '../services/restaurant.service';
 import {TranslateService} from 'ng2-translate';
@@ -9,6 +9,8 @@ import { MenuListPage } from '../menu-list/menu-list';
 import { Page2 } from '../page2/page2';
 
 import { AuthService } from '../services/auth.service';
+import { OrderService } from '../services/order.service';
+
 
 @Component({
   selector: 'page-restaurant-list',
@@ -34,7 +36,9 @@ export class RestaurantListPage {
               private restaurantListService: RestaurantService,
               private translate: TranslateService,
               public menuCtrl: MenuController,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private alertCtrl: AlertController,
+              private orderServices: OrderService) {
       translate.setDefaultLang('en');
   }
 
@@ -57,10 +61,61 @@ export class RestaurantListPage {
         );
       }
 
-  itemTapped(event, restaurant) {
+  itemTapped(event, restaurant): void {
     this.restaurantListService.selectedRestaurant = restaurant;
-    this.navCtrl.push(MenuListPage, {
+    // if order notification flag is set to "ta" i.e table number, it will prompt owner to enter table number
+    if (this.restaurantListService.selectedRestaurant.orderNotiFlag == 'ta'){
+      this.presentPrompt(restaurant);
+    } else // if not set to "ta", straight throught
+      this.nextToMenu(restaurant);
+  }
+
+  nextToMenu(restaurant) {
+      this.navCtrl.push(MenuListPage, {
       item: restaurant
     });
+  }
+
+  presentPrompt(restaurant) {
+    var text;
+    this.translate.get('orderNoti').subscribe(
+      value => {
+        // value is our translated string from json files
+        text = value;
+      }
+    )
+    let alert = this.alertCtrl.create({
+       title: text.byTableTitle,
+       inputs: [
+         {
+          name: 'tableNumber',
+          placeholder: text.byTablePlaceholder,
+          type: 'string'
+         }
+        ],
+       buttons: [
+         {
+          text: text.cancelButton,
+          role: 'cancel',
+          handler: data => {
+             console.log('Cancel clicked');
+          }
+        },
+        {
+          text: text.submitButton,
+          handler: data => {
+            if (data.tableNumber) {
+              this.orderServices.notifyOrderDetail = data.tableNumber;
+              console.log(this.orderServices.notifyOrderDetail);
+              this.nextToMenu(restaurant);
+            } else {
+              // tableNumber cannot be empty, prompt will not close until valid entry
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

@@ -117,6 +117,7 @@ var restaurants = [
   {
     "address": "Burger Street",
     "kitCashModeFlag": "cnk",
+    "orderNotiFlag": "na",
     "paypalId": "2322323kjh",
     "supportedLanguages": [
       {
@@ -750,5 +751,3 @@ setTimeout(function () {
   }
 
 }, 5000)
-
-
