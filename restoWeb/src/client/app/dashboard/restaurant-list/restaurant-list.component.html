@@ -1,7 +1,7 @@
 <div id="restaurantList">
   <div class="manage-header">
     <h2 *ngIf="!isEmployee">{{ 'restaurant.titleManage' | translate}}</h2>
-    <h2 *ngIf="isEmployee">Restaurants</h2>
+    <h2 *ngIf="isEmployee">{{ 'restaurant.employeeTitle' | translate }}</h2>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <div *ngIf="!isEmployee" class="manage-button">
       <button id="addRestoBtn" (click)="add()" class="btn btn-success btn-green">{{ 'restaurant.addRestoButton' | translate}}</button>

@@ -20,6 +20,8 @@ import {SettingsRoutes} from './settings/account-settings.routes';
 import {ProfileRoutes} from './profile/profile.routes';
 
 import {UnpaidOrdersRoutes} from './unpaid-orders/unpaid-orders.routes';
+import {KitchenCashierSelectRoutes} from './kitchen-cashier-select/kitchen-cashier-select.routes';
+import {KitchenRoutes} from './kitchen/kitchen.routes';
 import {OrdersRoutes} from './order-list/order-list.routes';
 import {OrderRoutes} from './order/order.routes';
 
@@ -42,6 +44,8 @@ const dashboardRoutes: Routes = [
       .concat(SettingsRoutes)
       .concat(ProfileRoutes)
       .concat(UnpaidOrdersRoutes)
+      .concat(KitchenCashierSelectRoutes)
+      .concat(KitchenRoutes)
       .concat(OrdersRoutes)
       .concat(OrderRoutes),
     canActivate: [AuthService],
