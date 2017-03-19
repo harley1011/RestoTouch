@@ -14,5 +14,17 @@
   "welcome": {
     "welcomeTitle": "Welcome to",
     "poweredBottom": "Powered by "
+  },
+
+  "orderNoti": {
+    "byTableTitle": "Please enter the designated table number for this device: ",
+    "byTablePlaceholder":"Table number",
+    "byNameTile":"Please enter your name for your order: ",
+    "byNamePlaceholder":"Name",
+    "byNumberTitle":"Order Confirmation",
+    "byNumberSubtitle":"Please take note of your order number: ",
+    "byNumberButton":"Ok! Close",
+    "submitButton":"Submit",
+    "cancelButton":"Cancel"
   }
 }

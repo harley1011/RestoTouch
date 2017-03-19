@@ -10,6 +10,7 @@ export class Order {
     public paymentId: string,
     public id?: number,
     public restaurantId?: number,
-    public createdAt?: Date
+    public createdAt?: Date,
+    public notifyOrderDetail?: string
   ) { }
 }

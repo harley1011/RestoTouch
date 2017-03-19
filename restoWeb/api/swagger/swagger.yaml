@@ -1383,6 +1383,8 @@ definitions:
           "$ref": "#/definitions/Payment"
       kitCashModeFlag:
         type: string
+      orderNotiFlag:
+        type: string
     required:
       - address
   MenuListResponse:
