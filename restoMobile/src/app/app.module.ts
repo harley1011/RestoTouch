@@ -3,7 +3,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { MenuListPage } from '../pages/menu-list/menu-list';
 import { MenuPage } from '../pages/menu/menu';
-import { FoodListPage } from '../pages/food-list/food-list';
 import { IngredientGroupPage } from '../pages/ingredient-group/ingredient-group';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -32,7 +31,6 @@ export function createTranslateLoader(http: Http) {
     MyApp,
     MenuListPage,
     MenuPage,
-    FoodListPage,
     IngredientGroupPage,
     WelcomePage,
     SettingsPage,
@@ -54,7 +52,6 @@ export function createTranslateLoader(http: Http) {
     MyApp,
     MenuListPage,
     MenuPage,
-    FoodListPage,
     IngredientGroupPage,
     WelcomePage,
     SettingsPage,
