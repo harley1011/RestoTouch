@@ -8,6 +8,7 @@ export class Order {
     public total: number,
     public paymentId: string,
     public id?: number,
-    public createdAt?: Date
+    public createdAt?: Date,
+    public notifyOrderDetail?: string
   ) { }
 }

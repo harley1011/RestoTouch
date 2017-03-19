@@ -10,6 +10,8 @@ import  {RestaurantService} from '../services/restaurant.service';
 @Injectable()
 export class OrderService {
 
+  public notifyOrderDetail: string;
+
   constructor(private http: AuthHttpService, private api: ApiEndpointService, private restaurantListService: RestaurantService,) {
   }
 
