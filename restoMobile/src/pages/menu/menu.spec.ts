@@ -3,10 +3,8 @@ import { async, ComponentFixture } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { MenuPage } from './menu';
 
-
-
 let fixture: ComponentFixture<MenuPage> = null;
-let instance: any = null;//MenuPage = null;
+let instance: any = MenuPage;//MenuPage = null;
 
 describe('Pages: MenuPage', () => {
 
@@ -24,6 +22,21 @@ describe('Pages: MenuPage', () => {
     expect(fixture).not.toBeNull();
     expect(instance).not.toBeNull();
   });
+
+  it('adds a Simple Order', () => {
+
+    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
+    let orderableSizeMock = {size: null, count: 1};
+
+    spyOn(instance.currentOrder,'addOrder');
+
+    instance.addSimpleOrder(orderableItemMock, orderableSizeMock);
+
+    expect(instance.currentOrder.addOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null, 0);
+    expect(orderableSizeMock.count).toEqual(2);
+
+  });
+
 
 });
 
