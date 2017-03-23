@@ -27,6 +27,8 @@ export class RestaurantComponent implements OnInit {
   languages: Array<Language>;
   selectedLanguage: string;
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
+  kitchenMode = true; // since the default for kitchen mode is alredy set to 'kce'
+  numOfKitchenStation = 0;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -286,4 +288,14 @@ export class RestaurantComponent implements OnInit {
 
     return timeConflict;
   }
+
+  activateKitchenMode(s: string): void {
+    if (s === 'cnk') {
+     this.kitchenMode = false;
+    } else
+      this.kitchenMode = true;
+  }
+
+
+
 }

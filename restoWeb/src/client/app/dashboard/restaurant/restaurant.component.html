@@ -427,9 +427,12 @@
             </div>
         </div>
         <div class="radio form-group">
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kco" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kce" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt2' | translate}} <span class="label label-default">Default</span></label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kco" [(ngModel)]="restaurant.kitCashModeFlag" (change)="activateKitchenMode('kco')"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kce" [(ngModel)]="restaurant.kitCashModeFlag" (change)="activateKitchenMode('kce')"> {{ 'restaurant.kitCashModeOpt2' | translate}} <span class="label label-default">Default</span></label>
+             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag" (change)="activateKitchenMode('cnk')"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
+       </div>
+       <div *ngIf="kitchenMode">
+          <span>How many kitchen stations do you need?</span>
        </div>
        <br/><br/>
       </div>
