@@ -21,15 +21,14 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
-        <label class="filter-label">Filter {{filterQuery}}
+        <label class="filter-label">Filter
           <input id="filterquery" class="form-control filter-input" name="filterquery"
-                 [(ngModel)]="filterQuery" name="filterquery" #filterquery="ngModel"
-                 (ngModelChange)="executeQuery()">
+                 [(ngModel)]="filterQuery" name="filterquery" #filterquery="ngModel">
         </label>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-3 col-md-2 col-lg-2" style="max-width:300px;" *ngFor="let item of items">
+      <div class="col-sm-3 col-md-2 col-lg-2" style="max-width:300px;" *ngFor="let item of items | itemFilter:filterQuery:sortAscending">
         <div (click)="modify(item)" class="card">
           <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl"/>
           <div class="card-block">

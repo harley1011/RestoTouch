@@ -63,35 +63,5 @@ export class ItemListComponent implements OnInit {
         this.sortAscending = 1;
         break;
     }
-
-    if (this.sortAscending == 1) {
-      this.items.sort(compareItemAscending);
-    } else {
-      this.items.sort(compareItemDescending);
-    }
   }
-
-  executeQuery(): void {
-    console.log('EXECUTE QUERY');
-  }
-}
-
-function compareItemAscending (item1: Item, item2: Item) {
-  if (item1.selectedTranslation.name < item2.selectedTranslation.name) {
-    return -1;
-  } else if (item1.selectedTranslation.name > item2.selectedTranslation.name) {
-    return 1;
-	} else {
-		return 0;
-	}
-}
-
-function compareItemDescending (item1: Item, item2: Item) {
-  if (item1.selectedTranslation.name > item2.selectedTranslation.name) {
-    return -1;
-  } else if (item1.selectedTranslation.name < item2.selectedTranslation.name) {
-    return 1;
-	} else {
-		return 0;
-	}
 }
