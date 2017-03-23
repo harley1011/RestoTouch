@@ -57,3 +57,10 @@
   margin-bottom: 20px;
   margin-left: 20px;
 }
+
+.item-name {
+  text-overflow: clip;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap
+}
