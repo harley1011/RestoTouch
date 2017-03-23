@@ -8,7 +8,7 @@
     "emailHolderFieldForm": "E-mail",
     "passwordHolderFieldForm": "Password",
     "logButton": "Log in",
-    "cashierMode": "Cashier Mode"
+    "cashierMode": "Employee Mode"
   },
 
   "logout": {
