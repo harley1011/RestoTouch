@@ -10,12 +10,23 @@
   </div>
   <div class="form-container">
     <div class="row">
-      <span class="dropdown nav-item" dropdown>
-        <button id="ascending-button" (click)="sortItems()" class="nav-link text-primary">
-          <span *ngIf="sortAscending != 2">Ascending <i class="fa fa-angle-up" aria-hidden="true"></i></span>
-          <span *ngIf="sortAscending == 2">Descending <i class="fa fa-angle-down" aria-hidden="true"></i></span>
-        </button>
-      </span>
+      <div class="col-lg-12">
+        <span class="dropdown nav-item" dropdown>
+          <button id="ascending-button" (click)="sortItems()" class="nav-link text-primary">
+            <span *ngIf="sortAscending != 2">Ascending <i class="fa fa-angle-up" aria-hidden="true"></i></span>
+            <span *ngIf="sortAscending == 2">Descending <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <label class="filter-label">Filter {{filterQuery}}
+          <input id="filterquery" class="form-control filter-input" name="filterquery"
+                 [(ngModel)]="filterQuery" name="filterquery" #filterquery="ngModel"
+                 (ngModelChange)="executeQuery()">
+        </label>
+      </div>
     </div>
     <div class="row">
       <div class="col-sm-3 col-md-2 col-lg-2" style="max-width:300px;" *ngFor="let item of items">

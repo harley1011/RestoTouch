@@ -56,7 +56,6 @@
   background: none;
   outline: none;
   margin-bottom: 20px;
-  margin-left: 20px;
 }
 
 .item-name {
@@ -64,4 +63,15 @@
   overflow: hidden;
   display: block;
   white-space: nowrap
+}
+
+.filter-label {
+  width: 100%;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.filter-input {
+  width: 30%;
+  /*display: inline-block;*/
 }

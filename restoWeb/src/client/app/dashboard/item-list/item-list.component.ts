@@ -14,12 +14,14 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 export class ItemListComponent implements OnInit {
   items: Array<Item>;
   sortAscending: number;
+  filterQuery: string;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
   constructor(private itemService: ItemService, private router: Router) {
     this.sortAscending = 0;
+    this.filterQuery = "";
   }
 
   ngOnInit(): void {
@@ -67,6 +69,10 @@ export class ItemListComponent implements OnInit {
     } else {
       this.items.sort(compareItemDescending);
     }
+  }
+
+  executeQuery(): void {
+    console.log('EXECUTE QUERY');
   }
 }
 
