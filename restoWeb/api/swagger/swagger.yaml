@@ -1299,6 +1299,39 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/Language"
+  ################################################## Kitchen
+ # KitchenStationResponse:
+#  required:
+ #     - kitchenStations
+#    properties:
+ #     # Array of combo
+  #    kitchenStations:
+   #     type: array
+    #    items:
+     #     "$ref": "#/definitions/KitchenStation"
+  KitchenStation:
+    type: object
+    properties:
+      supportedLanguages:
+        type: array
+        items:
+          "$ref": "#/definitions/Language"
+      translations:
+        type: array
+        items:
+          "$ref": "#/definitions/KitchenTranslations"
+      kitCat:
+        type: array
+        items:
+          "$ref": "#/definitions/Category"
+  KitchenTranslations:
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
+ ###################################################
   RestaurantTranslations:
     type: object
     properties:
@@ -1383,6 +1416,10 @@ definitions:
           "$ref": "#/definitions/Payment"
       kitCashModeFlag:
         type: string
+      kitchenStations:
+        type: array
+        items:
+          "$ref": "#/definitions/KitchenStation"
       orderNotiFlag:
         type: string
     required:
