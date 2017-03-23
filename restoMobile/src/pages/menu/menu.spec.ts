@@ -37,6 +37,18 @@ describe('Pages: MenuPage', () => {
 
   });
 
+  it('removes an order', () => {
+    let orderableCategoryMock = null;
+    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
+    let orderableSizeMock = {size: null, count: 1};
+
+    spyOn(instance.currentOrder,'removeOrder');
+
+    instance.removeOrder(orderableCategoryMock, orderableItemMock, orderableSizeMock);
+
+    expect(instance.currentOrder.removeOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null);
+    expect(orderableSizeMock.count).toEqual(0);
+  });
 
 });
 
