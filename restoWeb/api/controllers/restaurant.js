@@ -6,6 +6,10 @@ var businessHoursModel;
 var paymentsModel;
 var menuModel;
 var menuTranslationModel;
+var kitchenStationsModel;
+var kitchenTranslationModel;
+var kitchenServModel;
+var categoryModel;
 var _ = require('lodash');
 
 
@@ -29,6 +33,10 @@ function setDatabase(m) {
   restaurantsTranslations = models.getRestaurantsTranslationModel();
   businessHoursModel = models.getBusinessHoursModel();
   paymentsModel = models.getPaymentsModel();
+  kitchenStationsModel = models.getKitchenStationModel();
+  kitchenTranslationModel = models.getKitchenTranslationModel();
+  kitchenServModel = models.getKitchenServModel();
+  categoryModel = models.getCategoryModel();
 }
 
 //GET /restaurant
@@ -103,6 +111,9 @@ function get(req, res) {
     }, {
       model: paymentsModel,
       as: 'payments'
+    }, {
+      model: kitchenStationsModel, include:[{model: kitchenTranslationModel, as: 'translations'}],
+      as: 'kitchenStations'
     }]
   }).then(function (restaurant) {
     if (restaurant) {

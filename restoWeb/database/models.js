@@ -80,6 +80,42 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'restaurantId'
     });
     paymentsModel.sync({force: dropTable});
+
+    restaurantModel.hasMany(kitchenStationModel, {
+      as: 'kitchenStations',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
+    kitchenStationModel.sync({force: dropTable}).then(function () {
+      kitchenStationModel.hasMany(kitchenTranslationModel, {
+        as: 'translations',
+        onDelete: 'cascade',
+        foreignKey: 'kitchenStationId'
+      });
+      kitchenTranslationModel.sync({force: dropTable});
+
+      // kitchenStationModel.hasMany(kitchenServModel, {
+      //   as: 'kitchenServs',
+      //   onDelete: 'cascade',
+      //   foreignKey: 'kitchenStationId'
+      // });
+      kitchenServModel.sync({force: dropTable}).then(function(){
+        categoryModel.belongsToMany(kitchenStationModel, {
+          as: 'kitchenStations',
+          through: kitchenServModel,
+          onDelete: 'cascade',
+          foreignKey: "categoryId",
+        });
+        kitchenStationModel.belongsToMany(categoryModel, {
+          as: 'kitCat',
+          through: kitchenServModel,
+          onDelete: 'cascade',
+          foreignKey: "kitchenStationId",
+          constraints: false
+        });
+      });
+    });
+
   });
 
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
@@ -269,45 +305,42 @@ comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
 
   });
 
-  kitchenStationModel.belongsTo(restaurantModel, {as: 'kitchenStations', onDelete: 'cascade', foreignKey: 'restaurantId'});
-  kitchenStationModel.sync({force: dropTable}).then(function () {
+  // kitchenStationModel.belongsTo(restaurantModel, {as: 'kitchenStations', onDelete: 'cascade', foreignKey: 'restaurantId'});
+  // kitchenStationModel.sync({force: dropTable}).then(function () {
 
-    kitchenStationModel.hasMany(kitchenTranslationModel, {
-      as: 'translations',
-      onDelete: 'cascade',
-      foreignKey: 'kitchenStationId'
-    });
-    kitchenTranslationModel.sync({force: dropTable});
+  //   kitchenStationModel.hasMany(kitchenTranslationModel, {
+  //     as: 'translations',
+  //     onDelete: 'cascade',
+  //     foreignKey: 'kitchenStationId'
+  //   });
+  //   kitchenTranslationModel.sync({force: dropTable});
 
-    // kitchenStationModel.hasMany(kitchenServModel, {
-    //   as: 'kitchenServs',
-    //   onDelete: 'cascade',
-    //   foreignKey: 'kitchenStationId'
-    // });
-    kitchenServModel.sync({force: dropTable}).then(function(){
-      categoryModel.belongsToMany(kitchenStationModel, {
-        as: 'kitchenStations',
-        through: kitchenServModel,
-        onDelete: 'cascade',
-        foreignKey: "categoryId",
-      });
-      kitchenStationModel.belongsToMany(categoryModel, {
-        as: 'kitCat',
-        through: kitchenServModel,
-        onDelete: 'cascade',
-        foreignKey: "kitchenStationId",
-        constraints: false
-      });
-      // kitchenServModel.hasMany(categoryModel, {
-      //   as: 'kitCat',
-      //   onDelete: 'cascade',
-      //   foreignKey: "kitchenStationId",
-      // });
-    });
-
-
-
-  });
+  //   // kitchenStationModel.hasMany(kitchenServModel, {
+  //   //   as: 'kitchenServs',
+  //   //   onDelete: 'cascade',
+  //   //   foreignKey: 'kitchenStationId'
+  //   // });
+  //   kitchenServModel.sync({force: dropTable}).then(function(){
+  //     categoryModel.belongsToMany(kitchenStationModel, {
+  //       as: 'kitchenStations',
+  //       through: kitchenServModel,
+  //       onDelete: 'cascade',
+  //       foreignKey: "categoryId",
+  //     });
+  //     kitchenStationModel.belongsToMany(categoryModel, {
+  //       as: 'kitCat',
+  //       through: kitchenServModel,
+  //       onDelete: 'cascade',
+  //       foreignKey: "kitchenStationId",
+  //       constraints: false
+  //     });
+  //     // kitchenServModel.hasMany(categoryModel, {
+  //     //   as: 'kitCat',
+  //     //   onDelete: 'cascade',
+  //     //   foreignKey: "kitchenStationId",
+  //     // });
+  //   });
+  //});
 
 
 });
