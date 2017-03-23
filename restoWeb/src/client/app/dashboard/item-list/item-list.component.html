@@ -11,8 +11,9 @@
   <div class="form-container">
     <div class="row">
       <span class="dropdown nav-item" dropdown>
-        <button id="ascending-button" (click)="sortItems()" class="nav-link dropdown-toggle text-primary" dropdownToggle>
-          Ascending <span class="caret"></span>
+        <button id="ascending-button" (click)="sortItems()" class="nav-link text-primary">
+          <span *ngIf="sortAscending != 2">Ascending <i class="fa fa-angle-up" aria-hidden="true"></i></span>
+          <span *ngIf="sortAscending == 2">Descending <i class="fa fa-angle-down" aria-hidden="true"></i></span>
         </button>
       </span>
     </div>

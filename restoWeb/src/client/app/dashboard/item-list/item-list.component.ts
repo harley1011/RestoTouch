@@ -13,13 +13,13 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 
 export class ItemListComponent implements OnInit {
   items: Array<Item>;
-  sortAscending: boolean;
+  sortAscending: number;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
   constructor(private itemService: ItemService, private router: Router) {
-    this.sortAscending = false;
+    this.sortAscending = 0;
   }
 
   ngOnInit(): void {
@@ -50,8 +50,19 @@ export class ItemListComponent implements OnInit {
   }
 
   sortItems(): void {
-    this.sortAscending = !this.sortAscending;
-    if (this.sortAscending) {
+    switch(this.sortAscending) {
+      case 0:
+        this.sortAscending = 1;
+        break;
+      case 1:
+        this.sortAscending = 2;
+        break;
+      case 2:
+        this.sortAscending = 1;
+        break;
+    }
+
+    if (this.sortAscending == 1) {
       this.items.sort(compareItemAscending);
     } else {
       this.items.sort(compareItemDescending);
