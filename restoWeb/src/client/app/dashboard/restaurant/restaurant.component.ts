@@ -12,12 +12,17 @@ import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 import {KitchenStation, KitchenTranslations} from '../../shared/models/kitchen-station';
+//import {Item} from '../../shared/models/items';
+import {CategoryService} from '../category/category.service';
+import {Category} from '../../shared/models/category';
+import {MenuService} from '../menu/menu.service';
 
 
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
-  templateUrl: 'restaurant.component.html'
+  templateUrl: 'restaurant.component.html',
+  providers: [CategoryService, MenuService]
 })
 
 export class RestaurantComponent implements OnInit {
@@ -32,6 +37,8 @@ export class RestaurantComponent implements OnInit {
   kitchenMode = true; // since the default for kitchen mode is alredy set to 'kce'
   numOfKitchenStation = 0;
   selectedKitchenStation:[string, number] = ['', null];
+  categories: Array<Category> = [];
+  menu: Array<Menu> = [];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -40,7 +47,10 @@ export class RestaurantComponent implements OnInit {
               private router: Router,
               private languageService: LanguageService,
               private restaurantService: RestaurantService,
-              private translate: TranslateService,) {
+              private translate: TranslateService,
+              private categoryService: CategoryService,
+              private menuService: MenuService
+              ) {
 
     this.create = true;
     translate.setDefaultLang('en');
@@ -111,7 +121,13 @@ export class RestaurantComponent implements OnInit {
             return 1;
           }
         });
-        console.warn(this.restaurant);
+        // get full menu info
+        this.menu = [];
+        if (this.restaurant.Menus.length !== 0) {
+            this.restaurant.Menus.forEach(menu => {
+            this.getMenu(menu.id);
+          });
+        }
       },
       error => {
         this.errorMessage = <any>error;
@@ -141,7 +157,6 @@ export class RestaurantComponent implements OnInit {
   ngOnInit(): void {
     this.languageService.getSupportedLanguages().subscribe((languages: Array<Language>) => {
       this.languages = languages;
-
       this.route.params.forEach((params: Params) => {
         if (params['id']) {
           this.getRestaurant(params['id']);
@@ -363,6 +378,36 @@ export class RestaurantComponent implements OnInit {
     this.selectedKitchenStation[0] ='';
   }
 
+  /*
+   * get category from db
+   */
+  getCategories(): void {
+    this.categoryService.getCategories().subscribe(
+      categories => {
+        this.categories = categories;
+        //console.warn(this.categories);
+        categories.forEach(category => {
+          category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 
+  getMenu(id: number): void {
+    this.menuService.getMenu(id).subscribe(
+      menu => {
+        this.menu.push(menu);
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        this.getCategories();
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
+    console.warn("menu", this.menu);
+  }
 
 }

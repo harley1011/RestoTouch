@@ -451,6 +451,32 @@
               <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
             </span>
           </div>
+
+          <!--<div class="row">
+            <div class="col-md-6">
+              <label>category food list</label>
+              <ul class="list-group scrollable-list">
+                <li *ngFor="let item of categories.items" class="list-group-item"> {{item.selectedTranslation?.name}}
+                  <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
+                      (click)="addItemToKitchenStation(item)"></i>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-md-6">
+              <label>Kitchen Station Responsabilities<span class="label label-success"> add item</span> </label>
+              <ul class="list-group scrollable-list">
+                <li *ngFor="let item of restaurant.kitchenStations[0]?.kitItem" class="list-group-item"> {{item.selectedTranslation?.name}}
+                  <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                      (click)="removeItemFromKitchenStation(item)"></i>
+                </li>
+              </ul>
+              <div [hidden]="restaurant.kitchenStations[0]?.kitItem.length != 0">
+                <i class="fa fa-exclamation-circle"></i> no responsability
+              </div>
+            </div>
+          </div>-->
+
        </div>
        <br/><br/>
       </div>
