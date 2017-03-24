@@ -31,6 +31,7 @@ export class RestaurantComponent implements OnInit {
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
   kitchenMode = true; // since the default for kitchen mode is alredy set to 'kce'
   numOfKitchenStation = 0;
+  selectedKitchenStation:[string, number] = ['', null];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -62,6 +63,16 @@ export class RestaurantComponent implements OnInit {
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
+
+    // also do the kitchen station translation
+    this.restaurant.kitchenStations.forEach(station => {
+      let kitchenTranslation = station.translations.find(translation => translation.languageCode === language.languageCode);
+      if (!kitchenTranslation){
+        kitchenTranslation = new KitchenTranslations(language.languageCode, '');
+        station.translations.push(kitchenTranslation);
+      }
+      station.selectedTranslation = kitchenTranslation;
+    });
   }
 
   removeLanguage(language: Language) {
@@ -100,6 +111,7 @@ export class RestaurantComponent implements OnInit {
             return 1;
           }
         });
+        console.warn(this.restaurant);
       },
       error => {
         this.errorMessage = <any>error;
@@ -163,6 +175,9 @@ export class RestaurantComponent implements OnInit {
           new Payment('Credit', false)
         ];
 
+        let kitchenTranslation = new KitchenTranslations(this.languages.find(language => language.languageCode === 'en').languageCode, '1');
+        let newStation = new KitchenStation([kitchenTranslation], kitchenTranslation, []);
+
         this.restaurant = new Restaurant('',
           [this.languages.find(language => language.languageCode === 'en')],
           [translation],
@@ -170,7 +185,7 @@ export class RestaurantComponent implements OnInit {
           payments,
           businessHours,
           '', 'kce',
-          [], // kitchenStation info
+          [newStation], // kitchenStation info with default of 1 station as type is 'kce'
           'na' // default value for kitchen/cashier mode and default value for order notification value
         );
       }
@@ -297,23 +312,57 @@ export class RestaurantComponent implements OnInit {
     console.log(this.restaurant);
     if (s === 'cnk') {
      this.kitchenMode = false;
-    } else
+     this.resetToOneDefaultKitchenStationArray();
+    } else {
       this.kitchenMode = true;
-  }
-
-  setNumOfKitStation(n: number): void{
-    let translation: any;
-    this.numOfKitchenStation = n;
-    this.restaurant.kitchenStations = new Array(n);
-    for(let i =0; i<n;i++){
-      translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (i+1).toString());
-      this.restaurant.kitchenStations[i] = new KitchenStation([translation], translation, []);
+      this.resetToOneDefaultKitchenStationArray();
     }
-    console.warn(this.restaurant);
   }
 
-  setKitchenStationName(s: string, i: number): void{
-    this.restaurant.kitchenStations[i].selectedTranslation.name=s;
+  resetToOneDefaultKitchenStationArray():void {
+      this.restaurant.kitchenStations.splice(0, this.restaurant.kitchenStations.length);
+      let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
+      let newStation = new KitchenStation([translation], translation, []);
+      this.restaurant.kitchenStations.push(newStation);
   }
+
+  // setNumOfKitStation(n: number): void{
+  //   let translation: any;
+  //   this.numOfKitchenStation = n;
+  //   this.restaurant.kitchenStations = new Array(n);
+  //   for(let i =0; i<n;i++){
+  //     translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (i+1).toString());
+  //     this.restaurant.kitchenStations[i] = new KitchenStation([translation], translation, []);
+  //   }
+  //   console.warn(this.restaurant);
+  // }
+
+  setKitchenStationName(s: HTMLInputElement, i: number): void{
+    this.restaurant.kitchenStations[i].selectedTranslation.name=s.value;
+    s.value = null;
+    this.selectedKitchenStation[0] =s.value;
+    console.warn(this.restaurant.kitchenStations[i].selectedTranslation.name);
+  }
+
+  kitStatSelected(i: number): void {
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[i].translations[0].name, i];
+  }
+
+  addNewStation(): void{
+    let size = this.restaurant.kitchenStations.length;
+    let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (size+1).toString());
+    let newStation = new KitchenStation([translation], translation, []);
+    this.restaurant.kitchenStations.push(newStation);
+  }
+
+  removeStation(i: number): void {
+    this.restaurant.kitchenStations.splice(i,1);
+    if(this.restaurant.kitchenStations.length === 0) {
+      this.resetToOneDefaultKitchenStationArray();
+    }
+    this.selectedKitchenStation[0] ='';
+  }
+
+
 
 }
