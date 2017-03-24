@@ -12,6 +12,7 @@ export class KitchenStation {
 
 export class KitchenTranslations {
 	constructor(
-		public name: string,
+		public languageCode: string,
+        public name: string
 	) { }
 }

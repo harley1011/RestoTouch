@@ -11,6 +11,8 @@ import {Menu} from '../../shared/models/menu';
 import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
+import {KitchenStation, KitchenTranslations} from '../../shared/models/kitchen-station';
+
 
 @Component({
   moduleId: module.id,
@@ -167,7 +169,9 @@ export class RestaurantComponent implements OnInit {
           translation, [],
           payments,
           businessHours,
-          '', 'kce','na' // default value for kitchen/cashier mode and default value for order notification value
+          '', 'kce',
+          [], // kitchenStation info
+          'na' // default value for kitchen/cashier mode and default value for order notification value
         );
       }
     });
@@ -290,12 +294,26 @@ export class RestaurantComponent implements OnInit {
   }
 
   activateKitchenMode(s: string): void {
+    console.log(this.restaurant);
     if (s === 'cnk') {
      this.kitchenMode = false;
     } else
       this.kitchenMode = true;
   }
 
+  setNumOfKitStation(n: number): void{
+    let translation: any;
+    this.numOfKitchenStation = n;
+    this.restaurant.kitchenStations = new Array(n);
+    for(let i =0; i<n;i++){
+      translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (i+1).toString());
+      this.restaurant.kitchenStations[i] = new KitchenStation([translation], translation, []);
+    }
+    console.warn(this.restaurant);
+  }
 
+  setKitchenStationName(s: string, i: number): void{
+    this.restaurant.kitchenStations[i].selectedTranslation.name=s;
+  }
 
 }

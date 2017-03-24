@@ -79,7 +79,14 @@ function save(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
-    }, {
+    },
+    {
+      model: kitchenStationsModel,
+      as: 'kitchenStations',
+      include:[{model: kitchenTranslationModel, as: 'translations'}]
+
+    }
+    , {
       model: paymentsModel,
       as: 'payments'
     }]
@@ -110,15 +117,17 @@ function get(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
-    }, {
+    },
+    {
+      model: kitchenStationsModel,
+      as: 'kitchenStations',
+      include:[{model: kitchenTranslationModel, as: 'translations'}]
+
+    },
+    {
       model: paymentsModel,
       as: 'payments'
-    }
-    , {
-      model: kitchenStationsModel, include:[{model: kitchenTranslationModel, as: 'translations'}],
-      as: 'kitchenStations'
-    }
-    ]
+    }]
   }).then(function (restaurant) {
     if (restaurant) {
       return res.json(restaurant);
@@ -143,7 +152,14 @@ function update(req, res) {
     }, {
       model: businessHoursModel,
       as: 'businessHours'
-    }, {
+    },
+    {
+      model: kitchenStationsModel,
+      as: 'kitchenStations',
+      include:[{model: kitchenTranslationModel, as: 'translations'}]
+
+    },
+    {
       model: paymentsModel,
       as: 'payments'
     }]

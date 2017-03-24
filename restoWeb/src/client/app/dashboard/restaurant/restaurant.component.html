@@ -432,7 +432,12 @@
              <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag" (change)="activateKitchenMode('cnk')"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
        </div>
        <div *ngIf="kitchenMode">
-          <span>How many kitchen stations do you need?</span>
+          <span>How many kitchen stations do you need? </span> <input style="width:50px;" #box type="number" (keyup)="setNumOfKitStation(box.value)"><br/><br/><span *ngIf="numOfKitchenStation > 0">Kitchen Station #: </span>
+          <div *ngIf="numOfKitchenStation > 0" class="btn-group" data-toggle="buttons" role="group">
+              <label *ngFor="let station of restaurant.kitchenStations; let i = index" class="btn btn-secondary">
+                <input type="checkbox"> {{ station.selectedTranslation.name }}
+              </label>
+          </div>
        </div>
        <br/><br/>
       </div>

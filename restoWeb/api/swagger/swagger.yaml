@@ -1312,10 +1312,6 @@ definitions:
   KitchenStation:
     type: object
     properties:
-      supportedLanguages:
-        type: array
-        items:
-          "$ref": "#/definitions/Language"
       translations:
         type: array
         items:
@@ -1327,6 +1323,8 @@ definitions:
   KitchenTranslations:
     type: object
     properties:
+      languageCode:
+        type: string
       name:
         type: string
     required:
