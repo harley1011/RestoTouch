@@ -445,26 +445,28 @@
 
           </div>
           <div *ngIf="restaurant.kitchenStations.length > 0" >
-            <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0])  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
+            <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0]?.selectedTranslation.name)  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
             <span class="fa-stack">
               <i class="fa fa-circle fa-stack-2x text-success"></i>
               <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
             </span>
+            size {{categories?.length }}
           </div>
 
-          <!--<div class="row">
+          <div class="row">
             <div class="col-md-6">
               <label>category food list</label>
-              <ul class="list-group scrollable-list">
-                <li *ngFor="let item of categories.items" class="list-group-item"> {{item.selectedTranslation?.name}}
+              <ul *ngFor="let cat of categories" class="list-group scrollable-list" > {{cat.translations[0]?.name}}
+                <li *ngFor="let item of cat?.items" class="list-group-item"> {{item.translations[0]?.name}}
                   <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                       (click)="addItemToKitchenStation(item)"></i>
                 </li>
               </ul>
             </div>
+          </div>
 
-            <div class="col-md-6">
-              <label>Kitchen Station Responsabilities<span class="label label-success"> add item</span> </label>
+            <!--<div class="col-md-6">
+              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0] }}</span> </label>
               <ul class="list-group scrollable-list">
                 <li *ngFor="let item of restaurant.kitchenStations[0]?.kitItem" class="list-group-item"> {{item.selectedTranslation?.name}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"

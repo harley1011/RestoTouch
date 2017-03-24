@@ -36,7 +36,7 @@ export class RestaurantComponent implements OnInit {
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
   kitchenMode = true; // since the default for kitchen mode is alredy set to 'kce'
   numOfKitchenStation = 0;
-  selectedKitchenStation:[string, number] = ['', null];
+  selectedKitchenStation:[KitchenStation, number] = [null, null];
   categories: Array<Category> = [];
   menu: Array<Menu> = [];
 
@@ -192,6 +192,7 @@ export class RestaurantComponent implements OnInit {
 
         let kitchenTranslation = new KitchenTranslations(this.languages.find(language => language.languageCode === 'en').languageCode, '1');
         let newStation = new KitchenStation([kitchenTranslation], kitchenTranslation, []);
+        this.selectedKitchenStation[0] = newStation;
 
         this.restaurant = new Restaurant('',
           [this.languages.find(language => language.languageCode === 'en')],
@@ -339,6 +340,7 @@ export class RestaurantComponent implements OnInit {
       let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
       let newStation = new KitchenStation([translation], translation, []);
       this.restaurant.kitchenStations.push(newStation);
+      this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
   }
 
   // setNumOfKitStation(n: number): void{
@@ -355,12 +357,12 @@ export class RestaurantComponent implements OnInit {
   setKitchenStationName(s: HTMLInputElement, i: number): void{
     this.restaurant.kitchenStations[i].selectedTranslation.name=s.value;
     s.value = null;
-    this.selectedKitchenStation[0] =s.value;
+   // this.selectedKitchenStation[0].selectedTranslation.name = '';
     console.warn(this.restaurant.kitchenStations[i].selectedTranslation.name);
   }
 
   kitStatSelected(i: number): void {
-    this.selectedKitchenStation = [this.restaurant.kitchenStations[i].translations[0].name, i];
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[i], i];
   }
 
   addNewStation(): void{
@@ -375,39 +377,41 @@ export class RestaurantComponent implements OnInit {
     if(this.restaurant.kitchenStations.length === 0) {
       this.resetToOneDefaultKitchenStationArray();
     }
-    this.selectedKitchenStation[0] ='';
+    //this.selectedKitchenStation[0].selectedTranslation.name ='';
   }
 
-  /*
-   * get category from db
-   */
-  getCategories(): void {
-    this.categoryService.getCategories().subscribe(
-      categories => {
-        this.categories = categories;
-        //console.warn(this.categories);
-        categories.forEach(category => {
-          category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-        });
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+  // /*
+  //  * get category from db
+  //  */
+  // getCategories(): void {
+  //   this.categoryService.getCategories().subscribe(
+  //     categories => {
+  //       this.categories = categories;
+  //       //console.warn(this.categories);
+  //       categories.forEach(category => {
+  //         category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+  //       });
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
-        this.menu.push(menu);
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        this.getCategories();
+        //this.getCategories();
+        this.menu.push(menu);
+        menu.categories.forEach( cat => {
+          this.categories.push(cat);
+        });
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
-    console.warn("menu", this.menu);
   }
 
 }
