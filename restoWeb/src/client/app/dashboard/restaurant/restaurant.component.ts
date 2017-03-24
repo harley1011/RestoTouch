@@ -387,11 +387,24 @@ export class RestaurantComponent implements OnInit {
     //this.selectedKitchenStation[0].kitItem.push(item);
     this.restaurant.kitchenStations[index].kitItem.push(item);
     this.categories.forEach(cat => {
-      cat.items.splice(cat.items.indexOf(item),1);
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.splice(cat.items.indexOf(item),1);
+      }
     });
     console.warn(this.selectedKitchenStation[0]);
 
     console.warn(this.restaurant.kitchenStations[index]);
+  }
+
+  removeItemFromKitchenStation(item: Item): void{
+    this.restaurant.kitchenStations.forEach(station => {
+      station.kitItem.splice(station.kitItem.indexOf(item), 1);
+    });
+    this.categories.forEach(cat => {
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.push(item);
+      }
+    });
   }
   // /*
   //  * get category from db
