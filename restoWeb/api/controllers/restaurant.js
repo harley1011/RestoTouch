@@ -38,7 +38,7 @@ function setDatabase(m) {
   kitchenTranslationModel = models.getKitchenTranslationModel();
   kitchenServModel = models.getKitchenServModel();
   categoryModel = models.getCategoryModel();
-  itemModelModel = models.getItemModel();
+  itemModel = models.getItemModel();
 }
 
 //GET /restaurant
@@ -121,7 +121,10 @@ function get(req, res) {
     {
       model: kitchenStationsModel,
       as: 'kitchenStations',
-      include:[{model: kitchenTranslationModel, as: 'translations'}]
+      include:[
+        {model: kitchenTranslationModel, as: 'translations'},
+        {model: itemModel, as: 'kitItem'}
+        ]
 
     },
     {
