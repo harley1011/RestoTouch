@@ -1320,10 +1320,10 @@ definitions:
         type: array
         items:
           "$ref": "#/definitions/KitchenTranslations"
-      kitCat:
+      kitItem:
         type: array
         items:
-          "$ref": "#/definitions/Category"
+          "$ref": "#/definitions/Item"
   KitchenTranslations:
     type: object
     properties:

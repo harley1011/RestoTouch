@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "kitchenServCompositeIndex",
       primaryKey: true
     },
-    categoryId: {
+    itemId: {
       type: DataTypes.INTEGER,
       unique: "kitchenServCompositeIndex",
       primaryKey: true

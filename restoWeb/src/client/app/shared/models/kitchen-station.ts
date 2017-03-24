@@ -1,11 +1,11 @@
 import { Language } from './language';
-import { Category } from './category';
+import { Item } from './items';
 
 export class KitchenStation {
   constructor (
     public translations: Array<KitchenTranslations>,
     public selectedTranslation: KitchenTranslations,
-    public kitCat: Array<Category>,
+    public kitItem: Array<Item>,
     public id?: number
   ) { }
 }

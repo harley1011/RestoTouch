@@ -100,18 +100,17 @@ userModel.sync({force: dropTable}).then(function () {
       //   foreignKey: 'kitchenStationId'
       // });
       kitchenServModel.sync({force: dropTable}).then(function(){
-        categoryModel.belongsToMany(kitchenStationModel, {
+        itemModel.belongsToMany(kitchenStationModel, {
           as: 'kitchenStations',
           through: kitchenServModel,
           onDelete: 'cascade',
-          foreignKey: "categoryId",
+          foreignKey: 'itemId'
         });
-        kitchenStationModel.belongsToMany(categoryModel, {
-          as: 'kitCat',
+        kitchenStationModel.belongsToMany(itemModel, {
+          as: 'kitItem',
           through: kitchenServModel,
           onDelete: 'cascade',
-          foreignKey: "kitchenStationId",
-          constraints: false
+          foreignKey: 'kitchenStationId'
         });
       });
     });

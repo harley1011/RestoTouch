@@ -10,6 +10,7 @@ var kitchenStationsModel;
 var kitchenTranslationModel;
 var kitchenServModel;
 var categoryModel;
+var itemModel;
 var _ = require('lodash');
 
 
@@ -37,6 +38,7 @@ function setDatabase(m) {
   kitchenTranslationModel = models.getKitchenTranslationModel();
   kitchenServModel = models.getKitchenServModel();
   categoryModel = models.getCategoryModel();
+  itemModelModel = models.getItemModel();
 }
 
 //GET /restaurant
@@ -111,10 +113,12 @@ function get(req, res) {
     }, {
       model: paymentsModel,
       as: 'payments'
-    }, {
+    }
+    , {
       model: kitchenStationsModel, include:[{model: kitchenTranslationModel, as: 'translations'}],
       as: 'kitchenStations'
-    }]
+    }
+    ]
   }).then(function (restaurant) {
     if (restaurant) {
       return res.json(restaurant);
