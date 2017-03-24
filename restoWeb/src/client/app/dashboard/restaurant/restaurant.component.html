@@ -463,21 +463,21 @@
                 </li>
               </ul>
             </div>
-          </div>
+          <!--</div>-->
 
-            <!--<div class="col-md-6">
-              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0] }}</span> </label>
+            <div class="col-md-6">
+              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0]?.selectedTranslation.name }}</span> </label>
               <ul class="list-group scrollable-list">
-                <li *ngFor="let item of restaurant.kitchenStations[0]?.kitItem" class="list-group-item"> {{item.selectedTranslation?.name}}
+                <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item"> {{item.translations[0]?.name}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
                       (click)="removeItemFromKitchenStation(item)"></i>
                 </li>
               </ul>
-              <div [hidden]="restaurant.kitchenStations[0]?.kitItem.length != 0">
+              <!--<div [hidden]="restaurant.kitchenStations[0]?.kitItem.length != 0">
                 <i class="fa fa-exclamation-circle"></i> no responsability
-              </div>
+              </div>-->
             </div>
-          </div>-->
+          </div>
 
        </div>
        <br/><br/>

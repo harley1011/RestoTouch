@@ -12,7 +12,7 @@ import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 import {KitchenStation, KitchenTranslations} from '../../shared/models/kitchen-station';
-//import {Item} from '../../shared/models/items';
+import {Item} from '../../shared/models/items';
 import {CategoryService} from '../category/category.service';
 import {Category} from '../../shared/models/category';
 import {MenuService} from '../menu/menu.service';
@@ -122,6 +122,7 @@ export class RestaurantComponent implements OnInit {
           }
         });
         // get full menu info
+        console.warn(this.restaurant);
         this.menu = [];
         if (this.restaurant.Menus.length !== 0) {
             this.restaurant.Menus.forEach(menu => {
@@ -365,7 +366,7 @@ export class RestaurantComponent implements OnInit {
     this.selectedKitchenStation = [this.restaurant.kitchenStations[i], i];
   }
 
-  addNewStation(): void{
+  addNewStation(): void {
     let size = this.restaurant.kitchenStations.length;
     let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (size+1).toString());
     let newStation = new KitchenStation([translation], translation, []);
@@ -380,6 +381,18 @@ export class RestaurantComponent implements OnInit {
     //this.selectedKitchenStation[0].selectedTranslation.name ='';
   }
 
+  addItemToKitchenStation(item: Item): void {
+    let index =this.selectedKitchenStation[1];
+     console.warn(this.restaurant);
+    //this.selectedKitchenStation[0].kitItem.push(item);
+    this.restaurant.kitchenStations[index].kitItem.push(item);
+    this.categories.forEach(cat => {
+      cat.items.splice(cat.items.indexOf(item),1);
+    });
+    console.warn(this.selectedKitchenStation[0]);
+
+    console.warn(this.restaurant.kitchenStations[index]);
+  }
   // /*
   //  * get category from db
   //  */
