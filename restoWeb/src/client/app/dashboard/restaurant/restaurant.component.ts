@@ -16,6 +16,7 @@ import {Item} from '../../shared/models/items';
 import {CategoryService} from '../category/category.service';
 import {Category} from '../../shared/models/category';
 import {MenuService} from '../menu/menu.service';
+import {ItemCategory} from '../../shared/models/item-category';
 
 
 @Component({
@@ -121,8 +122,10 @@ export class RestaurantComponent implements OnInit {
             return 1;
           }
         });
-        // get full menu info
+        // get manipulate resto object to be like the initial
         console.warn(this.restaurant);
+        this.updateRestoCatInfo();
+        // get full menu info
         this.menu = [];
         if (this.restaurant.Menus.length !== 0) {
             this.restaurant.Menus.forEach(menu => {
@@ -445,12 +448,43 @@ export class RestaurantComponent implements OnInit {
               this.categories.push(cat);
           }
         });
+
+        this.updateItemList();
         console.warn(this.categories);
       },
       error => {
         this.errorMessage = <any>error;
       }
     );
+  }
+
+  updateRestoCatInfo():void {
+    this.restaurant.kitchenStations.forEach(station => {
+      station.kitItem.forEach(item =>{
+        item.categories.forEach(cat => {
+          item.ItemCategory = new ItemCategory(item.id, cat.id);
+        });
+      });
+    });
+  };
+
+
+// following 2 methods, for updating available item info when editing a restaurant's kitchen station responsibilites
+  updateItemList(): void{
+    this.restaurant.kitchenStations.forEach(station => {
+      station.kitItem.forEach(item => {
+        this.removeItemfromCatList(item);
+      });
+    });
+  }
+
+  removeItemfromCatList(item: Item):void {
+    console.warn(item.ItemCategory.categoryId);
+    this.categories.forEach(cat => {
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.splice(cat.items.indexOf(item),1);
+      }
+    });
   }
 
 }
