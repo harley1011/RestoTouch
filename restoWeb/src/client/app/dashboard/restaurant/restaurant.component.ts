@@ -377,11 +377,16 @@ export class RestaurantComponent implements OnInit {
   }
 
   removeStation(i: number): void {
+    if(this.restaurant.kitchenStations[i].kitItem.length > 0){
+      this.restaurant.kitchenStations[i].kitItem.forEach(item => {
+        this.addBackToCatList(item);
+      });
+    }
     this.restaurant.kitchenStations.splice(i,1);
     if(this.restaurant.kitchenStations.length === 0) {
       this.resetToOneDefaultKitchenStationArray();
     }
-    //this.selectedKitchenStation[0].selectedTranslation.name ='';
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0]; // for html shows another station
   }
 
   addItemToKitchenStation(item: Item): void {
@@ -400,6 +405,10 @@ export class RestaurantComponent implements OnInit {
 
   removeItemFromKitchenStation(item: Item, i: number): void {
     this.restaurant.kitchenStations[i].kitItem.splice( this.restaurant.kitchenStations[i].kitItem.indexOf(item), 1);
+    this.addBackToCatList(item);
+  }
+
+  addBackToCatList(item: Item){
     this.categories.forEach(cat => {
       if(cat.id === item.ItemCategory.categoryId) {
         cat.items.push(item);
