@@ -398,10 +398,8 @@ export class RestaurantComponent implements OnInit {
     console.warn(this.restaurant.kitchenStations[index]);
   }
 
-  removeItemFromKitchenStation(item: Item): void{
-    this.restaurant.kitchenStations.forEach(station => {
-      station.kitItem.splice(station.kitItem.indexOf(item), 1);
-    });
+  removeItemFromKitchenStation(item: Item, i: number): void {
+    this.restaurant.kitchenStations[i].kitItem.splice( this.restaurant.kitchenStations[i].kitItem.indexOf(item), 1);
     this.categories.forEach(cat => {
       if(cat.id === item.ItemCategory.categoryId) {
         cat.items.push(item);
@@ -466,6 +464,7 @@ export class RestaurantComponent implements OnInit {
         });
       });
     });
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
   };
 
 
