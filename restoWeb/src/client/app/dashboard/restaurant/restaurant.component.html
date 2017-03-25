@@ -432,27 +432,17 @@
              <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag" (change)="activateKitchenMode('cnk')"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
        </div>
        <div *ngIf="kitchenMode">
-          <span>Add a kitchen station </span>
-          <i class="fa fa-plus-circle fa-lg icon-add" aria-hidden="true" (click)="addNewStation()"></i>
-          <br/>
-          <span *ngIf="restaurant.kitchenStations.length > 0">Kitchen Station #: </span>
+          <span *ngIf="restaurant.kitchenStations.length > 0">List of Kitchen Station(s): </span> &nbsp; &nbsp;
+          <button type="button" class="btn btn-xs btn-default" (click)="addNewStation()"><span style="font-size: 8px;"> + Add a kitchen station </span></button>
+          <br/><br/>
           <div *ngIf="restaurant.kitchenStations.length > 0" class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let station of restaurant.kitchenStations; let i = index" class="btn btn-secondary">
-                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp;
+                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp; &nbsp;
                 <i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeStation(i)"></i>
               </label>
               <br/><br/>
 
           </div>
-          <div *ngIf="restaurant.kitchenStations.length > 0" >
-            <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0]?.name)  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
-            <span class="fa-stack">
-              <i class="fa fa-circle fa-stack-2x text-success"></i>
-              <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
-            </span>
-            size {{categories?.length }}
-          </div>
-
           <div class="row">
             <div class="col-md-6">
               <label>category food list</label>
@@ -462,20 +452,31 @@
                       (click)="addItemToKitchenStation(item)"></i>
                 </li>
               </ul>
+            <div [hidden]="restaurant.Menus?.length > 0">
+                <i class="fa fa-exclamation-circle"></i> no menu or menu is empty. Please add a menu to the restaurant or complete the menu
+              </div>
             </div>
           <!--</div>-->
 
             <div class="col-md-6">
-              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0]?.name }}</span> </label>
+              Station <span class="label label-success"> {{ selectedKitchenStation[0]?.name }} </span>'s Settings
+              <div *ngIf="restaurant.kitchenStations.length > 0" >
+                <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0]?.name)  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
+                <span class="fa-stack">
+                  <i class="fa fa-circle fa-stack-2x text-success"></i>
+                  <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
+                </span>
+              </div>
+              <label>Kitchen Station Responsabilities </label>
               <ul class="list-group scrollable-list">
                 <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item"> {{item.translations[0]?.name}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
-                      (click)="removeItemFromKitchenStation(item)"></i>
+                      (click)="removeItemFromKitchenStation(item, selectedKitchenStation[1])"></i>
                 </li>
               </ul>
-              <!--<div [hidden]="restaurant.kitchenStations[0]?.kitItem.length != 0">
+              <div [hidden]="selectedKitchenStation[0]?.kitItem.length > 0">
                 <i class="fa fa-exclamation-circle"></i> no responsability
-              </div>-->
+              </div>
             </div>
           </div>
 
