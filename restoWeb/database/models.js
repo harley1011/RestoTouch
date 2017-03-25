@@ -31,7 +31,7 @@ var comboModel = sequelize.import('./models/combos.js');
 var comboTranslationModel = sequelize.import('./models/comboTranslations.js');
 var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem.js');
 var kitchenStationModel = sequelize.import('./models/kitchenStations.js');
-var kitchenTranslationModel = sequelize.import('./models/kitchenTranslations.js');
+//var kitchenTranslationModel = sequelize.import('./models/kitchenTranslations.js');
 var kitchenServModel = sequelize.import('./models/kitchenStationServices.js');
 
 // Enable this if you want to drop all tables and create them,
@@ -469,9 +469,9 @@ exports.getKitchenStationModel = function () {
   return kitchenStationModel;
 };
 
-exports.getKitchenTranslationModel = function () {
-  return kitchenTranslationModel;
-};
+// exports.getKitchenTranslationModel = function () {
+//   return kitchenTranslationModel;
+// };
 
 exports.getKitchenServModel= function(){
   return kitchenServModel;
