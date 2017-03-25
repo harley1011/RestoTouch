@@ -403,6 +403,23 @@ export class RestaurantComponent implements OnInit {
     console.warn(this.restaurant.kitchenStations[index]);
   }
 
+  addAllItemToKitchenStation(j: number): void {
+    let index =this.selectedKitchenStation[1];
+    console.log( this.categories[j].items.length);
+    this.categories[j].items.forEach(item => {
+      this.restaurant.kitchenStations[index].kitItem.push(item);
+      console.log(item);
+    });
+    this.categories[j].items=[];
+    // this.categories.forEach(cat => {
+    //   if(cat.id === item.ItemCategory.categoryId) {
+    //     cat.items.splice(cat.items.indexOf(item),1);
+    //   }
+    // });
+      //console.warn(this.selectedKitchenStation[0]);
+      console.warn(this.restaurant.kitchenStations[index]);
+  }
+
   removeItemFromKitchenStation(item: Item, i: number): void {
     this.restaurant.kitchenStations[i].kitItem.splice( this.restaurant.kitchenStations[i].kitItem.indexOf(item), 1);
     this.addBackToCatList(item);
