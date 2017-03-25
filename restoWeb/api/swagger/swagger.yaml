@@ -1312,23 +1312,21 @@ definitions:
   KitchenStation:
     type: object
     properties:
-      translations:
-        type: array
-        items:
-          "$ref": "#/definitions/KitchenTranslations"
+      name:
+        type: string
       kitItem:
         type: array
         items:
           "$ref": "#/definitions/Item"
-  KitchenTranslations:
-    type: object
-    properties:
-      languageCode:
-        type: string
-      name:
-        type: string
-    required:
-      - name
+#  KitchenTranslations:
+#    type: object
+#    properties:
+#      languageCode:
+#        type: string
+#      name:
+#        type: string
+#    required:
+#      - name
  ###################################################
   RestaurantTranslations:
     type: object

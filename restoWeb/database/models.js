@@ -87,12 +87,12 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'restaurantId'
     });
     kitchenStationModel.sync({force: dropTable}).then(function () {
-      kitchenStationModel.hasMany(kitchenTranslationModel, {
-        as: 'translations',
-        onDelete: 'cascade',
-        foreignKey: 'kitchenStationId'
-      });
-      kitchenTranslationModel.sync({force: dropTable});
+      // kitchenStationModel.hasMany(kitchenTranslationModel, {
+      //   as: 'translations',
+      //   onDelete: 'cascade',
+      //   foreignKey: 'kitchenStationId'
+      // });
+      // kitchenTranslationModel.sync({force: dropTable});
 
       // kitchenStationModel.hasMany(kitchenServModel, {
       //   as: 'kitchenServs',

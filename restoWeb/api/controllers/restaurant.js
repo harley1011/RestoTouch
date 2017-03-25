@@ -38,7 +38,7 @@ function setDatabase(m) {
   businessHoursModel = models.getBusinessHoursModel();
   paymentsModel = models.getPaymentsModel();
   kitchenStationsModel = models.getKitchenStationModel();
-  kitchenTranslationModel = models.getKitchenTranslationModel();
+ // kitchenTranslationModel = models.getKitchenTranslationModel();
   kitchenServModel = models.getKitchenServModel();
   categoryModel = models.getCategoryModel();
   itemModel = models.getItemModel();
@@ -90,7 +90,7 @@ function save(req, res) {
       model: kitchenStationsModel,
       as: 'kitchenStations',
       include:[
-        {model: kitchenTranslationModel, as: 'translations'},
+    //    {model: kitchenTranslationModel, as: 'translations'},
         {model: itemModel, as: 'kitItem',
           include: [
             { model: itemSizeModel, as: 'sizes',
@@ -139,7 +139,7 @@ function get(req, res) {
       model: kitchenStationsModel,
       as: 'kitchenStations',
       include:[
-        {model: kitchenTranslationModel, as: 'translations'},
+      //  {model: kitchenTranslationModel, as: 'translations'},
         {model: itemModel, as: 'kitItem',
           include: [
             { model: itemSizeModel, as: 'sizes',
@@ -186,7 +186,7 @@ function update(req, res) {
       model: kitchenStationsModel,
       as: 'kitchenStations',
       include:[
-        {model: kitchenTranslationModel, as: 'translations'},
+      //  {model: kitchenTranslationModel, as: 'translations'},
         {model: itemModel, as: 'kitItem',
           include: [
             { model: itemSizeModel, as: 'sizes',
@@ -194,7 +194,8 @@ function update(req, res) {
                 { model: itemSizeTranslationModel, as: 'translations'}
                 ]
             },
-            { model: itemTranslationModel, as: 'translations' }
+            { model: itemTranslationModel, as: 'translations' },
+            { model: categoryModel, as: 'categories'}
           ]
         }
         ]
@@ -216,33 +217,7 @@ function update(req, res) {
     var paymentsToUpdate = _.intersectionBy(restaurant.payments, oldRestaurant.payments, 'id');
     var kitchenStationToRemove =_.differenceBy(oldRestaurant.kitchenStations, restaurant.kitchenStations, 'id');
     var kitchenToAdd = _.differenceBy(restaurant.kitchenStations, oldRestaurant.kitchenStations, 'id');
-
-    // level 2 comparison item in each kitchen station
-    var adjustedOldKitStation = _.xor(oldRestaurant.kitchenStations, kitchenStationToRemove);
-    adjustedOldKitStation = _.xor(adjustedOldKitStation, kitchenToAdd);
-    var ksItemToAdd;
-    var ksItemToRemove;
-    var ksCollection = [];
-
-    adjustedOldKitStation.forEach(function(station) {
-      var stationMatch = _.find(restaurant.kitchenStations, function(newStation) {return newStation.id == station.id});
-      ksItemToRemove = _.differenceBy(station.kitItem, stationMatch.kitItem, 'id');
-      ksItemToAdd = _.differenceBy(stationMatch.kitItem, station.kitItem, 'id');
-
-      ksItemToAdd.forEach(function(item) {
-        ksCollection.push({kitchenStationId: station.id, itemId: item.id });
-      });
-      kitchenServModel.bulkCreate(ksCollection, {individualHooks: true});
-
-      ksItemToRemove.forEach(function(item) {
-        kitchenServModel.destroy({where: {kitchenStationId: station.id, itemId: item.id}});
-      });
-
-
-
-    });
-
-
+    var kitchenToUpdate = _.intersectionBy(restaurant.kitchenStations, oldRestaurant.kitchenStations, 'id');
 
     for (var prop in restaurant) {
       if (prop != 'translations')
@@ -276,18 +251,65 @@ function update(req, res) {
     });
 
     //------------------KITCHEN STATION MODE------------------
-
-
-    kitchenStationToRemove.forEach(function (kit) {
-      kitchenStationsModel.destroy({where: {id: kit.id}});
+    kitchenToUpdate.forEach(function (kit) {
+      kitchenStationsModel.update(kit, {where: {id: kit.id}});
     });
 
     kitchenToAdd.forEach(function (kit) {
       kit.restaurantId = oldRestaurant.id;
     });
-    kitchenStationsModel.bulkCreate(kitchenToAdd);
+    kitchenStationsModel.bulkCreate(kitchenToAdd, {individualHooks: true});
 
-    console.log(kitchenToAdd.dataValues);
+    kitchenStationToRemove.forEach(function (kit) {
+      kitchenStationsModel.destroy({where: {id: kit.id}});
+    });
+
+
+    // level 2 comparison item in each kitchen station
+    var adjustedOldKitStation = _.xor(oldRestaurant.kitchenStations, kitchenStationToRemove);
+    console.log('OLD STATIONS after remove: ', adjustedOldKitStation);
+    adjustedOldKitStation = _.xor(adjustedOldKitStation, kitchenToAdd);
+    console.log('OLD STATIONS after add: ', adjustedOldKitStation);
+    adjustedOldKitStation = _.concat(adjustedOldKitStation, kitchenToUpdate);
+    console.log('OLD STATIONS after update: ', adjustedOldKitStation);
+
+    var ksItemToAdd;
+    var ksItemToRemove;
+    var ksItemToUpdate;
+    var ksCollection = [];
+
+    adjustedOldKitStation.forEach(function(station) {
+      var stationMatch = _.find(restaurant.kitchenStations, function(newStation) {return newStation.id == station.id});
+      ksItemToRemove = _.differenceBy(station.kitItem, stationMatch.kitItem, 'id');
+      ksItemToAdd = _.differenceBy(stationMatch.kitItem, station.kitItem, 'id');
+      ksItemToUpdate = _.intersectionBy(stationMatch.kitItem, station.kitItem, 'id');
+
+      console.log('ITEMS to remove: ',ksItemToRemove);
+       console.log('ITEMS to add: ',ksItemToAdd);
+        console.log('ITEMS to update: ',ksItemToUpdate);
+
+      ksItemToAdd.forEach(function(item) {
+        ksCollection.push({kitchenStationId: station.id, itemId: item.id });
+      });
+      kitchenServModel.bulkCreate(ksCollection);
+
+      ksItemToRemove.forEach(function(item) {
+        kitchenServModel.destroy({where: {kitchenStationId: station.id, itemId: item.id}});
+      });
+
+      ksItemToUpdate.forEach(function (item) {
+        kitchenServModel.update(item, {where: {kitchenStationId: station.id, itemId: item.id}});
+        kitchenServModel.findOrCreate({where: {kitchenStationId: station.id, itemId: item.id}}).spread(function() {});
+      });
+       // if(result){
+          //   ksItemToUpdate.forEach(function(item) {
+          //     ksCollection.push({kitchenStationId: station.id, itemId: item.id });
+          //   });
+          //   ksItemToUpdate.bulkCreate(ksCollection);
+          // }
+    }); // end of adjustedOldKitStation
+
+
 
 
 

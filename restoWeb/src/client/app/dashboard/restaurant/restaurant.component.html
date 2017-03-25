@@ -438,14 +438,14 @@
           <span *ngIf="restaurant.kitchenStations.length > 0">Kitchen Station #: </span>
           <div *ngIf="restaurant.kitchenStations.length > 0" class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let station of restaurant.kitchenStations; let i = index" class="btn btn-secondary">
-                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.selectedTranslation.name }} &nbsp;
+                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp;
                 <i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeStation(i)"></i>
               </label>
               <br/><br/>
 
           </div>
           <div *ngIf="restaurant.kitchenStations.length > 0" >
-            <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0]?.selectedTranslation.name)  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
+            <span>Give the station a new name: </span><input type="text" [attr.placeholder]=(selectedKitchenStation[0]?.name)  #newName (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
             <span class="fa-stack">
               <i class="fa fa-circle fa-stack-2x text-success"></i>
               <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
@@ -466,7 +466,7 @@
           <!--</div>-->
 
             <div class="col-md-6">
-              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0]?.selectedTranslation.name }}</span> </label>
+              <label>Kitchen Station Responsabilities<span class="label label-success"> {{ selectedKitchenStation[0]?.name }}</span> </label>
               <ul class="list-group scrollable-list">
                 <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item"> {{item.translations[0]?.name}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"

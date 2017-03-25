@@ -11,7 +11,7 @@ import {Menu} from '../../shared/models/menu';
 import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
-import {KitchenStation, KitchenTranslations} from '../../shared/models/kitchen-station';
+import {KitchenStation} from '../../shared/models/kitchen-station';
 import {Item} from '../../shared/models/items';
 import {CategoryService} from '../category/category.service';
 import {Category} from '../../shared/models/category';
@@ -74,15 +74,15 @@ export class RestaurantComponent implements OnInit {
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
 
-    // also do the kitchen station translation
-    this.restaurant.kitchenStations.forEach(station => {
-      let kitchenTranslation = station.translations.find(translation => translation.languageCode === language.languageCode);
-      if (!kitchenTranslation){
-        kitchenTranslation = new KitchenTranslations(language.languageCode, '');
-        station.translations.push(kitchenTranslation);
-      }
-      station.selectedTranslation = kitchenTranslation;
-    });
+    // // also do the kitchen station translation
+    // this.restaurant.kitchenStations.forEach(station => {
+    //   let kitchenTranslation = station.translations.find(translation => translation.languageCode === language.languageCode);
+    //   if (!kitchenTranslation){
+    //     kitchenTranslation = new KitchenTranslations(language.languageCode, '');
+    //     station.translations.push(kitchenTranslation);
+    //   }
+    //   station.selectedTranslation = kitchenTranslation;
+    // });
   }
 
   removeLanguage(language: Language) {
@@ -191,8 +191,8 @@ export class RestaurantComponent implements OnInit {
           new Payment('Credit', false)
         ];
 
-        let kitchenTranslation = new KitchenTranslations(this.languages.find(language => language.languageCode === 'en').languageCode, '1');
-        let newStation = new KitchenStation([kitchenTranslation], kitchenTranslation, []);
+       // let kitchenTranslation = new KitchenTranslations(this.languages.find(language => language.languageCode === 'en').languageCode, '1');
+        let newStation = new KitchenStation('1', []);
         this.selectedKitchenStation[0] = newStation;
 
         this.restaurant = new Restaurant('',
@@ -338,8 +338,8 @@ export class RestaurantComponent implements OnInit {
 
   resetToOneDefaultKitchenStationArray():void {
       this.restaurant.kitchenStations.splice(0, this.restaurant.kitchenStations.length);
-      let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
-      let newStation = new KitchenStation([translation], translation, []);
+    //  let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
+      let newStation = new KitchenStation('1', []);
       this.restaurant.kitchenStations.push(newStation);
       this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
   }
@@ -356,10 +356,10 @@ export class RestaurantComponent implements OnInit {
   // }
 
   setKitchenStationName(s: HTMLInputElement, i: number): void{
-    this.restaurant.kitchenStations[i].selectedTranslation.name=s.value;
+    this.restaurant.kitchenStations[i].name=s.value;
     s.value = null;
    // this.selectedKitchenStation[0].selectedTranslation.name = '';
-    console.warn(this.restaurant.kitchenStations[i].selectedTranslation.name);
+    console.warn(this.restaurant.kitchenStations[i].name);
   }
 
   kitStatSelected(i: number): void {
@@ -368,8 +368,8 @@ export class RestaurantComponent implements OnInit {
 
   addNewStation(): void {
     let size = this.restaurant.kitchenStations.length;
-    let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (size+1).toString());
-    let newStation = new KitchenStation([translation], translation, []);
+   // let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (size+1).toString());
+    let newStation = new KitchenStation((size+1).toString(), []);
     this.restaurant.kitchenStations.push(newStation);
   }
 
@@ -391,8 +391,7 @@ export class RestaurantComponent implements OnInit {
         cat.items.splice(cat.items.indexOf(item),1);
       }
     });
-    console.warn(this.selectedKitchenStation[0]);
-
+    //console.warn(this.selectedKitchenStation[0]);
     console.warn(this.restaurant.kitchenStations[index]);
   }
 
