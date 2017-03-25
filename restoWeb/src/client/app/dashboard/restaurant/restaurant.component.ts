@@ -429,9 +429,23 @@ export class RestaurantComponent implements OnInit {
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         //this.getCategories();
         this.menu.push(menu);
+
         menu.categories.forEach( cat => {
-          this.categories.push(cat);
+          if(this.categories.length === 0){ // add the first cat
+            this.categories.push(cat);
+          }
+          let found = false;
+          // check that cat is not already in the object
+          for (let i=0; i<this.categories.length; i++) {
+              if(this.categories[i].id === cat.id) {
+                found = true;
+              }
+          }
+          if(!found){ // add only when not found
+              this.categories.push(cat);
+          }
         });
+        console.warn(this.categories);
       },
       error => {
         this.errorMessage = <any>error;
