@@ -340,7 +340,12 @@ export class RestaurantComponent implements OnInit {
   }
 
   resetToOneDefaultKitchenStationArray():void {
-      this.restaurant.kitchenStations.splice(0, this.restaurant.kitchenStations.length);
+      this.restaurant.kitchenStations.forEach(station => {
+        station.kitItem.forEach(item => {
+          this.addBackToCatList(item);
+        });
+      });
+      this.restaurant.kitchenStations = [];
     //  let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
       let newStation = new KitchenStation('1', []);
       this.restaurant.kitchenStations.push(newStation);
@@ -472,7 +477,6 @@ export class RestaurantComponent implements OnInit {
               this.categories.push(cat);
           }
         });
-
         this.updateItemList();
         console.warn(this.categories);
       },
