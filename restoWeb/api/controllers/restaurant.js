@@ -11,6 +11,9 @@ var kitchenTranslationModel;
 var kitchenServModel;
 var categoryModel;
 var itemModel;
+var itemSizeModel;
+var itemSizeTranslationModel
+var itemTranslationModel;
 var _ = require('lodash');
 
 
@@ -39,6 +42,9 @@ function setDatabase(m) {
   kitchenServModel = models.getKitchenServModel();
   categoryModel = models.getCategoryModel();
   itemModel = models.getItemModel();
+  itemTranslationModel = models.getItemTranslationModel();
+  itemSizeModel = models.getItemSizesModel();
+  itemSizeTranslationModel = models.getItemSizeTranslationsModel();
 }
 
 //GET /restaurant
@@ -83,8 +89,19 @@ function save(req, res) {
     {
       model: kitchenStationsModel,
       as: 'kitchenStations',
-      include:[{model: kitchenTranslationModel, as: 'translations'}]
-
+      include:[
+        {model: kitchenTranslationModel, as: 'translations'},
+        {model: itemModel, as: 'kitItem',
+          include: [
+            { model: itemSizeModel, as: 'sizes',
+              include: [
+                { model: itemSizeTranslationModel, as: 'translations'}
+                ]
+            },
+            { model: itemTranslationModel, as: 'translations' }
+          ]
+        }
+        ]
     }
     , {
       model: paymentsModel,
@@ -123,9 +140,18 @@ function get(req, res) {
       as: 'kitchenStations',
       include:[
         {model: kitchenTranslationModel, as: 'translations'},
-        {model: itemModel, as: 'kitItem'}
+        {model: itemModel, as: 'kitItem',
+          include: [
+            { model: itemSizeModel, as: 'sizes',
+              include: [
+                { model: itemSizeTranslationModel, as: 'translations'}
+                ]
+            },
+            { model: itemTranslationModel, as: 'translations' },
+            { model: categoryModel, as: 'categories'}
+          ]
+        }
         ]
-
     },
     {
       model: paymentsModel,
@@ -159,8 +185,19 @@ function update(req, res) {
     {
       model: kitchenStationsModel,
       as: 'kitchenStations',
-      include:[{model: kitchenTranslationModel, as: 'translations'}]
-
+      include:[
+        {model: kitchenTranslationModel, as: 'translations'},
+        {model: itemModel, as: 'kitItem',
+          include: [
+            { model: itemSizeModel, as: 'sizes',
+              include: [
+                { model: itemSizeTranslationModel, as: 'translations'}
+                ]
+            },
+            { model: itemTranslationModel, as: 'translations' }
+          ]
+        }
+        ]
     },
     {
       model: paymentsModel,
@@ -177,6 +214,35 @@ function update(req, res) {
     var paymentsToRemove = _.differenceBy(oldRestaurant.payments, restaurant.payments, 'id');
     var paymentsToAdd = _.differenceBy(restaurant.payments, oldRestaurant.payments, 'id');
     var paymentsToUpdate = _.intersectionBy(restaurant.payments, oldRestaurant.payments, 'id');
+    var kitchenStationToRemove =_.differenceBy(oldRestaurant.kitchenStations, restaurant.kitchenStations, 'id');
+    var kitchenToAdd = _.differenceBy(restaurant.kitchenStations, oldRestaurant.kitchenStations, 'id');
+
+    // level 2 comparison item in each kitchen station
+    var adjustedOldKitStation = _.xor(oldRestaurant.kitchenStations, kitchenStationToRemove);
+    adjustedOldKitStation = _.xor(adjustedOldKitStation, kitchenToAdd);
+    var ksItemToAdd;
+    var ksItemToRemove;
+    var ksCollection = [];
+
+    adjustedOldKitStation.forEach(function(station) {
+      var stationMatch = _.find(restaurant.kitchenStations, function(newStation) {return newStation.id == station.id});
+      ksItemToRemove = _.differenceBy(station.kitItem, stationMatch.kitItem, 'id');
+      ksItemToAdd = _.differenceBy(stationMatch.kitItem, station.kitItem, 'id');
+
+      ksItemToAdd.forEach(function(item) {
+        ksCollection.push({kitchenStationId: station.id, itemId: item.id });
+      });
+      kitchenServModel.bulkCreate(ksCollection, {individualHooks: true});
+
+      ksItemToRemove.forEach(function(item) {
+        kitchenServModel.destroy({where: {kitchenStationId: station.id, itemId: item.id}});
+      });
+
+
+
+    });
+
+
 
     for (var prop in restaurant) {
       if (prop != 'translations')
@@ -208,6 +274,24 @@ function update(req, res) {
     paymentsToUpdate.forEach(function (payment) {
       paymentsModel.update(payment, {where: {id: payment.id}});
     });
+
+    //------------------KITCHEN STATION MODE------------------
+
+
+    kitchenStationToRemove.forEach(function (kit) {
+      kitchenStationsModel.destroy({where: {id: kit.id}});
+    });
+
+    kitchenToAdd.forEach(function (kit) {
+      kit.restaurantId = oldRestaurant.id;
+    });
+    kitchenStationsModel.bulkCreate(kitchenToAdd);
+
+    console.log(kitchenToAdd.dataValues);
+
+
+
+    //------------------END KITCHEN STATION MODE------------------
 
     oldRestaurant.translations.forEach(function(translation) {
       var newTranslation = _.find(restaurant.translations, function (tr) {return tr.languageCode === translation.languageCode});
