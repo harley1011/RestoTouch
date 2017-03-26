@@ -434,9 +434,10 @@
 
        <div *ngIf="kitchenMode">
           <span *ngIf="restaurant.kitchenStations.length > 0"><h5>List of Kitchen Station(s): </h5></span>
+          <span>Select a station to modify its settings below:</span><br/><br/>
           <div *ngIf="restaurant.kitchenStations.length > 0" class="btn-group" data-toggle="buttons" role="group">
               <label *ngFor="let station of restaurant.kitchenStations; let i = index" class="btn btn-secondary">
-                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp; &nbsp;
+                <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp; &nbsp; &nbsp; &nbsp;
                 <i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeStation(i)"></i>
               </label>
               <label class="btn btn-secondary">
@@ -448,11 +449,11 @@
               <label><h5>Food Items Responsabilities by category</h5></label>
               <ul *ngFor="let cat of categories; let i = index;" class="list-group scrollable-list" >
                   <li class="list-group-item bg-faded">{{cat.translations[0]?.name}}
-                    <i [hidden]="cat?.items.length == 0" class="fa fa-chevron-circle-right text-info icon-align fa-pull-right"
+                    <i [hidden]="cat?.items.length == 0" class="fa fa-angle-double-right icon-add icon-align fa-pull-right"
                         (click)="addAllItemToKitchenStation(i)"></i>
                   </li>
                   <li [hidden]="cat?.items.length > 0" class="list-group-item"><i class="fa fa-exclamation-circle"></i> All items of this category are associated to a kitchen station </li>
-                <li *ngFor="let item of cat?.items" class="list-group-item"> {{item.translations[0]?.name}}
+                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.translations[0]?.name}}
                   <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                       (click)="addItemToKitchenStation(item)"></i>
                 </li>
