@@ -32,6 +32,7 @@ export class KitchenComponent implements OnInit {
   stationItemResponsability: Array<Item> = [];
   assignedOrder: Order;
   listOfAssignedOrders: Array<Order>;
+  completedOrder: Array<Order> =[];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -91,13 +92,15 @@ export class KitchenComponent implements OnInit {
             this.order.orderedItems.forEach(orderedItem => {
               orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });
+            if(this.selectedStationInfo[1]){
+              this.filterToThisStation(this.order);
+            }
             this.orders.push(this.order);
           });
 
            //Get previously cached orders
            this.orderService.retrieveOrders(id).subscribe(orders => {
             this.orders = orders;
-            this.listOfAssignedOrders = orders;
            });
   }
 
@@ -106,20 +109,28 @@ export class KitchenComponent implements OnInit {
     this.selectedStationInfo = [this.restaurant.kitchenStations[i].name, true];
     this.stationItemResponsability = this.restaurant.kitchenStations[i].kitItem;
 
-    this.listOfAssignedOrders.forEach(order => {
+    this.orders.forEach(order => {
       this.filterToThisStation(order);
-      console.log(this.assignedOrder);
+      //console.log(this.assignedOrder);
       //this.listOfAssignedOrders.push(this.assignedOrder);
     });
   }
 
   goBack(): void {
     this.getOrders(this.id);
+    this.removeCompletedOrder();
     this.selectedStationInfo[1] = false;
   }
 
-  completeOrder(o: Order): void {
+  removeCompletedOrder(): void {
+    this.completedOrder.forEach(order => {
+      this.orders.splice(this.orders.indexOf(order),1);
+    });
+  }
 
+  completeOrder(i: number): void {
+    this.completedOrder.push(this.orders[i]);
+    this.orders.splice(i, 1);
   }
 
   filterToThisStation(o: Order): void {
