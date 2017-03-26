@@ -255,64 +255,61 @@ function update(req, res) {
       kitchenStationsModel.update(kit, {where: {id: kit.id}});
     });
 
-    kitchenToAdd.forEach(function (kit) {
-      kit.restaurantId = oldRestaurant.id;
-    });
-    kitchenStationsModel.bulkCreate(kitchenToAdd, {individualHooks: true});
-
     kitchenStationToRemove.forEach(function (kit) {
       kitchenStationsModel.destroy({where: {id: kit.id}});
     });
 
+    kitchenToAdd.forEach(function (kit) {
+      kit.restaurantId = oldRestaurant.id;
+    });
+    kitchenStationsModel.bulkCreate(kitchenToAdd, {individualHooks: true}).then(function(result){
 
-    // level 2 comparison item in each kitchen station
-    var adjustedOldKitStation = _.xor(oldRestaurant.kitchenStations, kitchenStationToRemove);
-    console.log('OLD STATIONS after remove: ', adjustedOldKitStation);
-    adjustedOldKitStation = _.xor(adjustedOldKitStation, kitchenToAdd);
-    console.log('OLD STATIONS after add: ', adjustedOldKitStation);
-    adjustedOldKitStation = _.concat(adjustedOldKitStation, kitchenToUpdate);
-    console.log('OLD STATIONS after update: ', adjustedOldKitStation);
-
-    var ksItemToAdd;
-    var ksItemToRemove;
-    var ksItemToUpdate;
-    var ksCollection = [];
-
-    adjustedOldKitStation.forEach(function(station) {
-      var stationMatch = _.find(restaurant.kitchenStations, function(newStation) {return newStation.id == station.id});
-      ksItemToRemove = _.differenceBy(station.kitItem, stationMatch.kitItem, 'id');
-      ksItemToAdd = _.differenceBy(stationMatch.kitItem, station.kitItem, 'id');
-      ksItemToUpdate = _.intersectionBy(stationMatch.kitItem, station.kitItem, 'id');
-
-      console.log('ITEMS to remove: ',ksItemToRemove);
-       console.log('ITEMS to add: ',ksItemToAdd);
-        console.log('ITEMS to update: ',ksItemToUpdate);
-
-      ksItemToAdd.forEach(function(item) {
-        ksCollection.push({kitchenStationId: station.id, itemId: item.id });
-      });
-      kitchenServModel.bulkCreate(ksCollection);
-
-      ksItemToRemove.forEach(function(item) {
-        kitchenServModel.destroy({where: {kitchenStationId: station.id, itemId: item.id}});
+      restaurant.kitchenStations.forEach(function(station){
+        result.forEach(function(re){
+          if(station.name === re.name){
+            station.id = re.id;
+          }
+        });
       });
 
-      ksItemToUpdate.forEach(function (item) {
-        kitchenServModel.update(item, {where: {kitchenStationId: station.id, itemId: item.id}});
-        kitchenServModel.findOrCreate({where: {kitchenStationId: station.id, itemId: item.id}}).spread(function() {});
+      restaurant.kitchenStations.forEach(function(station){
+        station.kitItem.forEach(function(item) {
+          kitchenServModel.findOrCreate({where: {kitchenStationId: station.id, itemId: item.id}}).spread(function() {});
+        });
       });
-       // if(result){
-          //   ksItemToUpdate.forEach(function(item) {
-          //     ksCollection.push({kitchenStationId: station.id, itemId: item.id });
-          //   });
-          //   ksItemToUpdate.bulkCreate(ksCollection);
-          // }
-    }); // end of adjustedOldKitStation
 
+      // level 2 comparison item in each kitchen station
+      var adjustedOldKitStation = _.xor(oldRestaurant.kitchenStations, kitchenStationToRemove);
+      adjustedOldKitStation = _.xor(adjustedOldKitStation, kitchenToAdd);
+      adjustedOldKitStation = _.concat(adjustedOldKitStation, kitchenToUpdate);
 
+      var ksItemToAdd;
+      var ksItemToRemove;
+      var ksItemToUpdate;
+      var ksCollection = [];
 
+      adjustedOldKitStation.forEach(function(station) {
+        var stationMatch = _.find(restaurant.kitchenStations, function(newStation) {return newStation.id == station.id});
+        ksItemToRemove = _.differenceBy(station.kitItem, stationMatch.kitItem, 'id');
+        ksItemToAdd = _.differenceBy(stationMatch.kitItem, station.kitItem, 'id');
+        ksItemToUpdate = _.intersectionBy(stationMatch.kitItem, station.kitItem, 'id');
 
+        ksItemToAdd.forEach(function(item) {
+          ksCollection.push({kitchenStationId: station.id, itemId: item.id });
+        });
+        kitchenServModel.bulkCreate(ksCollection);
 
+        ksItemToRemove.forEach(function(item) {
+          kitchenServModel.destroy({where: {kitchenStationId: station.id, itemId: item.id}});
+        });
+
+        ksItemToUpdate.forEach(function (item) {
+          kitchenServModel.update(item, {where: {kitchenStationId: station.id, itemId: item.id}});
+          kitchenServModel.findOrCreate({where: {kitchenStationId: station.id, itemId: item.id}}).spread(function() {});
+        });
+      });  // end of adjustedOldKitStation
+
+    });
     //------------------END KITCHEN STATION MODE------------------
 
     oldRestaurant.translations.forEach(function(translation) {
