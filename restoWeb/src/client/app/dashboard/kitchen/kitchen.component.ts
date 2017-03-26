@@ -93,8 +93,9 @@ export class KitchenComponent implements OnInit {
             this.order.orderedItems.forEach(orderedItem => {
               orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
             });
-            if(this.selectedStationInfo[1]){
+            if(this.selectedStationInfo[1]) {
               this.filterToThisStation(this.order);
+              console.log(this.order);
             }
             this.orders.push(this.order);
              this.removeCompletedOrder();
@@ -114,8 +115,6 @@ export class KitchenComponent implements OnInit {
 
     this.orders.forEach(order => {
       this.filterToThisStation(order);
-      //console.log(this.assignedOrder);
-      //this.listOfAssignedOrders.push(this.assignedOrder);
     });
   }
 
@@ -126,9 +125,6 @@ export class KitchenComponent implements OnInit {
 
   removeCompletedOrder(): void {
     var diff = _.differenceBy(this.orders, this.completedOrders, 'id');
-    console.warn(this.orders.length);
-    console.warn(this.completedOrders);
-    console.warn(diff.length);
     this.orders = diff;
   }
 
