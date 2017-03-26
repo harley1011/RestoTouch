@@ -11,6 +11,7 @@ import { TranslationSelectComponent } from '../../shared/translation-select/tran
 import { Language } from './../../shared/models/language';
 import { KitchenStation } from '../../shared/models/kitchen-station';
 import { Item } from '../../shared/models/items';
+var _ = require('lodash');
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,7 @@ export class KitchenComponent implements OnInit {
   stationItemResponsability: Array<Item> = [];
   assignedOrder: Order;
   listOfAssignedOrders: Array<Order>;
-  completedOrder: Array<Order> =[];
+  completedOrders: Array<Order> =[];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -96,11 +97,13 @@ export class KitchenComponent implements OnInit {
               this.filterToThisStation(this.order);
             }
             this.orders.push(this.order);
+             this.removeCompletedOrder();
           });
 
            //Get previously cached orders
            this.orderService.retrieveOrders(id).subscribe(orders => {
             this.orders = orders;
+             this.removeCompletedOrder();
            });
   }
 
@@ -118,18 +121,19 @@ export class KitchenComponent implements OnInit {
 
   goBack(): void {
     this.getOrders(this.id);
-    this.removeCompletedOrder();
     this.selectedStationInfo[1] = false;
   }
 
   removeCompletedOrder(): void {
-    this.completedOrder.forEach(order => {
-      this.orders.splice(this.orders.indexOf(order),1);
-    });
+    var diff = _.differenceBy(this.orders, this.completedOrders, 'id');
+    console.warn(this.orders.length);
+    console.warn(this.completedOrders);
+    console.warn(diff.length);
+    this.orders = diff;
   }
 
   completeOrder(i: number): void {
-    this.completedOrder.push(this.orders[i]);
+    this.completedOrders.push(this.orders[i]);
     this.orders.splice(i, 1);
   }
 

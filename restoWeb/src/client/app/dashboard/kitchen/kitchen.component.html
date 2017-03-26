@@ -17,9 +17,9 @@
     <h3>{{ 'kitchen.title' | translate }} for station: {{ selectedStationInfo[0] }}</h3>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
+    <button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>
   </div>
   <div class="manage-list-container">
-    <button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>
     <div class="row">
       <div *ngFor="let order of orders; let i = index;">
       	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
