@@ -6,9 +6,11 @@ import { OrderService } from '../../services/order.service';
 import { OrderNotifierService } from '../../services/order-notifier.service';
 import { Order } from '../../shared/models/order';
 import { RestaurantService } from '../../services/restaurant.service';
-
+import { Restaurant } from '../../shared/models/restaurant';
 import { TranslationSelectComponent } from '../../shared/translation-select/translation-select.component';
 import { Language } from './../../shared/models/language';
+import { KitchenStation } from '../../shared/models/kitchen-station';
+import { Item } from '../../shared/models/items';
 
 @Component({
   moduleId: module.id,
@@ -23,6 +25,11 @@ export class KitchenComponent implements OnInit {
   order: Order;
   id: number;
   restoMode: string;
+  restaurant: Restaurant;
+  selectedStationInfo: [string, boolean] = ['', false];
+  stationList: Array<KitchenStation> = [];
+  stationItemResponsability: Array<Item> = [];
+  orderResponsibilityToSelectedStation: Order;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -40,7 +47,10 @@ export class KitchenComponent implements OnInit {
         if (params['id']) {
           this.id = params['id'];
           this.restaurantService.getRestaurant(this.id).subscribe( restaurant => {
+            console.warn(restaurant);
             this.restoMode = restaurant.kitCashModeFlag;
+            this.restaurant = restaurant;
+            this.stationList = restaurant.kitchenStations;
           })
           this.orderNotifierService.connectToOrderNotifier(this.id).subscribe((order: any) => {
             this.order = JSON.parse(order);
@@ -55,6 +65,8 @@ export class KitchenComponent implements OnInit {
            //Get previously cached orders
            this.orderService.retrieveOrders(this.id).subscribe(orders => {
            this.orders = orders;
+           console.warn(this.orders);
+
            });
 
         }
@@ -85,6 +97,13 @@ export class KitchenComponent implements OnInit {
     });
   }
 
+  stationSelect(id: string, i: number): void {
+    this.selectedStationInfo = [id, true];
+    this.stationItemResponsability = this.restaurant.kitchenStations[i].kitItem;
+  }
 
+  goBack(): void {
+    this.selectedStationInfo[1] = false;
+  }
 
 }

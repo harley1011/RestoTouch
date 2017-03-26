@@ -1,10 +1,25 @@
-<div id="restaurant">
+<div *ngIf="!selectedStationInfo[1]" id="restaurant">
   <div class="manage-header">
-    <h2>{{ 'kitchen.title' | translate }}</h2>
+    <h3>Select Kitchen Station</h3>
+    <hr>
+  </div>
+  <div class="manage-list">
+  <div class="manage-list-container">
+      <div (click)="stationSelect(station.id, i)" *ngFor="let station of stationList; let i = index" class="card card-block">
+        <h4 class="card-title"> Station: {{ station.name }}</h4>
+      </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="selectedStationInfo[1]" id="restaurant">
+  <div class="manage-header">
+    <h3>{{ 'kitchen.title' | translate }} for station: {{ selectedStationInfo }}</h3>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
   </div>
   <div class="manage-list-container">
+    <button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>
     <div class="row">
       <div *ngFor="let order of orders">
       	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
