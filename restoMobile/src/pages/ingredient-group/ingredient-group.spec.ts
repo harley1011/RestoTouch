@@ -36,4 +36,36 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance.newOrderableIngredients).toHaveBeenCalled();
   });
 
+  it('gets new orderable ingredients', () => {
+    instance.ingredientGroup = {};
+    instance.ingredientGroup.ingredients = [];
+
+    instance.selectedIngredients = {};
+    instance.selectedIngredients.ingredients = [];
+
+    instance.ingredientCount = 0;
+    instance.total = 0;
+    instance.maxNumberOfIngredients = 2;
+
+    instance.ingredientGroup.ingredients.push(
+      {
+        name: 'test-ig-1',
+        addByDefault: true,
+        price: 50.5555
+      },
+      {
+        name: 'test-ig-2',
+        addByDefault: false,
+        price: 75.34444
+      }
+    );
+    spyOn(instance, 'disableIngredients');
+    instance.newOrderableIngredients();
+    expect(instance.selectedIngredients.ingredients.length).toEqual(1);
+    expect(instance.total).toEqual(50.5555);
+    expect(instance.orderableIngredients.length).toEqual(2);
+    expect(instance.disableIngredients).not.toHaveBeenCalled();
+    expect(instance.ingredientCount).toEqual(1);
+  });
+
 });
