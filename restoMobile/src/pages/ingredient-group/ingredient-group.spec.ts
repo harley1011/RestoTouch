@@ -22,4 +22,18 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance).not.toBeNull();
   });
 
+  it('initialises orderable ingredients', () => {
+    spyOn(instance, 'newOrderableIngredients');
+    spyOn(instance, 'modifyOrderableIngredients');
+
+    instance.modify = true;
+
+    instance.initOrderableIngredients();
+    expect(instance.modifyOrderableIngredients).toHaveBeenCalled();
+
+    instance.modify = false;
+    instance.initOrderableIngredients();
+    expect(instance.newOrderableIngredients).toHaveBeenCalled();
+  });
+
 });
