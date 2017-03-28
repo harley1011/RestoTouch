@@ -10,5 +10,6 @@ module.exports = function(sequelize, DataTypes) {
     isEmployee: {type: DataTypes.BOOLEAN, defaultValue: false},
     employeePassword: DataTypes.STRING,
     employeeSalt: DataTypes.STRING,
+    s3BucketId: DataTypes.STRING,
   });
 };
