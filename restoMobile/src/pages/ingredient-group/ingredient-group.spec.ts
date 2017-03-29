@@ -3,7 +3,7 @@ import { TestUtils } from '../../test';
 import { IngredientGroupPage } from './ingredient-group';
 
 let fixture: ComponentFixture<IngredientGroupPage> = null;
-let instance: any = null;
+let instance: any = IngredientGroupPage;
 
 describe('Pages: IngredientGroupPage', () => {
 
@@ -152,6 +152,41 @@ describe('Pages: IngredientGroupPage', () => {
 
     instance.previousIngredientGroup();
     expect(instance.navCtrl.pop).toHaveBeenCalledWith(opts);
+  });
+
+  it('goes to next ingredient group', () => {
+    instance.item = {};
+    instance.item.ingredientGroups = ['ingredientGroup1', 'ingredientGroup2'];
+    instance.ingredientGroupIndex = 99;
+    spyOn(instance, 'doneIngredientOrder');
+    spyOn(instance,'nextIngredientOrder');
+
+    instance.nextIngredientGroup();
+    expect(instance.doneIngredientOrder).toHaveBeenCalled();
+
+    instance.ingredientGroupIndex = 0;
+    instance.nextIngredientGroup();
+    expect(instance.nextIngredientOrder).toHaveBeenCalled();
+  });
+
+  it('goes to next ingredient order', () => {
+    instance.ingredientGroupIndex = 0;
+    let navParams: any = {
+      item: instance.item,
+      ingredientGroupIndex: 1,
+      language: instance.selectedLanguage,
+      callback: instance.complexOrderCallback,
+      ingredients: instance.selectedIngredients,
+      modify: instance.modify,
+      total: instance.total
+    };
+    let opts = {
+      animate: true,
+      animation: 'ios-transition'
+    };
+    spyOn(instance.navCtrl, 'push');
+    instance.nextIngredientOrder();
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(IngredientGroupPage, navParams, opts);
   });
 
 
