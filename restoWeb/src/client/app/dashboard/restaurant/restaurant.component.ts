@@ -363,7 +363,7 @@ export class RestaurantComponent implements OnInit {
   //   console.warn(this.restaurant);
   // }
 
-  setKitchenStationName(s: HTMLInputElement, i: number): void{
+  setKitchenStationName(s: HTMLInputElement, i: number): void {
     this.restaurant.kitchenStations[i].name=s.value;
     s.value = null;
    // this.selectedKitchenStation[0].selectedTranslation.name = '';
@@ -382,7 +382,7 @@ export class RestaurantComponent implements OnInit {
   }
 
   removeStation(i: number): void {
-    if(this.restaurant.kitchenStations[i].kitItem.length > 0){
+    if(this.restaurant.kitchenStations[i].kitItem.length > 0) {
       this.restaurant.kitchenStations[i].kitItem.forEach(item => {
         this.addBackToCatList(item);
       });
@@ -430,7 +430,7 @@ export class RestaurantComponent implements OnInit {
     this.addBackToCatList(item);
   }
 
-  addBackToCatList(item: Item){
+  addBackToCatList(item: Item) {
     this.categories.forEach(cat => {
       if(cat.id === item.ItemCategory.categoryId) {
         cat.items.push(item);
@@ -463,7 +463,7 @@ export class RestaurantComponent implements OnInit {
         this.menu.push(menu);
 
         menu.categories.forEach( cat => {
-          if(this.categories.length === 0){ // add the first cat
+          if(this.categories.length === 0) { // add the first cat
             this.categories.push(cat);
           }
           let found = false;
@@ -473,7 +473,7 @@ export class RestaurantComponent implements OnInit {
                 found = true;
               }
           }
-          if(!found){ // add only when not found
+          if(!found) { // add only when not found
               this.categories.push(cat);
           }
         });
@@ -488,7 +488,7 @@ export class RestaurantComponent implements OnInit {
 
   updateRestoCatInfo():void {
     this.restaurant.kitchenStations.forEach(station => {
-      station.kitItem.forEach(item =>{
+      station.kitItem.forEach(item => {
         item.categories.forEach(cat => {
           item.ItemCategory = new ItemCategory(item.id, cat.id);
         });
@@ -499,7 +499,7 @@ export class RestaurantComponent implements OnInit {
 
 
 // following 2 methods, for updating available item info when editing a restaurant's kitchen station responsibilites
-  updateItemList(): void{
+  updateItemList(): void {
     this.restaurant.kitchenStations.forEach(station => {
       station.kitItem.forEach(item => {
         this.removeItemfromCatList(item);
