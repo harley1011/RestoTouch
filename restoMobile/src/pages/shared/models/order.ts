@@ -6,9 +6,11 @@ export class Order {
   constructor (
     public orderedItems: Array<{item: Item, sizes: Array<{size: Size, selectedIngredients: SelectedIngredients}>}>,
     public total: number,
+    public status: string,
     public paymentId: string,
     public id?: number,
-    public restaurantId?: number
+    public restaurantId?: number,
+    public notifyOrderDetail?: string
   ) { }
 
   addOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients, ingredientPrice: number): void {

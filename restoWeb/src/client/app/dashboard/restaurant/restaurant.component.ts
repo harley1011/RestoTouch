@@ -165,7 +165,7 @@ export class RestaurantComponent implements OnInit {
           translation, [],
           payments,
           businessHours,
-          '', ''
+          '', 'kce','na' // default value for kitchen/cashier mode and default value for order notification value
         );
       }
     });

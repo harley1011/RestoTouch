@@ -5,10 +5,11 @@ import { ItemListComponent } from './item-list.component';
 import {TranslateModule} from 'ng2-translate';
 import {TranslationSelectModule} from '../../shared/translation-select/translation-select.module';
 import {LanguageService} from '../../services/language.service';
+import { ItemFilterPipe }   from './data-filter.pipe';
 
 @NgModule({
     imports: [CommonModule, TranslateModule, FormsModule, TranslationSelectModule],
-    declarations: [ItemListComponent],
+    declarations: [ItemListComponent, ItemFilterPipe],
     exports: [ItemListComponent]
 })
 

@@ -50,6 +50,47 @@ describe('Pages: MenuPage', () => {
     expect(orderableSizeMock.count).toEqual(0);
   });
 
+  // test condition branches of method order()
+  // pass if condition
+  it('should call method "presentPrompt" for "na" notification', () => {
+    spyOn(instance, 'presentPrompt');
+    spyOn(instance, 'notifyAtEndOrder');
+    instance.selectedRestaurant.orderNotiFlag = "na";
+    instance.order();
+    expect(instance.presentPrompt).toHaveBeenCalled();
+    expect(instance.notifyAtEndOrder).not.toHaveBeenCalled();
+  });
+  // skip if condition to else body
+  it('should NOT call method "presentPrompt" for other notifications not "na"', () => {
+    spyOn(instance, 'presentPrompt');
+    spyOn(instance, 'notifyAtEndOrder');
+    spyOn(instance, 'sendOrder');
+    instance.selectedRestaurant.orderNotiFlag = "nu";
+    instance.order();
+    expect(instance.presentPrompt).not.toHaveBeenCalled();
+    expect(instance.notifyAtEndOrder).toHaveBeenCalled();
+    expect(instance.sendOrder).toHaveBeenCalled();
+  });
+
+  // test condition branches of method notifyAtEndOrder()
+  it('should call "presentAlert" method for "nu" notification', () => {
+    spyOn(instance, 'presentAlert');
+    instance.selectedRestaurant.orderNotiFlag = "nu";
+    instance.notifyAtEndOrder();
+    expect(instance.presentAlert).toHaveBeenCalled();
+  });
+  it('should NOT call presentAlert method for other notifications not "nu"', () => {
+    spyOn(instance, 'presentAlert');
+    instance.selectedRestaurant.orderNotiFlag = "ta";
+    instance.notifyAtEndOrder();
+    expect(instance.presentAlert).not.toHaveBeenCalled();
+  });
+
+  // test method generateOrderNumber()
+  it('should return a number as a string', () => {
+    expect(instance.generateOrderNumber()).toEqual(jasmine.any(String));
+  });
+
 });
 
 

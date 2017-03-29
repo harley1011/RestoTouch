@@ -18,8 +18,8 @@ page-home {
         background-color: rgba(255,255,255,0.5);
         width: 36%;
         margin-top: 20vh;
-        // margin-left: 15vw;
-        right: 15%;
+        margin-left: 15vw; // for android
+        // right: 15%; // for ios
         padding: 30px 15px;
         font-family: "Maven Pro";
         position: absolute;
@@ -50,8 +50,8 @@ page-home {
         border-left: 25px solid rgba(255,255,255,0.4);
         position: absolute;
         margin-top: 25vh;
-        // left: 51.5vw;
-        right: 13.3%;
+        left: 51.5vw; // for android
+        // right: 13.3%; // for ios
     }
 
 }
