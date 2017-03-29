@@ -74,16 +74,6 @@ export class RestaurantComponent implements OnInit {
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
-
-    // // also do the kitchen station translation
-    // this.restaurant.kitchenStations.forEach(station => {
-    //   let kitchenTranslation = station.translations.find(translation => translation.languageCode === language.languageCode);
-    //   if (!kitchenTranslation){
-    //     kitchenTranslation = new KitchenTranslations(language.languageCode, '');
-    //     station.translations.push(kitchenTranslation);
-    //   }
-    //   station.selectedTranslation = kitchenTranslation;
-    // });
   }
 
   removeLanguage(language: Language) {
@@ -123,7 +113,6 @@ export class RestaurantComponent implements OnInit {
           }
         });
         // get manipulate resto object to be like the initial
-        console.warn(this.restaurant);
         this.updateRestoCatInfo();
         // get full menu info
         this.menu = [];
@@ -352,22 +341,9 @@ export class RestaurantComponent implements OnInit {
       this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
   }
 
-  // setNumOfKitStation(n: number): void{
-  //   let translation: any;
-  //   this.numOfKitchenStation = n;
-  //   this.restaurant.kitchenStations = new Array(n);
-  //   for(let i =0; i<n;i++){
-  //     translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (i+1).toString());
-  //     this.restaurant.kitchenStations[i] = new KitchenStation([translation], translation, []);
-  //   }
-  //   console.warn(this.restaurant);
-  // }
-
   setKitchenStationName(s: HTMLInputElement, i: number): void {
     this.restaurant.kitchenStations[i].name=s.value;
     s.value = null;
-   // this.selectedKitchenStation[0].selectedTranslation.name = '';
-    console.warn(this.restaurant.kitchenStations[i].name);
   }
 
   kitStatSelected(i: number): void {
@@ -376,7 +352,6 @@ export class RestaurantComponent implements OnInit {
 
   addNewStation(): void {
     let size = this.restaurant.kitchenStations.length;
-   // let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, (size+1).toString());
     let newStation = new KitchenStation((size+1).toString(), []);
     this.restaurant.kitchenStations.push(newStation);
   }
@@ -396,33 +371,20 @@ export class RestaurantComponent implements OnInit {
 
   addItemToKitchenStation(item: Item): void {
     let index =this.selectedKitchenStation[1];
-     console.warn(this.restaurant);
-    //this.selectedKitchenStation[0].kitItem.push(item);
     this.restaurant.kitchenStations[index].kitItem.push(item);
     this.categories.forEach(cat => {
       if(cat.id === item.ItemCategory.categoryId) {
         cat.items.splice(cat.items.indexOf(item),1);
       }
     });
-    //console.warn(this.selectedKitchenStation[0]);
-    console.warn(this.restaurant.kitchenStations[index]);
   }
 
   addAllItemToKitchenStation(j: number): void {
     let index =this.selectedKitchenStation[1];
-    console.log( this.categories[j].items.length);
     this.categories[j].items.forEach(item => {
       this.restaurant.kitchenStations[index].kitItem.push(item);
-      console.log(item);
     });
     this.categories[j].items=[];
-    // this.categories.forEach(cat => {
-    //   if(cat.id === item.ItemCategory.categoryId) {
-    //     cat.items.splice(cat.items.indexOf(item),1);
-    //   }
-    // });
-      //console.warn(this.selectedKitchenStation[0]);
-      console.warn(this.restaurant.kitchenStations[index]);
   }
 
   removeItemFromKitchenStation(item: Item, i: number): void {
@@ -437,29 +399,11 @@ export class RestaurantComponent implements OnInit {
       }
     });
   }
-  // /*
-  //  * get category from db
-  //  */
-  // getCategories(): void {
-  //   this.categoryService.getCategories().subscribe(
-  //     categories => {
-  //       this.categories = categories;
-  //       //console.warn(this.categories);
-  //       categories.forEach(category => {
-  //         category.selectedTranslation = category.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-  //       });
-  //     },
-  //     error => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
 
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        //this.getCategories();
         this.menu.push(menu);
 
         menu.categories.forEach( cat => {
@@ -478,7 +422,6 @@ export class RestaurantComponent implements OnInit {
           }
         });
         this.updateItemList();
-        console.warn(this.categories);
       },
       error => {
         this.errorMessage = <any>error;
@@ -508,7 +451,6 @@ export class RestaurantComponent implements OnInit {
   }
 
   removeItemfromCatList(item: Item):void {
-    console.warn(item.ItemCategory.categoryId);
     this.categories.forEach(cat => {
       if(cat.id === item.ItemCategory.categoryId) {
         cat.items.splice(cat.items.indexOf(item),1);
