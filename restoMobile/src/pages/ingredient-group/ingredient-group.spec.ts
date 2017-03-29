@@ -68,4 +68,91 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance.ingredientCount).toEqual(1);
   });
 
+  it('gets new orderable ingredients and hits limit (disabling)', () => {
+    instance.ingredientGroup = {};
+    instance.ingredientGroup.ingredients = [];
+    instance.selectedIngredients = {};
+    instance.selectedIngredients.ingredients = [];
+    instance.ingredientCount = 0;
+    instance.total = 0;
+    instance.ingredientGroup.maxNumberOfIngredients = 2;
+    instance.ingredientCount = 0;
+    instance.ingredientGroup.ingredients.push(
+      {
+        name: 'test-ig-1',
+        addByDefault: true,
+        price: 50.5555
+      },
+      {
+        name: 'test-ig-2',
+        addByDefault: true,
+        price: 20.5555
+      },
+      {
+        name: 'test-ig-3',
+        addByDefault: false,
+        price: 75.34444
+      }
+    );
+    spyOn(instance, 'disableIngredients');
+    instance.newOrderableIngredients();
+    expect(instance.selectedIngredients.ingredients.length).toEqual(2);
+    expect(instance.total).toEqual(71.111);
+    expect(instance.orderableIngredients.length).toEqual(3);
+    expect(instance.disableIngredients).toHaveBeenCalled();
+    expect(instance.ingredientCount).toEqual(2);
+  });
+
+  it('modifies orderable ingredients', () => {
+    instance.ingredientGroup = {};
+    instance.ingredientGroup.ingredients = [];
+    instance.selectedIngredients = {};
+    instance.selectedIngredients.ingredients = [];
+    instance.ingredientCount = 0;
+    instance.total = 0;
+    instance.maxNumberOfIngredients = 2;
+    instance.ingredientCount = 0;
+    instance.ingredientGroup.ingredients.push(
+      {
+        name: 'test-ig-1',
+        addByDefault: true,
+        price: 50.5555
+      },
+      {
+        name: 'test-ig-2',
+        addByDefault: true,
+        price: 20.5555
+      },
+      {
+        name: 'test-ig-3',
+        addByDefault: false,
+        price: 75.34444
+      }
+    );
+    instance.modifyOrderableIngredients();
+    expect(instance.orderableIngredients.length).toEqual(3);
+  });
+
+  it('goes to previous ingredient group', () => {
+    spyOn(instance.navCtrl, 'pop');
+
+    instance.ingredientGroupIndex = 1;
+    instance.previousIngredientGroup();
+
+    let opts = {
+      animate: true,
+      animation: 'ios-transition',
+      direction: 'back'
+    };
+
+    expect(instance.navCtrl.pop).toHaveBeenCalledWith(opts);
+
+    opts.animation  = 'md-transition';
+    instance.ingredientGroupIndex = 0;
+
+    instance.previousIngredientGroup();
+    expect(instance.navCtrl.pop).toHaveBeenCalledWith(opts);
+  });
+
+
 });
