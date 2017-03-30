@@ -23,33 +23,6 @@ describe('Pages: MenuPage', () => {
     expect(instance).not.toBeNull();
   });
 
-  it('adds a Simple Order', () => {
-
-    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
-    let orderableSizeMock = {size: null, count: 1};
-
-    spyOn(instance.currentOrder,'addOrder');
-
-    instance.addSimpleOrder(orderableItemMock, orderableSizeMock);
-
-    expect(instance.currentOrder.addOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null, 0);
-    expect(orderableSizeMock.count).toEqual(2);
-
-  });
-
-  it('removes an order', () => {
-    let orderableCategoryMock = null;
-    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
-    let orderableSizeMock = {size: null, count: 1};
-
-    spyOn(instance.currentOrder,'removeOrder');
-
-    instance.removeOrder(orderableCategoryMock, orderableItemMock, orderableSizeMock);
-
-    expect(instance.currentOrder.removeOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null);
-    expect(orderableSizeMock.count).toEqual(0);
-  });
-
   // test condition branches of method order()
   // pass if condition
   it('should call method "presentPrompt" for "na" notification', () => {
@@ -91,6 +64,110 @@ describe('Pages: MenuPage', () => {
     expect(instance.generateOrderNumber()).toEqual(jasmine.any(String));
   });
 
+  it('adds a Simple Order', () => {
+
+    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
+    let orderableSizeMock = {size: null, count: 1};
+
+    spyOn(instance.currentOrder,'addOrder');
+
+    instance.addSimpleOrder(orderableItemMock, orderableSizeMock);
+
+    expect(instance.currentOrder.addOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null, 0);
+    expect(orderableSizeMock.count).toEqual(2);
+
+  });
+
+  it('removes an order', () => {
+    let orderableCategoryMock = null;
+    let orderableItemMock = {item: null, sizes: [{size: null, count: 1}]};
+    let orderableSizeMock = {size: null, count: 1};
+
+    spyOn(instance.currentOrder,'removeOrder');
+
+    instance.removeOrder(orderableCategoryMock, orderableItemMock, orderableSizeMock);
+
+    expect(instance.currentOrder.removeOrder).toHaveBeenCalledWith(orderableItemMock.item, orderableSizeMock.size, null);
+    expect(orderableSizeMock.count).toEqual(0);
+  });
+
+  //line 60
+  it('should distinguish the correct item to be disabled', () => {
+
+    instance.menu.disabledCategoryItems = [{itemId:1 , categoryId: 1, id: 1}];
+    let targetItem:[{id:1}];
+    let category:[{categoryId:1}];
+
+    expect(instance.isItemDisabled(targetItem, category)).toBeTruthy();
+
+    instance.menu.disabledCategoryItems = [{itemId:1 , categoryId: 2, id: 1}];
+    expect(instance.isItemDisabled(targetItem, category)).toBeFalsy();
+  });
+
+  //line 69
+  it('should get a menu', () => {
+
+
+  });
+
+  //line 105
+  it('', () => {
+
+  });
+
+  //line 125
+  it('', () => {
+
+  });
+
+  //line 145
+  it('', () => {
+
+  });
+
+  //line 157
+  it('', () => {
+
+  });
+
+  //line 172
+  it('', () => {
+
+  });
+
+  //line 197
+  it('', () => {
+
+  });
+
+  //line 218
+  it('', () => {
+
+  });
+
+  //line 229
+  it('', () => {
+
+  });
+
+  //line 268
+  it('', () => {
+
+  });
+
+  //line 279
+  it('', () => {
+
+  });
+
+  //line 306
+  it('', () => {
+
+  });
+
+  //line 351
+  it('', () => {
+
+  });
+
 });
-
-
