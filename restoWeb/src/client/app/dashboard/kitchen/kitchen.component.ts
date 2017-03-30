@@ -23,6 +23,7 @@ export class KitchenComponent implements OnInit {
   order: Order;
   id: number;
   restoMode: string;
+  errorMessage: string;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -88,14 +89,12 @@ export class KitchenComponent implements OnInit {
   completeOrder(order: Order) {
     let i = this.orders.indexOf(order);
     this.orders.splice(i, 1);
-    /*
-    order.status = 'paidComplete';
+    //order.status = 'paidComplete';
     this.orderService.completeOrder(this.restoMode, order).subscribe(generalResponse => {
           },
       error => {
           this.errorMessage = <any> error;
      });
-    */
   }
 
 

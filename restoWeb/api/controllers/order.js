@@ -42,6 +42,7 @@ module.exports = {
   closeRedis: closeRedis,
   removeRestaurantsOrder: removeRestaurantsOrder,
   payForOrder: payForOrder,
+  completeOrder: completeOrder,
   retrieveCompletedOrders: retrieveCompletedRestaurantOrders,
   retrieveCompletedOrder: retrieveCompletedRestaurantOrder
 };
@@ -195,6 +196,11 @@ function payForOrder(req, res) {
       });
     }
   )
+}
+
+function completeOrder(req, res) {
+  console.log('In completeOrder function');
+  return res.json({success: 1, description: "Order Complete"});
 }
 
 function retrieveCompletedRestaurantOrder(req, res) {
