@@ -28,8 +28,11 @@ var orderModel = sequelize.import('./models/orders.js');
 var orderedItemIngredientModel = sequelize.import('./models/orderedItemIngredients.js');
 var orderedItemsModel = sequelize.import('./models/orderedItems.js');
 var comboModel = sequelize.import('./models/combos.js');
-var comboTranslationModel = sequelize.import('./models/comboTranslations');
-var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem');
+var comboTranslationModel = sequelize.import('./models/comboTranslations.js');
+var comboCatFoodItemModel = sequelize.import('./models/comboCatFoodItem.js');
+var kitchenStationModel = sequelize.import('./models/kitchenStations.js');
+//var kitchenTranslationModel = sequelize.import('./models/kitchenTranslations.js');
+var kitchenServModel = sequelize.import('./models/kitchenStationServices.js');
 
 // Enable this if you want to drop all tables and create them,
 // DO NOT COMMIT THIS AS TRUE THOUGH
@@ -77,6 +80,29 @@ userModel.sync({force: dropTable}).then(function () {
       foreignKey: 'restaurantId'
     });
     paymentsModel.sync({force: dropTable});
+
+    restaurantModel.hasMany(kitchenStationModel, {
+      as: 'kitchenStations',
+      onDelete: 'cascade',
+      foreignKey: 'restaurantId'
+    });
+    kitchenStationModel.sync({force: dropTable}).then(function () {
+      kitchenServModel.sync({force: dropTable}).then(function(){
+        itemModel.belongsToMany(kitchenStationModel, {
+          as: 'kitchenStations',
+          through: kitchenServModel,
+          onDelete: 'cascade',
+          foreignKey: 'itemId'
+        });
+        kitchenStationModel.belongsToMany(itemModel, {
+          as: 'kitItem',
+          through: kitchenServModel,
+          onDelete: 'cascade',
+          foreignKey: 'kitchenStationId'
+        });
+      });
+    });
+
   });
 
   categoryModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
@@ -101,21 +127,6 @@ comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
     });
     comboTranslationModel.sync({force: dropTable});
 
-
-      // itemModel.belongsToMany(itemSizesModel, {
-      //   as: 'size',
-      //   through: comboCatFoodItemModel,
-      //   onDelete: 'cascade',
-      //   foreignKey: "itemId",
-      //   constraints:false
-      // });
-      // itemSizesModel.belongsToMany(itemModel, {
-      //   as: 'item',
-      //   through: comboCatFoodItemModel,
-      //   onDelete: 'cascade',
-      //   foreignKey: "itemSizeId",
-      //   constraints: false
-      // });
     comboCatFoodItemModel.sync({force: dropTable}).then(function(){
       categoryModel.belongsToMany(comboModel, {
         as: 'combos',
@@ -276,11 +287,7 @@ comboModel.belongsTo(userModel, {onDelete: 'cascade', foreignKey: 'userId'});
     });
 
     ingredientTranslationModel.sync({force: dropTable});
-
-
-
   });
-
 });
 
 
@@ -403,3 +410,15 @@ exports.getOrderedItemsModel = function () {
 exports.getOrderedItemIngredientModel = function () {
   return orderedItemIngredientModel;
 }
+
+exports.getKitchenStationModel = function () {
+  return kitchenStationModel;
+};
+
+// exports.getKitchenTranslationModel = function () {
+//   return kitchenTranslationModel;
+// };
+
+exports.getKitchenServModel= function(){
+  return kitchenServModel;
+};
