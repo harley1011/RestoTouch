@@ -49,3 +49,29 @@
     border: 0;
     text-align: center;
 }
+
+#ascending-button {
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+.item-name {
+  text-overflow: clip;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap
+}
+
+.filter-label {
+  width: 100%;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.filter-input {
+  width: 30%;
+  /*display: inline-block;*/
+}

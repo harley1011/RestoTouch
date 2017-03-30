@@ -13,11 +13,15 @@ import {TranslationSelectComponent} from '../../shared/translation-select/transl
 
 export class ItemListComponent implements OnInit {
   items: Array<Item>;
+  sortAscending: number;
+  filterQuery: string;
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
 
   constructor(private itemService: ItemService, private router: Router) {
+    this.sortAscending = 0;
+    this.filterQuery = "";
   }
 
   ngOnInit(): void {
@@ -45,5 +49,19 @@ export class ItemListComponent implements OnInit {
 
   modify(item: Item): void {
     this.router.navigate(['/dashboard/item', item.id]);
+  }
+
+  sortItems(): void {
+    switch(this.sortAscending) {
+      case 0:
+        this.sortAscending = 1;
+        break;
+      case 1:
+        this.sortAscending = 2;
+        break;
+      case 2:
+        this.sortAscending = 1;
+        break;
+    }
   }
 }
