@@ -168,6 +168,7 @@ function payForOrder(req, res) {
       }
       else {
         oldOrder.status = 'paidComplete';
+        removeRestaurantOrderFromCache(restaurantKey, id);
         oldOrder.save().then(function(result) {
         return res.json({success: 1, description: 'Order PaidComplete'});
         });
@@ -255,6 +256,51 @@ function completeOrder(req, res) {
   var order = req.body;
   var id = order.id;
   console.log("Id:" + id);
+
+  if(restoMode === 'kco') {
+    return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+        model: itemModel,
+        as: 'item',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: itemSizeModel,
+        as: 'size',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      }]
+    }]}).then(function (oldOrder) {
+      if(oldOrder === null) {
+        order.status = 'NotPaidComplete';
+        var orderedItems = order.orderedItems;
+        return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          }]
+        }).then(function (createdOrder) {
+            return res.json({success: 1, description: "Order NotPaidComplete"});
+        })
+      }
+      else {
+        oldOrder.status = 'paidComplete';
+        removeRestaurantOrderFromCache(restaurantKey, id);
+        oldOrder.save().then(function(result) {
+        return res.json({success: 1, description: 'Order PaidComplete'});
+        });
+      }
+    })
+  }
 
   removeRestaurantOrderFromCache(restaurantKey, id);
 
