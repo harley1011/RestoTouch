@@ -1,6 +1,6 @@
 <div *ngIf="!selectedStationInfo[1]" id="restaurant">
   <div class="manage-header">
-    <h3>Select Kitchen Station</h3>
+    <h3>{{ 'kitchen.kitSelect'| translate}}</h3>
     <hr>
   </div>
   <div class="manage-list">
@@ -14,10 +14,10 @@
 
 <div *ngIf="selectedStationInfo[1]" id="restaurant">
   <div class="manage-header">
-    <h3>{{ 'kitchen.title' | translate }} for station: {{ selectedStationInfo[0] }}</h3>
+    <h3>{{ 'kitchen.title' | translate }} {{ 'kitchen.kitText'| translate}} {{ selectedStationInfo[0] }}</h3>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
-    <button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>
+    <!--<button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>-->
   </div>
   <div class="manage-list-container">
     <div class="row">
@@ -25,9 +25,9 @@
       	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
 	        <div *ngIf="order.orderedItems.length > 0" class="card card-primary card-inverse">
 	          <div class="card-block">
-	            <h4 class="card-title">Order: {{order.notifyOrderDetail}}</h4>
-              <h6 class="card-title">Status: {{order.status}}</h6>
-	            <button class="btn btn-success" (click)="completeOrder(i)">Complete Order</button>
+	            <h4 class="card-title">{{ 'kitchen.kitOrder'| translate}} {{order.notifyOrderDetail}}</h4>
+              <h6 class="card-title">{{ 'kitchen.kitStatus'| translate}} {{order.status}}</h6>
+	            <button class="btn btn-success" (click)="completeOrder(i)">{{ 'kitchen.KitCompleteButton'| translate}}</button>
 	          </div>
 	          <ul class="list-group list-group-flush">
 	            <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
