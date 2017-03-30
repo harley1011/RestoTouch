@@ -248,7 +248,7 @@ export class IngredientGroupPage implements OnInit {
 
       this.currentIngredientGroup = ingredientGroup;
       this.ingredientGroup = ingredientGroup;
-      console.log(this.currentIngredientGroup);
+      //console.log(this.currentIngredientGroup);
       this.jumpToIngredientGroup(index);
   }
 

@@ -189,5 +189,154 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance.navCtrl.push).toHaveBeenCalledWith(IngredientGroupPage, navParams, opts);
   });
 
+  //
+
+
+  it('adds an ingredient', () => {
+
+    let og = {
+      ingredient: {
+        price: 10,
+        id: 1
+      },
+      amount: 1,
+    };
+
+    let og2 = {
+      amount: 1,
+      ingredient: {
+        price: 10,
+        id: 1
+      },
+    };
+
+    instance.ingredientCount = 0;
+
+    instance.selectedIngredients = {};
+    instance.selectedIngredients.ingredients = [{
+      ingredient: {
+        price: 10,
+        id: 1
+      }
+    }];
+
+    instance.total = 0;
+
+    instance.addIngredient(og);
+    expect(instance.total).toEqual(10);
+    expect(instance.totalStr).toEqual('10.00');
+    expect(instance.ingredientCount).toEqual(1);
+    expect(instance.selectedIngredients.ingredients.length).toEqual(1);
+
+    instance.addIngredient(og2);
+    expect(instance.total).toEqual(20);
+    expect(instance.totalStr).toEqual('20.00');
+    expect(instance.ingredientCount).toEqual(2);
+    expect(instance.selectedIngredients.ingredients.length).toEqual(1);
+  });
+
+  it('removes an ingredient', () => {
+    let og = {
+      amount: 1,
+      ingredient: {
+        id: 1,
+        price: 10,
+      }
+    };
+
+    let og2 = {
+      amount: 1,
+      ingredient: {
+        id: 2,
+        price: 20
+      }
+    };
+
+    instance.ingredientCount = 0;
+
+    instance.selectedIngredients = {
+      ingredients: [
+        {
+          ingredient: {
+            id: 1,
+          },
+          amount: 2
+        },
+        {
+          ingredient: {
+            id: 2
+          },
+          amount: 2
+        }
+      ]
+    };
+
+    instance.ingredientCount = 2;
+    instance.total = 100;
+
+    instance.removeIngredient(og);
+    expect(instance.total).toEqual(90);
+    expect(instance.totalStr).toEqual('90.00');
+    expect(instance.ingredientCount).toEqual(1);
+    expect(instance.selectedIngredients.ingredients.length).toEqual(1);
+
+    instance.addIngredient(og2);
+    expect(instance.total).toEqual(110);
+    expect(instance.totalStr).toEqual('110.00');
+    expect(instance.ingredientCount).toEqual(2);
+    expect(instance.selectedIngredients.ingredients.length).toEqual(1);
+  });
+
+  it('disables an ingredient', () => {
+    instance.orderableIngredients = [
+      {
+        amount: 2,
+        ingredient: {
+          id: 2,
+          price: 20,
+        },
+        disabled: false
+      },
+      {
+        amount: 1,
+        ingredient: {
+          id: 2,
+          price: 20,
+          allowQuantity: 1,
+        },
+        disabled: false
+      },
+    ];
+
+    instance.disableIngredients();
+    expect(instance.orderableIngredients[0].disabled).toBeTruthy();
+    expect(instance.orderableIngredients[1].disabled).toBeFalsy();
+  });
+
+  it('changes an ingredient group', () => {
+    instance.currentIngredientGroup = 'test';
+    instance.ingredientGroup = 'test';
+
+    spyOn(instance, 'jumpToIngredientGroup');
+
+    instance.changeGroup(1, 'test-group');
+
+    expect(instance.currentIngredientGroup).toEqual('test-group');
+    expect(instance.ingredientGroup).toEqual('test-group');
+    expect(instance.jumpToIngredientGroup).toHaveBeenCalledWith(1);
+  });
+
+  it('jumps to an ingredient group', () => {
+    instance.item = {
+      ingredientGroups: ['something']
+    };
+    spyOn(instance, 'doneIngredientOrder');
+    spyOn(instance, 'nextIngredientOrder');
+    instance.jumpToIngredientGroup(0);
+    expect(instance.nextIngredientOrder).toHaveBeenCalled();
+
+    instance.jumpToIngredientGroup(1);
+    expect(instance.doneIngredientOrder).toHaveBeenCalled();
+  });
 
 });
