@@ -286,12 +286,11 @@
 
   "kitchen": {
     "title": "Orders to Prepare",
-    "titleChoiceForResto":"Select a restaurant to view its orders",
-    "":"",
-    "":"",
-    "":"",
-    "":"",
-    "":""
+    "kitSelect":"Select Kitchen Station",
+    "kitText":"for station:",
+    "kitOrder":"Order:",
+    "kitStatus":"Status:",
+    "KitCompleteButton":"Complete Order"
   },
 
   "cashKitchenSelection": {
