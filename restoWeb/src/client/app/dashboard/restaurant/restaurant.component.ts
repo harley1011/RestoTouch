@@ -318,7 +318,6 @@ export class RestaurantComponent implements OnInit {
   }
 
   activateKitchenMode(s: string): void {
-    console.log(this.restaurant);
     if (s === 'cnk') {
      this.kitchenMode = false;
      this.resetToOneDefaultKitchenStationArray();
@@ -335,7 +334,6 @@ export class RestaurantComponent implements OnInit {
         });
       });
       this.restaurant.kitchenStations = [];
-    //  let translation = new KitchenTranslations(this.restaurant.selectedTranslation.languageCode, '1');
       let newStation = new KitchenStation('1', []);
       this.restaurant.kitchenStations.push(newStation);
       this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
