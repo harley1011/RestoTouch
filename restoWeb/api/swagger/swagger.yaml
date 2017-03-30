@@ -1216,6 +1216,8 @@ definitions:
         type: string
       paymentId:
         type: [string, "null"]
+      orderId:
+        type: string
   OrderedItem:
     required:
       - item

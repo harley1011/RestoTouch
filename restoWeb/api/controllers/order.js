@@ -43,6 +43,7 @@ module.exports = {
   removeRestaurantsOrder: removeRestaurantsOrder,
   payForOrder: payForOrder,
   completeOrder: completeOrder,
+  cancelOrder: cancelOrder,
   retrieveCompletedOrders: retrieveCompletedRestaurantOrders,
   retrieveCompletedOrder: retrieveCompletedRestaurantOrder
 };
@@ -123,6 +124,7 @@ function payForOrder(req, res) {
   //var restaurantId = extractRestaurantId(req);
   var restoMode = req.swagger.params.restoMode.value;
   var restaurantId = req.body.restaurantId;
+  var id = req.body.id;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
       var order = result.removedOrder;
@@ -145,7 +147,7 @@ function payForOrder(req, res) {
         });
       });
 
-      return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems},
+      return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
             model: orderedItemsModel, as: 'orderedItems', include: [{
@@ -199,8 +201,45 @@ function payForOrder(req, res) {
 }
 
 function completeOrder(req, res) {
-  console.log('In completeOrder function');
-  return res.json({success: 1, description: "Order Complete"});
+  var restoMode = req.swagger.params.restoMode.value;
+  var restaurantId = req.body.restaurantId;
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  var order = req.body;
+  var id = order.id;
+  console.log("Id:" + id);
+
+  removeRestaurantOrderFromCache(restaurantKey, id);
+
+  orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (oldOrder) {
+    //console.log(oldOrder);
+    oldOrder.status = 'paidComplete';
+    oldOrder.save().then(function(result) {
+      return res.json({success: 1, description: 'Order Complete'});
+    });
+  });
+}
+
+function cancelOrder(req, res) {
+  console.log("In cancelOrder");
+  return res.json({success: 1, description: 'Order Canceled'});
 }
 
 function retrieveCompletedRestaurantOrder(req, res) {
