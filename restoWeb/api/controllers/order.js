@@ -125,8 +125,58 @@ function payForOrder(req, res) {
   var restoMode = req.swagger.params.restoMode.value;
   var restaurantId = req.body.restaurantId;
   var id = req.body.id;
+  var order = req.body;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
+
+  if(restoMode === 'kco') {
+    return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+        model: itemModel,
+        as: 'item',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: itemSizeModel,
+        as: 'size',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      }]
+    }]}).then(function (oldOrder) {
+      if(oldOrder === null) {
+        order.status = 'paidNotComplete';
+        var orderedItems = order.orderedItems;
+        return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          }]
+        }).then(function (createdOrder) {
+            console.log('---------------------------');
+            console.log(createdOrder);
+            console.log('The order was created in kco mode');
+            return res.json({success: 1, description: "Order PaidNotComplete"});
+        })
+      }
+      else {
+        oldOrder.status = 'paidComplete';
+        oldOrder.save().then(function(result) {
+        return res.json({success: 1, description: 'Order PaidComplete'});
+        });
+      }
+    })
+  }
+
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
+      console.log('The order is being removed');
       var order = result.removedOrder;
       order.status = req.body.status;
       var orderedItems = [];
@@ -154,10 +204,9 @@ function payForOrder(req, res) {
               model: orderedItemIngredientModel,
               as: 'orderedItemIngredients'
             }]
-          },
-          ]
+          }]
         }).then(function (createdOrder) {
-
+          console.log('The order was created in kce/cashier mode');
           if(restoMode === 'kce') {
             var restaurantOrders = [];
             redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
@@ -193,7 +242,6 @@ function payForOrder(req, res) {
               });
             });
           }
-
         return res.json({success: 1, description: "Order paid"});
       });
     }
@@ -210,7 +258,7 @@ function completeOrder(req, res) {
 
   removeRestaurantOrderFromCache(restaurantKey, id);
 
-  orderModel.find({where: {orderId: id}, include: [{
+  return orderModel.find({where: {orderId: id}, include: [{
     model: orderedItemsModel,
     as: 'orderedItems',
     include: [{
@@ -244,7 +292,7 @@ function cancelOrder(req, res) {
   console.log(restaurantKey);
   console.log(id);
   removeRestaurantOrderFromCache(restaurantKey, id);
-  orderModel.find({where: {orderId: id}, include: [{
+  return orderModel.find({where: {orderId: id}, include: [{
     model: orderedItemsModel,
     as: 'orderedItems',
     include: [{
@@ -266,7 +314,7 @@ function cancelOrder(req, res) {
     if(oldOrder === null) {
       return res.json({success: 1, description: 'Order not in database'});
     }
-    oldOrder.destroy().then(function(result) {
+    return oldOrder.destroy().then(function(result) {
       return res.json({success: 1, description: 'Order Canceled'});
     });
   });
