@@ -238,8 +238,40 @@ function completeOrder(req, res) {
 }
 
 function cancelOrder(req, res) {
-  console.log("In cancelOrder");
-  return res.json({success: 1, description: 'Order Canceled'});
+  var id = req.swagger.params.orderId.value;
+  var restaurantId = req.swagger.params.restaurantId.value;
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  console.log(restaurantKey);
+  console.log(id);
+  removeRestaurantOrderFromCache(restaurantKey, id);
+  orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (oldOrder) {
+    if(oldOrder === null) {
+      return res.json({success: 1, description: 'Order not in database'});
+    }
+    oldOrder.destroy().then(function(result) {
+      return res.json({success: 1, description: 'Order Canceled'});
+    });
+  });
+  //console.log("In cancelOrder");
+  //return res.json({success: 1, description: 'Order Canceled'});
 }
 
 function retrieveCompletedRestaurantOrder(req, res) {

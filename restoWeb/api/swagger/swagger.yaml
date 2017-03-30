@@ -98,6 +98,40 @@ paths:
           description: restaurant mode
           in: path
           required: true
+          
+  /cancelOrder/{orderId}/{restaurantId}:
+    x-swagger-router-controller: order
+    delete:
+      # used as the method name of the controller
+      operationId: cancelOrder
+      description: Cancels and deletes an order in database 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GeneralResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - name: order
+          description: order properties
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/Order"
+        - name: orderId
+          type: string
+          description: order id
+          in: path
+          required: true
+        - name: restaurantId
+          type: number
+          description: restaurant id
+          in: path
+          required: true
 
   /retrieveCompletedOrders/{restaurantId}:
     x-swagger-router-controller: order

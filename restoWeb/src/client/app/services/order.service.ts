@@ -49,6 +49,15 @@ export class OrderService {
       .catch(this.handleError);
   }
 
+  cancelOrder (order: Order): Observable<GeneralResponse> {
+    let body = JSON.stringify(order);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.delete(this.api.getEndpoint() + '/cancelOrder/' + order.id + '/' + order.restaurantId)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   retrieveCompletedOrders (id: number): Observable<any> {
     return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrders/' + id)
       .map(this.extractData)

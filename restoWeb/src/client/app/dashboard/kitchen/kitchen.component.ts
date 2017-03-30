@@ -97,6 +97,17 @@ export class KitchenComponent implements OnInit {
      });
   }
 
+  cancelOrder(order: Order) {
+    let i = this.orders.indexOf(order);
+    this.orders.splice(i, 1);
+    //order.status = 'paidComplete';
+    this.orderService.cancelOrder(order).subscribe(generalResponse => {
+          },
+      error => {
+          this.errorMessage = <any> error;
+     });
+  }
+
 
 
 }
