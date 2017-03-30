@@ -151,6 +151,7 @@ function payForOrder(req, res) {
       if(oldOrder === null) {
         order.status = 'paidNotComplete';
         var orderedItems = order.orderedItems;
+        modifyOrderInCache(restaurantKey, id, order.status);
         return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
@@ -160,9 +161,6 @@ function payForOrder(req, res) {
             }]
           }]
         }).then(function (createdOrder) {
-            console.log('---------------------------');
-            console.log(createdOrder);
-            console.log('The order was created in kco mode');
             return res.json({success: 1, description: "Order PaidNotComplete"});
         })
       }
@@ -177,7 +175,6 @@ function payForOrder(req, res) {
   }
 
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
-      console.log('The order is being removed');
       var order = result.removedOrder;
       order.status = req.body.status;
       var orderedItems = [];
@@ -185,7 +182,6 @@ function payForOrder(req, res) {
         orderedItem.sizes.forEach(function (sizeContainer) {
           var selectedIngredients = [];
           if(sizeContainer.selectedIngredients) {
-            console.log("in ingredients loop");
             sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
               selectedIngredients.push({
                 ingredientId: ingredientContainer.ingredient.id,
@@ -207,7 +203,6 @@ function payForOrder(req, res) {
             }]
           }]
         }).then(function (createdOrder) {
-          console.log('The order was created in kce/cashier mode');
           if(restoMode === 'kce') {
             var restaurantOrders = [];
             redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
@@ -280,6 +275,7 @@ function completeOrder(req, res) {
       if(oldOrder === null) {
         order.status = 'NotPaidComplete';
         var orderedItems = order.orderedItems;
+        modifyOrderInCache(restaurantKey, id, order.status);
         return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
@@ -323,7 +319,6 @@ function completeOrder(req, res) {
       }]
     }]
   }]}).then(function (oldOrder) {
-    //console.log(oldOrder);
     oldOrder.status = 'paidComplete';
     oldOrder.save().then(function(result) {
       return res.json({success: 1, description: 'Order Complete'});
@@ -455,6 +450,50 @@ function removeRestaurantOrderFromCache(restaurantKey, orderId) {
           fulfill({
             success: 0,
             description: "Order not removed because it doesn't exist in the restaurants orders"
+          });
+        }
+      });
+    });
+  });
+}
+
+function modifyOrderInCache(restaurantKey, orderId, status) {
+  return new promise(function (fulfill, reject) {
+    redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
+      client.get(restaurantKey, function (err, reply) {
+        if (reply) {
+          var restaurantOrders = JSON.parse(reply);
+          var orderToUpdate = _.find(restaurantOrders, function (o) {
+            return o.id == orderId;
+          });
+
+          orderToUpdate.status = status;
+
+          if (orderToUpdate.length == 0) {
+            unlock(lock);
+            fulfill({
+              success: 0,
+              description: "Order not updated because it doesn't exist in the restaurants orders"
+            });
+
+          }
+          client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
+            if (reply == "OK") {
+              unlock(lock);
+              fulfill({success: 1, description: "Order removed from restaurants order", updatedOrder: orderToUpdate});
+            }
+            else {
+              unlock(lock);
+              reject({success: 0, description: "Order failed to update, removed would be persisted"});
+            }
+          });
+        }
+        else {
+
+          unlock(lock);
+          fulfill({
+            success: 0,
+            description: "Order not updated because it doesn't exist in the restaurants orders"
           });
         }
       });
