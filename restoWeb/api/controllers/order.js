@@ -150,8 +150,24 @@ function payForOrder(req, res) {
     }]}).then(function (oldOrder) {
       if(oldOrder === null) {
         order.status = 'paidNotComplete';
-        var orderedItems = order.orderedItems;
+        //var orderedItems = order.orderedItems;
         modifyOrderInCache(restaurantKey, id, order.status);
+        var orderedItems = [];
+        order.orderedItems.forEach(function (orderedItem) {
+          orderedItem.sizes.forEach(function (sizeContainer) {
+            var selectedIngredients = [];
+            if(sizeContainer.selectedIngredients) {
+              sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+                selectedIngredients.push({
+                  ingredientId: ingredientContainer.ingredient.id,
+                  //quantity: ingredientContainer.ingredient.quantity
+                });
+              });
+            }
+
+            orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+          });
+        });
         return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
@@ -165,6 +181,9 @@ function payForOrder(req, res) {
         })
       }
       else {
+        for (var prop in order) {
+          oldOrder[prop] = order[prop];
+        }
         oldOrder.status = 'paidComplete';
         removeRestaurantOrderFromCache(restaurantKey, id);
         oldOrder.save().then(function(result) {
@@ -274,8 +293,24 @@ function completeOrder(req, res) {
     }]}).then(function (oldOrder) {
       if(oldOrder === null) {
         order.status = 'NotPaidComplete';
-        var orderedItems = order.orderedItems;
+        //var orderedItems = order.orderedItems;
         modifyOrderInCache(restaurantKey, id, order.status);
+        var orderedItems = [];
+        order.orderedItems.forEach(function (orderedItem) {
+          orderedItem.sizes.forEach(function (sizeContainer) {
+            var selectedIngredients = [];
+            if(sizeContainer.selectedIngredients) {
+              sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+                selectedIngredients.push({
+                  ingredientId: ingredientContainer.ingredient.id,
+                  //quantity: ingredientContainer.ingredient.quantity
+                });
+              });
+            }
+
+            orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+          });
+        });
         return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
@@ -289,6 +324,9 @@ function completeOrder(req, res) {
         })
       }
       else {
+        for (var prop in order) {
+          oldOrder[prop] = order[prop];
+        }
         oldOrder.status = 'paidComplete';
         removeRestaurantOrderFromCache(restaurantKey, id);
         oldOrder.save().then(function(result) {
@@ -319,6 +357,9 @@ function completeOrder(req, res) {
       }]
     }]
   }]}).then(function (oldOrder) {
+    for (var prop in order) {
+      oldOrder[prop] = order[prop];
+    }
     oldOrder.status = 'paidComplete';
     oldOrder.save().then(function(result) {
       return res.json({success: 1, description: 'Order Complete'});
