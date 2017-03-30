@@ -8,7 +8,7 @@
     "emailHolderFieldForm": "E-mail",
     "passwordHolderFieldForm": "Password",
     "logButton": "Log in",
-    "cashierMode": "Cashier Mode"
+    "cashierMode": "Employee Mode"
   },
 
   "logout": {
@@ -18,7 +18,7 @@
     "formSousTitle": "Got signed out by mistake?",
     "formTitle2": "Sign back in:",
     "formLogButton": "Log back in",
-    "cashierMode": "Cashier Mode"
+    "cashierMode": "Employee Mode"
   },
 
   "registration": {
@@ -55,7 +55,7 @@
     "settingTopnav": "Settings",
     "logoutTopnav": "Log Out",
     "modalLanguageTitle": "Add Supported Language",
-    "cashierMode": "Cashier Mode"
+    "cashierMode": "Employee Mode"
   },
 
   "restaurant":{
@@ -107,6 +107,16 @@
     "orderNotiDetail1":"An order number confirmation will appear on the screen to your client after his/her order has been submitted. When the order is ready, the staff can match the order number with your client's number to ensure to give the order to the right client.",
     "orderNotiDetail2":"For a more personalized service, this type allows your client to type their name before submitting the order. The staff can read out the name to inform the client that his/her order is ready. This is the default option.",
     "orderNotiDetail3":"This type is appropriate for sit-in service where on each table has its own designated device. If this type is selected, after selecting the restaurant on your tablet device, the app will prompt you to enter the table number. For every order made with that tablet device, it will be tagged with the pre-entered table number.",
+    "kitListTitle":"List of Kitchen Station(s):",
+    "kitListdesc":"Select a station to modify its settings below:",
+    "kitListAddButton":"Add more",
+    "kitListItems":"Food Items Responsabilities by category",
+    "kitListItemWarning":"All items of this category are associated to a kitchen station",
+    "kitListMenuWarning":"No menu or the menu is empty. Please add a menu to the restaurant or complete the menu",
+    "kitListStationSettingTitle":"Settings of station ",
+    "kitListStationNameField":"Give the station a new name: ",
+    "kitListStationItemTitle":"Kitchen Station Responsabilities",
+    "kitListStationItemWarning":"No assigned responsibility. To add food item responsabilities, select from the left list.",
     "orderNotiOpt1":"By Number",
     "orderNotiOpt2":"By Name",
     "orderNotiOpt3":"By Table Number",
@@ -275,7 +285,18 @@
   },
 
   "kitchen": {
-    "title": "Orders to Prepare"
+    "title": "Orders to Prepare",
+    "kitSelect":"Select Kitchen Station",
+    "kitText":"for station:",
+    "kitOrder":"Order:",
+    "kitStatus":"Status:",
+    "KitCompleteButton":"Complete Order"
+  },
+
+  "cashKitchenSelection": {
+    "title": "Select Cashier or Kitchen Mode",
+    "cashMode":"Cashier Mode",
+    "kitMode":"Kitchen Mode"
   }
 
 }

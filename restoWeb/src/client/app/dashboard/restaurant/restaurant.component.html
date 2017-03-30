@@ -367,7 +367,9 @@
               <label for="language">{{ 'restaurant.langSelect' | translate}}</label>
               <select name="language" class="form-control" [(ngModel)]="selectedLanguage">
                 <template ngFor let-language [ngForOf]="languages">
-                  <option [ngValue]="language.languageCode" *ngIf="checkIfInSupportedLanguages(language)">{{language.name}}</option>
+                  <option [ngValue]="language.languageCode" *ngIf="checkIfInSupportedLanguages(language)">
+                    {{language.name}}
+                  </option>
                 </template>
               </select>
             </div>
@@ -413,47 +415,134 @@
         -->
       </div>
 
-<!--KITCHEN CASHIER MODE OPTION SECTION-->
-      <div id="basic-info" class="col-md-9">
+      <!--KITCHEN CASHIER MODE OPTION SECTION-->
+      <div class="col-md-9">
         <h4>{{ 'restaurant.kitCashModeTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
-            <div class="card-block">
-              <blockquote class="card-blockquote">
-                  <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
-                  <p><span class="label label-primary">{{ 'restaurant.kitCashModeOpt1' | translate}}</span> {{ 'restaurant.kitCashModeDetails1' | translate}}</p>
-                  <p><span class="label label-success">{{ 'restaurant.kitCashModeOpt2' | translate}}</span> {{ 'restaurant.kitCashModeDetails2' | translate}}</p>
-                  <p><span class="label label-warning">{{ 'restaurant.kitCashModeOpt3' | translate}}</span> {{ 'restaurant.kitCashModeDetails3' | translate}}</p>
-              </blockquote>
-            </div>
+          <div class="card-block">
+            <blockquote class="card-blockquote">
+              <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
+              <p *ngIf="restaurant.kitCashModeFlag=='kco'">{{ 'restaurant.kitCashModeDetails1' | translate}}</p>
+              <p *ngIf="restaurant.kitCashModeFlag=='kce'">{{ 'restaurant.kitCashModeDetails2' | translate}}</p>
+              <p *ngIf="restaurant.kitCashModeFlag=='cnk'">{{ 'restaurant.kitCashModeDetails3' | translate}}</p>
+            </blockquote>
+          </div>
         </div>
         <div class="radio form-group">
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kco" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt1' | translate}}</label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="kce" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt2' | translate}} <span class="label label-default">Default</span></label>
-             <label class="radio-inline"><input type="radio" name="kitCashModeFlag" id="kitCashMode" value="cnk" [(ngModel)]="restaurant.kitCashModeFlag"> {{ 'restaurant.kitCashModeOpt3' | translate}}</label>
-       </div>
-       <br/><br/>
+          <label class="radio-inline"><input type="radio" name="kitCashModeFlag" value="kco"
+                                             [(ngModel)]="restaurant.kitCashModeFlag"
+                                             (change)="activateKitchenMode('kco')"> {{ 'restaurant.kitCashModeOpt1' |
+            translate}}</label>
+          <label class="radio-inline"><input type="radio" name="kitCashModeFlag" value="kce"
+                                             [(ngModel)]="restaurant.kitCashModeFlag"
+                                             (change)="activateKitchenMode('kce')"> {{ 'restaurant.kitCashModeOpt2' |
+            translate}} <span class="label label-default">Default</span></label>
+          <label class="radio-inline"><input type="radio" name="kitCashModeFlag" value="cnk"
+                                             [(ngModel)]="restaurant.kitCashModeFlag"
+                                             (change)="activateKitchenMode('cnk')"> {{ 'restaurant.kitCashModeOpt3' |
+            translate}}</label>
+        </div>
+        <br/>
+        <hr>
+
+        <div *ngIf="kitchenMode">
+          <span
+            *ngIf="restaurant.kitchenStations.length > 0"><h5>{{ 'restaurant.kitListTitle' | translate }} </h5></span>
+          <span>{{ 'restaurant.kitListdesc' | translate }}</span><br/><br/>
+          <div *ngIf="restaurant.kitchenStations.length > 0" class="btn-group" data-toggle="buttons" role="group">
+            <label *ngFor="let station of restaurant.kitchenStations; let i = index" class="btn btn-secondary">
+              <input type="checkbox" (click)="kitStatSelected(i)"> {{ station.name }} &nbsp; &nbsp; &nbsp; &nbsp;
+              <i class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeStation(i)"></i>
+            </label>
+            <label class="btn btn-secondary">
+              <input type="checkbox" (click)="addNewStation()"><i class="fa fa-plus-circle text-success"
+                                                                  aria-hidden="true"></i> {{
+              'restaurant.kitListAddButton' | translate }}
+            </label>
+          </div>
+          <br/>
+          <hr>
+          <br/>
+          <div class="row">
+            <div class="col-md-6">
+              <label><h5>{{ 'restaurant.kitListItems' | translate }}</h5></label>
+              <ul *ngFor="let cat of categories; let i = index;" class="list-group scrollable-list">
+                <li class="list-group-item bg-faded">{{cat.translations[0]?.name}}
+                  <i [hidden]="cat?.items.length == 0"
+                     class="fa fa-angle-double-right icon-add icon-align fa-pull-right"
+                     (click)="addAllItemToKitchenStation(i)"></i>
+                </li>
+                <li [hidden]="cat?.items.length > 0" class="list-group-item"><i class="fa fa-exclamation-circle"></i> {{
+                  'restaurant.kitListItemWarning' | translate }}
+                </li>
+                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.translations[0]?.name}}
+                  <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
+                     (click)="addItemToKitchenStation(item)"></i>
+                </li>
+              </ul>
+              <div [hidden]="restaurant.Menus?.length > 0">
+                <i class="fa fa-exclamation-circle"></i> {{ 'restaurant.kitListMenuWarning' | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h5>{{ 'restaurant.kitListStationSettingTitle' | translate }} <span class="label label-success"> {{ selectedKitchenStation[0]?.name }} </span>
+              </h5>
+              <div *ngIf="restaurant.kitchenStations.length > 0">
+                <span>{{ 'restaurant.kitListStationNameField' | translate }} </span><input type="text"
+                                                                                           [attr.placeholder]=(selectedKitchenStation[0]?.name)
+                                                                                           #newName
+                                                                                           (change)="setKitchenStationName(newName, selectedKitchenStation[1])">
+                <span class="fa-stack">
+                  <i class="fa fa-circle fa-stack-2x text-success"></i>
+                  <i class="fa fa-floppy-o fa-stack-1x fa-inverse"></i>
+                </span>
+              </div>
+              <br>
+              <label><h6>{{ 'restaurant.kitListStationItemTitle' | translate }}</h6></label>
+              <ul class="list-group scrollable-list">
+                <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item">
+                  {{item.translations[0]?.name}}
+                  <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
+                     (click)="removeItemFromKitchenStation(item, selectedKitchenStation[1])"></i>
+                </li>
+              </ul>
+              <div [hidden]="selectedKitchenStation[0]?.kitItem.length > 0">
+                <i class="fa fa-exclamation-circle"></i> {{ 'restaurant.kitListStationItemWarning' | translate }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <br/><br/>
       </div>
 
-<!--ORDER NOTIFICATION TYPE-->
-      <div id="basic-info" class="col-md-9">
+      <!--ORDER NOTIFICATION TYPE-->
+      <div class="col-md-9">
         <h4>{{'restaurant.orderNotiTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
-            <div class="card-block">
-              <blockquote class="card-blockquote">
-                  <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
-                  <p>{{'restaurant.orderNotiDetail' | translate}}</p>
-                  <p><span class="label label-primary">{{ 'restaurant.orderNotiOpt1' | translate}}</span> {{ 'restaurant.orderNotiDetail1' | translate}}</p>
-                  <p><span class="label label-success">{{ 'restaurant.orderNotiOpt2' | translate}}</span> {{ 'restaurant.orderNotiDetail2' | translate}}</p>
-                  <p><span class="label label-warning">{{ 'restaurant.orderNotiOpt3' | translate}}</span> {{ 'restaurant.orderNotiDetail3' | translate}}</p>
-              </blockquote>
-            </div>
+          <div class="card-block">
+            <blockquote class="card-blockquote">
+              <h5>Information <i class="fa fa-info-circle" aria-hidden="true"></i> :</h5>
+              <p>{{'restaurant.orderNotiDetail' | translate}}</p>
+              <p *ngIf="restaurant.orderNotiFlag=='nu'"> {{ 'restaurant.orderNotiDetail1' | translate}}</p>
+              <p *ngIf="restaurant.orderNotiFlag=='na'"> {{ 'restaurant.orderNotiDetail2' | translate}}</p>
+              <p *ngIf="restaurant.orderNotiFlag=='ta'"> {{ 'restaurant.orderNotiDetail3' | translate}}</p>
+            </blockquote>
+          </div>
         </div>
         <div class="radio form-group">
-             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="nu" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt1' | translate}}</label>
-             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="na" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt2' | translate}} <span class="label label-default">Default</span></label>
-             <label class="radio-inline"><input type="radio" name="orderNotiFlag" id="orderNotiType" value="ta" [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt3' | translate}}</label>
-       </div>
-       <br/><br/>
+          <label class="radio-inline"><input type="radio" name="orderNotiFlag" value="nu"
+                                             [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt1' |
+            translate}}</label>
+          <label class="radio-inline"><input type="radio" name="orderNotiFlag" value="na"
+                                             [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt2' |
+            translate}} <span class="label label-default">Default</span></label>
+          <label class="radio-inline"><input type="radio" name="orderNotiFlag" value="ta"
+                                             [(ngModel)]="restaurant.orderNotiFlag"> {{ 'restaurant.orderNotiOpt3' |
+            translate}}</label>
+        </div>
+        <br/><br/>
       </div>
 
       <div class="row">
@@ -462,10 +551,12 @@
           <button *ngIf="!create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.saveButton' |
             translate}}
           </button>
-          <button *ngIf="!create" id="deleteRestaurantBtn" type="button" (click)="delete()" class="btn btn-danger btn-red">{{
+          <button *ngIf="!create" id="deleteRestaurantBtn" type="button" (click)="delete()"
+                  class="btn btn-danger btn-red">{{
             'restaurant.deleteButton' | translate}}
           </button>
-          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.createButtonTopbar' |
+          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{
+            'restaurant.createButtonTopbar' |
             translate}}
           </button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'restaurant.cancelButtonTopbar'
