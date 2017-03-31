@@ -21,14 +21,13 @@
   </div>
   <div class="manage-list-container">
     <div class="row">
-      <div *ngFor="let order of orders">
-      	<div *ngIf="(restoMode === 'kce' && order.status === 'paidNotComplete') || (restoMode === 'kco' && (order.status === 'notPaidNotComplete' || order.status === 'paidNotComplete'))" class="col-sm-3">
+      <div *ngFor="let order of orders; let i = index;">
+      	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
 	        <div *ngIf="order.orderedItems.length > 0" class="card card-primary card-inverse">
 	          <div class="card-block">
-              <h4 class="card-title">{{ 'kitchen.kitOrder'| translate}} {{order.notifyOrderDetail}}</h4>
+	            <h4 class="card-title">{{ 'kitchen.kitOrder'| translate}} {{order.notifyOrderDetail}}</h4>
               <h6 class="card-title">{{ 'kitchen.kitStatus'| translate}} {{order.status}}</h6>
-	            <button class="btn btn-success" (click)="completeOrder(order)">{{ 'kitchen.KitCompleteButton'| translate}}</button>
-              <button class="btn btn-danger" (click)="cancelOrder(order)">Cancel</button>
+	            <button class="btn btn-success" (click)="completeOrder(i)">{{ 'kitchen.KitCompleteButton'| translate}}</button>
 	          </div>
 	          <ul class="list-group list-group-flush">
 	            <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
@@ -40,8 +39,8 @@
                     <li *ngFor="let ingredientGroup of orderedItem.item.ingredientGroups">
                       {{ingredientGroup.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No Translation"}}
                       <ul>
-                        <li *ngFor="let ingredient of size.selectedIngredients.ingredients">
-                          {{ingredient.ingredient.translations ? ingredient.ingredient.translations[0].name : "No Translation"}}
+                        <li *ngFor="let ingredient of ingredientGroup.ingredients">
+                          {{ingredient.translations ? ingredient.translations[0].name : "No Translation"}}
                         </li>
                       </ul>
                     </li>
