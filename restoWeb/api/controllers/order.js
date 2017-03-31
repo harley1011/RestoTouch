@@ -42,6 +42,8 @@ module.exports = {
   closeRedis: closeRedis,
   removeRestaurantsOrder: removeRestaurantsOrder,
   payForOrder: payForOrder,
+  completeOrder: completeOrder,
+  cancelOrder: cancelOrder,
   retrieveCompletedOrders: retrieveCompletedRestaurantOrders,
   retrieveCompletedOrder: retrieveCompletedRestaurantOrder
 };
@@ -119,10 +121,76 @@ function notifyNewOrder(restaurantId, order) {
 }
 
 function payForOrder(req, res) {
-  //var restaurantId = extractRestaurantId(req);
   var restoMode = req.swagger.params.restoMode.value;
   var restaurantId = req.body.restaurantId;
+  var id = req.body.id;
+  var order = req.body;
   var restaurantKey = 'restaurantOrders:' + restaurantId;
+
+  if(restoMode === 'kco') {
+    return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+        model: itemModel,
+        as: 'item',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: itemSizeModel,
+        as: 'size',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      }]
+    }]}).then(function (oldOrder) {
+      if(oldOrder === null) {
+        order.status = 'paidNotComplete';
+        modifyOrderInCache(restaurantKey, id, order.status);
+        var orderedItems = [];
+        order.orderedItems.forEach(function (orderedItem) {
+          orderedItem.sizes.forEach(function (sizeContainer) {
+            var selectedIngredients = [];
+            if(sizeContainer.selectedIngredients) {
+              sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+                selectedIngredients.push({
+                  ingredientId: ingredientContainer.ingredient.id,
+                  //quantity: ingredientContainer.ingredient.quantity
+                });
+              });
+            }
+
+            orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+          });
+        });
+        return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          }]
+        }).then(function (createdOrder) {
+            return res.json({success: 1, description: "Order PaidNotComplete"});
+        })
+      }
+      else {
+        for (var prop in order) {
+          oldOrder[prop] = order[prop];
+        }
+        oldOrder.status = 'paidComplete';
+        removeRestaurantOrderFromCache(restaurantKey, id);
+        oldOrder.save().then(function(result) {
+        return res.json({success: 1, description: 'Order PaidComplete'});
+        });
+      }
+    })
+  }
+
   return removeRestaurantOrderFromCache(restaurantKey, req.body.id).then(function (result) {
       var order = result.removedOrder;
       order.status = req.body.status;
@@ -131,7 +199,6 @@ function payForOrder(req, res) {
         orderedItem.sizes.forEach(function (sizeContainer) {
           var selectedIngredients = [];
           if(sizeContainer.selectedIngredients) {
-            console.log("in ingredients loop");
             sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
               selectedIngredients.push({
                 ingredientId: ingredientContainer.ingredient.id,
@@ -144,17 +211,15 @@ function payForOrder(req, res) {
         });
       });
 
-      return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems},
+      return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
         {
           include: [{
             model: orderedItemsModel, as: 'orderedItems', include: [{
               model: orderedItemIngredientModel,
               as: 'orderedItemIngredients'
             }]
-          },
-          ]
+          }]
         }).then(function (createdOrder) {
-
           if(restoMode === 'kce') {
             var restaurantOrders = [];
             redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
@@ -190,11 +255,150 @@ function payForOrder(req, res) {
               });
             });
           }
-
         return res.json({success: 1, description: "Order paid"});
       });
     }
   )
+}
+
+function completeOrder(req, res) {
+  var restoMode = req.swagger.params.restoMode.value;
+  var restaurantId = req.body.restaurantId;
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  var order = req.body;
+  var id = order.id;
+  console.log("Id:" + id);
+
+  if(restoMode === 'kco') {
+    return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+        model: itemModel,
+        as: 'item',
+        include: [{
+          model: itemTranslationModel,
+          as: 'translations'
+        }]
+      }, {
+        model: itemSizeModel,
+        as: 'size',
+        include: [{
+          model: itemSizeTranslationModel,
+          as: 'translations'
+        }]
+      }]
+    }]}).then(function (oldOrder) {
+      if(oldOrder === null) {
+        order.status = 'notPaidComplete';
+        modifyOrderInCache(restaurantKey, id, order.status);
+        var orderedItems = [];
+        order.orderedItems.forEach(function (orderedItem) {
+          orderedItem.sizes.forEach(function (sizeContainer) {
+            var selectedIngredients = [];
+            if(sizeContainer.selectedIngredients) {
+              sizeContainer.selectedIngredients.ingredients.forEach(function (ingredientContainer) {
+                selectedIngredients.push({
+                  ingredientId: ingredientContainer.ingredient.id,
+                  //quantity: ingredientContainer.ingredient.quantity
+                });
+              });
+            }
+
+            orderedItems.push({itemId: orderedItem.item.id, itemSizeId: sizeContainer.size.id});
+          });
+        });
+        return orderModel.create({total: order.total, status: order.status, restaurantId: restaurantId, orderedItems: orderedItems, orderId: id},
+        {
+          include: [{
+            model: orderedItemsModel, as: 'orderedItems', include: [{
+              model: orderedItemIngredientModel,
+              as: 'orderedItemIngredients'
+            }]
+          }]
+        }).then(function (createdOrder) {
+            return res.json({success: 1, description: "Order NotPaidComplete"});
+        })
+      }
+      else {
+        for (var prop in order) {
+          oldOrder[prop] = order[prop];
+        }
+        oldOrder.status = 'paidComplete';
+        removeRestaurantOrderFromCache(restaurantKey, id);
+        oldOrder.save().then(function(result) {
+        return res.json({success: 1, description: 'Order PaidComplete'});
+        });
+      }
+    })
+  }
+
+  removeRestaurantOrderFromCache(restaurantKey, id);
+
+  return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (oldOrder) {
+    for (var prop in order) {
+      oldOrder[prop] = order[prop];
+    }
+    oldOrder.status = 'paidComplete';
+    oldOrder.save().then(function(result) {
+      return res.json({success: 1, description: 'Order Complete'});
+    });
+  });
+}
+
+function cancelOrder(req, res) {
+  var id = req.swagger.params.orderId.value;
+  var restaurantId = req.swagger.params.restaurantId.value;
+  var restaurantKey = 'restaurantOrders:' + restaurantId;
+  console.log(restaurantKey);
+  console.log(id);
+  removeRestaurantOrderFromCache(restaurantKey, id);
+  return orderModel.find({where: {orderId: id}, include: [{
+    model: orderedItemsModel,
+    as: 'orderedItems',
+    include: [{
+      model: itemModel,
+      as: 'item',
+      include: [{
+        model: itemTranslationModel,
+        as: 'translations'
+      }]
+    }, {
+      model: itemSizeModel,
+      as: 'size',
+      include: [{
+        model: itemSizeTranslationModel,
+        as: 'translations'
+      }]
+    }]
+  }]}).then(function (oldOrder) {
+    if(oldOrder === null) {
+      return res.json({success: 1, description: 'Order not in database'});
+    }
+    return oldOrder.destroy().then(function(result) {
+      return res.json({success: 1, description: 'Order Canceled'});
+    });
+  });
+  //console.log("In cancelOrder");
+  //return res.json({success: 1, description: 'Order Canceled'});
 }
 
 function retrieveCompletedRestaurantOrder(req, res) {
@@ -284,6 +488,50 @@ function removeRestaurantOrderFromCache(restaurantKey, orderId) {
           fulfill({
             success: 0,
             description: "Order not removed because it doesn't exist in the restaurants orders"
+          });
+        }
+      });
+    });
+  });
+}
+
+function modifyOrderInCache(restaurantKey, orderId, status) {
+  return new promise(function (fulfill, reject) {
+    redlock.lock(restaurantKey + 'lock', ttl).then(function (lock) {
+      client.get(restaurantKey, function (err, reply) {
+        if (reply) {
+          var restaurantOrders = JSON.parse(reply);
+          var orderToUpdate = _.find(restaurantOrders, function (o) {
+            return o.id == orderId;
+          });
+
+          orderToUpdate.status = status;
+
+          if (orderToUpdate.length == 0) {
+            unlock(lock);
+            fulfill({
+              success: 0,
+              description: "Order not updated because it doesn't exist in the restaurants orders"
+            });
+
+          }
+          client.setex(restaurantKey, 24 * 60 * 60, JSON.stringify(restaurantOrders), function (err, reply) {
+            if (reply == "OK") {
+              unlock(lock);
+              fulfill({success: 1, description: "Order removed from restaurants order", updatedOrder: orderToUpdate});
+            }
+            else {
+              unlock(lock);
+              reject({success: 0, description: "Order failed to update, removed would be persisted"});
+            }
+          });
+        }
+        else {
+
+          unlock(lock);
+          fulfill({
+            success: 0,
+            description: "Order not updated because it doesn't exist in the restaurants orders"
           });
         }
       });

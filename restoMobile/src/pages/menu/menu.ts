@@ -31,7 +31,7 @@ export class MenuPage {
   categories: Array<OrderableCategory>;
   total: string;
 
-  currentOrder = new Order([], 0, 'notPaid', '');
+  currentOrder = new Order([], 0, 'notPaidNotComplete', '');
   showAllCategories: boolean;
   currentCategory: Category;
 
