@@ -26,6 +26,7 @@ export class KitchenComponent implements OnInit {
   order: Order;
   id: number;
   restoMode: string;
+  errorMessage: string;
   restaurant: Restaurant;
   selectedStationInfo: [string, boolean] = ['', false];
   selectedStationId: number;
@@ -56,8 +57,29 @@ export class KitchenComponent implements OnInit {
             this.restaurant = restaurant;
             this.stationList = restaurant.kitchenStations;
           });
-          this.getOrders(this.id);
+          this.orderNotifierService.connectToOrderNotifier(this.id).subscribe((order: any) => {
+            this.order = JSON.parse(order);
+            console.log(this.order);
+            this.order.orderedItems.forEach(orderedItem => {
 
+              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
+
+            });
+            if(this.selectedStationInfo[1]) {
+              this.filterToThisStation(this.order);
+              console.log(this.order);
+            }
+            this.orders.push(this.order);
+          });
+
+
+
+           //Get previously cached orders
+           this.orderService.retrieveOrders(this.id).subscribe(orders => {
+             console.log('this.orderService.retrieveOrders');
+             console.log(orders);
+           this.orders = orders;
+           });
 
         }
     });
@@ -87,27 +109,6 @@ export class KitchenComponent implements OnInit {
     });
   }
 
-  getOrders(id: number):void {
-          this.orderNotifierService.connectToOrderNotifier(id).subscribe((order: any) => {
-            this.order = JSON.parse(order);
-            this.order.orderedItems.forEach(orderedItem => {
-              orderedItem.item.selectedTranslation = orderedItem.item.translations.find(translation => translation.languageCode === this.translationSelectComponent.selectedLanguage.languageCode);
-            });
-            if(this.selectedStationInfo[1]) {
-              this.filterToThisStation(this.order);
-              console.log(this.order);
-            }
-            this.orders.push(this.order);
-             this.removeCompletedOrder();
-          });
-
-           //Get previously cached orders
-           this.orderService.retrieveOrders(id).subscribe(orders => {
-            this.orders = orders;
-             this.removeCompletedOrder();
-           });
-  }
-
   stationSelect(id: number, i: number): void {
     this.selectedStationId = id;
     this.selectedStationInfo = [this.restaurant.kitchenStations[i].name, true];
@@ -118,7 +119,7 @@ export class KitchenComponent implements OnInit {
     });
   }
 
-  goBack(): void {
+/*  goBack(): void {
     this.getOrders(this.id);
     this.selectedStationInfo[1] = false;
   }
@@ -127,11 +128,28 @@ export class KitchenComponent implements OnInit {
     var diff = _.differenceBy(this.orders, this.completedOrders, 'id');
     this.orders = diff;
   }
-
-  completeOrder(i: number): void {
-    this.completedOrders.push(this.orders[i]);
-    this.orders.splice(i, 1);
+ */
+  completeOrder(order: Order) {
+   let i = this.orders.indexOf(order);
+   this.orders.splice(i, 1);
+   //order.status = 'paidComplete';
+   this.orderService.completeOrder(this.restoMode, order).subscribe(generalResponse => {
+     },
+     error => {
+       this.errorMessage = <any> error;
+     });
   }
+
+   cancelOrder(order: Order) {
+    let i = this.orders.indexOf(order);
+    this.orders.splice(i, 1);
+    //order.status = 'paidComplete';
+    this.orderService.cancelOrder(order).subscribe(generalResponse => {
+     },
+     error => {
+       this.errorMessage = <any> error;
+     });
+   }
 
   filterToThisStation(o: Order): void {
     let keepItem: Order = new Order([], null,'','');
