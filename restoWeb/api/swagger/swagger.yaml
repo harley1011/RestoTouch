@@ -1251,7 +1251,7 @@ definitions:
       paymentId:
         type: [string, "null"]
       orderId:
-        type: string
+        type: [string, "null"]
   OrderedItem:
     required:
       - item
