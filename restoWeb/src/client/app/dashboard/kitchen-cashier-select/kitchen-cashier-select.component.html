@@ -1,14 +1,14 @@
 <div class="manage-list">
   <div class="manage-header">
-    <h2>Select Cashier or Kitchen Mode</h2>
+    <h2>{{ 'cashKitchenSelection.title' | translate }}</h2>
     <hr>
   </div>
   <div class="manage-list-container">
       <div (click)="cashierSelect()" class="card card-block">
-        <h4 class="card-title">Cashier Mode</h4>
+        <h4 class="card-title">{{ 'cashKitchenSelection.cashMode' | translate }}</h4>
       </div>
       <div (click)="kitchenSelect()" class="card card-block">
-        <h4 class="card-title">Kitchen Mode</h4>
+        <h4 class="card-title">{{ 'cashKitchenSelection.kitMode' | translate }}</h4>
       </div>
   </div>
 </div>
