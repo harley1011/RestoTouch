@@ -555,10 +555,12 @@
                   class="btn btn-danger btn-red">{{
             'restaurant.deleteButton' | translate}}
           </button>
-          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{
-            'restaurant.createButtonTopbar' |
+          <button id="addMoreBtn" *ngIf="create" type="button" (click)="addMoreStep()" class="btn btn-success btn-green">+ Add a Menu
+          </button>
+          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.createButtonTopbar' |
             translate}}
           </button>
+
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'restaurant.cancelButtonTopbar'
             | translate}}
           </button>

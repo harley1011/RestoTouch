@@ -140,6 +140,17 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  addMoreStep(): void {
+    this.menuService.addMenu(this.menu).subscribe(
+      generalResponse => {
+        this.router.navigate(['/dashboard/category']);
+      },
+      error => {
+        this.errorMessage = <any> error;
+      }
+    );
+  }
+
   changeOrder(catCheckList: CategoryCheckboxList, changeIndex: number) {
     var currentIndex = this.itemCategories.indexOf(catCheckList);
     var newIndex = (currentIndex + changeIndex) % this.itemCategories.length;
