@@ -12,7 +12,7 @@
   <div class="manage-list-container">
     <div class="row">
       <div *ngFor="let order of orders">
-        <div *ngIf="order.status === 'notPaid'" class="col-sm-3">
+        <div *ngIf="(order.status === 'notPaidNotComplete') || (restoMode === 'kco' && (order.status === 'notPaidNotComplete' || order.status === 'notPaidComplete'))" class="col-sm-3">
           <div class="card card-primary card-inverse">
             <div class="card-block">
             <h4 class="card-title">Order: {{order.id}} {{order.notifyOrderDetail}}</h4>

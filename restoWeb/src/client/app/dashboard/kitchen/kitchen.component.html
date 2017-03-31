@@ -7,7 +7,7 @@
   <div class="manage-list-container">
     <div class="row">
       <div *ngFor="let order of orders">
-      	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
+      	<div *ngIf="(restoMode === 'kce' && order.status === 'paidNotComplete') || (restoMode === 'kco' && (order.status === 'notPaidNotComplete' || order.status === 'paidNotComplete'))" class="col-sm-3">
 	        <div class="card card-primary card-inverse">
 	          <div class="card-block">
 	            <h4 class="card-title">Order: {{order.id}}</h4>

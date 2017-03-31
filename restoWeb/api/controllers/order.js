@@ -121,7 +121,6 @@ function notifyNewOrder(restaurantId, order) {
 }
 
 function payForOrder(req, res) {
-  //var restaurantId = extractRestaurantId(req);
   var restoMode = req.swagger.params.restoMode.value;
   var restaurantId = req.body.restaurantId;
   var id = req.body.id;
@@ -150,7 +149,6 @@ function payForOrder(req, res) {
     }]}).then(function (oldOrder) {
       if(oldOrder === null) {
         order.status = 'paidNotComplete';
-        //var orderedItems = order.orderedItems;
         modifyOrderInCache(restaurantKey, id, order.status);
         var orderedItems = [];
         order.orderedItems.forEach(function (orderedItem) {
@@ -292,8 +290,7 @@ function completeOrder(req, res) {
       }]
     }]}).then(function (oldOrder) {
       if(oldOrder === null) {
-        order.status = 'NotPaidComplete';
-        //var orderedItems = order.orderedItems;
+        order.status = 'notPaidComplete';
         modifyOrderInCache(restaurantKey, id, order.status);
         var orderedItems = [];
         order.orderedItems.forEach(function (orderedItem) {

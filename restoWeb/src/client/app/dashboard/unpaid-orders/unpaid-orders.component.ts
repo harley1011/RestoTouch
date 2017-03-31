@@ -78,7 +78,10 @@ export class UnpaidOrdersComponent implements OnInit {
   paid(order: Order) {
     let i = this.orders.indexOf(order);
     this.orders.splice(i, 1);
-    order.status = 'paid';
+    order.status = 'paidNotComplete';
+    if(this.restoMode === 'cnk') {
+      order.status = 'paidComplete';
+    }
     this.orderService.payForOrder(this.restoMode, order).subscribe(generalResponse => {
           },
       error => {
@@ -89,7 +92,6 @@ export class UnpaidOrdersComponent implements OnInit {
   cancelOrder(order: Order) {
     let i = this.orders.indexOf(order);
     this.orders.splice(i, 1);
-    //order.status = 'paidComplete';
     this.orderService.cancelOrder(order).subscribe(generalResponse => {
           },
       error => {
