@@ -1,18 +1,18 @@
-<!--<div *ngIf="!selectedStationInfo[1]" id="restaurant">-->
-  <!--<div class="manage-header">-->
-    <!--<h3>{{ 'kitchen.kitSelect'| translate}}</h3>-->
-    <!--<hr>-->
-  <!--</div>-->
-  <!--<div class="manage-list">-->
-  <!--<div class="manage-list-container">-->
-      <!--<div (click)="stationSelect(station.id, i)" *ngFor="let station of stationList; let i = index" class="card card-block">-->
-        <!--<h4 class="card-title"> Station: {{ station.name }}</h4>-->
-      <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
 <div *ngIf="!selectedStationInfo[1]" id="restaurant">
+  <div class="manage-header">
+    <h3>{{ 'kitchen.kitSelect'| translate}}</h3>
+    <hr>
+  </div>
+  <div class="manage-list">
+  <div class="manage-list-container">
+      <div (click)="stationSelect(station.id, i)" *ngFor="let station of stationList; let i = index" class="card card-block">
+        <h4 class="card-title"> Station: {{ station.name }}</h4>
+      </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="selectedStationInfo[1]" id="restaurant">
   <div class="manage-header">
     <h3>{{ 'kitchen.title' | translate }} {{ 'kitchen.kitText'| translate}} {{ selectedStationInfo[0] }}</h3>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
