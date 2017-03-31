@@ -19,6 +19,7 @@ export class CategoryComponent implements OnInit {
   category: Category;
 	items: Array<Item>;
   errorMessage: string;
+	form: Any;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,
@@ -142,7 +143,7 @@ export class CategoryComponent implements OnInit {
     // calling add categoryService
     this.categoryService.addCategory(this.category).subscribe(
       generalResponse => {
-        this._router.navigate(['/dashboard/category']);
+				this.router.navigate(['/dashboard/category']);
       },
       error => {
         this.errorMessage = <any> error;
