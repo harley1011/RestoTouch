@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 
 import { GeneralResponse }  from '../shared/general.response';
-import { Order } from '../shared/models/order';
 
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { AuthHttpService } from './auth-http.services';
@@ -15,8 +14,8 @@ export class OrderService {
 
   constructor (private http: AuthHttpService, private api: ApiEndpointService) {}
 
-  placeOrder (order: Order): Observable<GeneralResponse> {
-    let body = JSON.stringify({order});
+  placeOrder (order: any): Observable<GeneralResponse> {
+    let body = JSON.stringify(order);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -25,21 +24,11 @@ export class OrderService {
       .catch(this.handleError);
   }
 
-  retrieveOrders (id: number): Observable<Order[]> {
+  retrieveOrders (id: number): Observable<any> {
     return this.http.get(this.api.getEndpoint()+ '/retrieveOrders/' + id)
-      .map((response) => this.extractData(response).orders)
-      .catch(this.handleError);
-  }
-
-  payForOrder (restoMode: string, order: Order): Observable<GeneralResponse> {
-    let body = JSON.stringify(order);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.api.getEndpoint() + '/payForOrder/' + restoMode, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
-
 
   retrieveCompletedOrders (id: number): Observable<any> {
     return this.http.get(this.api.getEndpoint() + '/retrieveCompletedOrders/' + id)

@@ -1,25 +1,29 @@
-import { async, ComponentFixture } from '@angular/core/testing';
-import { TestUtils } from '../../test';
-import { IngredientGroupPage } from './ingredient-group';
 
-let fixture: ComponentFixture<IngredientGroupPage> = null;
-let instance: any = null;
+  import { async, ComponentFixture } from '@angular/core/testing';
+ import { TestUtils } from '../../test';
+ import { IngredientGroupPage } from './ingredient-group';
 
-describe('Pages: IngredientGroupPage', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([IngredientGroupPage]).then(compiled => {
-    fixture = compiled.fixture;
-    instance = compiled.instance;
-    fixture.autoDetectChanges(true);
-  })));
+ let fixture: ComponentFixture<IngredientGroupPage> = null;
+ let instance: any = null;//IngredientGroupPage = null;
 
-  afterEach(() => {
-    fixture.destroy();
-  });
+ describe('Pages: IngredientGroupPage', () => {
 
-  it('initialises', () => {
-    expect(fixture).not.toBeNull();
-    expect(instance).not.toBeNull();
-  });
+ beforeEach(async(() => TestUtils.beforeEachCompiler([IngredientGroupPage]).then(compiled => {
+ fixture = compiled.fixture;
+ instance = compiled.instance;
+ fixture.autoDetectChanges(true);
+ })));
 
-});
+ afterEach(() => {
+ fixture.destroy();
+ });
+
+ it('initialises', () => {
+ expect(fixture).not.toBeNull();
+ expect(instance).not.toBeNull();
+ });
+
+ });
+
+

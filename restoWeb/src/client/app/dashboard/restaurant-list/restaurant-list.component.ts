@@ -63,7 +63,7 @@ export class RestaurantListComponent implements OnInit {
 
   modify(restaurant: Restaurant): void {
     if(this.authService.loggedInUser.isEmployee) {
-      this.router.navigate(['/dashboard/modeSelect', restaurant.id]);
+      this.router.navigate(['/dashboard/unpaidOrders', restaurant.id]);
     } else {
       this.router.navigate(['/dashboard/restaurant', restaurant.id]);
     }

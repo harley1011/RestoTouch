@@ -27,15 +27,21 @@ var users = [
     "email": "david.bastien5@gmail.com",
     "password": passwordData.passwordHash,
     "salt": passwordData.salt,
-    "employeePassword": passwordData.passwordHash,
-    "employeeSalt": passwordData.salt,
     "emailVerified": true,
     "supportedLanguages": [
       {
         "name": "English",
         "languageCode": "en"
       }]
-  }];
+  }, {
+   firstName: 'hilary',
+   lastName: 'chan',
+   email: 'hilary@restotouch.com',
+   phoneNumber: '514 514 4444',
+   password: passwordData.passwordHash,
+   salt: passwordData.salt,
+   emailVerified: true
+ }];
 // },
 //
 // {
@@ -677,7 +683,7 @@ setTimeout(function () {
                   }
                 }
                 var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
-                orderModel.create({total: orderTotal, status: "notPaid", orderedItems: orderedItems, restaurantId: createdRestaurant.id, paymentId: "", createdAt: paidDate}, {
+                orderModel.create({total: orderTotal, orderedItems: orderedItems, restaurantId: createdRestaurant.id, paymentId: "", createdAt: paidDate}, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,

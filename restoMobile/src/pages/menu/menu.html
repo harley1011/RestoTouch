@@ -68,13 +68,8 @@
 
 </ion-content>
 <ion-footer>
-  <ion-list no-lines>
-    <ion-item *ngIf="currentOrder.orderedItems.length > 0" (click)="orderList()" id="order-list-btn">
-      Order List
-    </ion-item>
-    <ion-item>
-      <h1>Total: {{currentOrder.total | currency:'USD':true:'1.2-2'}}</h1>
-      <button ion-button item-right (click)="order()" color="secondary" large [disabled]="currentOrder.orderedItems.length == 0">Order</button>
-    </ion-item>
-  </ion-list>
+  <ion-item>
+    <h1>Total: {{currentOrder.total | currency:'USD':true:'1.2-2'}}</h1>
+    <button ion-button item-right (click)="order()" color="secondary" large [disabled]="currentOrder.orderedItems.length == 0">Order</button>
+  </ion-item>
 </ion-footer>
