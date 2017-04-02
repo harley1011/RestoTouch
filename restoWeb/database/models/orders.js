@@ -4,6 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     status: {type: DataTypes.STRING, allowNull: true},
     paidDate: {type: DataTypes.DATE, allowNull: true},
     openedDate: {type: DataTypes.DATE, allowNull: true},
-    paymentId: {type: DataTypes.STRING, allowNull: true}
+    paymentId: {type: DataTypes.STRING, allowNull: true},
+    orderId: {type: DataTypes.STRING, allowNull: true}
   });
 };

@@ -12,7 +12,8 @@
     "postinstall": "webdriver-manager update",
     "start": "ionic serve",
     "test": "ng test",
-    "test-coverage": "ng test --code-coverage"
+    "test-coverage": "ng test --code-coverage",
+    "test-ci": "ng test --watch=false --code-coverage"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -37,6 +38,8 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.0",
+    "@angular/compiler-cli": "^2.2.1",
     "@ionic/app-scripts": "1.0.0",
     "@types/jasmine": "^2.5.41",
     "angular-cli": "^1.0.0-beta.26",

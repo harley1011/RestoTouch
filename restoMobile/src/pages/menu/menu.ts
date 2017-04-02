@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { PayPal, PayPalPayment, PayPalConfiguration } from "ionic-native";
 import { Category } from '../shared/models/category';
 import { Item } from '../shared/models/items';
@@ -17,6 +17,7 @@ import { IngredientGroupPage } from '../ingredient-group/ingredient-group';
 import { OrderService } from '../services/order.service';
 import { WelcomePage } from '../welcome/welcome';
 import { Platform } from 'ionic-angular';
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   selector: 'page-menu',
@@ -30,7 +31,7 @@ export class MenuPage {
   categories: Array<OrderableCategory>;
   total: string;
 
-  currentOrder = new Order([], 0, 'notPaid', '');
+  currentOrder = new Order([], 0, 'notPaidNotComplete', '');
   showAllCategories: boolean;
   currentCategory: Category;
 
@@ -39,7 +40,9 @@ export class MenuPage {
               private orderService: OrderService,
               private itemService: ItemService,
               private menuService: MenuService,
-              private platform: Platform) {
+              private platform: Platform,
+              private alertCtrl: AlertController,
+              private translate: TranslateService) {
 
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
@@ -49,6 +52,9 @@ export class MenuPage {
     this.showAllCategories = true;
 
     this.getMenu(this.selectedMenu.id);
+    // if order notification flag is set "ta" i.e table number, set notifyOrderDetail
+    if (this.selectedRestaurant.orderNotiFlag=="ta")
+      this.currentOrder.notifyOrderDetail = "Table: "+this.orderService.notifyOrderDetail;
   }
 
   isItemDisabled(targetItem, category): boolean {
@@ -200,6 +206,16 @@ export class MenuPage {
   }
 
   order(): void {
+    // if the notification flag is "na" i.e by name then it will prompt user to enter its name
+    if(this.selectedRestaurant.orderNotiFlag=="na"){
+      this.presentPrompt();
+    } else { // if notification is not set to na, order will be sent without prompting user's name
+     this.notifyAtEndOrder(); // this is for the notification is "nu" i.e by number
+     this.sendOrder();
+    }
+  }
+
+  sendOrder(): void{
     var payFirst = true;
     if (payFirst && this.platform.is('cordova')) {
       this.usePayPal();
@@ -237,6 +253,18 @@ export class MenuPage {
     });
   }
 
+
+    notifyAtEndOrder(): void{
+      var self = this;
+      // if the notification flag is "nu" i.e by number then it will show the order number to the user
+      if(this.selectedRestaurant.orderNotiFlag=="nu"){
+        self.currentOrder.notifyOrderDetail = this.generateOrderNumber();
+        this.presentAlert();
+      }
+    }
+
+
+
     changeGroup(name: string, category: Category): void {
      if(name == 'all') {
         this.showAllCategories = true;
@@ -245,6 +273,78 @@ export class MenuPage {
           this.currentCategory = category;
           this.currentCategory.items = category.items;
       }
+    }
+
+    // basic alert for order notification by number
+    presentAlert() {
+       // for ng2-translate, get text from translation from json files
+      var text;
+      this.translate.get('orderNoti').subscribe(
+        value => {
+          // value is our translated string from json files
+          text = value;
+        }
+      )
+      var self = this;
+      let alert = this.alertCtrl.create({
+        title: text.byNumberTitle,
+        subTitle: text.byNumberSubtitle + self.currentOrder.notifyOrderDetail,
+        buttons: [text.byNumberButton]
+        });
+      alert.present();
+    }
+
+    // generated order number for order notfication by number
+    // generation is based on time which will minimized number collision
+    generateOrderNumber() {
+      var date = new Date();
+      return date.getSeconds()+""+date.getMilliseconds();
+    }
+
+
+    // prompt alert for order notification by name
+    presentPrompt() {
+    // for ng2-translate, get text from translation from json files
+    var text;
+    this.translate.get('orderNoti').subscribe(
+      value => {
+        // value is our translated string from json files
+        text = value;
+      }
+    )
+      var self=this;
+      let alert = this.alertCtrl.create({
+        title: text.byNameTile,
+        inputs: [
+          {
+            name: 'name',
+            placeholder: text.byNamePlaceholder,
+            type: 'string'
+          }
+        ],
+        buttons: [
+          {
+            text: text.cancelButton,
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: text.submitButton,
+            handler: data => {
+              if (data.name) {
+                self.currentOrder.notifyOrderDetail = data.name;
+                this.sendOrder();
+              } else {
+                // name cannot be empty, prompt will not close until valid entry
+                return false;
+              }
+            }
+          }
+        ]
+      });
+      alert.present();
     }
 }
 

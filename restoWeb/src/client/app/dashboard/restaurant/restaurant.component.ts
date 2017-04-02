@@ -11,11 +11,19 @@ import {Menu} from '../../shared/models/menu';
 import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
+import {KitchenStation} from '../../shared/models/kitchen-station';
+import {Item} from '../../shared/models/items';
+import {CategoryService} from '../category/category.service';
+import {Category} from '../../shared/models/category';
+import {MenuService} from '../menu/menu.service';
+import {ItemCategory} from '../../shared/models/item-category';
+
 
 @Component({
   moduleId: module.id,
   selector: 'restaurant-cmp',
-  templateUrl: 'restaurant.component.html'
+  templateUrl: 'restaurant.component.html',
+  providers: [CategoryService, MenuService]
 })
 
 export class RestaurantComponent implements OnInit {
@@ -27,6 +35,11 @@ export class RestaurantComponent implements OnInit {
   languages: Array<Language>;
   selectedLanguage: string;
   timeConflicts: Array<boolean> = [false, false, false, false, false, false, false];
+  kitchenMode = true; // since the default for kitchen mode is alredy set to 'kce'
+  numOfKitchenStation = 0;
+  selectedKitchenStation:[KitchenStation, number] = [null, null];
+  categories: Array<Category> = [];
+  menu: Array<Menu> = [];
 
   @ViewChild(TranslationSelectComponent)
   private translationSelectComponent: TranslationSelectComponent;
@@ -35,7 +48,10 @@ export class RestaurantComponent implements OnInit {
               private router: Router,
               private languageService: LanguageService,
               private restaurantService: RestaurantService,
-              private translate: TranslateService,) {
+              private translate: TranslateService,
+              private categoryService: CategoryService,
+              private menuService: MenuService
+              ) {
 
     this.create = true;
     translate.setDefaultLang('en');
@@ -96,6 +112,15 @@ export class RestaurantComponent implements OnInit {
             return 1;
           }
         });
+        // get manipulate resto object to be like the initial
+        this.updateRestoCatInfo();
+        // get full menu info
+        this.menu = [];
+        if (this.restaurant.Menus.length !== 0) {
+            this.restaurant.Menus.forEach(menu => {
+            this.getMenu(menu.id);
+          });
+        }
       },
       error => {
         this.errorMessage = <any>error;
@@ -125,7 +150,6 @@ export class RestaurantComponent implements OnInit {
   ngOnInit(): void {
     this.languageService.getSupportedLanguages().subscribe((languages: Array<Language>) => {
       this.languages = languages;
-
       this.route.params.forEach((params: Params) => {
         if (params['id']) {
           this.getRestaurant(params['id']);
@@ -159,13 +183,19 @@ export class RestaurantComponent implements OnInit {
           new Payment('Credit', false)
         ];
 
+       // let kitchenTranslation = new KitchenTranslations(this.languages.find(language => language.languageCode === 'en').languageCode, '1');
+        let newStation = new KitchenStation('1', []);
+        this.selectedKitchenStation[0] = newStation;
+
         this.restaurant = new Restaurant('',
           [this.languages.find(language => language.languageCode === 'en')],
           [translation],
           translation, [],
           payments,
           businessHours,
-          '', ''
+          '', 'kce',
+          [newStation], // kitchenStation info with default of 1 station as type is 'kce'
+          'na' // default value for kitchen/cashier mode and default value for order notification value
         );
       }
     });
@@ -286,4 +316,144 @@ export class RestaurantComponent implements OnInit {
 
     return timeConflict;
   }
+
+  activateKitchenMode(s: string): void {
+    if (s === 'cnk') {
+     this.kitchenMode = false;
+     this.resetToOneDefaultKitchenStationArray();
+    } else {
+      this.kitchenMode = true;
+      this.resetToOneDefaultKitchenStationArray();
+    }
+  }
+
+  resetToOneDefaultKitchenStationArray():void {
+      this.restaurant.kitchenStations.forEach(station => {
+        station.kitItem.forEach(item => {
+          this.addBackToCatList(item);
+        });
+      });
+      this.restaurant.kitchenStations = [];
+      let newStation = new KitchenStation('1', []);
+      this.restaurant.kitchenStations.push(newStation);
+      this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
+  }
+
+  setKitchenStationName(s: HTMLInputElement, i: number): void {
+    this.restaurant.kitchenStations[i].name=s.value;
+    s.value = null;
+  }
+
+  kitStatSelected(i: number): void {
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[i], i];
+  }
+
+  addNewStation(): void {
+    let size = this.restaurant.kitchenStations.length;
+    let newStation = new KitchenStation((size+1).toString(), []);
+    this.restaurant.kitchenStations.push(newStation);
+  }
+
+  removeStation(i: number): void {
+    if(this.restaurant.kitchenStations[i].kitItem.length > 0) {
+      this.restaurant.kitchenStations[i].kitItem.forEach(item => {
+        this.addBackToCatList(item);
+      });
+    }
+    this.restaurant.kitchenStations.splice(i,1);
+    if(this.restaurant.kitchenStations.length === 0) {
+      this.resetToOneDefaultKitchenStationArray();
+    }
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0]; // for html shows another station
+  }
+
+  addItemToKitchenStation(item: Item): void {
+    let index =this.selectedKitchenStation[1];
+    this.restaurant.kitchenStations[index].kitItem.push(item);
+    this.categories.forEach(cat => {
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.splice(cat.items.indexOf(item),1);
+      }
+    });
+  }
+
+  addAllItemToKitchenStation(j: number): void {
+    let index =this.selectedKitchenStation[1];
+    this.categories[j].items.forEach(item => {
+      this.restaurant.kitchenStations[index].kitItem.push(item);
+    });
+    this.categories[j].items=[];
+  }
+
+  removeItemFromKitchenStation(item: Item, i: number): void {
+    this.restaurant.kitchenStations[i].kitItem.splice( this.restaurant.kitchenStations[i].kitItem.indexOf(item), 1);
+    this.addBackToCatList(item);
+  }
+
+  addBackToCatList(item: Item) {
+    this.categories.forEach(cat => {
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.push(item);
+      }
+    });
+  }
+
+  getMenu(id: number): void {
+    this.menuService.getMenu(id).subscribe(
+      menu => {
+        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        this.menu.push(menu);
+
+        menu.categories.forEach( cat => {
+          if(this.categories.length === 0) { // add the first cat
+            this.categories.push(cat);
+          }
+          let found = false;
+          // check that cat is not already in the object
+          for (let i=0; i<this.categories.length; i++) {
+              if(this.categories[i].id === cat.id) {
+                found = true;
+              }
+          }
+          if(!found) { // add only when not found
+              this.categories.push(cat);
+          }
+        });
+        this.updateItemList();
+      },
+      error => {
+        this.errorMessage = <any>error;
+      }
+    );
+  }
+
+  updateRestoCatInfo():void {
+    this.restaurant.kitchenStations.forEach(station => {
+      station.kitItem.forEach(item => {
+        item.categories.forEach(cat => {
+          item.ItemCategory = new ItemCategory(item.id, cat.id);
+        });
+      });
+    });
+    this.selectedKitchenStation = [this.restaurant.kitchenStations[0], 0];
+  };
+
+
+// following 2 methods, for updating available item info when editing a restaurant's kitchen station responsibilites
+  updateItemList(): void {
+    this.restaurant.kitchenStations.forEach(station => {
+      station.kitItem.forEach(item => {
+        this.removeItemfromCatList(item);
+      });
+    });
+  }
+
+  removeItemfromCatList(item: Item):void {
+    this.categories.forEach(cat => {
+      if(cat.id === item.ItemCategory.categoryId) {
+        cat.items.splice(cat.items.indexOf(item),1);
+      }
+    });
+  }
+
 }

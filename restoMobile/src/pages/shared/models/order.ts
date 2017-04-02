@@ -9,7 +9,8 @@ export class Order {
     public status: string,
     public paymentId: string,
     public id?: number,
-    public restaurantId?: number
+    public restaurantId?: number,
+    public notifyOrderDetail?: string
   ) { }
 
   addOrder(item: Item, size: Size, selectedIngredients: SelectedIngredients, ingredientPrice: number): void {

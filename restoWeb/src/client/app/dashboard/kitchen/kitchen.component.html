@@ -1,17 +1,34 @@
-<div id="restaurant">
+<div *ngIf="!selectedStationInfo[1]" id="restaurant">
   <div class="manage-header">
-    <h2>{{ 'kitchen.title' | translate }}</h2>
+    <h3>{{ 'kitchen.kitSelect'| translate}}</h3>
+    <hr>
+  </div>
+  <div class="manage-list">
+  <div class="manage-list-container">
+      <div (click)="stationSelect(station.id, i)" *ngFor="let station of stationList; let i = index" class="card card-block">
+        <h4 class="card-title"> Station: {{ station.name }}</h4>
+      </div>
+  </div>
+</div>
+</div>
+
+<div *ngIf="selectedStationInfo[1]" id="restaurant">
+  <div class="manage-header">
+    <h3>{{ 'kitchen.title' | translate }} {{ 'kitchen.kitText'| translate}} {{ selectedStationInfo[0] }}</h3>
     <translation-select-cmp (onSelectLanguage)="onSelectLanguage($event)"></translation-select-cmp>
     <hr>
+    <!--<button type="button" (click)="goBack()" class="btn btn-success">Back</button><br/>-->
   </div>
   <div class="manage-list-container">
     <div class="row">
       <div *ngFor="let order of orders">
-      	<div *ngIf="(restoMode === 'kce' && order.status === 'paid') || (restoMode === 'kco')" class="col-sm-3">
-	        <div class="card card-primary card-inverse">
+      	<div *ngIf="(restoMode === 'kce' && order.status === 'paidNotComplete') || (restoMode === 'kco' && (order.status === 'notPaidNotComplete' || order.status === 'paidNotComplete'))" class="col-sm-3">
+	        <div *ngIf="order.orderedItems.length > 0" class="card card-primary card-inverse">
 	          <div class="card-block">
-	            <h4 class="card-title">Order: {{order.id}}</h4>
-	            <button class="btn btn-success">Complete Order</button>
+              <h4 class="card-title">{{ 'kitchen.kitOrder'| translate}} {{order.notifyOrderDetail}}</h4>
+              <h6 class="card-title">{{ 'kitchen.kitStatus'| translate}} {{order.status}}</h6>
+	            <button class="btn btn-success" (click)="completeOrder(order)">{{ 'kitchen.KitCompleteButton'| translate}}</button>
+              <button class="btn btn-danger" (click)="cancelOrder(order)">Cancel</button>
 	          </div>
 	          <ul class="list-group list-group-flush">
 	            <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
@@ -23,8 +40,8 @@
                     <li *ngFor="let ingredientGroup of orderedItem.item.ingredientGroups">
                       {{ingredientGroup.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No Translation"}}
                       <ul>
-                        <li *ngFor="let ingredient of ingredientGroup.ingredients">
-                          {{ingredient.translations ? ingredient.translations[0].name : "No Translation"}}
+                        <li *ngFor="let ingredient of size.selectedIngredients.ingredients">
+                          {{ingredient.ingredient.translations ? ingredient.ingredient.translations[0].name : "No Translation"}}
                         </li>
                       </ul>
                     </li>
@@ -33,10 +50,6 @@
               </ul>
               </li>
 	          </ul>
-	          <div class="card-block">
-	            <h6 class="card-title">Total: {{order.total}}$</h6>
-	            <h6 class="card-title">Status: {{order.status}}</h6>
-	          </div>
 	        </div>
 	    </div>
       </div>

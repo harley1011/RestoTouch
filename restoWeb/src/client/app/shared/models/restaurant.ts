@@ -2,6 +2,7 @@ import {Language} from './language';
 import { Menu } from './menu';
 import { Payment } from './payment';
 import { BusinessHour } from './business-hour';
+import { KitchenStation } from './kitchen-station';
 
 export class Restaurant {
 
@@ -15,6 +16,8 @@ export class Restaurant {
               public businessHours: BusinessHour[],
               public paypalId: string,
               public kitCashModeFlag: string,
+              public kitchenStations: Array<KitchenStation>,
+              public orderNotiFlag: string,
               public id?: number) {
   }
 }

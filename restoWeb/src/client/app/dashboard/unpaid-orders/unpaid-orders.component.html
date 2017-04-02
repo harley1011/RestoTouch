@@ -12,11 +12,12 @@
   <div class="manage-list-container">
     <div class="row">
       <div *ngFor="let order of orders">
-        <div *ngIf="order.status === 'notPaid'" class="col-sm-3">
+        <div *ngIf="(order.status === 'notPaidNotComplete') || (restoMode === 'kco' && (order.status === 'notPaidNotComplete' || order.status === 'notPaidComplete'))" class="col-sm-3">
           <div class="card card-primary card-inverse">
             <div class="card-block">
-              <h4 class="card-title">Order: {{order.id}}</h4>
+            <h4 class="card-title">Order: {{order.notifyOrderDetail}}</h4>
               <button class="btn btn-success" (click)="paid(order)">Paid</button>
+              <button class="btn btn-danger" (click)="cancelOrder(order)">Cancel</button>
             </div>
             <ul [hidden] = "!itemsVisible" class="list-group list-group-flush">
               <li *ngFor="let orderedItem of order.orderedItems" class="list-group-item">
