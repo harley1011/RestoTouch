@@ -1,44 +1,98 @@
-#to get the instance of Travis CI
-sudo: required
-dist: trusty
+language: node_js
+node_js:
+  - 4
 
-notifications:
-  email: true
+sudo: false
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - google-chrome
-    packages:
-      - google-chrome-stable
-      - lib32stdc++6
-      - lib32z1
+os:
+  - linux
 
-branches:
-  only:
-    - master
-    - e2eTests
 
-#
-# Build Lifecycle:
-#
+matrix:
+  exclude:
+    - os: osx
+      node_js: 4
+    - os: osx
+      node_js: 5
 
 before_install:
-  - nvm install node
-  - nvm use node
-  - npm install -g cordova ionic
-  - cd restoMobile
-  - ionic state clear
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew outdated xctool || brew upgrade xctool; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export CHROME_BIN=chromium-browser; fi  # Karma CI
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask install google-chrome; fi  # Karma CI
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi
 
-install: npm install
-
-# that's how travis run on chrome
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then nohup bash -c "webdriver-manager start 2>&1 &"; fi  # Protractor CI
 
+after_failure:
+  - cat /home/travis/build/mgechev/angular2-seed/npm-debug.log
+
+notifications:
+  slack:
+    rooms: agile-sloths:gRUYjpMIEXY6ptArOBR8s5D3
+    on_success: never
+
+
+env:
+  global:
+    # https://github.com/DefinitelyTyped/tsd#tsdrc
+    # Token has no scope (read-only access to public information)
+    - TSD_GITHUB_TOKEN=9b18c72997769f3867ef2ec470e626d39661795d
+
+cache:
+  directories: node_modules
 
 script:
-  - npm run test-ci  # unit tests
-  - npm run e2e      # run e2e tests against ionic
+  - cd restoWeb
+  - npm run setup
+  #- npm run test
+
+#BELOW WAS THE ORIGINAL SOLUTION TO RUNNING restoMobile tests onto Travis CI. SOLUTION IS IN THE COMMENT IN ISSUE #147.
+
+##to get the instance of Travis CI
+#sudo: required
+#dist: trusty
+#
+#notifications:
+#  email: true
+#
+#addons:
+#  apt:
+#    sources:
+#      - ubuntu-toolchain-r-test
+#      - google-chrome
+#    packages:
+#      - google-chrome-stable
+#      - lib32stdc++6
+#      - lib32z1
+#
+#branches:
+#  only:
+#    - master
+#    - e2eTests
+#
+##
+## Build Lifecycle:
+##
+#
+#before_install:
+#  - nvm install node
+#  - nvm use node
+#  - npm install -g cordova ionic
+#  - cd restoMobile
+#  - ionic state clear
+#
+#install: npm install
+#
+## that's how travis run on chrome
+#before_script:
+#  - export DISPLAY=:99.0
+#  - sh -e /etc/init.d/xvfb start
+#
+#
+#script:
+#  - npm run test-ci  # unit tests
+#  - npm run e2e      # run e2e tests against ionic

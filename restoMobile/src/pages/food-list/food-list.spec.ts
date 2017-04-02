@@ -21,7 +21,7 @@ describe('Pages: FoodListPage', () => {
     expect(fixture).not.toBeNull();
     expect(instance).not.toBeNull();
   });
-
+/*
   //line 32
   it('', () => {
 
@@ -56,4 +56,5 @@ describe('Pages: FoodListPage', () => {
   it('', () => {
 
   });
+  */
 });

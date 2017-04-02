@@ -104,7 +104,7 @@ describe('Pages: MenuPage', () => {
     instance.menu.disabledCategoryItems = [{itemId:1 , categoryId: 2, id: 1}];
     expect(instance.isItemDisabled(targetItem, category)).toBeFalsy();
   });
-
+/*
   //line 69
   it('should get a menu', () => {
 
@@ -170,5 +170,5 @@ describe('Pages: MenuPage', () => {
   it('', () => {
 
   });
-
+*/
 });
