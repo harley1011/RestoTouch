@@ -50,5 +50,9 @@
     "detail":"You can select a maximum of",
     "removeButton":"Remove",
     "addButton":"Add"
+  },
+
+  "home":{
+    "detail":"Quick access to switch restaurants or menus"
   }
 }

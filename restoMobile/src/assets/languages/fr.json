@@ -50,5 +50,9 @@
     "detail":"Vous pouvez sélectionner un maximum de",
     "removeButton":"Retirer",
     "addButton":"Ajouter"
+  },
+
+  "home":{
+    "detail":"Accès rapide pour changer de restaurant ou de menus"
   }
 }
