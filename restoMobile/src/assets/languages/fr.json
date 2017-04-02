@@ -30,6 +30,13 @@
 
   "menu":{
     "allButton":"Toutes les Catégories",
+    "orderListButton":"Détail de la commande",
     "orderButton":"Commander"
+  },
+
+  "orderList":{
+    "title":"Détail de la commande",
+    "backButton":"Retour",
+    "removeButton":"Retirer"
   }
 }

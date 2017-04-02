@@ -70,7 +70,7 @@
 <ion-footer>
   <ion-list no-lines>
     <ion-item *ngIf="currentOrder.orderedItems.length > 0" (click)="orderList()" id="order-list-btn">
-      Order List
+      {{ 'menu.orderListButton' | translate }}
     </ion-item>
     <ion-item>
       <h1>Total: {{currentOrder.total | currency:'USD':true:'1.2-2'}}</h1>
