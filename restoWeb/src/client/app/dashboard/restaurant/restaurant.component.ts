@@ -257,7 +257,9 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.addRestaurant(this.restaurant)
       .subscribe(
         generalResponse => {
-          this.router.navigate(['/dashboard/menu']);
+          console.log(this.restaurant);
+          this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
+          // this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
         },
         error => {
           this.errorMessage = <any>error;

@@ -19,7 +19,6 @@ export class CategoryComponent implements OnInit {
   category: Category;
 	items: Array<Item>;
   errorMessage: string;
-	form: Any;
   @ViewChild(TranslationSelectComponent) translationSelectComponent: TranslationSelectComponent;
 
   constructor(private route: ActivatedRoute,

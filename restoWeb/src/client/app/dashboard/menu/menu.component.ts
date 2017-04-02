@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
+
+import {Restaurant, RestaurantTranslations} from '../../shared/models/restaurant';
 import {MenuService} from './menu.service';
+import {MenuListService} from '../menu-list/menu-list.service';
 import {CategoryCheckboxList, ItemCheckbox} from './category-checkbox-list';
 import {Category} from '../../shared/models/category';
 import {CategoryService} from '../category/category.service';
@@ -16,12 +19,13 @@ import {ItemCategory} from '../../shared/models/item-category';
   moduleId: module.id,
   selector: 'menu-cmp',
   templateUrl: 'menu.component.html',
-  providers: [MenuService, CategoryService], //Registering Services with angular.
+  providers: [MenuService, CategoryService, MenuListService], //Registering Services with angular.
 })
 
 export class MenuComponent implements OnInit {
   create: boolean;
   errorMessage: string;
+  restaurant: Restaurant;
   menu: Menu; // Menu has an array of selected categories that represent Category List
   availableCategories: Array<Category> = []; // This is the Available Category List
   itemCategories: Array<CategoryCheckboxList> = [];
@@ -32,9 +36,11 @@ export class MenuComponent implements OnInit {
   // We are using dependency injection to get instances of these services into our component.
   constructor(private route: ActivatedRoute,
               private menuService: MenuService,
+              private menuListService: MenuListService,
               private categoryService: CategoryService,
               private languageService: LanguageService,
               private router: Router) {
+
   }
 
   ngOnInit(): void {
@@ -42,6 +48,7 @@ export class MenuComponent implements OnInit {
       if (params['menuId']) {
         this.getMenu(params['menuId']);
         this.create = false;
+        this.restaurant = params['restaurant'];
       } else {
         this.getCategories();
         let translation = new MenuTranslations('', this.translationSelectComponent.selectedLanguage.languageCode);
@@ -143,13 +150,15 @@ export class MenuComponent implements OnInit {
   addMoreStep(): void {
     this.menuService.addMenu(this.menu).subscribe(
       generalResponse => {
-        this.router.navigate(['/dashboard/category']);
-      },
+         this.router.navigate(['/dashboard/category']);
+       },
       error => {
         this.errorMessage = <any> error;
       }
     );
+
   }
+
 
   changeOrder(catCheckList: CategoryCheckboxList, changeIndex: number) {
     var currentIndex = this.itemCategories.indexOf(catCheckList);
