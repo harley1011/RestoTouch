@@ -59,6 +59,7 @@
 
   "restaurant":{
     "titleManage":"Gestion des restaurants",
+    "employeeTitle": "Sélectionner un restaurant pour voir les commandes",
     "sousTitleManage":"Sélectionner le restaurant que vous désirez faire des changements",
     "addRestoButton":"+ Ajouter un Restaurant",
     "titleCreate": "Création d'un restaurant",
@@ -95,11 +96,29 @@
     "langSelect":"Sélectionner une langue:",
     "kitCashModeTitle":"Option Mode Cuisine & Caisse",
     "kitCashModeDetails1":"Ce mode permet d'envoyer les commandes à la cuisine et au terminal de la caisse après que le paiement a été reçu de vos clients.",
-    "kitCashModeDetails2":"Ce mode permet d'envoyer des ordres d'abord au terminal de la caisse, puis la commande peut être envoyée au terminal de cuisine une fois que l'ordre a été payé par vos clients.",
+    "kitCashModeDetails2":"Ce mode permet d'envoyer des ordres d'abord au terminal de la caisse, puis la commande peut être envoyée au terminal de cuisine une fois que l'ordre a été payé par vos clients.  Ceci est l'option par défaut.",
     "kitCashModeDetails3":"Ce mode permet uniquement d'envoyer des ordres au terminal de la caisse; Le personnel de la cuisine recevra la commande par l'intermédiaire d'une imprimante.",
     "kitCashModeOpt1":"Mode Cuisine et Caisse (Post)",
     "kitCashModeOpt2":"Mode Cuisine et Caisse (Pré) ",
     "kitCashModeOpt3":"Mode Caisse seulement",
+    "orderNotiTitle":"Type de notification pour les commandes",
+    "orderNotiDetail":"Lorsque la commande est prête, la notification pour la commande sert de pont pour connaître qui a commandé quoi. Il existe 3 types de notification décrites ci-dessous.",
+    "orderNotiDetail1":"Une confirmation de numéro de commande apparaîtra sur l'écran à votre client après que sa commande a été soumise. Lorsque la commande est prête, le personnel peut faire correspondre le numéro de commande avec le numéro de votre client pour s'assurer de donner la commande au bon client.",
+    "orderNotiDetail2":"Pour un service plus personnalisé, ce type permet à votre client de taper son nom avant de soumettre sa commande. Le personnel peut lire le nom afin d'informer le client que sa commande est prête. Ceci est l'option par défaut.",
+    "orderNotiDetail3":"Ce type est approprié pour les services à table où sur chaque table, il a son propre dispositif désigné. Si ce type est sélectionné, après avoir sélectionné le restaurant sur votre tablette, l'application vous demandera d'entrer le numéro de la table. Pour chaque commande faite avec ce dispositif, elle sera étiquetée avec le numéro de table pré-enregistré.",
+    "kitListTitle":"Liste de station(s) de cuisine:",
+    "kitListdesc":"Sélectionnez une station pour modifier ses paramètres ci-dessous:",
+    "kitListAddButton":"Ajouter plus",
+    "kitListItems":"Responsabilités de Produits Alimentaires par catégorie",
+    "kitListItemWarning":"Tous les éléments de cette catégorie sont associés à une station de cuisine",
+    "kitListMenuWarning":"Aucun menu ou le menu n'est vide. Ajouter un menu au restaurant ou compléter le menu",
+    "kitListStationSettingTitle":"Paramètres de la station ",
+    "kitListStationNameField":"Donnez un nouveau nom à la station:",
+    "kitListStationItemTitle":"Responsabilités de la Station de Cuisine",
+    "kitListStationItemWarning":"Aucune responsabilité assignée. Pour ajouter les responsabilités des produits alimentaires, sélectionnez dans la liste de gauche.",
+    "orderNotiOpt1":"Par Numéro",
+    "orderNotiOpt2":"Par Nom",
+    "orderNotiOpt3":"Par Numéro de Table",
     "addLangButton": "Ajouter",
     "nomenuButton":"Aucun Menu",
     "addRemoveButton":"Ajouter/Retirer Menu",
@@ -261,6 +280,21 @@
 
   "unpaidOrders": {
     "title": "Liste de commandes non-payées"
+  },
+
+  "kitchen": {
+    "title": "Commandes à préparer",
+    "kitSelect":"Sélectionner une station de cuisine",
+    "kitText":"pour la station:",
+    "kitOrder":"Commande:",
+    "kitStatus":"Statut:",
+    "KitCompleteButton":"Commande complétée"
+  },
+
+  "cashKitchenSelection": {
+    "title": "Sélectionner le mode Caissier ou Cuisine",
+    "cashMode":"Mode caisse",
+    "kitMode":"Mode cuisine"
   }
 
 }

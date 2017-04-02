@@ -36,45 +36,6 @@ var users = [
         "languageCode": "en"
       }]
   }];
-// },
-//
-// {
-//   firstName: 'tamy',
-//   lastName: 'huynh',
-//   email: 'tamyhuynh@gmail.com',
-//   phoneNumber: '514 514 3333',
-//   password: passwordData.passwordHash,
-//   salt: passwordData.salt,
-//   emailVerified: true
-// },
-// {
-//   firstName: 'hilary',
-//   lastName: 'chan',
-//   email: 'hilary@gmail.com',
-//   phoneNumber: '514 514 4444',
-//   password: passwordData.passwordHash,
-//   salt: passwordData.salt,
-//   emailVerified: true
-// },
-// {
-//   firstName: 'alex',
-//   lastName: 'pelletier',
-//   email: 'alex@gmail.com',
-//   phoneNumber: '514 514 5555',
-//   password: passwordData.passwordHash,
-//   salt: passwordData.salt,
-//   emailVerified: true
-// },
-//
-// {
-//   firstName: 'samer',
-//   lastName: 'elachkar',
-//   email: 'samer@gmail.com',
-//   phoneNumber: '514 514 6666',
-//   password: passwordData.passwordHash,
-//   salt: passwordData.salt,
-//   emailVerified: true
-// }
 
 var drinkCategory = {
   "translations": [
@@ -119,6 +80,7 @@ var restaurants = [
     "kitCashModeFlag": "cnk",
     "orderNotiFlag": "na",
     "paypalId": "2322323kjh",
+    "kitchenStations": [{"name": "Kitchen"}, {"name": "Bar"}],
     "supportedLanguages": [
       {
         "languageCode": "en",
@@ -607,7 +569,7 @@ setTimeout(function () {
   var orderModel = model.getOrdersModel();
   var orderedItemsModel = model.getOrderedItemsModel();
   var orderedItemIngredientModel = model.getOrderedItemIngredientModel();
-
+  var kitchenStationsModel = model.getKitchenStationModel();
   users.forEach(function (user) {
 
     userModel.findOrCreate({
@@ -636,7 +598,10 @@ setTimeout(function () {
           }, {
             model: paymentsModel,
             as: 'payments'
-          }], defaults: restaurant
+          }, {
+          model: kitchenStationsModel,
+          as: 'kitchenStations'
+        }], defaults: restaurant
         }).then(function (createdRestaurant) {
 
 
