@@ -42,6 +42,10 @@ var drinkCategory = {
     {
       "name": "Drinks",
       "languageCode": "en"
+    },
+    {
+      "name": "Boissons",
+      "languageCode": "fr"
     }
   ]
 };
@@ -51,6 +55,10 @@ var mealCategory = {
     {
       "name": "Meals",
       "languageCode": "en"
+    },
+    {
+      "name": "Repas",
+      "languageCode": "fr"
     }
   ]
 };
@@ -60,6 +68,10 @@ var sideCategory = {
     {
       "name": "Sides",
       "languageCode": "en"
+    },
+    {
+      "name": "Entrée",
+      "languageCode": "fr"
     }
   ]
 };
@@ -70,13 +82,30 @@ var mainMenu = {
     {
       "name": "General Menu",
       "languageCode": "en"
+    },
+    {
+      "name": "Menu général",
+      "languageCode": "fr"
+    }
+  ]
+};
+
+var breakfastMenu = {
+  "translations": [
+    {
+      "name": "Breakfast",
+      "languageCode": "en"
+    },
+    {
+      "name": "Déjeuner",
+      "languageCode": "fr"
     }
   ]
 };
 
 var restaurants = [
   {
-    "address": "Burger Street",
+    "address": "7141 Sherbrooke St W, Montreal, QC H4B 1R6, Canada",
     "kitCashModeFlag": "cnk",
     "orderNotiFlag": "na",
     "paypalId": "2322323kjh",
@@ -86,13 +115,24 @@ var restaurants = [
         "languageCode": "en",
         "name": "English",
         "userId": 1
+      },
+      {
+        "name": "French",
+        "languageCode": "fr",
+        "userId": 1
       }
     ],
     "translations": [
       {
-        "name": "Burger King",
-        "description": "Burgersss",
+        "name": "Burger Joint",
+        "description": "A fast food restaurant that sells burgers, hot dogs, and fries",
         "languageCode": "en",
+        "kitCashModeFlag": "kco"
+      },
+      {
+        "name": "Burger Joint",
+        "description": "Un restaurant de restauration rapide qui vend des hamburgers, des hot-dogs et des frites",
+        "languageCode": "fr",
         "kitCashModeFlag": "kco"
       }
     ],
@@ -221,6 +261,10 @@ var commonSizes = [
       {
         "languageCode": "en",
         "name": "Small"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Petit"
       }
     ],
     "price": 2
@@ -230,6 +274,10 @@ var commonSizes = [
       {
         "languageCode": "en",
         "name": "Medium"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Moyen"
       }
     ],
     "price": 2.50
@@ -239,6 +287,10 @@ var commonSizes = [
       {
         "languageCode": "en",
         "name": "Large"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Grand"
       }
     ],
     "price": 3
@@ -250,6 +302,11 @@ var drinkItems = [{
       "languageCode": "en",
       "name": "Pepsi",
       "description": "A classic refreshing soda"
+    },
+    {
+      "languageCode": "fr",
+      "name": "Pepsi",
+      "description": "Un soda rafraîchissante classique"
     }
   ],
   "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/703f4587-144f-47c3-a818-5b21dd1eab74",
@@ -277,6 +334,11 @@ var drinkItems = [{
         "languageCode": "en",
         "name": "Sprite",
         "description": "A classic refreshing soda"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Sprite",
+        "description": "Une soude rafraîchissante classique"
       }
     ],
     "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/65c5fba3-7c39-44cf-8e85-b93e0047d8ff",
@@ -287,7 +349,12 @@ var drinkItems = [{
       {
         "languageCode": "en",
         "name": "Water",
-        "description": "A classic refreshing soda"
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Water",
+        "description": ""
       }
     ],
     "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/b1b71c27-f271-44d9-9dd5-6e983fec1c2a",
@@ -303,6 +370,11 @@ var sideItems = [{
       "languageCode": "en",
       "name": "Fries",
       "description": "Deep fried taters"
+    },
+    {
+      "languageCode": "fr",
+      "name": "Frites",
+      "description": "Patates frites"
     }
   ],
   "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/a4ae8968-38c0-4c1b-84c4-73bad88ccb4f",
@@ -314,9 +386,30 @@ var sideItems = [{
         "languageCode": "en",
         "name": "Chicken Wings",
         "description": "Some delicious chicken"
+      },
+      {
+        "languageCode": "fr",
+        "name": "Ailes de poulet",
+        "description": ""
       }
     ],
     "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/635050d6-d03a-4799-a729-76c41db1a80d",
+    "sizes": commonSizes
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Poutine",
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Poutine",
+        "description": ""
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/7acef210-17bd-11e7-bea3-0b8c792e2c14",
     "sizes": commonSizes
   }
 ]
@@ -325,8 +418,13 @@ var mealItems = [{
   "translations": [
     {
       "languageCode": "en",
-      "name": "Burger",
-      "description": "Yummy burger"
+      "name": "Hamburger",
+      "description": ""
+    },
+    {
+      "languageCode": "fr",
+      "name": "Hamburger",
+      "description": ""
     }
   ],
   "categories": [],
@@ -343,6 +441,10 @@ var mealItems = [{
           {
             "languageCode": "en",
             "name": "White Bread"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Pain blanc"
           }]
       },
         {
@@ -353,6 +455,10 @@ var mealItems = [{
             {
               "languageCode": "en",
               "name": "Brown Bread"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Pain complet"
             }]
         },
         {
@@ -363,6 +469,10 @@ var mealItems = [{
             {
               "languageCode": "en",
               "name": "Sesame Bread"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Pain au sésame"
             }]
         }
       ],
@@ -370,12 +480,16 @@ var mealItems = [{
         {
           "languageCode": "en",
           "name": "Bread"
+        },
+        {
+          "languageCode": "fr",
+          "name": "Pain"
         }]
 
     },
     {
       "maxNumberOfIngredients": 3,
-      "minNumberOfIngredients": 1,
+      "minNumberOfIngredients": 0,
       "orderPriority": 2,
       "ingredients": [{
         "addByDefault": true,
@@ -385,6 +499,9 @@ var mealItems = [{
           {
             "languageCode": "en",
             "name": "Lettuce"
+          }, {
+            "languageCode": "fr",
+            "name": "Salade"
           }]
       },
         {
@@ -394,6 +511,10 @@ var mealItems = [{
           "translations": [
             {
               "languageCode": "en",
+              "name": "Bacon"
+            },
+            {
+              "languageCode": "fr",
               "name": "Bacon"
             }]
         },
@@ -405,6 +526,10 @@ var mealItems = [{
             {
               "languageCode": "en",
               "name": "Ketchup"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Ketchup"
             }]
         },
         {
@@ -415,6 +540,9 @@ var mealItems = [{
             {
               "languageCode": "en",
               "name": "Mustard"
+            }, {
+              "languageCode": "fr",
+              "name": "Moutarde"
             }]
         }
       ],
@@ -422,6 +550,10 @@ var mealItems = [{
         {
           "languageCode": "en",
           "name": "Toppings"
+        },
+        {
+          "languageCode": "fr",
+          "name": "Garnitures"
         }]
 
     }
@@ -433,6 +565,10 @@ var mealItems = [{
         {
           "languageCode": "en",
           "name": "Regular"
+        },
+        {
+          "languageCode": "fr",
+          "name": "Ordinaire"
         }
       ],
       "price": 2
@@ -443,8 +579,218 @@ var mealItems = [{
     "translations": [
       {
         "languageCode": "en",
+        "name": "Chicken Burger",
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Burger de poulet",
+        "description": ""
+      }
+    ],
+    "categories": [],
+    "ingredientGroups": [
+      {
+        "maxNumberOfIngredients": 1,
+        "minNumberOfIngredients": 1,
+        "orderPriority": 1,
+        "ingredients": [{
+          "addByDefault": true,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "White Bread"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Pain blanc"
+            }]
+        },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Brown Bread"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain complet"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": .50,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Sesame Bread"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain au sésame"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Bread"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Pain"
+          }]
+
+      },
+      {
+        "maxNumberOfIngredients": 3,
+        "minNumberOfIngredients": 0,
+        "orderPriority": 2,
+        "ingredients": [{
+          "addByDefault": true,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "Lettuce"
+            }, {
+              "languageCode": "fr",
+              "name": "Salade"
+            }]
+        },
+          {
+            "addByDefault": false,
+            "price": 1,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Bacon"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Bacon"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Ketchup"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Ketchup"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Mustard"
+              }, {
+                "languageCode": "fr",
+                "name": "Moutarde"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Toppings"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Garnitures"
+          }]
+
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/71372ad0-17c0-11e7-bea3-0b8c792e2c14",
+    "sizes": [
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Regular"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Ordinaire"
+          }
+        ],
+        "price": 2
+      }
+    ]
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Chicken Strips",
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Lanières de poulet",
+        "description": ""
+      }
+    ],
+    "categories": [],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/1e60a7a0-17c0-11e7-bea3-0b8c792e2c14",
+    "sizes": [
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "6 strips"
+          },
+          {
+            "languageCode": "fr",
+            "name": "6 lanières"
+          }
+        ],
+        "price": 3
+      },
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "9 strips"
+          },
+          {
+            "languageCode": "fr",
+            "name": "9 lanières"
+          }
+        ],
+        "price": 4
+      }
+    ]
+  },
+  {
+    "translations": [
+      {
+        "languageCode": "en",
         "name": "Hot Dog",
-        "description": "Hot Dogs"
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Hot Dog",
+        "description": ""
       }
     ],
     "categories": [],
@@ -461,6 +807,10 @@ var mealItems = [{
             {
               "languageCode": "en",
               "name": "White Bun"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Pain blanc"
             }]
         },
           {
@@ -471,6 +821,10 @@ var mealItems = [{
               {
                 "languageCode": "en",
                 "name": "Brown Bun"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain brun"
               }]
           },
           {
@@ -481,6 +835,10 @@ var mealItems = [{
               {
                 "languageCode": "en",
                 "name": "Sesame Bun"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain de sésame"
               }]
           }
         ],
@@ -488,6 +846,10 @@ var mealItems = [{
           {
             "languageCode": "en",
             "name": "Bread"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Pain"
           }]
 
       },
@@ -504,6 +866,10 @@ var mealItems = [{
               {
                 "languageCode": "en",
                 "name": "Ketchup"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Ketchup"
               }]
           },
           {
@@ -514,6 +880,10 @@ var mealItems = [{
               {
                 "languageCode": "en",
                 "name": "Mustard"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Mustard"
               }]
           }
         ],
@@ -521,6 +891,10 @@ var mealItems = [{
           {
             "languageCode": "en",
             "name": "Toppings"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Garnitures"
           }]
 
       }
@@ -532,6 +906,194 @@ var mealItems = [{
           {
             "languageCode": "en",
             "name": "Regular"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Ordinaire"
+          }
+        ],
+        "price": 2
+      }
+    ]
+  }
+];
+
+
+var breakFastItems = [{
+  "translations": [
+    {
+      "languageCode": "en",
+      "name": "Pancakes",
+      "description": ""
+    },
+    {
+      "languageCode": "fr",
+      "name": "Crêpes",
+      "description": ""
+    }
+  ],
+  "categories": [],
+  "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/fb12e1a2-3efb-4b71-ba44-d8f527f97592",
+  "sizes": [
+    {
+      "translations": [
+        {
+          "languageCode": "en",
+          "name": "Regular"
+        },
+        {
+          "languageCode": "fr",
+          "name": "Ordinaire"
+        }
+      ],
+      "price": 2
+    }
+  ]
+},
+  {
+    "translations": [
+      {
+        "languageCode": "en",
+        "name": "Egg McMuffin",
+        "description": ""
+      },
+      {
+        "languageCode": "fr",
+        "name": "Oeuf mcmuffin",
+        "description": ""
+      }
+    ],
+    "categories": [],
+    "ingredientGroups": [
+      {
+        "maxNumberOfIngredients": 1,
+        "minNumberOfIngredients": 1,
+        "orderPriority": 1,
+        "ingredients": [{
+          "addByDefault": true,
+          "price": 0,
+          "allowQuantity": 1,
+          "translations": [
+            {
+              "languageCode": "en",
+              "name": "White Bread"
+            },
+            {
+              "languageCode": "fr",
+              "name": "Pain blanc"
+            }]
+        },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Brown Bun"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain brun"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": .50,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Sesame Bun"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Pain de sésame"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Bread"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Pain"
+          }]
+
+      },
+      {
+        "maxNumberOfIngredients": 3,
+        "minNumberOfIngredients": 0,
+        "orderPriority": 2,
+        "ingredients": [
+          {
+            "addByDefault": false,
+            "price": .50,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Bacon"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Bacon"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": .50,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Sausage"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Saucisse"
+              }]
+          },
+          {
+            "addByDefault": false,
+            "price": 0,
+            "allowQuantity": 1,
+            "translations": [
+              {
+                "languageCode": "en",
+                "name": "Cheese"
+              },
+              {
+                "languageCode": "fr",
+                "name": "Fromage"
+              }]
+          }
+        ],
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Toppings"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Garnitures"
+          }]
+
+      }
+    ],
+    "imageUrl": "https://s3.amazonaws.com/resto-item-images-static/63cc3c4f-291f-48e7-b42c-7219634bfa98",
+    "sizes": [
+      {
+        "translations": [
+          {
+            "languageCode": "en",
+            "name": "Regular"
+          },
+          {
+            "languageCode": "fr",
+            "name": "Ordinaire"
           }
         ],
         "price": 2
@@ -586,7 +1148,8 @@ setTimeout(function () {
 
       restaurants.forEach(function (restaurant) {
         restaurant.userId = user.id;
-        restaurantModel.create(restaurant, {include: [{
+        restaurantModel.create(restaurant, {
+          include: [{
             model: restaurantLanguageModel,
             as: 'supportedLanguages'
           }, {
@@ -599,11 +1162,20 @@ setTimeout(function () {
             model: paymentsModel,
             as: 'payments'
           }, {
-          model: kitchenStationsModel,
-          as: 'kitchenStations'
-        }], defaults: restaurant
+            model: kitchenStationsModel,
+            as: 'kitchenStations'
+          }], defaults: restaurant
         }).then(function (createdRestaurant) {
 
+          breakfastMenu.userId = user.id;
+          menuModel.create(mainMenu, {
+            include: [{
+              model: menuTranslationsModel,
+              as: 'translations'
+            }]
+          }).then(function (createdMenu) {
+
+          });
 
           mainMenu.userId = user.id;
           menuModel.create(mainMenu, {
@@ -636,14 +1208,21 @@ setTimeout(function () {
 
                   // Add multiple sizes a few times
                   var sizesToAddNumber = Math.random() * 5;
-                  for(var k = 0; k < sizesToAddNumber; k++) {
+                  for (var k = 0; k < sizesToAddNumber; k++) {
                     var sizeToAdd = itemToAdd.sizes[parseInt((Math.random() * 10 + 1)) % itemToAdd.sizes.length];
                     orderTotal += sizeToAdd.price;
                     orderedItems.push({itemId: itemToAdd.id, itemSizeId: sizeToAdd.id})
                   }
                 }
                 var paidDate = new Date(2015 + i % 2, i % 12, i % 26, i % 60, i % 60, 0, 0);
-                orderModel.create({total: orderTotal, status: "notPaidNotComplete", orderedItems: orderedItems, restaurantId: createdRestaurant.id, paymentId: "", createdAt: paidDate}, {
+                orderModel.create({
+                  total: orderTotal,
+                  status: "notPaidNotComplete",
+                  orderedItems: orderedItems,
+                  restaurantId: createdRestaurant.id,
+                  paymentId: "",
+                  createdAt: paidDate
+                }, {
                   include: [{
                     model: orderedItemsModel, as: 'orderedItems', include: [{
                       model: orderedItemIngredientModel,
