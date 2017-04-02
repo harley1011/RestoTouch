@@ -26,5 +26,10 @@
     "byNumberButton":"Ok! Close",
     "submitButton":"Submit",
     "cancelButton":"Cancel"
+  },
+
+  "menu":{
+    "allButton":"All Categories",
+    "orderButton":"Order"
   }
 }

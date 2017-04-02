@@ -6,7 +6,7 @@
 
 <ion-content>
     <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-        <button ion-button class="btnCat" [ngClass]="{'btnCat-selected': showAllCategories }" color="danger" (click)="changeGroup('all', null)">All Categories</button>
+        <button ion-button class="btnCat" [ngClass]="{'btnCat-selected': showAllCategories }" color="danger" (click)="changeGroup('all', null)">{{ 'menu.allButton' | translate }}</button>
         <button ion-button class="btnCat" color="danger" *ngFor="let category of categories" (click)="changeGroup('one', category)" [ngClass]="{'btnCat-selected': currentCategory == category && !showAllCategories }">
                 {{category.category.selectedTranslation ? category.category.selectedTranslation.name : "No translation"}}
             </button>
@@ -74,7 +74,7 @@
     </ion-item>
     <ion-item>
       <h1>Total: {{currentOrder.total | currency:'USD':true:'1.2-2'}}</h1>
-      <button ion-button item-right (click)="order()" color="secondary" large [disabled]="currentOrder.orderedItems.length == 0">Order</button>
+      <button ion-button item-right (click)="order()" color="secondary" large [disabled]="currentOrder.orderedItems.length == 0">{{ 'menu.orderButton' | translate }}</button>
     </ion-item>
   </ion-list>
 </ion-footer>

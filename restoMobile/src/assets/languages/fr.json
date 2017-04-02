@@ -26,5 +26,10 @@
     "byNumberButton":"Ok! Fermer",
     "submitButton":"Soumettre",
     "cancelButton":"Annuler"
+  },
+
+  "menu":{
+    "allButton":"Toutes les Catégories",
+    "orderButton":"Commander"
   }
 }
