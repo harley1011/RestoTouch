@@ -79,14 +79,15 @@ export class RestaurantComponent implements OnInit {
 
   setLanguageCategoryItem(language: Language) {
     let currentLanguageCode = language.languageCode;
-    let currentSelectedTranslation;
+    let currentSelectedTranslation: CategoryTranslations;
+    let currentSelectedItemTranslation: ItemTranslations;
     this.menu.forEach(menu => {
       menu.categories.forEach(cat =>{
         currentSelectedTranslation = cat.translations.find(translation => translation.languageCode === currentLanguageCode);
         cat.selectedTranslation = currentSelectedTranslation;
         cat.items.forEach(item => {
-          currentSelectedTranslation = item.translations.find(translation => translation.languageCode === currentLanguageCode);
-          item.selectedTranslation = currentSelectedTranslation;
+          currentSelectedItemTranslation = item.translations.find(translation => translation.languageCode === currentLanguageCode);
+          item.selectedTranslation = currentSelectedItemTranslation;
         });
       });
     });
