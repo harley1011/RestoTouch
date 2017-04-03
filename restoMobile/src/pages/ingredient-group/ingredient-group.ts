@@ -121,9 +121,6 @@ export class IngredientGroupPage implements OnInit {
       this.ingredientGroup = ingredientGroup;
       this.jumpToIngredientGroup(index);
 
-      console.log("current " + this.currentIngredientIndex);
-      console.log("next " + index);
-      console.log("group index " + this.ingredientGroupIndex);
   }
 
   jumpToIngredientGroup(index: number): void {
@@ -153,22 +150,6 @@ export class IngredientGroupPage implements OnInit {
       opts['direction'] = 'back';
     }
 
-    // var index = this.ingredientGroupIndex - 1;
-    // this.ingredientGroupIndex -= 1;
-    // this.navCtrl.pop(IngredientGroupPage, {
-    //   item: this.item,
-    //   ingredientGroupIndex: index,
-    //   language: this.selectedLanguage,
-    //   callback: this.complexOrderCallback,
-    //   ingredients: this.selectedIngredients,
-    //   modify: this.modify,
-    //   total: this.total,
-    //   currentIngredientIndex: this.currentIngredientIndex
-    // }, opts);
-
-
-    console.log("after change prev " + this.currentIngredientIndex);
-    console.log("ingre prev " + this.ingredientGroupIndex);
     this.navCtrl.pop(opts);
 
 
@@ -183,9 +164,6 @@ export class IngredientGroupPage implements OnInit {
     } else {
       this.nextIngredientOrder();
     }
-
-    console.log("after change next " + this.currentIngredientIndex);
-    console.log("ingre next " + this.ingredientGroupIndex);
   }
 
   nextIngredientOrder(): void {
