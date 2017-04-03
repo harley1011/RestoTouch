@@ -7,7 +7,7 @@ var users = [
   {
     "firstName": "Harley",
     "lastName": "McPhee",
-    "email": "harley.1011@gmail.com",
+    "email": "demo@restotouch.com",
     "password": passwordData.passwordHash,
     "employeePassword": passwordData.passwordHash,
     "salt": passwordData.salt,
