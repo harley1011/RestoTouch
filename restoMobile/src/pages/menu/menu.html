@@ -74,7 +74,9 @@
     </ion-item>
     <ion-item>
       <h1>Total: {{currentOrder.total | currency:'USD':true:'1.2-2'}}</h1>
+
       <button ion-button item-right (click)="order()" color="secondary" large [disabled]="currentOrder.orderedItems.length == 0">{{ 'menu.orderButton' | translate }}</button>
+      <button ion-button item-right (click)="cancel()" color="danger" large >{{ 'menu.cancelButton' | translate }}</button>
     </ion-item>
   </ion-list>
 </ion-footer>

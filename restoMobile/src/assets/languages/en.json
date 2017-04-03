@@ -31,7 +31,8 @@
   "menu":{
     "allButton":"All Categories",
     "orderListButton":"Order List",
-    "orderButton":"Order"
+    "orderButton":"Order",
+    "cancelButton": "Cancel"
   },
 
   "orderList":{

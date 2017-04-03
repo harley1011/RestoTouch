@@ -31,7 +31,8 @@
   "menu":{
     "allButton":"Toutes les Catégories",
     "orderListButton":"Détail de la commande",
-    "orderButton":"Commander"
+    "orderButton":"Commander",
+    "cancelButton":"Annuler"
   },
 
   "orderList":{
