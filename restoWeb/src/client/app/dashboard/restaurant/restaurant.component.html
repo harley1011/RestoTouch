@@ -352,10 +352,10 @@
         </table>
       </div>
 
-      <div id="resto-lang" class="edit-section"><br/>
+      <div id="resto-lang" class="edit-section col-md-12">
+        <h4>{{ 'restaurant.langTitle' | translate}}</h4>
         <div class="row">
           <div class="col col-md-5">
-            <label>{{ 'restaurant.langTitle' | translate}}</label>
             <ul class="list-group">
               <li *ngFor="let language of restaurant.supportedLanguages" class="list-group-item"> {{language.name}}<i
                 class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i>
@@ -404,19 +404,10 @@
         </div>
 
 
-        <!--
-                <div class="form-group">
-
-                  <div class="btn-group-vertical btn-group-md">
-                    <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
-                    <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
-                  </div>
-                </div>
-        -->
       </div>
 
       <!--KITCHEN CASHIER MODE OPTION SECTION-->
-      <div class="col-md-9">
+      <div class="col-md-12">
         <h4>{{ 'restaurant.kitCashModeTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
           <div class="card-block">
@@ -518,7 +509,7 @@
       </div>
 
       <!--ORDER NOTIFICATION TYPE-->
-      <div class="col-md-9">
+      <div class="col-md-12">
         <h4>{{'restaurant.orderNotiTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
           <div class="card-block">
