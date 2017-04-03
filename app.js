@@ -24,7 +24,7 @@ require('./restoWeb/websiteRoutes')(app, express);
 app.all('/*', [require('./restoWeb/authenticator.js')]);
 
 var port = process.env.PORT || 10010;
-app.listen(port);
+var appListen = app.listen(port);
 SwaggerExpress.create(config, function (err, swaggerExpress) {
   if (err) {
     throw err;
@@ -32,8 +32,7 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
 
   swaggerExpress.register(app);
 
-
- // orderNotifier(app.listen(port));
+  orderNotifier(appListen);
   console.log('Server listening on port', port);
 });
 
