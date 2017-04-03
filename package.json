@@ -2,7 +2,7 @@
   "name": "resto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/harley1011/RestoTouch.git"
