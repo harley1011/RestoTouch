@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/harley1011/RestoTouch.git"
   },
+  "scripts": {
+    "start": "node app.js"
+  },
   "author": "",
   "license": "ISC",
   "bugs": {
