@@ -467,7 +467,7 @@
             <div class="col-md-6">
               <label><h5>{{ 'restaurant.kitListItems' | translate }}</h5></label>
               <ul *ngFor="let cat of categories; let i = index;" class="list-group scrollable-list">
-                <li class="list-group-item bg-faded">{{cat.translations[0]?.name}}
+                <li class="list-group-item bg-faded">{{cat.selectedTranslation ? cat.selectedTranslation.name : "No Translation"}}
                   <i [hidden]="cat?.items.length == 0"
                      class="fa fa-angle-double-right icon-add icon-align fa-pull-right"
                      (click)="addAllItemToKitchenStation(i)"></i>
@@ -475,7 +475,7 @@
                 <li [hidden]="cat?.items.length > 0" class="list-group-item"><i class="fa fa-exclamation-circle"></i> {{
                   'restaurant.kitListItemWarning' | translate }}
                 </li>
-                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.translations[0]?.name}}
+                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
                   <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                      (click)="addItemToKitchenStation(item)"></i>
                 </li>
@@ -502,7 +502,7 @@
               <label><h6>{{ 'restaurant.kitListStationItemTitle' | translate }}</h6></label>
               <ul class="list-group scrollable-list">
                 <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item">
-                  {{item.translations[0]?.name}}
+                  {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
                      (click)="removeItemFromKitchenStation(item, selectedKitchenStation[1])"></i>
                 </li>

@@ -12,9 +12,9 @@ import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 import {KitchenStation} from '../../shared/models/kitchen-station';
-import {Item} from '../../shared/models/items';
+import {Item, ItemTranslations} from '../../shared/models/items';
 import {CategoryService} from '../category/category.service';
-import {Category} from '../../shared/models/category';
+import {Category, CategoryTranslations} from '../../shared/models/category';
 import {MenuService} from '../menu/menu.service';
 import {ItemCategory} from '../../shared/models/item-category';
 
@@ -74,6 +74,22 @@ export class RestaurantComponent implements OnInit {
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
+    this.setLanguageCategoryItem(language);
+  }
+
+  setLanguageCategoryItem(language: Language) {
+    let currentLanguageCode = language.languageCode;
+    let currentSelectedTranslation;
+    this.menu.forEach(menu => {
+      menu.categories.forEach(cat =>{
+        currentSelectedTranslation = cat.translations.find(translation => translation.languageCode === currentLanguageCode);
+        cat.selectedTranslation = currentSelectedTranslation;
+        cat.items.forEach(item => {
+          currentSelectedTranslation = item.translations.find(translation => translation.languageCode === currentLanguageCode);
+          item.selectedTranslation = currentSelectedTranslation;
+        });
+      });
+    });
   }
 
   removeLanguage(language: Language) {
@@ -402,7 +418,7 @@ export class RestaurantComponent implements OnInit {
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
-        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        //this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.menu.push(menu);
 
         menu.categories.forEach( cat => {
@@ -420,6 +436,7 @@ export class RestaurantComponent implements OnInit {
               this.categories.push(cat);
           }
         });
+        this.setLanguageCategoryItem(this.translationSelectComponent.selectedLanguage);
         this.updateItemList();
       },
       error => {
