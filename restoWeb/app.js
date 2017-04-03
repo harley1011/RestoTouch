@@ -25,6 +25,8 @@ app.use(morgan('combined'));
 require('./websiteRoutes.js')(app, express);
 
 app.all('/*', [require('./authenticator.js')]);
+
+var port = process.env.PORT || 10010;
 app.listen(port);
 SwaggerExpress.create(config, function (err, swaggerExpress) {
   if (err) {
@@ -33,7 +35,6 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
 
   swaggerExpress.register(app);
 
-  var port = process.env.PORT || 10010;
 
  // orderNotifier(app.listen(port));
   console.log('Server listening on port', port);
