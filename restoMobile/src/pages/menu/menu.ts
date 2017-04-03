@@ -221,7 +221,7 @@ export class MenuPage {
   }
 
   sendOrder(): void{
-    var payFirst = true;
+    var payFirst = false;
     if (payFirst && this.platform.is('cordova')) {
       this.usePayPal();
     } else {
