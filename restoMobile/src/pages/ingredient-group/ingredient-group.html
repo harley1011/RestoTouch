@@ -18,15 +18,15 @@
 
 <ion-content>
   <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': currentIngredientGroup == inGroup }">
+      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': i == currentIngredientIndex }">
               {{inGroup.selectedTranslation ? inGroup.selectedTranslation.name : "No translation"}}
           </button>
   </ion-scroll>
-  <div *ngIf="ingredientGroup">
+  <div *ngIf="ingredientGroup" padding>
     <h1 class="ingredientGroup-name">{{'ingredientGroup.title'|translate}} {{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}} </h1>
     <h2 class="ingredientGroup-subtitle">{{'ingredientGroup.detail'|translate}} {{ingredientGroup.maxNumberOfIngredients}} {{'ingredientGroup.title2'|translate}} </h2>
   </div>
- <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
+ <ion-list *ngIf="item && ingredientGroup && orderableIngredients" padding>
     <ion-item class="ingredient-item" *ngFor="let orderableIngredient of orderableIngredients; let i = index">
       <ion-label>{{orderableIngredient.ingredient.translations[0].name}} ${{orderableIngredient.ingredient.price.toFixed(2)}}</ion-label>
       <ion-checkbox *ngIf="orderableIngredient.ingredient.allowQuantity == 1" [checked]="orderableIngredient.amount > 0" [disabled]="orderableIngredient.disabled" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>

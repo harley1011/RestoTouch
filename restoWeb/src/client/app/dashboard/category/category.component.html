@@ -5,7 +5,7 @@
     <hr>
   </div>
   <div *ngIf="category" class="form-container">
-    <form (ngSubmit)="addAndUpdate()" id="categoryForm" role="form">
+    <form (ngSubmit)="addAndUpdate()" id="categoryForm" role="form" #categoryForm="ngForm">
 
       <div class="form-group">
         <label>{{'category.catName' | translate}}</label>
@@ -47,6 +47,8 @@
         <div class="manage-button">
           <button *ngIf="!create" class="btn btn-success btn-green" type="submit">{{'category.saveButton' | translate}}</button>
           <button *ngIf="!create" id="deleteCategoryBtn" type="button" (click)="delete()" class="btn btn-danger btn-red" >{{'category.deleteButton' | translate}}</button>
+          <button id="addMoreBtn" *ngIf="create" type="button" (click)="addMoreStep(); categoryForm.reset()" class="btn btn-success btn-green">+ Add another Category
+          </button>
           <button *ngIf="create" id="createCategoryBtn" class="btn btn-success btn-green" type="submit">{{'category.createButtonTopbar' | translate}}</button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{'category.cancelButtonTopbar' | translate}}</button>
         </div>

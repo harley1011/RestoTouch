@@ -66,6 +66,8 @@
           <button *ngIf="!create" id="deleteMenuBtn" type="button" (click)="delete()" class="btn btn-danger btn-red">{{ 'menu.deleteButton'
             | translate}}
           </button>
+          <button id="addMoreBtn" *ngIf="create" type="button" (click)="addMoreStep()" class="btn btn-success btn-green">+ Add a Category
+          </button>
           <button *ngIf="create" id="createMenuBtn" (click)="addAndUpdate()" class="btn btn-success btn-green" type="button">{{'menu.createButtonTopbar' | translate}}
           </button>
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'menu.cancelButtonTopbar' |

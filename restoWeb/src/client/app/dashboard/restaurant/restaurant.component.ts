@@ -253,6 +253,20 @@ export class RestaurantComponent implements OnInit {
       );
   }
 
+  addMoreStep(): void {
+    this.restaurantService.addRestaurant(this.restaurant)
+      .subscribe(
+        generalResponse => {
+          console.log(this.restaurant);
+          this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
+          // this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
+        },
+        error => {
+          this.errorMessage = <any>error;
+        }
+      );
+  }
+
   delete(): void {
     this.restaurantService.deleteRestaurant(this.restaurant).subscribe(
       generalResponse => {
