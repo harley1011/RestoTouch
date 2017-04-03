@@ -34,7 +34,7 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
   swaggerExpress.register(app);
 
   var port = process.env.PORT || 10010;
-
+  app.listen(port);
  // orderNotifier(app.listen(port));
   console.log('Server listening on port', port);
 });
