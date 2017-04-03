@@ -18,7 +18,7 @@
 
 <ion-content>
   <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': currentIngredientGroup == inGroup }">
+      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': i == currentIngredientIndex }">
               {{inGroup.selectedTranslation ? inGroup.selectedTranslation.name : "No translation"}}
           </button>
   </ion-scroll>

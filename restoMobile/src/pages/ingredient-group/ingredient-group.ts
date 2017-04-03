@@ -23,6 +23,7 @@ export class IngredientGroupPage implements OnInit {
   total: number;
   totalStr: string;
   currentIngredientGroup: IngredientGroup;
+  currentIngredientIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
@@ -38,6 +39,7 @@ export class IngredientGroupPage implements OnInit {
     this.selectedIngredients = this.navParams.get('ingredients');
     this.modify = this.navParams.get('modify');
     this.ingredientCount = 0;
+    this.currentIngredientIndex = this.ingredientGroupIndex;
     this.total = this.navParams.get('total');
     this.totalStr = this.total.toFixed(2);
 
@@ -114,6 +116,7 @@ export class IngredientGroupPage implements OnInit {
   }
 
   previousIngredientGroup(): void {
+
     var opts = {
       animate: true,
       animation: "ios-transition"
@@ -126,17 +129,24 @@ export class IngredientGroupPage implements OnInit {
       opts['direction'] = 'back';
     }
 
+    this.currentIngredientIndex--;
+    console.log("after change " + this.currentIngredientIndex);
     this.navCtrl.pop(opts);
+
+
   }
 
   nextIngredientGroup(): void {
     var index = this.ingredientGroupIndex + 1;
+    this.currentIngredientIndex++;
 
     if (index >= this.item.ingredientGroups.length) {
       this.doneIngredientOrder();
     } else {
       this.nextIngredientOrder();
     }
+
+    console.log("after change " + this.currentIngredientIndex);
   }
 
   nextIngredientOrder(): void {
@@ -149,7 +159,8 @@ export class IngredientGroupPage implements OnInit {
       callback: this.complexOrderCallback,
       ingredients: this.selectedIngredients,
       modify: this.modify,
-      total: this.total
+      total: this.total,
+      currentIngredientIndex: this.currentIngredientIndex
     }, {
       animate: true,
       animation: "ios-transition"
@@ -248,17 +259,20 @@ export class IngredientGroupPage implements OnInit {
 
       this.currentIngredientGroup = ingredientGroup;
       this.ingredientGroup = ingredientGroup;
-      console.log(this.currentIngredientGroup);
       this.jumpToIngredientGroup(index);
+
+      console.log("current " + this.currentIngredientIndex);
+      console.log("next " + index);
   }
 
   jumpToIngredientGroup(index: number): void {
     this.ingredientGroupIndex = index - 1;
 
-    if (index >= this.item.ingredientGroups.length) {
-      this.doneIngredientOrder();
+
+    if (index >= this.currentIngredientIndex) {
+      this.nextIngredientGroup();
     } else {
-      this.nextIngredientOrder();
+      this.previousIngredientGroup();
     }
   }
 }
