@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd restoWeb && npm install && node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,32 @@
   "bugs": {
     "url": "https://github.com/harley1011/RestoTouch/issues"
   },
-  "homepage": "https://github.com/harley1011/RestoTouch#readme"
+  "homepage": "https://github.com/harley1011/RestoTouch#readme",
+  "dependencies": {
+    "aws-sdk": "^2.7.0",
+    "cors": "^2.8.1",
+    "crypto": "0.0.3",
+    "express": "^4.12.3",
+    "font-awesome": "4.6.3",
+    "intl": "^1.2.5",
+    "jwt-simple": "^0.5.0",
+    "lodash": "^4.17.4",
+    "moment": "2.14.1",
+    "morgan": "^1.7.0",
+    "multer": "^1.2.0",
+    "uuid": "^3.0.1",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "promise": "^7.1.1",
+    "redis": "^2.6.5",
+    "redlock": "^2.1.0",
+    "reflect-metadata": "^0.1.8",
+    "request": "^2.75.0",
+    "rxjs": "5.0.2",
+    "sequelize": "^3.24.3",
+    "sl-blip": "^1.0.0",
+    "swagger-express-mw": "^0.1.0",
+    "systemjs": "0.19.40",
+    "zone.js": "^0.7.2"
+  }
 }
