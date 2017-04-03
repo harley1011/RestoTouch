@@ -2,18 +2,20 @@
   <div class="home-inside">
     <h1>{{ 'dashboard.title' | translate }}<span style="text-transform:capitalize">{{user.firstName}}</span>.</h1>
     <h4>{{ 'dashboard.sousTitle' | translate }}</h4>
-    <div class="row resto">
+
+    <div class="row resto" *ngFor="let restaurant of restaurants; let i = index">
       <div class="col col-md-9">
-        <div class="resto-name">Coffee To Go</div>
-        <div class="resto-address">1 rue Principal</div>
-        <div class="resto-sales">{{ 'dashboard.currentSales' | translate }}1000.00</div>
+        <div class="resto-name">{{ restaurant.selectedTranslation ? restaurant.selectedTranslation.name : restaurant.translations[0].name }}</div>
+        <div class="resto-address">{{ restaurant.address}}</div>
+        <div class="resto-sales">{{ 'dashboard.currentSales' | translate }} N/A </div>
       </div>
       <div class="col col-md-3" style="text-align: right">
-        <button class="btn btn-default btn-circle">
+        <button class="btn btn-default btn-circle" (click)="modify(restaurant)">
           <i class="fa fa-pencil"></i>
         </button>
-        <button type="button" class="btn btn-default btn-circle"><i class="fa fa-trash-o"></i></button>
+        <!--<button type="button" class="btn btn-default btn-circle"><i class="fa fa-trash-o"></i></button>-->
       </div>
     </div>
+
   </div>
 </div>

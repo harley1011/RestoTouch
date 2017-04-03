@@ -3,13 +3,13 @@
       <ion-buttons start>
         <button (click)="previousIngredientGroup()" ion-button icon-left clear>
           <ion-icon *ngIf="ingredientGroupIndex > 0" name="arrow-back"></ion-icon>
-          {{ ingredientGroupIndex == 0 ? "Cancel" : "Back" }}
+          {{ ingredientGroupIndex == 0 ? ('ingredientGroup.cancelButton'|translate) : ('ingredientGroup.cancelButton'|translate) }}
         </button>
       </ion-buttons>
           <ion-title>{{item.selectedTranslation ? item.selectedTranslation.name : "No translation"}} (Total: ${{totalStr}})</ion-title>
       <ion-buttons end>
         <button (click)="nextIngredientGroup()" [disabled]="ingredientGroup.minNumberOfIngredients > ingredientCount" ion-button icon-right clear>
-          {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? "Next" : "Done" }}
+          {{ ingredientGroupIndex + 1 < item.ingredientGroups.length ? ('ingredientGroup.nextButton'|translate) : ('ingredientGroup.doneButton'|translate) }}
           <ion-icon *ngIf="ingredientGroupIndex + 1 < item.ingredientGroups.length" name="arrow-forward"></ion-icon>
         </button>
       </ion-buttons>
@@ -18,21 +18,21 @@
 
 <ion-content>
   <ion-scroll scrollX="true" scrollY="true" class="mini-menu">
-      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': currentIngredientGroup == inGroup }">
+      <button ion-button class="btnCat" color="danger" *ngFor="let inGroup of item.ingredientGroups; let i = index" (click)="changeGroup(i, inGroup)" [ngClass]="{'btnCat-selected': i == currentIngredientIndex }">
               {{inGroup.selectedTranslation ? inGroup.selectedTranslation.name : "No translation"}}
           </button>
   </ion-scroll>
-  <div *ngIf="ingredientGroup">
-    <h1 class="ingredientGroup-name">Choose your {{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}} </h1>
-    <h2 class="ingredientGroup-subtitle">You can select a maximum of {{ingredientGroup.maxNumberOfIngredients}} ingredients</h2>
+  <div *ngIf="ingredientGroup" padding>
+    <h1 class="ingredientGroup-name">{{'ingredientGroup.title'|translate}} {{ingredientGroup?.selectedTranslation ? ingredientGroup.selectedTranslation.name : "No translation"}} </h1>
+    <h2 class="ingredientGroup-subtitle">{{'ingredientGroup.detail'|translate}} {{ingredientGroup.maxNumberOfIngredients}} {{'ingredientGroup.title2'|translate}} </h2>
   </div>
- <ion-list *ngIf="item && ingredientGroup && orderableIngredients">
+ <ion-list *ngIf="item && ingredientGroup && orderableIngredients" padding>
     <ion-item class="ingredient-item" *ngFor="let orderableIngredient of orderableIngredients; let i = index">
       <ion-label>{{orderableIngredient.ingredient.translations[0].name}} ${{orderableIngredient.ingredient.price.toFixed(2)}}</ion-label>
       <ion-checkbox *ngIf="orderableIngredient.ingredient.allowQuantity == 1" [checked]="orderableIngredient.amount > 0" [disabled]="orderableIngredient.disabled" (ionChange)="selectIngredient(orderableIngredient)"></ion-checkbox>
-      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1"  (click)="removeIngredient(orderableIngredient, false)" [disabled]="orderableIngredient.amount == 0" ion-button item-right clear>Remove<ion-icon name="ion-minus-circled"></ion-icon></button>
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1"  (click)="removeIngredient(orderableIngredient, false)" [disabled]="orderableIngredient.amount == 0" ion-button item-right clear>{{'ingredientGroup.removeButton'|translate}}<ion-icon name="ion-minus-circled"></ion-icon></button>
       <p *ngIf="orderableIngredient.ingredient.allowQuantity > 1" item-right>{{orderableIngredient.amount}}</p>
-      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" (click)="addIngredient(orderableIngredient)" [disabled]="orderableIngredient.disabled || orderableIngredient.amount == orderableIngredient.ingredient.allowQuantity" ion-button item-right clear>Add<ion-icon name="add-circle"></ion-icon></button>
+      <button *ngIf="orderableIngredient.ingredient.allowQuantity > 1" (click)="addIngredient(orderableIngredient)" [disabled]="orderableIngredient.disabled || orderableIngredient.amount == orderableIngredient.ingredient.allowQuantity" ion-button item-right clear>{{'ingredientGroup.addButton'|translate}}<ion-icon name="add-circle"></ion-icon></button>
     </ion-item>
   </ion-list>
 </ion-content>

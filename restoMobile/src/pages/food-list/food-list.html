@@ -3,10 +3,10 @@
       <ion-buttons start>
         <button (click)="back()" ion-button icon-left clear>
           <ion-icon name="arrow-back"></ion-icon>
-          Back
+          {{ 'orderList.backButton'| translate }}
         </button>
       </ion-buttons>
-      <ion-title>Order Food Items</ion-title>
+      <ion-title>{{ 'orderList.title'| translate }}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
         <p *ngFor="let ingredient of food.size.selectedIngredients.ingredients">- {{ingredient.ingredient.translations[0].name}}</p>
       </div>
       <button *ngIf="food.size.selectedIngredients" ion-button color="default" (click)="modify(food.item, food.size)" outline item-right>Modify</button>
-      <button ion-button color="danger" (click)="remove(food.item, food.size)" outline item-right>Remove</button>
+      <button ion-button color="danger" (click)="remove(food.item, food.size)" outline item-right>{{ 'orderList.removeButton' | translate }}</button>
     </ion-item>
   </ion-list>
 </ion-content>

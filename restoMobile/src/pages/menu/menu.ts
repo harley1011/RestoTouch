@@ -47,6 +47,7 @@ export class MenuPage {
     this.selectedMenu = navParams.get('menu');
     this.selectedLanguage = navParams.get('language');
     this.selectedRestaurant = navParams.get('restaurant');
+    this.selectedMenu.selectedTranslation = this.selectedMenu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
     this.categories = [];
     this.total = "0.00";
     this.showAllCategories = true;
@@ -70,6 +71,7 @@ export class MenuPage {
     this.menuService.getMenu(id).subscribe(
       menu => {
         this.menu = menu;
+        this.menu.selectedTranslation = this.menu.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
         this.menu.categories.forEach(category => {
           category.selectedTranslation = category.translations.find(translation => translation.languageCode == this.selectedLanguage.languageCode);
           var item: Item;
@@ -214,9 +216,12 @@ export class MenuPage {
      this.sendOrder();
     }
   }
+  cancel(): void {
+    this.navCtrl.setRoot(WelcomePage);
+  }
 
   sendOrder(): void{
-    var payFirst = true;
+    var payFirst = false;
     if (payFirst && this.platform.is('cordova')) {
       this.usePayPal();
     } else {

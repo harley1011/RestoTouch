@@ -10,7 +10,7 @@ export class ApiEndpointService {
   }
 
   getEndpoint() {
-    return this.localApiEndpoint;
+    return this.apiDevEndpoint;
   }
 
 }

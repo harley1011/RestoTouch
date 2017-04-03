@@ -352,10 +352,10 @@
         </table>
       </div>
 
-      <div id="resto-lang" class="edit-section"><br/>
+      <div id="resto-lang" class="edit-section col-md-12">
+        <h4>{{ 'restaurant.langTitle' | translate}}</h4>
         <div class="row">
           <div class="col col-md-5">
-            <label>{{ 'restaurant.langTitle' | translate}}</label>
             <ul class="list-group">
               <li *ngFor="let language of restaurant.supportedLanguages" class="list-group-item"> {{language.name}}<i
                 class="fa fa-times-circle icon-remove icon-align fa-pull-right" (click)="removeLanguage(language)"></i>
@@ -404,19 +404,10 @@
         </div>
 
 
-        <!--
-                <div class="form-group">
-
-                  <div class="btn-group-vertical btn-group-md">
-                    <button *ngFor="let menu of restaurant?.Menus;" (click)="openMenu(menu)" type="button" class="btn btn-secondary">{{ menu.name }}</button>
-                    <button (click)="addRemoveMenu()" type="button" class="btn btn-primary">Add/Remove</button>
-                  </div>
-                </div>
-        -->
       </div>
 
       <!--KITCHEN CASHIER MODE OPTION SECTION-->
-      <div class="col-md-9">
+      <div class="col-md-12">
         <h4>{{ 'restaurant.kitCashModeTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
           <div class="card-block">
@@ -467,7 +458,7 @@
             <div class="col-md-6">
               <label><h5>{{ 'restaurant.kitListItems' | translate }}</h5></label>
               <ul *ngFor="let cat of categories; let i = index;" class="list-group scrollable-list">
-                <li class="list-group-item bg-faded">{{cat.translations[0]?.name}}
+                <li class="list-group-item bg-faded">{{cat.selectedTranslation ? cat.selectedTranslation.name : "No Translation"}}
                   <i [hidden]="cat?.items.length == 0"
                      class="fa fa-angle-double-right icon-add icon-align fa-pull-right"
                      (click)="addAllItemToKitchenStation(i)"></i>
@@ -475,7 +466,7 @@
                 <li [hidden]="cat?.items.length > 0" class="list-group-item"><i class="fa fa-exclamation-circle"></i> {{
                   'restaurant.kitListItemWarning' | translate }}
                 </li>
-                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.translations[0]?.name}}
+                <li *ngFor="let item of cat?.items" class="list-group-item"> &nbsp; &nbsp; &nbsp;{{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
                   <i class="fa fa-chevron-circle-right icon-add icon-align fa-pull-right"
                      (click)="addItemToKitchenStation(item)"></i>
                 </li>
@@ -502,7 +493,7 @@
               <label><h6>{{ 'restaurant.kitListStationItemTitle' | translate }}</h6></label>
               <ul class="list-group scrollable-list">
                 <li *ngFor="let item of selectedKitchenStation[0]?.kitItem" class="list-group-item">
-                  {{item.translations[0]?.name}}
+                  {{item.selectedTranslation ? item.selectedTranslation.name : "No Translation"}}
                   <i class="fa fa-times-circle icon-remove icon-align fa-pull-right"
                      (click)="removeItemFromKitchenStation(item, selectedKitchenStation[1])"></i>
                 </li>
@@ -518,7 +509,7 @@
       </div>
 
       <!--ORDER NOTIFICATION TYPE-->
-      <div class="col-md-9">
+      <div class="col-md-12">
         <h4>{{'restaurant.orderNotiTitle' | translate}}</h4>
         <div class="card card-outline-warning mb-3">
           <div class="card-block">
@@ -555,10 +546,12 @@
                   class="btn btn-danger btn-red">{{
             'restaurant.deleteButton' | translate}}
           </button>
-          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{
-            'restaurant.createButtonTopbar' |
+          <button id="addMoreBtn" *ngIf="create" type="button" (click)="addMoreStep()" class="btn btn-success btn-green">+ Add a Menu
+          </button>
+          <button id="createRestoBtn" *ngIf="create" type="submit" class="btn btn-success btn-green">{{ 'restaurant.createButtonTopbar' |
             translate}}
           </button>
+
           <button class="btn btn-default btn-normal" (click)="cancel()" type="button">{{ 'restaurant.cancelButtonTopbar'
             | translate}}
           </button>
