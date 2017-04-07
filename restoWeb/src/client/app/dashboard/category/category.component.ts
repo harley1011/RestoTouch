@@ -138,6 +138,18 @@ export class CategoryComponent implements OnInit {
     );
   }
 
+	addMoreStep(): void {
+    // calling add categoryService
+    this.categoryService.addCategory(this.category).subscribe(
+      generalResponse => {
+				this.router.navigate(['/dashboard/category']);
+      },
+      error => {
+        this.errorMessage = <any> error;
+      }
+    );
+  }
+
   update(): void {
     this.categoryService.updateCategory(this.category).subscribe(
       generalResponse => {

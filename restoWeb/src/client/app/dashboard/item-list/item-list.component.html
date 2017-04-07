@@ -28,9 +28,9 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-3 col-md-2 col-lg-2" style="max-width:300px;" *ngFor="let item of items | itemFilter:filterQuery:sortAscending">
+      <div class="col-md-2 d-flex flex-row" *ngFor="let item of items | itemFilter:filterQuery:sortAscending">
         <div (click)="modify(item)" class="card">
-          <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl"/>
+          <img class="card-img-top img-thumbnail img-thumbnail-cust" [src]="item.imageUrl ? item.imageUrl : '../assets/img/simple-utensil.png'"/>
           <div class="card-block">
             <h4 class="card-title text-center item-name">{{ item.selectedTranslation ? item.selectedTranslation.name : "No translation" }} </h4>
           </div>

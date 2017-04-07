@@ -23,6 +23,7 @@ export class IngredientGroupPage implements OnInit {
   total: number;
   totalStr: string;
   currentIngredientGroup: IngredientGroup;
+  currentIngredientIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
@@ -38,6 +39,7 @@ export class IngredientGroupPage implements OnInit {
     this.selectedIngredients = this.navParams.get('ingredients');
     this.modify = this.navParams.get('modify');
     this.ingredientCount = 0;
+    this.currentIngredientIndex = this.ingredientGroupIndex;
     this.total = this.navParams.get('total');
     this.totalStr = this.total.toFixed(2);
 
@@ -113,7 +115,29 @@ export class IngredientGroupPage implements OnInit {
     }
   }
 
+  changeGroup(index: number, ingredientGroup: IngredientGroup): void {
+
+      this.currentIngredientGroup = ingredientGroup;
+      this.ingredientGroup = ingredientGroup;
+      this.jumpToIngredientGroup(index);
+
+  }
+
+  jumpToIngredientGroup(index: number): void {
+    this.ingredientGroupIndex = index - 1;
+
+
+    if (index >= this.currentIngredientIndex) {
+      this.nextIngredientGroup();
+    } else {
+      this.previousIngredientGroup();
+    }
+  }
+
   previousIngredientGroup(): void {
+
+    this.currentIngredientIndex -= 1;
+
     var opts = {
       animate: true,
       animation: "ios-transition"
@@ -127,12 +151,15 @@ export class IngredientGroupPage implements OnInit {
     }
 
     this.navCtrl.pop(opts);
+
+
   }
 
   nextIngredientGroup(): void {
     var index = this.ingredientGroupIndex + 1;
+    this.currentIngredientIndex++;
 
-    if (index >= this.item.ingredientGroups.length) {
+    if (this.currentIngredientIndex >= this.item.ingredientGroups.length) {
       this.doneIngredientOrder();
     } else {
       this.nextIngredientOrder();
@@ -149,7 +176,8 @@ export class IngredientGroupPage implements OnInit {
       callback: this.complexOrderCallback,
       ingredients: this.selectedIngredients,
       modify: this.modify,
-      total: this.total
+      total: this.total,
+      currentIngredientIndex: this.currentIngredientIndex
     }, {
       animate: true,
       animation: "ios-transition"
@@ -241,24 +269,6 @@ export class IngredientGroupPage implements OnInit {
       if (otherOrderableIngredient.amount != 1 || otherOrderableIngredient.ingredient.allowQuantity != 1) {
         otherOrderableIngredient.disabled = true;
       }
-    }
-  }
-
-  changeGroup(index: number, ingredientGroup: IngredientGroup): void {
-
-      this.currentIngredientGroup = ingredientGroup;
-      this.ingredientGroup = ingredientGroup;
-      //console.log(this.currentIngredientGroup);
-      this.jumpToIngredientGroup(index);
-  }
-
-  jumpToIngredientGroup(index: number): void {
-    this.ingredientGroupIndex = index - 1;
-
-    if (index >= this.item.ingredientGroups.length) {
-      this.doneIngredientOrder();
-    } else {
-      this.nextIngredientOrder();
     }
   }
 }

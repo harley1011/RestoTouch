@@ -12,9 +12,9 @@ import {Payment} from '../../shared/models/payment';
 import {BusinessHour} from '../../shared/models/business-hour';
 import {TranslateService} from 'ng2-translate';
 import {KitchenStation} from '../../shared/models/kitchen-station';
-import {Item} from '../../shared/models/items';
+import {Item, ItemTranslations} from '../../shared/models/items';
 import {CategoryService} from '../category/category.service';
-import {Category} from '../../shared/models/category';
+import {Category, CategoryTranslations} from '../../shared/models/category';
 import {MenuService} from '../menu/menu.service';
 import {ItemCategory} from '../../shared/models/item-category';
 
@@ -74,6 +74,23 @@ export class RestaurantComponent implements OnInit {
       this.restaurant.translations.push(restaurantTranslation);
     }
     this.restaurant.selectedTranslation = restaurantTranslation;
+    this.setLanguageCategoryItem(language);
+  }
+
+  setLanguageCategoryItem(language: Language) {
+    let currentLanguageCode = language.languageCode;
+    let currentSelectedTranslation: CategoryTranslations;
+    let currentSelectedItemTranslation: ItemTranslations;
+    this.menu.forEach(menu => {
+      menu.categories.forEach(cat =>{
+        currentSelectedTranslation = cat.translations.find(translation => translation.languageCode === currentLanguageCode);
+        cat.selectedTranslation = currentSelectedTranslation;
+        cat.items.forEach(item => {
+          currentSelectedItemTranslation = item.translations.find(translation => translation.languageCode === currentLanguageCode);
+          item.selectedTranslation = currentSelectedItemTranslation;
+        });
+      });
+    });
   }
 
   removeLanguage(language: Language) {
@@ -98,6 +115,7 @@ export class RestaurantComponent implements OnInit {
       restaurant => {
         this.restaurant = restaurant;
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        this.activateKitchenMode(this.restaurant.kitCashModeFlag);
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
           if (a.day < b.day) {
@@ -229,6 +247,20 @@ export class RestaurantComponent implements OnInit {
       .subscribe(
         generalResponse => {
           this.router.navigate(['/dashboard/restaurants']);
+        },
+        error => {
+          this.errorMessage = <any>error;
+        }
+      );
+  }
+
+  addMoreStep(): void {
+    this.restaurantService.addRestaurant(this.restaurant)
+      .subscribe(
+        generalResponse => {
+          console.log(this.restaurant);
+          this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
+          // this.router.navigate(['/dashboard/menu', {restaurant: this.restaurant}]);
         },
         error => {
           this.errorMessage = <any>error;
@@ -401,7 +433,7 @@ export class RestaurantComponent implements OnInit {
   getMenu(id: number): void {
     this.menuService.getMenu(id).subscribe(
       menu => {
-        this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
+        //this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
         this.menu.push(menu);
 
         menu.categories.forEach( cat => {
@@ -419,6 +451,7 @@ export class RestaurantComponent implements OnInit {
               this.categories.push(cat);
           }
         });
+        this.setLanguageCategoryItem(this.translationSelectComponent.selectedLanguage);
         this.updateItemList();
       },
       error => {

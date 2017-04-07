@@ -23,13 +23,13 @@ require('./restoWeb/websiteRoutes')(app, express);
 
 app.all('/*', [require('./restoWeb/authenticator.js')]);
 
-
+var port = process.env.PORT || 10010;
+var appListen = app.listen(port);
 SwaggerExpress.create(config, function (err, swaggerExpress) {
   if (err) {
     throw err;
   }
-  var port = process.env.PORT || 10010;
-  var appListen = app.listen(port);
+
   swaggerExpress.register(app);
 
   orderNotifier(appListen);

@@ -44,6 +44,7 @@ export class WelcomePage {
   continueTapped(event, lang) {
     // Will push to virtual menu page
     this.selectedLanguage = lang;
+    this.translate.use(lang.languageCode); // set mobile app language the same as menu language.
     this.navCtrl.push(MenuPage, {
       language: this.selectedLanguage,
       menu: this.menuService.selectedMenu,

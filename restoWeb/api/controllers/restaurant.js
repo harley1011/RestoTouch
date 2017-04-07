@@ -136,33 +136,31 @@ function get(req, res) {
       as: 'businessHours'
     },
     {
-      model: kitchenStationsModel,
-      as: 'kitchenStations',
-      include:[
-      //  {model: kitchenTranslationModel, as: 'translations'},
-        {model: itemModel, as: 'kitItem',
-          include: [
-            { model: itemSizeModel, as: 'sizes',
-              include: [
-                { model: itemSizeTranslationModel, as: 'translations'}
-                ]
-            },
-            { model: itemTranslationModel, as: 'translations' },
-            { model: categoryModel, as: 'categories'}
-          ]
-        }
-        ]
-    },
-    {
       model: paymentsModel,
       as: 'payments'
     }]
   }).then(function (restaurant) {
-    if (restaurant) {
-      return res.json(restaurant);
-    } else {
-      res.status(204).send();
-    }
+    kitchenStationsModel.findAll({where: {restaurantId: restaurant.id}, include: [
+      {model: itemModel, as: 'kitItem',
+        include: [
+          { model: itemSizeModel, as: 'sizes',
+            include: [
+              { model: itemSizeTranslationModel, as: 'translations'}
+            ]
+          },
+          { model: itemTranslationModel, as: 'translations' },
+          { model: categoryModel, as: 'categories'}
+        ]
+      }
+    ]}).then(function (kitStation) {
+      restaurant.dataValues.kitchenStations = kitStation;
+      if (restaurant) {
+        return res.json(restaurant);
+      } else {
+        res.status(204).send();
+      }
+    });
+
   });
 }
 

@@ -5,7 +5,7 @@ var order = require('../controllers/order');
 describe("The Order API", function () {
   var express = require('express');
   var app = express();
-  var orderNotifier = require('../controllers/orderNotifier.js')(app.listen(1017));
+  var orderNotifier = require('../controllers/orderNotifier.js')(app.listen(process.env.PORT || 1017));
   var io = require('socket.io-client');
   var redis = require('redis');
   var client = redis.createClient("redis://rediscloud:6wPtT2Oi8rVx458z@redis-19567.c8.us-east-1-3.ec2.cloud.redislabs.com:19567", {no_ready_check: false});

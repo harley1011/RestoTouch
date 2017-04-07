@@ -26,5 +26,34 @@
     "byNumberButton":"Ok! Close",
     "submitButton":"Submit",
     "cancelButton":"Cancel"
+  },
+
+  "menu":{
+    "allButton":"All Categories",
+    "orderListButton":"Order List",
+    "orderButton":"Order",
+    "cancelButton": "Cancel"
+  },
+
+  "orderList":{
+    "title":"Order Details",
+    "backButton":"Back",
+    "removeButton":"Remove"
+  },
+
+  "ingredientGroup":{
+    "cancelButton":"Cancel",
+    "backButton":"Back",
+    "nextButton":"Next",
+    "doneButton":"Done",
+    "title":"Choose your",
+    "title2":"ingredient(s)",
+    "detail":"You can select a maximum of",
+    "removeButton":"Remove",
+    "addButton":"Add"
+  },
+
+  "home":{
+    "detail":"Quick access to switch restaurants or menus"
   }
 }
