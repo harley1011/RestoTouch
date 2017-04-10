@@ -4,7 +4,7 @@ import { TestUtils } from '../../test';
 import { MenuPage } from './menu';
 
 let fixture: ComponentFixture<MenuPage> = null;
-let instance: any = MenuPage;//MenuPage = null;
+let instance: any = null;//MenuPage = null;
 
 describe('Pages: MenuPage', () => {
 
