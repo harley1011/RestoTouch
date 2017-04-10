@@ -6,6 +6,7 @@ import {AuthHttpService} from '../../services/auth-http.services';
 import {ApiEndpointService} from '../../services/api-endpoint.service';
 import {Router} from '@angular/router';
 import {Item, ItemTranslations} from '../../shared/models/items';
+import {Size} from "../../shared/models/size";
 
 
 export function main() {
@@ -67,11 +68,11 @@ export function main() {
 
     });
 
-    /*it('should get a list of items', () => {
+/*    it('should get a list of items', () => {
      let mockItemTranlsations2 = new ItemTranslations('Ice Cream','french caramel','fr');
      let mockSize = new Size([],null,12.10,2);
      let mockItemTranlsations3 = new ItemTranslations('Ice Cream','english dark chocolate','en');
-     let mockItem2 = new Item([],mockItemTranlsations2, [], [], '', [], null, mockSize, 2);
+     let mockItem2 = new Item([], mockItemTranlsations2, [], [], '', [], null, mockSize,2);
      let mockItem3 = new Item([],mockItemTranlsations3, [], [], '', [], null, mockSize, 3);
      itemService.addItem(mockItem2);
      itemService.addItem(mockItem3);
