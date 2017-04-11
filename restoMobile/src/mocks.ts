@@ -56,7 +56,7 @@ export class NavParamMock {
 
     //mocking ionic codes
     if (param === 'menu') {
-      return {'id': '1'};
+      return {'id': '1', 'translations': [{'languageCode':'en'}], 'selectedTranslation': {}};
     }
 
     if (param === 'language') {

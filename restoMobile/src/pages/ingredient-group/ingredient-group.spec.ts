@@ -154,21 +154,23 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance.navCtrl.pop).toHaveBeenCalledWith(opts);
   });
 
+  //line 158
   it('goes to next ingredient group', () => {
     instance.item = {};
     instance.item.ingredientGroups = ['ingredientGroup1', 'ingredientGroup2'];
-    instance.ingredientGroupIndex = 99;
+    instance.currentIngredientIndex = 99;
     spyOn(instance, 'doneIngredientOrder');
     spyOn(instance,'nextIngredientOrder');
 
     instance.nextIngredientGroup();
     expect(instance.doneIngredientOrder).toHaveBeenCalled();
 
-    instance.ingredientGroupIndex = 0;
+    instance.currentIngredientIndex = 0;
     instance.nextIngredientGroup();
     expect(instance.nextIngredientOrder).toHaveBeenCalled();
   });
 
+  //Line 169
   it('goes to next ingredient order', () => {
     instance.ingredientGroupIndex = 0;
     let navParams: any = {
@@ -178,7 +180,8 @@ describe('Pages: IngredientGroupPage', () => {
       callback: instance.complexOrderCallback,
       ingredients: instance.selectedIngredients,
       modify: instance.modify,
-      total: instance.total
+      total: instance.total,
+      currentIngredientIndex: instance.currentIngredientIndex
     };
     let opts = {
       animate: true,
@@ -187,6 +190,7 @@ describe('Pages: IngredientGroupPage', () => {
     spyOn(instance.navCtrl, 'push');
     instance.nextIngredientOrder();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(IngredientGroupPage, navParams, opts);
+
   });
 
   //
@@ -326,17 +330,19 @@ describe('Pages: IngredientGroupPage', () => {
     expect(instance.jumpToIngredientGroup).toHaveBeenCalledWith(1);
   });
 
+
   it('jumps to an ingredient group', () => {
     instance.item = {
       ingredientGroups: ['something']
     };
-    spyOn(instance, 'doneIngredientOrder');
-    spyOn(instance, 'nextIngredientOrder');
-    instance.jumpToIngredientGroup(0);
-    expect(instance.nextIngredientOrder).toHaveBeenCalled();
+    spyOn(instance, 'previousIngredientGroup');
+    spyOn(instance, 'nextIngredientGroup');
 
-    instance.jumpToIngredientGroup(1);
-    expect(instance.doneIngredientOrder).toHaveBeenCalled();
+    instance.jumpToIngredientGroup(-1);
+    expect(instance.previousIngredientGroup).toHaveBeenCalled();
+
+     instance.jumpToIngredientGroup(1);
+     expect(instance.nextIngredientGroup).toHaveBeenCalled();
   });
 
 });
