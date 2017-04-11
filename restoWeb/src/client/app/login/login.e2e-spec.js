@@ -45,7 +45,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     element(by.id("name")).sendKeys("restoName");
     element(by.id("description")).sendKeys("Restaurant description");
     element(by.id("address")).sendKeys("540 Test Address");
-    element(by.id("pricetype")).click();
+    //element(by.id("pricetype")).click();
 
     //Click on the create restaurant button
     var createRestoBtn = element(by.id('createRestoBtn'));
@@ -131,7 +131,7 @@ describe("RESTOTOUCH TEST CASES", function () {
 
   it("Deletes a menu", function () {
     browser.get(browser.baseUrl + 'dashboard/menus');
-    var menu = element(by.className('card'));
+    var menu = element(by.className('card-block'));
     menu.click();
     var deleteMenuBtn = element(by.id('deleteMenuBtn'));
     deleteMenuBtn.click();
@@ -151,7 +151,7 @@ describe("RESTOTOUCH TEST CASES", function () {
 
   it("Deletes an item", function () {
     browser.get(browser.baseUrl + 'dashboard/items');
-    var item = element(by.className('card'));
+    var item = element(by.className('card-block'));
     item.click();
     var deleteItemBtn = element(by.id('deleteItemBtn'));
     deleteItemBtn.click();
@@ -176,6 +176,7 @@ describe("RESTOTOUCH TEST CASES", function () {
     var logoutBtn = element(by.id('logout'));
     logoutBtn.click();
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'logout');
+
   });
 
   it("Login as a cashier mode", function () {
