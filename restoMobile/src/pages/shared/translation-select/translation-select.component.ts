@@ -23,7 +23,6 @@ export class TranslationSelectComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('h');
   }
 
   getSelectedLanguage(): ReplaySubject<Language> {
