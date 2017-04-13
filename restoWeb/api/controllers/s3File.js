@@ -5,15 +5,11 @@ var itemModel;
 var userModel;
 var _ = require('lodash');
 var models = require("../../database/models");
-
+var s3 = require("../../config/s3");
 setDatabase(models);
 
 
-aws.config.update({
-  accessKeyId: 'AKIAI6I4KH6ZMYVNGVKA',
-  secretAccessKey: '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',
-  region: 'us-east-1'
-});
+aws.config.update(s3.s3Config);
 
 
 module.exports = {

@@ -115,7 +115,7 @@ export class RestaurantComponent implements OnInit {
       restaurant => {
         this.restaurant = restaurant;
         this.onSelectLanguage(this.translationSelectComponent.selectedLanguage);
-        this.activateKitchenMode(this.restaurant.kitCashModeFlag);
+        //this.activateKitchenMode(this.restaurant.kitCashModeFlag);
         //make sure that business hours are in order of day
         this.restaurant.businessHours.sort((a, b): number => {
           if (a.day < b.day) {

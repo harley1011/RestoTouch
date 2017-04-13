@@ -1,11 +1,12 @@
 var io;
 var configAuth = require('../../config/auth');
 var jwt = require('jwt-simple');
+var redisConfig = require("../../config/redis");
 module.exports = function (app) {
   var io = require('socket.io')(app);
 
   var redis = require('redis');
-  var client = redis.createClient("redis://rediscloud:6wPtT2Oi8rVx458z@redis-19567.c8.us-east-1-3.ec2.cloud.redislabs.com:19567", {no_ready_check: false});
+  var client = redis.createClient(redisConfig.url, {no_ready_check: false});
 
   client.on("subscribe", function (channel, count) {
 
